@@ -4,3 +4,6 @@
 [submodule "react_utils"]
 	path = ui/react_utils
 	url = git@github.com:pnoulis/react_utils.git
+[submodule "js_utils"]
+	path = lib/js_utils
+	url = git@github.com:pnoulis/js_utils.git
