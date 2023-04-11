@@ -11,5 +11,5 @@
 	path = ui/afadmin_client
 	url = git@github.com:pnoulis/afadmin_client.git
 [submodule "mqtt_proxy"]
-	path = services/mqtt_proxy
+	path = lib/mqtt_proxy
 	url = git@github.com:pnoulis/mqtt_proxy.git
