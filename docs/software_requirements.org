@@ -8,6 +8,7 @@ document.
 [[https://en.wikipedia.org/wiki/Monorepo][monorepo]]
 [[https://git-scm.com/docs/git-submodule][git submodules]]
 [[https://docs.npmjs.com/cli/v9/using-npm/workspaces?v=true][npm workspaces]]
+[[https://git-scm.com/docs/git-config#Documentation/git-config.txt][git config pair index]]
 * System overview
 ** Directory hierarchy
 The Agent_factory directory hosts all programs, configurations, data and other
@@ -43,4 +44,12 @@ hosts npm packages, not internally developed
 
 *** Shared resources
 **** config
+
+* System configuration
+** git
+[[https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse][add --recurse-submodules flag on commands that accept it, pull, fetch etc]]
+git config --local submodule.recurse true
+
+[[https://git-scm.com/docs/git-config#Documentation/git-config.txt-statussubmoduleSummary][include submodules in summary]]
+git config --local status.submodulesummary true
 

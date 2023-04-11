@@ -1,0 +1,3 @@
+[submodule "afmachine"]
+	path = core/afmachine
+	url = git@github.com:pnoulis/afmachine.git
