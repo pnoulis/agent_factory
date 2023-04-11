@@ -1,0 +1,15 @@
+{
+  "name": "agent_factory",
+  "version": "1.0.0",
+  "description": "",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "workspaces": ["core/afmachine", "lib/js_utils"]
+}
