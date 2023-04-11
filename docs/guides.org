@@ -38,3 +38,15 @@ git commit -m 'submodule A updates'
 cat .gitmodules
 cat .gitmodules | grep path | awk '{ print $3 }'
 git config --file .gitmodules --get-regexp path | awk '{ print $2 }'
+
+* Making use of internally developed programs
+** Through npm install, if it is an npm package
+npm install git@github.com:pnoulis/package.git
+
+npm update package
+
+The package should adhere to the package/library guidelines
+
+** By utilizing npm workspaces
+
+
