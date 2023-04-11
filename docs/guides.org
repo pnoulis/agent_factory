@@ -1,0 +1,36 @@
+* Git submodules
+** superproject configuration
+git config --local submodule.recurse true
+git config --local status.submodulesummary true
+** Adding a git submodule
+git submodule add git@github.com:pnoulis/afadmin_utils.git packages/afadmin_utils
+
+--name
+the name parameter acts as a reference to the installation path of the
+git submodule
+
+** cloning a superproject task list
+git submodule update --init --recursive
+
+or
+
+git clone git@... --recurse-submodules
+
+** Keeping a superproject up to date
+git pull --recurse-submodules=yes
+
+or if local config contains key value pair:
+git config --local --add submodule.recurse true
+there is no need to add the --recurse-submodules
+parameter in git pull
+
+
+git pull --recurse-submodules=yes only fetches, it does
+not merge the remote revision.
+
+git submodule update --remote
+
+git add .
+git commit -m 'submodule A updates'
+
+
