@@ -7,3 +7,6 @@
 [submodule "js_utils"]
 	path = lib/js_utils
 	url = git@github.com:pnoulis/js_utils.git
+[submodule "afadmin_client"]
+	path = ui/afadmin_client
+	url = git@github.com:pnoulis/afadmin_client.git
