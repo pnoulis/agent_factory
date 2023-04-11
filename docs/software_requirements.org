@@ -4,4 +4,43 @@ to satisfy the product agent_factory as described in the product requirements
 document.
 
 * Definitions
+[[https://en.wikipedia.org/wiki/Software_requirements_specification#SoftwareSystemAttributes][software requirements specification]]
+[[https://en.wikipedia.org/wiki/Monorepo][monorepo]]
+[[https://git-scm.com/docs/git-submodule][git submodules]]
+[[https://docs.npmjs.com/cli/v9/using-npm/workspaces?v=true][npm workspaces]]
 * System overview
+** Directory hierarchy
+The Agent_factory directory hosts all programs, configurations, data and other
+resources relevant to it. It is itself a git repository that implements the
+monorepo pattern, with the help of git submodules and npm workspaces.
+
+*** Programs
+The programs hosted within are classified into:
+
+- shared resource programs
+  Programs which are dependent on the superproject's configuration or data.
+  They make use of the shared resources found within, and are thus more tightly 
+  coupled that other programs.
+- npm dependencies
+  Programs which are managed by the node package manager (npm), can be either
+  transient or direct dependencies.
+- other dependencies
+  Programs which are not dependent on the superproject's configuration or data,
+  and are not distributed as an npm package.
+
+**** lib/
+hosts other dependencies
+**** core/
+hosts the agent_factory_machine
+**** ui/
+hosts the agent_factory front-end clients
+**** services/
+host services or service dependencies, that are internally developed
+**** dbs/
+hosts programs related to databases
+**** node_modules/
+hosts npm packages, not internally developed
+
+*** Shared resources
+**** config
+
