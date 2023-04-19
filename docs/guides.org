@@ -37,7 +37,7 @@ git commit -m 'submodule A updates'
 cat .gitmodules
 cat .gitmodules | grep path | awk '{ print $3 }'
 git config --file .gitmodules --get-regexp path | awk '{ print $2 }'
-
+** TODO Usual Workflow
 * Making use of internally developed programs
 ** Through npm install, if it is an npm package
 npm install git@github.com:pnoulis/package.git
@@ -89,3 +89,98 @@ Given a component named MyComponent found within src/components/myComponents
 
 #+end_src
 
+* Tools
+** Make
+*** Resources
+*** Installation on windows
+*** Installation on linux
+sudo apt install make
+*** Updating
+*** Configuration
+** wsl2
+*** Resources
+*** Installation on windows
+*** Installation on linux
+*** Updating
+*** Configuration
+** Nginx
+*** Resources
+[[https://nginx.org/en/docs/][nginx documentation]]
+*** Installation on windows
+*** Installation on linux
+sudo apt install nginx
+*** Updating
+*** Configuration
+In order to have nginx serve a single page application that makes use of
+client-side routing one must divert all requests to the root index page of the
+application.
+
+#+begin_src conf
+  # Change this default configuration
+  try_files $uri $uri/ =404
+
+  # to
+  try_files $uri /index.html
+
+#+end_src
+*** Dockerized
+**** Official nginx@latest
+configuration setup:
+
+/etc/nginx/nginx.conf
+/etc/nginx/conf.d/default.conf
+
+default.conf serves: /usr/share/nginx/html/
+
+**** Custom official nginx@latest image
+
+#+begin_src dockerfile
+  FROM nginx
+#+end_src
+
+#+begin_src nginx
+  server {
+      listen 80;
+      listen [::]:80;
+      server_name localhost;
+      root /srv/afadmin_client
+      index index.html;
+
+      location / {
+          try_files $uri /index.html;
+      }
+  }
+#+end_src
+
+** Docker
+*** Resources
+[[https://docs.docker.com/desktop/][Docker Desktop | Docker Documentation]]
+*** Installation on windows
+Docker in wsl2 may either be installed:
+
+- Through Docker Desktop for windows
+  In which case the installation instructions are the same as the ones listed
+  under installing docker on windows.
+
+  Do not forget to enable wsl2
+  
+- Natively within the virtual linux operating system
+  It is recommended to use Docker Desktop for windows
+
+Docker in windows may be used either:
+
+- Through Docker desktop
+- By installing individual docker modules, such as docker engine.
+  This method consumes less resources but requires extra configuration.
+
+*** Installation on linux
+*** Updating
+*** Configuration
+** Node
+*** Resources
+*** Installation on windows
+*** Installation on linux
+*** Updating
+*** Configuration
+
+* Exposing services to localhost
