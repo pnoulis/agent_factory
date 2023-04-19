@@ -8,8 +8,8 @@ SHELL = /usr/bin/bash
 SRCDIR = /home/pnoul/projects/work/agent_factory
 
 # git modules
-GITMODULES = ./core/afmachine ./ui/react_utils ./ui/afadmin_client \
-./lib/mqtt_proxy ./lib/js_utils
+GITMODULES = ./lib/js_utils ./core/afmachine ./ui/react_utils ./ui/afadmin_client \
+./lib/mqtt_proxy
 
 
 .PHONY: all
@@ -19,7 +19,10 @@ all:
 # ------------------------------ SETUP ------------------------------ #
 .PHONY: setup
 
-setup:
+setup: install build
+
+install:
+	npm install --workspace=js_utils
 	npm install
 
 # ------------------------------ BUILD ------------------------------ #

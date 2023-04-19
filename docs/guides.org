@@ -33,7 +33,6 @@ git submodule update --remote
 git add .
 git commit -m 'submodule A updates'
 
-
 ** Listing all git submodules within a superporject
 cat .gitmodules
 cat .gitmodules | grep path | awk '{ print $3 }'
@@ -47,6 +46,46 @@ npm update package
 
 The package should adhere to the package/library guidelines
 
-** By utilizing npm workspaces
+** Through the local filesystem
+npm install --workspace=js_utils.
+js_utils must be installed first
 
+** By utilizing npm workspaces
+Npm packages declared as part of a workspace get linked to the superproject's
+root. Another workspace package may reference another workspace package the same
+way as it would if it was declared a dependency through npm install.
+
+* Testing ui components
+Each ui component should be placed under its own file within the
+src/scratch directory tree.
+
+
+The file should export only 1 default component.
+The exported component should be named after the component that is being tested,
+prefixed by the word "Scratch".
+The <ScratchComponent> file should be named after the component that is being
+exported.
+
+
+One displays the ui component by exporting it from the scratch/current.jsx file
+like so:
+
+export { default } from './<ScratchComponent>.jsx'
+
+** example
+Given a component named MyComponent found within src/components/myComponents
+
+
+#+begin_src javascript
+
+  // file -> scr/scratch/ScratchMyComponent.jsx
+  import { MyComponent } from '/src/components/myComponents';
+
+  export default function ScratchMyComponent() {
+  }
+
+  // file -> src/scratch/current.jsx
+  export { default } from './ScratchMyComponent.jsx';
+
+#+end_src
 
