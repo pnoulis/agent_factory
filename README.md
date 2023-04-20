@@ -25,7 +25,6 @@
 </ol>
 </details>
 
-
 ### Built with
 
 ![java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
@@ -88,7 +87,6 @@ sudo apt install make
 
 - [Vscode integration](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers#develop-in-remote-containers-using-vs-code)
 
-
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
 ### Installation
@@ -105,15 +103,14 @@ cd agent_factory
 # Downloads npm packages
 make setup
 ```
-
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
 ## Usage
-
 ``` sh
 # Builds all modules in dev mode
 # Builds docker images and runs containers
 make build && make docker
+localhost:<port>...
 
 # Builds all modules in production mode
 make build-prod && make docker
@@ -130,14 +127,75 @@ make distclean
 # Remove all
 make allclean
 ```
-
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
 ## Contributing
 
+### Submodule development within the superproject
+Due to the implementation details of git submodules, one must make sure to
+switch to the master/main branch of the submodule before making any changes.
+
+```sh
+# The git development workflow for a submodule remains exactly the
+# same as if the submodule was a normal git repository with one
+# exception.
+
+# Meaning that:
+
+# Make some changes to the repository
+echo "some change" >> someChange.txt
+
+# Track those changes
+git add .
+
+# Commit the changes
+git commit -m 'Make a change to someChange.txt'
+
+# However due to the implementation details of git submodules, BEFORE you
+# make any changes to the repo perform the following procedure:
+git branch
+# If the git branch is on master/main do nothing, else do:
+git switch master
+
+# Then in order to incorporate those changes to the superproject follow the
+# directions in keeping the superproject up to date.
+```
+<p align='right'>(<a href="#readme-top">back to top</a>)</p>
+
+### Keeping the superproject up to date
+```sh
+# Fetches and Merges all upstream changes owned by the superproject.
+# It Fetches but does not Merge submodule upstream changes.
+git pull
+
+# In case git pull introduced a new git submodule one must run
+git submodule update --init --recursive
+
+# Move into the submodule directory that has pending upstream changes
+# and merge the changes
+cd $submodule
+git pull
+
+# Then one must bring up to date the superproject submodule references.
+cd $superproject
+git add .
+git commit -m "[submodule.$submodule] Merge upstream"
+```
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
 ## Contact
+
+- grigoris kolasis 
+  grigoris@iegroup.gr 
+  https://github.com/gregorykolasis
+  
+- pavlos kapoutsis
+  pavloskapoutsis@gmail.com 
+  https://github.com/IsThisRealLife
+
+- pavlos noulis
+  pnoulis@iegroup.gr 
+  https://github.com/pnoulis
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 

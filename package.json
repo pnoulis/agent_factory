@@ -6,7 +6,24 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Intelligent Entertainment <info@iegroup.gr> (https://iegroup.gr/)",
+  "contributors": [
+    {
+      "name": "grigoris kolasis",
+      "email": "grigoris@iegroup.gr",
+      "url": "https://github.com/gregorykolasis"
+    },
+    {
+      "name": "pavlos kapoutsis",
+      "email": "pavloskapoutsis@gmail.com",
+      "url": "https://github.com/IsThisRealLife"
+    },
+    {
+      "name": "pavlos noulis",
+      "email": "pnoulis@iegroup.gr",
+      "url": "https://github.com/pnoulis"
+    }
+  ],
   "type": "module",
   "workspaces": [
     "ui/react_utils",
