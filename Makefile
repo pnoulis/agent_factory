@@ -5,12 +5,16 @@ SHELL = /usr/bin/bash
 .DELETE_ON_ERROR:
 .DEFAULT_GOAL := all
 
-SRCDIR = /home/pnoul/projects/work/agent_factory
+SRCDIR := $(shell pwd)
+AFADMIN_CLIENT = $(SRCDIR)/ui/afadmin_client
+REACT_UTILS = $(SRCDIR)/ui/react_utils
+JS_UTILS = $(SRCDIR)/lib/js_utils
+MQTT_PROXY = $(SRCDIR)/lib/mqtt_proxy
+AF_MACHINE = $(SRCDIR)/core/afmachine
 
 # git modules
-GITMODULES = ./lib/js_utils ./core/afmachine ./ui/react_utils ./ui/afadmin_client \
-./lib/mqtt_proxy
-
+GITMODULES = $(AFADMIN_CLIENT) $(REACT_UTILS) $(JS_UTILS) \
+$(MQTT_PROXY) $(AF_MACHINE)
 
 .PHONY: all
 all:
@@ -19,9 +23,13 @@ all:
 # ------------------------------ SETUP ------------------------------ #
 .PHONY: setup
 
-setup: install build
+setup: modules npm-packages
 
-install:
+modules:
+	git config --local include.path '../.gitconfig'
+	git submodule update --init --recursive
+
+npm-packages:
 	npm install --workspace=js_utils
 	npm install
 
@@ -36,8 +44,11 @@ nginx-container: nginx-image
 	--name agent_factory.nginx \
 	--detach \
 	--publish 80:80 \
+	--mount \
+	type=bind,\
+	source=$(SRCDIR)/ui/afadmin_client/dist,\
+	target=/srv \
 	-v $(SRCDIR)/tmp/afadmin_client.nginx.conf:/etc/nginx/conf.d/default.conf:ro \
-	-v $(SRCDIR)/dist:/srv/afadmin_client:ro \
 	agent_factory/nginx
 
 nginx-image:
