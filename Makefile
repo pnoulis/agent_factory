@@ -65,19 +65,16 @@ build-dev:
 	@for gitmodule in $(GITMODULES); do \
 		make -C "$$gitmodule" build; \
 	done
-	cp -r ./ui/afadmin_client/dist .
 
 build-staging:
 	@for gitmodule in $(GITMODULES); do \
 		make -C "$$gitmodule" build-staging; \
 	done
-	cp -r ./ui/afadmin_client/dist .
 
 build-prod:
 	@for gitmodule in $(GITMODULES); do \
 		make -C "$$gitmodule" build-prod; \
 	done
-	cp -r ./ui/afadmin_client/dist .
 
 # ------------------------------ CLEAN ------------------------------ #
 .PHONY: clean distclean dockerclean

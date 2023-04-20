@@ -13,3 +13,6 @@
 [submodule "mqtt_proxy"]
 	path = lib/mqtt_proxy
 	url = git@github.com:pnoulis/mqtt_proxy.git
+[submodule "backend"]
+	path = core/backend
+	url = git@github.com:IsThisRealLife/agent_factory_services.git

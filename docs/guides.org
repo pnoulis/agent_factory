@@ -1,3 +1,4 @@
+* Development workflow
 * Git submodules
 ** superproject configuration
 git config --local submodule.recurse true
@@ -37,7 +38,6 @@ git commit -m 'submodule A updates'
 cat .gitmodules
 cat .gitmodules | grep path | awk '{ print $3 }'
 git config --file .gitmodules --get-regexp path | awk '{ print $2 }'
-** TODO Usual Workflow
 * Making use of internally developed programs
 ** Through npm install, if it is an npm package
 npm install git@github.com:pnoulis/package.git
@@ -184,3 +184,8 @@ Docker in windows may be used either:
 *** Configuration
 
 * Exposing services to localhost
+* Integrating pavlos backend service
+docker-compose build
+docker-compose up
+
+
