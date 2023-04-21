@@ -24,7 +24,7 @@ $(MQTT_PROXY) $(AF_MACHINE)
 
 .PHONY: all
 all:
-	@echo Supply recipie to run.
+	@echo Supply recipe to run.
 
 # ------------------------------ SETUP ------------------------------ #
 .PHONY: setup
@@ -64,9 +64,10 @@ nginx-image:
 	fi
 
 serve-backend:
-	cd $(BACKEND); \
-	docker-compose build; \
-	docker-compose up
+	cd $(BACKEND) && docker-compose build 2>/dev/null || exit 0
+	cd $(BACKEND) && docker-compose up -d
+	cd $(BACKEND) && docker-compose down
+	cd $(BACKEND) && docker-compose up -d
 
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build build-dev build-staging build-prod
@@ -88,7 +89,7 @@ build-prod:
 	done
 
 # ------------------------------ CLEAN ------------------------------ #
-.PHONY: clean distclean dockerclean
+.PHONY: clean distclean dockerclean dockercontclean dockerimgclean allclean
 
 clean:
 	rm -rdf build dist
@@ -102,7 +103,19 @@ distclean: clean
 		make -C "$$gitmodule" distclean; \
 	done
 
-dockerclean:
+dockercontclean:
 	docker stop agent_factory.nginx 2>/dev/null || exit 0
 	docker rm agent_factory.nginx 2>/dev/null || exit 0
-	docker rmi agent_factory/nginx 2>/dev/null || exit 0
+	cd $(BACKEND) && docker-compose down 2>/dev/null || exit 0
+
+dockerimgclean: dockercontclean
+	docker rmi agent_factory/nginx || exit 0
+	cd $(BACKEND) && docker-compose down --rmi all
+
+dockerclean: dockercontclean dockerimgclean
+
+allclean:
+	make clean
+	make dockerclean
+	make distclean
+	
