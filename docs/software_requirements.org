@@ -45,6 +45,11 @@ hosts npm packages, not internally developed
 *** Shared resources
 **** config
 
+*** Submodules
+
+**** tmp
+tmp/scratch
+
 * System configuration
 ** git
 [[https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse][add --recurse-submodules flag on commands that accept it, pull, fetch etc]]
@@ -53,3 +58,135 @@ git config --local submodule.recurse true
 [[https://git-scm.com/docs/git-config#Documentation/git-config.txt-statussubmoduleSummary][include submodules in summary]]
 git config --local status.submodulesummary true
 
+* Development workflow
+** Task runner
+*** Overview
+A task runner is a program created to assist in the development of software.
+
+It is very common to have to run a command many times throughout a development
+session.
+
+Commands like, compile, run, and others.
+
+In short, a task runners main features include:
+
+- The definition of tasks in arbitrary languages
+  
+  task_runner compile -> python do_something
+  task_runner compile -> node do_something
+  
+- Accept arguments to tasks
+  
+  task_runner compile --only-changed a b c...
+  
+- Persistence of tasks and developer experience
+  
+  Tasks should be defined through a text-only file
+  with readability and ease of usage in mind.
+
+  
+*** Make
+Make is a build system automation tool but it also functions as a task runner if
+some patterns devised by the community are employed.
+
+Make utilizes a domain specific language for defining tasks and a file named
+*Makefile*.
+
+For example:
+
+#+begin_src makefile
+  # Given the Makefile
+  .PHONY: compile
+
+  compile:
+    node src/main.jsx
+#+end_src
+
+#+begin_src shell
+  # Runs the compile task, also called a target
+  make compile
+#+end_src
+
+
+*** Standard targets
+
+**** make
+
+Same as calling, make help
+
+**** make help
+
+List the available targets along with a description.
+
+**** make run
+
+Tries to run a file as if it was an executable.
+
+#+begin_src shell
+  params=./src/myfile.js make run
+#+end_src
+
+
+So executing the command, given the following Makefile
+results in the execution of ./src/myfile.js by node.
+
+#+begin_src makefile
+  run:
+    node $(params)
+#+end_src
+
+**** make scratch
+
+Runs the file located at tmp/scratch[.ext]
+
+#+begin_src shell
+  make scratch
+#+end_src
+
+**** make build
+
+The term 'to build' is very overloaded. It mostly means to have your project in
+such a state so that it may be utilized.
+
+Stated differently:
+
+The build process end result must provide a way for others to use it as a single
+thing.
+
+- If that was a C program, after building one must be able to ->
+  ./c_program
+
+- If that was a library, after building one must be able to ->
+  #include  ./lib
+
+- If that was a front-end app after building one must be able to ->
+  serve ./dir
+
+Any action taken to achieve that stated goal, is part of the build process,
+which depending on the nature of the project may vary wildly.
+
+The make target build however should not be used to define the build procedur
+The make target build should be used to define the build procedure, whatever
+that means for each specific project.
+
+make build is a link. It does not itself execute a task but rather delegates the
+task to more specific build targets.
+
+By default the build target it links to is build-prod.
+
+#+begin_src shell
+  # actually calls build-prod
+  make build
+#+end_src
+
+**** make dev
+
+**** make clean
+
+**** make test
+
+**** make lint
+
+**** make fmt
+
+**** make env
