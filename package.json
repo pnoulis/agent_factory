@@ -30,6 +30,7 @@
     "lib/mqtt_proxy",
     "core/afmachine",
     "ui/afadmin_client",
-    "lib/js_utils"
+    "lib/js_utils",
+    "shared"
   ]
 }

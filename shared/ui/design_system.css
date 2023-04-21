@@ -1,0 +1,235 @@
+:root {
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+
+    /**
+   * Palette
+   * resources:
+   *
+   * https://en.wikipedia.org/wiki/Web_colors
+   * https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+   * https://www.colorhexa.com
+   * https://upload.wikimedia.org/wikipedia/commons/e/e7/SVG1.1_Color_Swatch.svg
+   * https://www.computerhope.com/htmcolor.htm
+   **/
+
+    /**
+   * _BLACK_
+   * Based on Midnight blue
+   * css color keyword: midnightblue
+   * rgb: 25 25 112
+   * hsl: 240 63 26
+   * hex: 191970
+   * web safe hex: 000066
+   **/
+    --base-black: 240, 63%;
+    rgb(25, 25, 112);
+
+    /**
+   * _GREY_
+   * Based on White smoke
+   * css color keyword: whitesmoke
+   * rgb: 245 245 245
+   * hsl: 0 0 96
+   * hex: f5f5f5
+   * web safe hex: #ffffff (white)
+   **/
+    --base-grey: 0, 0%;
+    rgb(245, 245, 245);
+
+    /**
+   * _PRIMARY_
+   * Blue Violet
+   * css color keyword: blueviolet
+   * rgb: 138 43 226
+   * hsl: 271 76 53
+   * hex: #8a2be2
+   * web safe hex: #9933cc
+   **/
+    --base-primary: 271, 76%;
+    rgb(138, 43, 226);
+
+    /**
+   * _SECONDARY_
+   * Fuchsia / Magenta
+   * css color keyword: fuchsia
+   * rgb: 255 0 255
+   * hsl: 300 100 50
+   * hex: #ff00ff
+   * web safe hex: #ff00ff
+   **/
+    --base-secondary: 300, 100%;
+    rgb(255, 0, 255);
+
+    /**
+   * _SEMANTIC_SUCCESS_
+   * Spring Green
+   * css color keyword: springgreen
+   * rgb: 0 255 127
+   * hsl: 150 100 50
+   * hex: 00ff7f
+   * web safe hex: 00ff66
+   **/
+    --base-success: 150, 100%;
+    rgb(0, 255, 127);
+
+    /**
+   * _SEMANTIC_ERROR_
+   * Red
+   * css color keyword: red
+   * rgb: 255 0 0
+   * hsl: 0 100 50
+   * hex: ff0000
+   * web safe hex: ff0000
+   **/
+    --base-error: 357, 98%;
+    rgb(255, 0, 0);
+
+    /**
+   * _SEMANTIC_WARN_
+   * Tomato
+   * css color keyword: tomato
+   * rgb: 255 99 71
+   * hsl: 9 100 64
+   * hex: ff6347
+   * web safe hex: ff6633
+   **/
+    --base-warn: 33, 100%;
+    rgb(255, 99, 71);
+
+    /**
+   * _SEMANTIC_INFO_
+   * Dodger Blue
+   * css color keyword: dodgerblue
+   * rgb: 30 144 255
+   * hsl: 210 100 56
+   * hex: #1e90ff
+   * web safe hex: #3399ff
+   **/
+    --base-info: 210, 100%;
+    rgb(30 144 255);
+
+    /* -------------------------------------------------- */
+    --black-subtle: hsl(var(--base-black), 13%);
+    --black-light: hsl(var(--base-black), 10%);
+    --black-base: hsl(var(--base-black), 7%);
+    --black-medium: hsl(var(--base-black), 4%);
+    --black-strong: hsl(var(--base-black), 0%);
+
+    --grey-subtle: hsl(var(--base-grey), 95%);
+    --grey-light: hsl(var(--base-grey), 90%);
+    --grey-base: hsl(var(--base-grey), 83%);
+    --grey-medium: hsl(var(--base-grey), 70%);
+    --grey-strong: hsl(var(--base-grey), 60%);
+
+    --primary-subtle: hsl(var(--base-primary), 73%);
+    --primary-light: hsl(var(--base-primary), 63%);
+    --primary-base: hsl(var(--base-primary), 53%);
+    --primary-medium: hsl(var(--base-primary), 43%);
+    --primary-strong: hsl(var(--base-primary), 33%);
+
+    --secondary-subtle: hsl(var(--base-secondary), 70%);
+    --secondary-light: hsl(var(--base-secondary), 60%);
+    --secondary-base: hsl(var(--base-secondary), 50%);
+    --secondary-medium: hsl(var(--base-secondary), 40%);
+    --secondary-strong: hsl(var(--base-secondary), 30%);
+
+    --success-subtle: hsl(var(--base-success), 70%);
+    --success-light: hsl(var(--base-success), 60%);
+    --success-base: hsl(var(--base-success), 50%);
+    --success-medium: hsl(var(--base-success), 40%);
+    --success-strong: hsl(var(--base-success), 30%);
+
+    --error-subtle: hsl(var(--base-error), 70%);
+    --error-light: hsl(var(--base-error), 60%);
+    --error-base: hsl(var(--base-error), 50%);
+    --error-medium: hsl(var(--base-error), 40%);
+    --error-strong: hsl(var(--base-error), 30%);
+
+    --warn-subtle: hsl(var(--base-warn), 84%);
+    --warn-light: hsl(var(--base-warn), 74%);
+    --warn-base: hsl(var(--base-warn), 64%);
+    --warn-medium: hsl(var(--base-warn), 54%);
+    --warn-strong: hsl(var(--base-warn), 44%);
+
+    --info-subtle: hsl(var(--base-info), 76%);
+    --info-light: hsl(var(--base-info), 66%);
+    --info-base: hsl(var(--base-info), 56%);
+    --info-medium: hsl(var(--base-info), 46%);
+    --info-strong: hsl(var(--base-info), 36%);
+
+    /**
+   * Space
+   * May be used in:
+   * Padding || Margin || Width || Height || Borders
+   **/
+    --sc-ratio: 1.3;
+    --sc: 0.8rem;
+    --sc-nl: var(--sc);
+    --sc-sm: calc(var(--sc-nl) / var(--sc-ratio));
+    --sc-xs: calc(var(--sc-sm) / var(--sc-ratio));
+    --sc-xxs: calc(var(--sc-xs) / var(--sc-ratio));
+    --sc-tn: 3px;
+    --sc-xt: 2px;
+    --sc-xxt: 1px;
+    --sc-md: calc(var(--sc-nl) * var(--sc-ratio));
+    --sc-lg: calc(var(--sc-md) * var(--sc-ratio));
+    --sc-xl: calc(var(--sc-lg) * var(--sc-ratio));
+    --sc-xxl: calc(var(--sc-xl) * var(--sc-ratio));
+    --sc-hg: calc(var(--sc-xxl) * var(--sc-ratio));
+    --sc-xh: calc(var(--sc-hg) * var(--sc-ratio));
+    --sc-xxh: calc(var(--sc-xh) * var(--sc-ratio));
+
+    /* Border radius */
+    --br-ratio: 1.3;
+    --br: 6px;
+    --br-nl: var(--br);
+    --br-sm: calc(var(--br-nl) / var(--br-ratio));
+    --br-xs: calc(var(--br-sm) / var(--br-ratio));
+    --br-xxs: calc(var(--br-xs) / var(--br-ratio));
+    --br-md: calc(var(--br-nl) * var(--br-ratio));
+    --br-lg: calc(var(--br-md) * var(--br-ratio));
+    --br-xl: calc(var(--br-lg) * var(--br-ratio));
+    --br-round: 50%;
+
+    /**
+   * Shadows
+   * Inspired by:
+   * https://getcssscan.com/css-box-shadow-examples
+   * Specifically the ones by box-shadows.co
+   **/
+    /* subtle focus */
+    --sd-0: rgba(17, 17, 26, 0.1) 0px 4px 6px -1px, rgba(17, 17, 26, 0.06) 0px 2px 4px -1px;
+    --sd-1: rgba(17, 17, 26, 0.1) 0px 1px 3px 0px, rgba(17, 17, 26, 0.06) 0px 1px 2px 0px;
+    --sd-2: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    --sd-3: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+    --sd-4: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+
+    /* deep focus */
+    --sd-5: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    --sd-6: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+    --sd-7: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+
+    /* spreads out */
+    --sd-8: 5px -5px 50px rgba(17, 17, 26, 0.1), -5px 5px 50px rgba(17, 17, 26, 0.1);
+    --sd-9: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+
+    /**
+   * Typography
+   **/
+    --tx-ratio: 1.2;
+    --tx-nl: 1rem;
+    --tx-sm: calc(var(--tx-nl) / var(--tx-ratio));
+    --tx-xs: calc(var(--tx-sm) / var(--tx-ratio));
+    --tx-xxs: calc(var(--tx-xs) / var(--tx-ratio));
+    --tx-md: calc(var(--tx-nl) * var(--tx-ratio));
+    --tx-lg: calc(var(--tx-md) * var(--tx-ratio));
+    --tx-xl: calc(var(--tx-lg) * var(--tx-ratio));
+    --tx-xxl: calc(var(--tx-xl) * var(--tx-ratio));
+    --tx-hg: calc(var(--tx-xxl) * var(--tx-ratio));
+    --tx-xh: calc(var(--tx-hg) * var(--tx-ratio));
+    --tx-xxh: calc(var(--tx-xh) * var(--tx-ratio));
+}
