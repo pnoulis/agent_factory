@@ -50,6 +50,8 @@ hosts npm packages, not internally developed
 **** tmp
 tmp/scratch
 
+** System architecture
+afadmin_client -> afmachine(client side) -> backend
 * System configuration
 ** git
 [[https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse][add --recurse-submodules flag on commands that accept it, pull, fetch etc]]
