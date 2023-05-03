@@ -182,10 +182,17 @@ Docker in windows may be used either:
 *** Installation on linux
 *** Updating
 *** Configuration
+* Running automated wristband scan
+requires:
+python3
+paho-mqtt
 
-* Exposing services to localhost
-* Integrating pavlos backend service
-docker-compose build
-docker-compose up
+run script with python.
 
+Then using mqtt-explorer connect to:
 
+localhost:9001
+
+publish at:
+
+/themaze/registration5/emulateScan/r/r

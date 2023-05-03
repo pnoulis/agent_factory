@@ -1,0 +1,31 @@
+{
+	"timestamp":1672137709,
+	"result":"OK",
+	"type":"teams",
+	"payload": [
+		{
+			"id":1,
+			"status":"idle",
+			"name":"Awesome",
+			"packages":["60 Minutes","Category Fire"],
+			"started":1672137709,
+			"members":[
+				{"username":"pavlaras","wristbandNumber":901,"wristbandColor":1},
+				{"username":"ioannara","wristbandNumber":902,"wristbandColor":2},
+				{"username":"thomakos","wristbandNumber":903,"wristbandColor":3}
+			 ]
+		},
+		{
+			"id":2,
+			"status":"idle",
+			"name":"Theplayers",
+			"packages":["30 Minutes"],
+			"started":1672137709,
+			"members":[
+				{"username":"alohaeiro","wristbandNumber":801,"wristbandColor":1},
+				{"username":"anonymous","wristbandNumber":802,"wristbandColor":2},
+				{"username":"theplayer","wristbandNumber":803,"wristbandColor":3}
+			 ]
+		}		
+	]	
+}

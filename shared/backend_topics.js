@@ -137,6 +137,14 @@ const TOPICS = [
           username: "yolo4",
           password: "yolo4",
         },
+        {
+          username: Math.random().toString(36).substring(2, 12),
+          password: Math.random().toString(36).substring(2, 12),
+        },
+        {
+          username: "yolo4",
+          password: null,
+        },
       ],
     },
     sub: {
