@@ -284,18 +284,52 @@ const TOPICS = [
     },
   },
 
+  // ------------------------------ WRISTBAND REGISTER  ------------------------ //
+  {
+    alias: "/wristband/register",
+    pub: {
+      topic: "/themaze/${clientId}/gui/player/registerWristband",
+      payloads: [
+        {
+          timestamp: 1234678999,
+          username: "yolo1",
+          wristbandNumber: 19,
+        },
+      ],
+    },
+    sub: {
+      topic: "/themaze/${clientId}/gui/player/registerWristband/response",
+      payloads: [
+        {
+          timestamp: 123456789,
+          result: "OK",
+          message: "successfully registerWristbandToPlayer",
+        },
+      ],
+    },
+  },
+
+  // ------------------------------ UNREGISTER WRISTBAND ----------------------- //
+
+  {
+    alias: "/wristband/unregister",
+    pub: {
+      topic: "/themaze/${clientId}/gui/player/unregisterWristband",
+      payloads: [],
+    },
+    sub: {
+      topic: "/themaze/${clientId}/gui/player/unregisterWristband/response",
+      payloads: [],
+    },
+  },
+
   // All Registered players
   {
     alias: "/players/list",
     pub: "/themaze/${clientId}/gui/player/all/search",
     sub: "/themaze/${clientId}/gui/player/all/search/response",
   },
-  // Wristband register
-  {
-    alias: "/wristband/register",
-    pub: "/themaze/${clientId}/gui/player/registerWristband",
-    sub: "/themaze/${clientId}/gui/player/registerWristband/response",
-  },
+
   // Wristband validate
   {
     alias: "/wristband/isValid",

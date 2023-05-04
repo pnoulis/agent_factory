@@ -52,6 +52,31 @@ tmp/scratch
 
 ** System architecture
 afadmin_client -> afmachine(client side) -> backend
+*** Wristbands
+
+wristbandMerged = false ->
+The player is not part of a team.
+
+wristbandMerged = true ->
+The player is part of a team, that may or may not be currently playing
+
+active = true ->
+The wristband has been registered to a player.
+
+active = false ->
+The wristband has not been registered to a player.
+
+**** Wristband registration
+A wristband may be registered to a user if and only if:
+
+- Player is not currently part of a team
+- The wristband has not been registered to a player.
+
+A wristband may be unregistered from a user if and only if:
+
+- Player is not currently part of a team
+- Player has a registered wristband
+
 * System configuration
 ** git
 [[https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse][add --recurse-submodules flag on commands that accept it, pull, fetch etc]]
