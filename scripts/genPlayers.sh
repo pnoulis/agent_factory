@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+
+EXECDIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)
+cd $EXECDIR
+
 declare -i i=0
 mkdir ../tmp 2>/dev/null
 PLAYERSFILE=../tmp/players.js
@@ -12,6 +16,7 @@ while (( i < 100 )); do
   player=$(gname)
   name="${player%_*}${i}"
   surname="${player#*_}${i}"
+  username="auto${i}_${name}"
   randomMerged=$((0 + $RANDOM % 2))
   if (( $randomMerged == 0 )); then
     # created a merged wristband player
@@ -30,7 +35,7 @@ while (( i < 100 )); do
 
     cat <<EOF >> ${PLAYERSFILE}
 {
-username: "TG${i}",
+username: "${username}",
 name: "${name}",
 surname: "${surname}",
 email: "${name}.${surname}@maze.com",
@@ -48,7 +53,7 @@ EOF
     # create a not merged wristband player
     cat <<EOF >> ${PLAYERSFILE}
 {
-username: "TG${i}",
+username: "${username}",
 name: "${name}",
 surname: "${surname}",
 email: "${name}.${surname}@maze.com",

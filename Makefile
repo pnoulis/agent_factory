@@ -119,3 +119,16 @@ allclean:
 	make dockerclean
 	make distclean
 	
+
+# ------------------------------ VARIOUS ------------------------------ #
+.PHONY: genPlayers registerPlayers
+
+registerPlayers: genPlayers
+	MODE=development \
+	BACKEND_URL=ws://localhost:9001 \
+	BACKEND_AUTH_USERNAME=pavlos \
+	BACKEND_AUTH_PASSWORD=mindtr@p \
+	node ./scripts/registerPlayers.js
+
+genPlayers:
+	./scripts/genPlayers.sh
