@@ -315,11 +315,23 @@ const TOPICS = [
     alias: "/wristband/unregister",
     pub: {
       topic: "/themaze/${clientId}/gui/player/unregisterWristband",
-      payloads: [],
+      payloads: [
+        {
+          timestamp: 1223456789,
+          username: "johnwick",
+          wristbandNumber: 19,
+        },
+      ],
     },
     sub: {
       topic: "/themaze/${clientId}/gui/player/unregisterWristband/response",
-      payloads: [],
+      payloads: [
+        {
+          timestamp: 1234567890,
+          result: "OK",
+          message: "successfully unregisterWristbandToPlayer",
+        },
+      ],
     },
   },
 
