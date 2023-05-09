@@ -26,7 +26,7 @@
    * web safe hex: 000066
    **/
     --base-black: 240, 63%;
-    rgb(25, 25, 112);
+    /* rgb(25, 25, 112); */
 
     /**
    * _GREY_
@@ -38,7 +38,7 @@
    * web safe hex: #ffffff (white)
    **/
     --base-grey: 0, 0%;
-    rgb(245, 245, 245);
+    /* rgb(245, 245, 245); */
 
     /**
    * _PRIMARY_
@@ -50,7 +50,7 @@
    * web safe hex: #9933cc
    **/
     --base-primary: 271, 76%;
-    rgb(138, 43, 226);
+    /* rgb(138, 43, 226); */
 
     /**
    * _SECONDARY_
@@ -62,7 +62,7 @@
    * web safe hex: #ff00ff
    **/
     --base-secondary: 300, 100%;
-    rgb(255, 0, 255);
+    /* rgb(255, 0, 255); */
 
     /**
    * _SEMANTIC_SUCCESS_
@@ -74,7 +74,7 @@
    * web safe hex: 00ff66
    **/
     --base-success: 150, 100%;
-    rgb(0, 255, 127);
+    /* rgb(0, 255, 127); */
 
     /**
    * _SEMANTIC_ERROR_
@@ -86,7 +86,7 @@
    * web safe hex: ff0000
    **/
     --base-error: 357, 98%;
-    rgb(255, 0, 0);
+    /* rgb(255, 0, 0); */
 
     /**
    * _SEMANTIC_WARN_
@@ -98,7 +98,7 @@
    * web safe hex: ff6633
    **/
     --base-warn: 33, 100%;
-    rgb(255, 99, 71);
+    /* rgb(255, 99, 71); */
 
     /**
    * _SEMANTIC_INFO_
@@ -110,7 +110,7 @@
    * web safe hex: #3399ff
    **/
     --base-info: 210, 100%;
-    rgb(30 144 255);
+    /* rgb(30 144 255); */
 
     /* -------------------------------------------------- */
     --black-subtle: hsl(var(--base-black), 13%);

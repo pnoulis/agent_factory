@@ -335,6 +335,43 @@ const TOPICS = [
     },
   },
 
+  // ------------------------------ LIST PLAYERS # 1 -------------- //
+  // Lists players that are not part of a team and have a registered wristband
+  {
+    alias: "/players/list/available",
+    pub: {
+      topic: `${PREFIX}/player/available/search`,
+      payloads: [
+        {
+          timestamp: 123456789,
+        },
+      ],
+    },
+    sub: {
+      topic: `${PREFIX}/player/available/search/response`,
+      payloads: [
+        {
+          timestamp: 1683634807786,
+          result: "OK",
+          players: [
+            {
+              username: "test10",
+              name: "test10_name",
+              surname: "test10_surname",
+              email: "test10@gmail.com",
+              wristbandMerged: false,
+              wristband: {
+                wristbandNumber: 10,
+                wristbandColor: 7,
+                active: true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
+
   // All Registered players
   {
     alias: "/players/list",
