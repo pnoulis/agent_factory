@@ -2,3 +2,21 @@ node_modules
 package-lock.json
 dist/
 tmp/
+
+
+# emacs
+# cached changes
+\#*\#
+\.#*
+# undo cache
+*~
+
+# vim
+:w
+
+# vscode
+.vscode
+
+# intellij
+.idea
+

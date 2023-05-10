@@ -36,8 +36,13 @@ modules:
 	git submodule update --init --recursive
 
 npm-packages:
-	npm install --workspace=js_utils
-	npm install || npm install
+	npm install --workspace js_utils
+	npm install --workspace mqtt_proxy
+	npm install --workspace shared
+	npm install --workspace afmachine
+	npm install --workspace react_utils
+	npm install --workspace afadmin_client
+
 
 # ------------------------------ SERVE ------------------------------ #
 .PHONY: serve serve-backend serve-afadmin_client
@@ -64,14 +69,12 @@ nginx-image:
 	fi
 
 serve-backend:
-	cd $(BACKEND) && docker-compose build 2>/dev/null || exit 0
-	cd $(BACKEND) && docker-compose up -d
-	cd $(BACKEND) && docker-compose down
+	cd $(BACKEND) && docker-compose build
 	cd $(BACKEND) && docker-compose up -d
 
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build build-dev build-staging build-prod
-build: build-dev
+build: build-prod
 
 build-dev:
 	@for gitmodule in $(GITMODULES); do \
@@ -118,17 +121,5 @@ allclean:
 	make clean
 	make dockerclean
 	make distclean
-	
 
 # ------------------------------ VARIOUS ------------------------------ #
-.PHONY: genPlayers registerPlayers
-
-registerPlayers: genPlayers
-	MODE=development \
-	BACKEND_URL=ws://localhost:9001 \
-	BACKEND_AUTH_USERNAME=pavlos \
-	BACKEND_AUTH_PASSWORD=mindtr@p \
-	node ./scripts/registerPlayers.js
-
-genPlayers:
-	./scripts/genPlayers.sh
