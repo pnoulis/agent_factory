@@ -1,0 +1,38 @@
+[
+{
+"username": "auto1_zen1",
+"name": "zen1",
+"surname": "Elendil1",
+"email": "zen1.Elendil1@afadmin.com",
+"wristbandMerged": false,
+"wristband": {
+"wristbandNumber": 1,
+"wristbandColor": 4,
+"active": true
+}
+},
+{
+"username": "auto2_magical2",
+"name": "magical2",
+"surname": "Luthien2",
+"email": "magical2.Luthien2@afadmin.com",
+"wristbandMerged": false,
+"wristband": {
+"wristbandNumber": 2,
+"wristbandColor": 1,
+"active": true
+}
+},
+{
+"username": "auto3_confident3",
+"name": "confident3",
+"surname": "Turin3",
+"email": "confident3.Turin3@afadmin.com",
+"wristbandMerged": false,
+"wristband": {
+"wristbandNumber": 3,
+"wristbandColor": 1,
+"active": true
+}
+}
+]
