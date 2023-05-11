@@ -1,0 +1,1231 @@
+[{
+    "name": "kl",
+    "totalPoints": 0,
+    "teamState": "LOADED_PACKAGES",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "pk",
+          "wristbandNumber": 3,
+          "wristbandColor": 1
+        },
+        {
+          "username": "pl",
+          "wristbandNumber": 2,
+          "wristbandColor": 1
+        }
+      ]
+    },
+    "packages": [{
+      "id": 1,
+      "name": "Per Mission 15",
+      "cost": null,
+      "started": 1678338436252,
+      "ended": null,
+      "missions": 15,
+      "missionsPlayed": 0,
+      "active": true
+    }]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": 50,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": 60,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": 10.33,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": 20.5,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": 25,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  },
+  {
+    "name": "exampleTeam1",
+    "totalPoints": 0,
+    "teamState": "PACKAGE_RUNNING",
+    "currentRoster": {
+      "version": 1,
+      "players": [{
+          "username": "ske",
+          "wristbandNumber": 11,
+          "wristbandColor": null
+        },
+        {
+          "username": "ple",
+          "wristbandNumber": 10,
+          "wristbandColor": null
+        }
+      ]
+    },
+    "packages": [{
+        "id": 10,
+        "name": "Per Mission 15",
+        "cost": null,
+        "started": null,
+        "ended": null,
+        "missions": 15,
+        "missionsPlayed": 0,
+        "active": false
+      },
+      {
+        "id": 7,
+        "name": "Per Time 90",
+        "cost": null,
+        "started": 1678828509129,
+        "ended": null,
+        "duration": 5400.000000000,
+        "paused": false,
+        "active": true
+      }
+    ]
+  }
+]
