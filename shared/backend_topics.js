@@ -372,6 +372,65 @@ const TOPICS = [
     },
   },
 
+  // ------------------------------ MERGE TEAM ------------------------------------ //
+  {
+    alias: "/team/merge",
+    pub: {
+      topic: `${PREFIX}/team/merge`,
+      payloads: [
+        {
+          teamName: "someName",
+          usernames: ["one", "two"],
+        },
+      ],
+    },
+    sub: {
+      topic: `${PREFIX}/team/merge/response`,
+      payloads: [
+        {
+          timestamp: 1683811827218,
+          result: "OK",
+          message: "successfully created team: team_test2",
+        },
+        {
+          timestamp: 1683811580476,
+          result: "NOK",
+          message:
+            "player with username: yolo2_username has already merged into a team",
+        },
+        {
+          timestamp: 123456789,
+          result: "NOK",
+          message: "team with this name already exist",
+        },
+        {
+          timestamp: 1683811643973,
+          result: "NOK",
+          message:
+            "player with username: yolo5_usernamehasn't register his wristband",
+        },
+        {
+          timestamp: 1683811723001,
+          result: "NOK",
+          message: "at least one username doesn't exist",
+        },
+      ],
+    },
+  },
+
+  // ------------------------------ MERGE GROUP TEAM ------------------------------ //
+  {
+    alias: "/groupteam/merge",
+    pub: {
+      topic: `${PREFIX}/groupteam/merge`,
+      payloads: [],
+    },
+    sub: {
+      topic: `${PREFIX}/groupteam/merge/response`,
+      payloads: [],
+    },
+  },
+
   // All Registered players
   {
     alias: "/players/list",
@@ -396,18 +455,6 @@ const TOPICS = [
     alias: "/teams/list",
     pub: "/themaze/${clientId}/gui/teams/all",
     sub: "/themaze/${clientId}/gui/teams/all/response",
-  },
-  // Create group team
-  {
-    alias: "/groupteam/merge",
-    pub: "/themaze/${clientId}/gui/groupteam/merge",
-    sub: "/themaze/${clientId}/gui/groupteam/merge/response",
-  },
-  // Create normal team
-  {
-    alias: "/team/merge",
-    pub: "/themaze/${clientId}/gui/team/merge",
-    sub: "/themaze/${clientId}/gui/team/merge/response",
   },
   // Packages list
   {

@@ -4,6 +4,9 @@ dist/
 tmp/
 
 
+# wsl2
+*:Zone.Identifier
+
 # emacs
 # cached changes
 \#*\#
