@@ -14,6 +14,11 @@ const PLAYER_SCHEMA = {
   wristband: WRISTBAND_SCHEMA,
 };
 
+const GROUP_PARTY_PLAYER_SCHEMA = {
+  ...PLAYER_SCHEMA,
+  groupParty: true,
+};
+
 const PACKAGE_SCHEMA = {
   id: undefined,
   name: "",
@@ -41,6 +46,7 @@ const TEAM_SCHEMA = {
 export {
   WRISTBAND_SCHEMA,
   PLAYER_SCHEMA,
+  GROUP_PARTY_PLAYER_SCHEMA,
   PACKAGE_SCHEMA,
   ROSTER_SCHEMA,
   TEAM_SCHEMA,
