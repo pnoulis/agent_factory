@@ -73,7 +73,8 @@ const TOPICS = [
     alias: "/player/register",
     pub: {
       topic: `${PREFIX}/player/registration`,
-      payloads: [{
+      payloads: [
+        {
           username: "something",
           name: "yolo",
           surname: "yolo3",
@@ -94,7 +95,8 @@ const TOPICS = [
     },
     sub: {
       topic: `${PREFIX}/player/registration/response`,
-      payloads: [{
+      payloads: [
+        {
           timestamp: 1679566508599,
           result: "NOK",
           message: "This username already exists",
@@ -118,7 +120,8 @@ const TOPICS = [
         {
           timestamp: 1679566847776,
           result: "NOK",
-          message: 'Unrecognized field "confirmPassword" (class gr.agentfactory.services.player.messages.PlayerRegistrationMessage), not marked as ignorable (6 known properties: "timestamp", "name", "email", "username", "surname", "password"])\n at [Source: (byte[])"{"username":"yolo3","surname":"","name":"","email":"","password":"","confirmPassword":"...."}"; line: 1, column: 88] (through reference chain: gr.agentfactory.services.player.messages.PlayerRegistrationMessage["confirmPassword"])',
+          message:
+            'Unrecognized field "confirmPassword" (class gr.agentfactory.services.player.messages.PlayerRegistrationMessage), not marked as ignorable (6 known properties: "timestamp", "name", "email", "username", "surname", "password"])\n at [Source: (byte[])"{"username":"yolo3","surname":"","name":"","email":"","password":"","confirmPassword":"...."}"; line: 1, column: 88] (through reference chain: gr.agentfactory.services.player.messages.PlayerRegistrationMessage["confirmPassword"])',
         },
       ],
     },
@@ -129,17 +132,14 @@ const TOPICS = [
     alias: "/player/login",
     pub: {
       topic: `${PREFIX}/player/login`,
-      payloads: [{
+      payloads: [
+        {
           username: "yolo4",
           password: "yolo4",
         },
         {
-          username: Math.random()
-            .toString(36)
-            .substring(2, 12),
-          password: Math.random()
-            .toString(36)
-            .substring(2, 12),
+          username: Math.random().toString(36).substring(2, 12),
+          password: Math.random().toString(36).substring(2, 12),
         },
         {
           username: "yolo4",
@@ -149,7 +149,8 @@ const TOPICS = [
     },
     sub: {
       topic: `${PREFIX}/player/login/response`,
-      payloads: [{
+      payloads: [
+        {
           timestamp: 1679578726601,
           result: "OK",
           player: {
@@ -174,7 +175,8 @@ const TOPICS = [
         {
           timestamp: 1679578443864,
           result: "NOK",
-          message: 'Unrecognized field "surname" (class gr.agentfactory.services.player.messages.PlayerLoginMessage), not marked as ignorable (3 known properties: "password", "timestamp", "username"])\n at [Source: (byte[])"{"username":"yolo4","surname":"yolo4","name":"yolo4","email":"yolo4@yolo4.com","password":"yolo4"}"; line: 1, column: 32] (through reference chain: gr.agentfactory.services.player.messages.PlayerLoginMessage["surname"])',
+          message:
+            'Unrecognized field "surname" (class gr.agentfactory.services.player.messages.PlayerLoginMessage), not marked as ignorable (3 known properties: "password", "timestamp", "username"])\n at [Source: (byte[])"{"username":"yolo4","surname":"yolo4","name":"yolo4","email":"yolo4@yolo4.com","password":"yolo4"}"; line: 1, column: 32] (through reference chain: gr.agentfactory.services.player.messages.PlayerLoginMessage["surname"])',
         },
       ],
     },
@@ -185,7 +187,8 @@ const TOPICS = [
     alias: "/player/search",
     pub: {
       topic: `${PREFIX}/player/search`,
-      payloads: [{
+      payloads: [
+        {
           timestamp: 1234234324,
           searchTerm: "TG1",
         },
@@ -205,10 +208,12 @@ const TOPICS = [
     },
     sub: {
       topic: `${PREFIX}/player/search/response`,
-      payloads: [{
+      payloads: [
+        {
           timestamp: 1681298866176,
           result: "OK",
-          players: [{
+          players: [
+            {
               username: "TG1",
               name: null,
               surname: null,
@@ -229,7 +234,8 @@ const TOPICS = [
         {
           timestamp: 1681298981576,
           result: "OK",
-          players: [{
+          players: [
+            {
               username: "TG1",
               name: null,
               surname: null,
@@ -267,12 +273,14 @@ const TOPICS = [
     pub: null,
     sub: {
       topic: `${PREFIX}/player/wristbandScan`,
-      payloads: [{
-        timestamp: 1679582297148,
-        result: "OK",
-        wristbandNumber: 32,
-        wristbandColor: 3,
-      }, ],
+      payloads: [
+        {
+          timestamp: 1679582297148,
+          result: "OK",
+          wristbandNumber: 32,
+          wristbandColor: 3,
+        },
+      ],
     },
   },
 
@@ -281,19 +289,23 @@ const TOPICS = [
     alias: "/wristband/register",
     pub: {
       topic: "/themaze/${clientId}/gui/player/registerWristband",
-      payloads: [{
-        timestamp: 1234678999,
-        username: "yolo1",
-        wristbandNumber: 19,
-      }, ],
+      payloads: [
+        {
+          timestamp: 1234678999,
+          username: "yolo1",
+          wristbandNumber: 19,
+        },
+      ],
     },
     sub: {
       topic: "/themaze/${clientId}/gui/player/registerWristband/response",
-      payloads: [{
-        timestamp: 123456789,
-        result: "OK",
-        message: "successfully registerWristbandToPlayer",
-      }, ],
+      payloads: [
+        {
+          timestamp: 123456789,
+          result: "OK",
+          message: "successfully registerWristbandToPlayer",
+        },
+      ],
     },
   },
 
@@ -303,19 +315,23 @@ const TOPICS = [
     alias: "/wristband/unregister",
     pub: {
       topic: "/themaze/${clientId}/gui/player/unregisterWristband",
-      payloads: [{
-        timestamp: 1223456789,
-        username: "johnwick",
-        wristbandNumber: 19,
-      }, ],
+      payloads: [
+        {
+          timestamp: 1223456789,
+          username: "johnwick",
+          wristbandNumber: 19,
+        },
+      ],
     },
     sub: {
       topic: "/themaze/${clientId}/gui/player/unregisterWristband/response",
-      payloads: [{
-        timestamp: 1234567890,
-        result: "OK",
-        message: "successfully unregisterWristbandToPlayer",
-      }, ],
+      payloads: [
+        {
+          timestamp: 1234567890,
+          result: "OK",
+          message: "successfully unregisterWristbandToPlayer",
+        },
+      ],
     },
   },
 
@@ -325,28 +341,34 @@ const TOPICS = [
     alias: "/players/list/available",
     pub: {
       topic: `${PREFIX}/player/available/search`,
-      payloads: [{
-        timestamp: 123456789,
-      }, ],
+      payloads: [
+        {
+          timestamp: 123456789,
+        },
+      ],
     },
     sub: {
       topic: `${PREFIX}/player/available/search/response`,
-      payloads: [{
-        timestamp: 1683634807786,
-        result: "OK",
-        players: [{
-          username: "test10",
-          name: "test10_name",
-          surname: "test10_surname",
-          email: "test10@gmail.com",
-          wristbandMerged: false,
-          wristband: {
-            wristbandNumber: 10,
-            wristbandColor: 7,
-            active: true,
-          },
-        }, ],
-      }, ],
+      payloads: [
+        {
+          timestamp: 1683634807786,
+          result: "OK",
+          players: [
+            {
+              username: "test10",
+              name: "test10_name",
+              surname: "test10_surname",
+              email: "test10@gmail.com",
+              wristbandMerged: false,
+              wristband: {
+                wristbandNumber: 10,
+                wristbandColor: 7,
+                active: true,
+              },
+            },
+          ],
+        },
+      ],
     },
   },
 
@@ -355,14 +377,17 @@ const TOPICS = [
     alias: "/team/merge",
     pub: {
       topic: `${PREFIX}/team/merge`,
-      payloads: [{
-        teamName: "someName",
-        usernames: ["one", "two"],
-      }, ],
+      payloads: [
+        {
+          teamName: "someName",
+          usernames: ["one", "two"],
+        },
+      ],
     },
     sub: {
       topic: `${PREFIX}/team/merge/response`,
-      payloads: [{
+      payloads: [
+        {
           timestamp: 1683811827218,
           result: "OK",
           message: "successfully created team: team_test2",
@@ -370,7 +395,8 @@ const TOPICS = [
         {
           timestamp: 1683811580476,
           result: "NOK",
-          message: "player with username: yolo2_username has already merged into a team",
+          message:
+            "player with username: yolo2_username has already merged into a team",
         },
         {
           timestamp: 123456789,
@@ -380,7 +406,8 @@ const TOPICS = [
         {
           timestamp: 1683811643973,
           result: "NOK",
-          message: "player with username: yolo5_usernamehasn't register his wristband",
+          message:
+            "player with username: yolo5_usernamehasn't register his wristband",
         },
         {
           timestamp: 1683811723001,
@@ -409,10 +436,37 @@ const TOPICS = [
     alias: "/teams/all",
     pub: {
       topic: `${PREFIX}/teams/all`,
-      payloads: []
+      payloads: [],
     },
     sub: {
       topic: `${PREFIX}/teams/all/response`,
+      payloads: [],
+    },
+  },
+
+  // ------------------------------ VALIDATE WRISTBAND ------------------------------ //
+
+  // Wristband validate
+  {
+    alias: "/wristband/isValid",
+    pub: "/themaze/${clientId}/gui/player/isValid",
+    sub: "/themaze/${clientId}/gui/player/isValid/response",
+  },
+
+  // Wristband info
+  {
+    alias: "/wristband/info",
+    pub: {
+      topic: `${PREFIX}/wristband/info`,
+      payloads: [
+        {
+          timestamp: 123456789,
+          wristbandNumber: 9,
+        },
+      ],
+    },
+    sub: {
+      topic: `${PREFIX}/wristband/info/response`,
       payloads: [],
     },
   },
@@ -424,18 +478,6 @@ const TOPICS = [
     sub: "/themaze/${clientId}/gui/player/all/search/response",
   },
 
-  // Wristband validate
-  {
-    alias: "/wristband/isValid",
-    pub: "/themaze/${clientId}/gui/player/isValid",
-    sub: "/themaze/${clientId}/gui/player/isValid/response",
-  },
-  // Wristband info
-  {
-    alias: "/wristband/info",
-    pub: "/themaze/${clientId}/wristband/info",
-    sub: "/themaze/${clientId}/wristband/info/response",
-  },
   // Packages list
   {
     alias: "/packages/list",
@@ -463,16 +505,7 @@ const TOPICS = [
 ];
 
 const makeTopics = new MakeTopics();
-const toClient = makeTopics.toClient()
-  .strip()
-  .get();
-const toServer = makeTopics.toServer()
-  .strip()
-  .get();
+const toClient = makeTopics.toClient().strip().get();
+const toServer = makeTopics.toServer().strip().get();
 
-export {
-  TOPICS,
-  makeTopics,
-  toClient,
-  toServer
-};
+export { TOPICS, makeTopics, toClient, toServer };
