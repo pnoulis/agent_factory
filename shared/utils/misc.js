@@ -18,6 +18,7 @@ function mapPackage(pkg, to) {
       return {
         ...pkg,
         status: mapPackageStatus("backend", pkg.active),
+        type: pkg.name ? /.*time.*/i.test(pkg.name) ? 'time' : 'mission' : undefined,
       };
     default:
       throw new Error(`Unknown team map:${to}`);
@@ -34,6 +35,7 @@ function mapPackageStatus(from, status) {
       throw new Error(`Unknown package status map:${from}`);
   }
 }
+
 function mapWristbandColor(from, color) {
   if (!color) return "";
   if (from === "color") {
@@ -79,4 +81,9 @@ function mapWristbandColor(from, color) {
   }
 }
 
-export { mapWristbandColor, mapPackageStatus, mapTeam, mapPackage };
+export {
+  mapWristbandColor,
+  mapPackageStatus,
+  mapTeam,
+  mapPackage
+};
