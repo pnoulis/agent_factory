@@ -1,3 +1,39 @@
+function mapTeam(team, to) {
+  switch (to) {
+    case "backend":
+    case "frontend":
+      return {
+        ...team,
+        packages: team.packages.map((pkg) => mapPackage(pkg, "frontend")),
+      };
+    default:
+      throw new Error(`Unknown team map:${to}`);
+  }
+}
+
+function mapPackage(pkg, to) {
+  switch (to) {
+    case "backend":
+    case "frontend":
+      return {
+        ...pkg,
+        status: mapPackageStatus("backend", pkg.active),
+      };
+    default:
+      throw new Error(`Unknown team map:${to}`);
+  }
+}
+
+function mapPackageStatus(from, status) {
+  switch (from) {
+    case "backend":
+      return !status ? "uploaded" : "active";
+    case "label":
+    case "code":
+    default:
+      throw new Error(`Unknown package status map:${from}`);
+  }
+}
 function mapWristbandColor(from, color) {
   if (!color) return "";
   if (from === "color") {
@@ -43,4 +79,4 @@ function mapWristbandColor(from, color) {
   }
 }
 
-export { mapWristbandColor };
+export { mapWristbandColor, mapPackageStatus, mapTeam, mapPackage };

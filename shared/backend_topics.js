@@ -481,8 +481,41 @@ const TOPICS = [
   // Packages list
   {
     alias: "/packages/list",
-    pub: "/themaze/${clientId}/gui/packages/all",
-    sub: "/themaze/${clientId}/gui/packages/all/response",
+    pub: {
+      topic: `${PREFIX}/packages/all`,
+      payloads: [],
+    },
+    sub: {
+      topic: `${PREFIX}/packages/all/response`,
+      payloads: [
+        [
+          {
+            name: "Per Mission 15",
+            amount: 15,
+            cost: 150,
+            type: "mission",
+          },
+          {
+            name: "Per Mission 20",
+            amount: 20,
+            cost: 200,
+            type: "mission",
+          },
+          {
+            name: "Per Time 30",
+            amount: 30,
+            cost: 50,
+            type: "time",
+          },
+          {
+            name: "Per Time 60",
+            amount: 60,
+            cost: 100,
+            type: "time",
+          },
+        ],
+      ],
+    },
   },
   // Add package to team
   {

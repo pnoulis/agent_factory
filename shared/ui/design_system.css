@@ -182,7 +182,6 @@
     --sc-hg: calc(var(--sc-xxl) * var(--sc-ratio));
     --sc-xh: calc(var(--sc-hg) * var(--sc-ratio));
     --sc-xxh: calc(var(--sc-xh) * var(--sc-ratio));
-
     /* Border radius */
     --br-ratio: 1.3;
     --br: 6px;
@@ -216,6 +215,10 @@
     /* spreads out */
     --sd-8: 5px -5px 50px rgba(17, 17, 26, 0.1), -5px 5px 50px rgba(17, 17, 26, 0.1);
     --sd-9: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+
+
+    --sd-16: var(--grey-subtle) 0px 1px 0px, var(--grey-subtle) 0px 8px 24px, var(--grey-subtle) 0px 16px 48px;
+    --sd-14: var(--grey-light) 0px 2px 4px 5px;
 
     /**
    * Typography
