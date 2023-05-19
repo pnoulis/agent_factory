@@ -77,6 +77,9 @@ For information on the development and usage of a specific module go to:
 
 - [Microsoft Guide on Wsl2 and Docker](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers)
 
+- [Vscode integration](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers#develop-in-remote-containers-using-vs-code)
+
+
 - Install Make
 ```sh
 # Within wsl2
@@ -85,7 +88,20 @@ sudo apt update && sudo apt upgrade
 sudo apt install make
 ```
 
-- [Vscode integration](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers#develop-in-remote-containers-using-vs-code)
+- Install Node
+```sh
+# Downloads and installs NVM (node version manager) 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+# Installs nodejs latest version
+nvm install node
+
+# Check version
+node --version
+
+# Check available versions
+nvm ls-remote
+```
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
