@@ -22,3 +22,6 @@ tmp/
 
 # intellij
 .idea
+
+# Ignore refactoring copies
+refactor.*

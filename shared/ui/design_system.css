@@ -223,7 +223,7 @@
     /**
    * Typography
    **/
-    --tx-ratio: 1.2;
+    --tx-ratio: 1.1;
     --tx-nl: 1rem;
     --tx-sm: calc(var(--tx-nl) / var(--tx-ratio));
     --tx-xs: calc(var(--tx-sm) / var(--tx-ratio));
