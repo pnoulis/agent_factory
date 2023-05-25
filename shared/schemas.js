@@ -1,6 +1,7 @@
 const WRISTBAND_SCHEMA = {
-  wristbandNumber: undefined,
-  wristbandColor: undefined,
+  status: "",
+  wristbandNumber: null,
+  wristbandColor: null,
   active: false,
 };
 
