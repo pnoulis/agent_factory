@@ -1,10 +1,10 @@
 function mapPlayerStatus(player = {}) {
   // client side
-  if (player.wristband.status) {
+  if (player?.wristband?.status) {
     return player.wristband.status;
-  } else if (player.wristbandMerged) {
+  } else if (player?.wristbandMerged) {
     return "inGame";
-  } else if (player.wristband?.active) {
+  } else if (player?.wristband?.active) {
     return "paired";
   } else {
     return "new";
