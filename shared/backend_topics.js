@@ -440,7 +440,45 @@ const TOPICS = [
     },
     sub: {
       topic: `${PREFIX}/teams/all/response`,
-      payloads: [],
+      payloads: [
+        [
+          {
+            name: "vibrant_Celeborn",
+            totalPoints: 0,
+            teamState: "LOADED_PACKAGES",
+            currentRoster: {
+              version: 1,
+              players: [
+                {
+                  username: "TG1",
+                  wristbandNumber: 76,
+                  wristbandColor: 6,
+                },
+                {
+                  username: "TG2",
+                  wristbandNumber: 2,
+                  wristbandColor: 1,
+                },
+              ],
+            },
+            roomType: null,
+            packages: [
+              {
+                id: 1,
+                name: "Per Time 30",
+                cost: null,
+                started: 1684490259214,
+                ended: null,
+                duration: 1800,
+                paused: false,
+                active: true,
+                status: "active",
+                type: "time",
+              },
+            ],
+          },
+        ],
+      ],
     },
   },
 

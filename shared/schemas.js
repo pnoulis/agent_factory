@@ -31,8 +31,35 @@ const PACKAGE_SCHEMA = {
   active: false,
 };
 
+const PACKAGE_TIME_SCHEMA = {
+  id: null,
+  name: "",
+  cost: null,
+  started: null,
+  ended: null,
+  duration: null,
+  paused: null,
+  active: null,
+  status: "",
+  type: "time",
+};
+
+const PACKAGE_MISSIONS_SCHEMA = {
+  id: null,
+  name: "",
+  cost: null,
+  started: null,
+  ended: null,
+  missions: null,
+  missionsPlayed: 0,
+  active: false,
+  status: "",
+  type: "mission",
+};
+
 const ROSTER_SCHEMA = {
   version: undefined,
+  roomType: null,
   players: [],
   packages: [],
 };
@@ -49,6 +76,8 @@ export {
   PLAYER_SCHEMA,
   GROUP_PARTY_PLAYER_SCHEMA,
   PACKAGE_SCHEMA,
+  PACKAGE_TIME_SCHEMA,
+  PACKAGE_MISSIONS_SCHEMA,
   ROSTER_SCHEMA,
   TEAM_SCHEMA,
 };
