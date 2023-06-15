@@ -1,0 +1,187 @@
+@import "../../../../styles/variables.scss";
+
+.keyboard_wrapper {
+	z-index: 1;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.keyboard_container {
+	bottom: 50%;
+	z-index: 100;
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+	padding: 20px 20px 10% 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	overflow: hidden;
+	position: absolute;
+	transform: translateX(-50%);
+	left: 50%;
+}
+
+.keyboard_container:before {
+	content: "";
+	background-color: $black;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: .5;
+	display: block;
+	z-index: 1;
+}
+
+.keyboard_line {
+	z-index: 10;
+	position: relative;
+}
+
+.keyboard_line {
+	width: 100%;
+	display: inline-flex;
+	margin: 2px 0;
+	justify-content: flex-end;
+}
+
+.keyboard_letter {
+	width: 9%;
+	color: $mauve;
+	border: 1px solid $mauve;
+	margin: 0 2px;
+	padding: 10px 0;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 22px;
+	background-color: $mauve_opacity;
+	-webkit-user-select: none;
+	user-select: none
+}
+
+.twenty_percent {
+	width: 20%;
+}
+
+.forty_percent {
+	width: 40%;
+}
+
+.fifty_percent {
+	width: 50%;
+}
+
+.ten_percent {
+	width: 10%;
+}
+
+.forty_percent {
+	width: 40%;
+}
+
+.back_keyboard .keyboard_letter {
+	color: $white;
+	border: 1px solid $white;
+}
+
+.keyboard_letter.noborder {
+	border: 1px solid $mauve_opacity;
+}
+
+.front_keyboard {
+	display: block;
+}
+
+.back_keyboard {
+	display: none;
+}
+
+.show_back_keyboard .front_keyboard {
+	display: none;
+}
+
+.show_back_keyboard .back_keyboard {
+	display: block;
+}
+.show_back_keyboard .keyboard_letter{
+	color: #fff;
+	border: 1px solid #fff;
+}
+.show_back_keyboard .keyboard_letter.noborder{
+	color: #fff;
+	border: 1px solid $mauve_opacity;
+}
+
+.keyboard_letter:hover {
+	animation-name: click_font;
+	animation-duration: .35s;
+}
+
+@keyframes click_font {
+	0% {
+		background-color: $mauve_opacity;
+	}
+	75% {
+		background-color: $heavy_grey;
+	}
+	100% {
+		background-color: $mauve_opacity;
+	}
+}
+
+.keyboard_wrapper {
+	display: block;
+}
+
+.keyboard_wrapper.show_keyboard {
+	display: block;
+}
+
+.keyboard_container {
+	bottom: -500px;
+	opacity: 0;
+	animation-name: hideKeyboard;
+	animation-duration: 0s;
+}
+
+.keyboard_wrapper.show_keyboard .keyboard_container {
+	animation-name: showKeyboard;
+	animation-duration: 1s;
+	bottom: 0px;
+	opacity: 1;
+}
+
+@keyframes hideKeyboard {
+	0% {
+		bottom: 0px;
+		opacity: 1;
+	}
+	75% {
+		display: block;
+	}
+	100% {
+		bottom: -350px;
+		opacity: 0;
+		display: none;
+	}
+}
+
+@keyframes showKeyboard {
+	0% {
+		bottom: -250px;
+		opacity: 0.5;
+		display: block;
+	}
+	100% {
+		bottom: 0px;
+		opacity: 1;
+		display: block;
+	}
+}
+.keyboard_letter img{
+	max-width: 23px;
+	height: auto;
+}

@@ -1,0 +1,272 @@
+.wristband_wrapper {
+	z-index: 1;
+	position: absolute;
+	top: 10%;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+
+.wristband_wrapper h1 {
+	color: #fff;
+    padding: 0 !important;
+    margin: 10px 0;
+    font-size: 100px;
+    line-height: 100px;
+}
+
+.wristband_container {
+	z-index: 100;
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+	padding: 25px 20px;
+	border-radius: 20px;
+	overflow: hidden;
+	position: relative;
+	opacity: 1;
+}
+
+.wristband_container:before {
+	content: "";
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: .5;
+	display: block;
+	z-index: -1;
+}
+
+.wristband_content{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 1000px;
+}
+
+
+.wristband_disclaimer{
+	font-size: 18px;
+    color: #c593f9;
+    font-weight: normal;
+}
+
+.wristband_content header{
+	max-width: 1000px
+}
+
+.wristband_flame_container{
+	display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.wristband_flame_item {
+    position: relative;
+}
+
+.wristabnd_flame_media{
+    position: absolute;
+    left: -50%;
+    transform: translateX(-50%);
+	max-width: 250px;
+}
+
+.wristabnd_flame_media img, .wristabnd_flame_media video{
+    max-width: 200px;
+}
+
+.wristband_flame_video video{
+	/*width: 250px;
+	height: 250px;*/
+}
+
+.wristband_flame_item{
+	width: 250px;
+	height: 250px;
+}
+
+.wristabnd_flame_media {
+    position: absolute;
+    left: 0;
+    transform: translateX(0);
+    max-width: 250px;
+}
+
+.remove_flame {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+}
+
+.remove_flame img{
+    width:80%;
+    height: auto;
+}
+
+.wristband_wrapper h3 {
+    color: #fff;
+    padding: 0;
+    margin: 10px 0;
+    font-size: 40px;
+    line-height: 50px;
+    max-width: 1100px;
+}
+
+.name_of_your_team{
+    position: absolute;
+bottom: 20px;
+color: #fff;
+font-size: 22px;
+left: calc(50% - 30px);
+transform: translateX(-50%);
+}
+
+.one_button_container {
+    display: block;
+    width: 100%;
+    position: relative;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.mauve_btns .header_btn,.mauve_btns .bottom_btn{
+    color: #c593f9 !important;
+}
+
+.one_button_item {
+    color: #fff;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+
+
+.disabled_button .header_btn{
+    color: #808080 !important;
+}
+
+.error_msg_container{
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+
+}
+
+.error_msg_container span{
+    display: inline-block;
+    background-color: #221b2f;
+    color: #e60305;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 18px;
+}
+
+.header_btn {
+    font-size: 55px;
+    color: white !important;
+    }
+
+//added
+
+
+
+.btn_game {
+padding: 30px;
+border: 2px solid #000;
+border-radius: 11px;
+display: inline-block;
+font-weight: bold;
+color: white;
+position: relative;
+overflow: hidden;
+width: auto;
+margin: 0 ;
+padding: 5px 40px 10px 40px;
+cursor: pointer;
+}
+
+
+.btn_game:before {
+content: "";
+position: absolute;
+top: 0;
+left: -13px;
+width: 100%;
+opacity: 1;
+height: 1px;
+background-color: transparent;
+box-shadow: 1px 0px 14px 7px white;
+padding: 0 10px;
+margin: 0 10px;
+z-index: 1;
+opacity: .9;
+}
+
+.btn_game:after {
+content: "";
+position: absolute;
+bottom: 0;
+left: -13px;
+width: 100%;
+height: 1px;
+background-color: transparent;
+box-shadow: 1px 0px 14px 7px white;
+padding: 0 10px;
+margin: 0 10px;
+z-index: 10;
+opacity: .9;
+}
+
+.effect_click{
+transform: scale(1) translateY(0px);
+transition: .35s;
+
+}
+.effect_click:hover{
+transform: scale(.95) translateY(5px);
+transition: .35s;
+}
+
+.btn_bg_color {
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+background-color: #292C31; //bunker
+opacity: .55;
+z-index: 0;
+}
+
+.btn_container {
+color: white;
+position: relative;
+z-index: 1;
+}
+
+
+.video_bg{
+position:relative;
+}
+
+.video_bg source{
+position:absolute;
+width: 100%;
+height: 100%;
+}

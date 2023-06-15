@@ -13,6 +13,7 @@ REACT_UTILS = $(SRCDIR)/ui/react_utils
 JS_UTILS = $(SRCDIR)/lib/js_utils
 MQTT_PROXY = $(SRCDIR)/lib/mqtt_proxy
 AF_MACHINE = $(SRCDIR)/core/afmachine
+THOMAS =$(SRCDIR)/ui/thomas
 
 # Config directories
 CONFDIR = $(SRCDIR)/config
@@ -43,6 +44,23 @@ npm-packages:
 	npm install --workspace react_utils
 	npm install --workspace afadmin_client
 
+# ------------------------------ RELEASE ------------------------------ #
+.PHONY: release
+release:
+	-rm -rdf $(SRCDIR)/dist/tmp 2>/dev/null
+	cd $(THOMAS); \
+	make release; \
+	cp *.tar.gz $(SRCDIR)/dist/gameplay.tar.gz
+	cd $(AFADMIN_CLIENT); \
+	make release; \
+	cp *.tar.gz $(SRCDIR)/dist/administration.tar.gz
+	mkdir -p $(SRCDIR)/dist/tmp/srv 2>/dev/null
+	mkdir -p $(SRCDIR)/dist/tmp/etc/nginx/conf.d 2>/dev/null
+	tar -xf $(SRCDIR)/dist/gameplay.tar.gz -C $(SRCDIR)/dist/tmp/srv
+	tar -xf $(SRCDIR)/dist/administration.tar.gz -C $(SRCDIR)/dist/tmp/srv
+	cp $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/tmp/etc/nginx/conf.d/agent_factory.conf
+	tar -cvaf agent_factory-v0.0.1.tar.gz -C $(SRCDIR)/dist tmp/*
+
 
 # ------------------------------ SERVE ------------------------------ #
 .PHONY: serve serve-backend serve-afadmin_client
@@ -50,15 +68,21 @@ npm-packages:
 serve: serve-backend serve-afadmin_client
 	@echo ngix was build
 
-serve-afadmin_client: nginx-image
+dockernginx: nginx-image
 	@docker run \
 	--name agent_factory.nginx \
 	--detach \
 	--publish 80:80 \
+	--publish 9000:9000 \
+	--publish 9090:9090 \
 	--mount \
 	type=bind,\
-	source=$(AFADMIN_CLIENT)/dist,\
+	source=$(SRCDIR)/dist,\
 	target=/srv \
+	--mount \
+	type=bind,\
+	source=$(SRCDIR)/config/afadmin_client/nginx.conf,\
+	target=/etc/nginx/conf.d/default.conf \
 	agent_factory/nginx
 
 nginx-image:
@@ -92,7 +116,8 @@ build-prod:
 	done
 
 # ------------------------------ CLEAN ------------------------------ #
-.PHONY: clean distclean dockerclean dockercontclean dockerimgclean allclean
+.PHONY: clean distclean dockerclean dockercleannginx \
+dockercontclean dockerimgclean allclean
 
 clean:
 	rm -rdf build dist
@@ -105,6 +130,11 @@ distclean: clean
 	@for gitmodule in $(GITMODULES); do \
 		make -C "$$gitmodule" distclean; \
 	done
+
+dockercleannginx:
+	-docker stop agent_factory.nginx 2>/dev/null
+	-docker rm agent_factory.nginx 2>/dev/null
+	-docker image rm agent_factory/nginx
 
 dockercontclean:
 	docker stop agent_factory.nginx 2>/dev/null || exit 0

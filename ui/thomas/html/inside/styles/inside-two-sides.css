@@ -1,0 +1,50 @@
+.the-maze-inside-container.inside-two-sides {
+    display: inline-flex;
+	justify-content: center;
+}
+.the-maze-inside-container.inside-two-sides .the-maze-inside-left{
+width: 30%;
+}
+
+.the-maze-inside-container.inside-two-sides .the-maze-inside-right{
+width: 40%;
+}
+.logo-inside-right{
+	    text-align: center;
+}
+.logo-inside-right img{
+    max-width: 300px;
+    height: auto;
+}
+.text-inside-right{
+    color: #1be1f0;
+    font-size: 35px;
+    width:100%;
+	margin-top: 30px;
+}
+.text-inside-right span{
+    max-width: 400px;
+    display: inline-block;
+    text-align: center;
+    font-weight: 500;
+}
+.the-maze-inside-left{
+    display: flex;
+    align-items:center;
+    justify-content: flex-end;
+}
+.the-maze-inside-left-inner {
+    display: inline-block;
+}
+.the-maze-inside-right{
+    display: flex;
+    align-items:center;
+    justify-content:flex-start;
+}
+.the-maze-inside-right-inner {
+    display: inline-block;
+	width: 100%;
+}
+.text-inside-right{
+	text-align: center;
+}

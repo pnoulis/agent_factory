@@ -1,0 +1,115 @@
+.wristband_wrapper {
+  z-index: 1;
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+.wristband_wrapper h1 {
+  color: #fff;
+  padding: 0 !important;
+  margin: 10px 0;
+  font-size: 100px;
+  line-height: 100px;
+}
+
+.wristband_container {
+  z-index: 100;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 25px 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  opacity: 1;
+}
+
+.wristband_container:before {
+  content: "";
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: .5;
+  display: block;
+  z-index: -1;
+}
+.wristband_content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+.wristband_disclaimer{
+  font-size: 18px;
+  color: #c593f9;
+  font-weight: normal;
+}
+.wristband_content header{
+  max-width: 1000px
+}
+.wristband_flame_container{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 50px;
+}
+.wristband_flame_item {
+  position: relative;
+}
+.wristabnd_flame_media{
+  position: absolute;
+  left: -50%;
+  transform: translateX(-50%);
+  max-width: 250px;
+}
+.wristabnd_flame_media img, .wristabnd_flame_media video{
+  max-width: 200px;
+}
+.wristband_flame_video video{
+  /*width: 250px;
+  height: 250px;*/
+}
+.wristband_flame_item{
+  width: 250px;
+  height: 250px;
+}
+.wristabnd_flame_media {
+  position: absolute;
+  left: 0;
+  transform: translateX(0);
+  max-width: 250px;
+}
+
+.form_disclaimer {
+  font-size: 18px;
+  color: #c593f9;
+  font-weight: normal;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+.form_disclaimer.error_message{
+  font-size: 30px;
+  font-weight: bolder;
+  color:#ff0000;
+}
+
+.name_of_your_team{
+  position: absolute;
+  bottom: 20px;
+  color: #fff;
+  font-size: 22px;
+  left: calc(50% - 30px);
+  transform: translateX(-50%);
+}

@@ -1,0 +1,365 @@
+// Skills scss
+@import "../registration/Login.module";
+
+.skills_container {
+	padding: 20px;
+	position: relative;
+	color: #fff;
+	display: inline-flex;
+	width: 90%;
+	justify-content: space-around;
+}
+
+
+.skill_item {
+	display: inline-flex;
+	align-items: center;
+}
+
+.skill_text {
+	margin: 0 5px;
+	font-size: 22px;
+	color:white;
+}
+
+.skill_score {
+	border-radius: 20px;
+	border: 1px solid #fff;
+	padding: 5px;
+}
+
+.point {
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+	background-color: #ffffff3b;
+	position: relative;
+}
+
+.point.achieved {
+	background-color: #fff;
+}
+
+//card scss
+
+.card_wrapper {
+
+	margin: 10px;
+	display: block;
+	position: relative;
+}
+
+.card_container {
+	padding: 20px;
+	position: relative;
+	color: #fff;
+}
+.card_item {
+	position: relative;
+	min-height: 550px;
+	min-width: 380px;
+	display: block;
+	width: auto;
+	display: inline-block;
+	margin-bottom: -24px;
+}
+.card_video_flame{
+	max-width: 140px;
+	position: absolute;
+	top: -50px;
+	left: -50px;
+}
+
+img.card_img_transparent, .card_img {
+	position: absolute;
+	top: 0;
+	left:0;
+}
+
+.card_container {
+	text-align: center;width: 100%;
+}
+.card_name_container {
+	position: absolute;
+	bottom: 130px;
+	left: calc(50% - 4px);
+	transform: translateX(-50%);
+	width: 250px;
+	height: 115px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.card_name{
+	font-weight: bold;
+	font-size: 50px;
+}
+
+.blue_card .card_name{
+	color: #01435e;
+}
+video.room_video {
+	position: absolute;
+	top: 55px;
+	left: 0;
+	width: 250px;
+	height: 165px;
+	left: calc( 50% - 4px);
+	transform: translateX(-50%);
+}
+
+.form_disclaimer {
+	padding: 5px 0;
+}
+.form_disclaimer.error_message{
+	color:#ff0000;
+	font-size: 60px;
+}
+
+// levels scss
+
+.levels_wrapper {
+	width: 90%;
+	margin: 10px 5%;
+	display: block;
+	position: relative;
+}
+
+.levels_container {
+	padding: 20px;
+	position: relative;
+	color: #fff;
+}
+
+.levels_wrapper:before {
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: .3;
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-radius: 10px;
+}
+
+.levels_text {
+	line-height: 34px;
+	font-size: 30px;
+}
+
+.levels_divider {
+	width: 35%;
+	height: 2px;
+	background-color: #fff;
+	margin: 15px auto;
+}
+
+.levels_header {
+	font-size: 32px;
+	line-height: 36px;
+	text-align: center;
+	margin: 20px auto;
+}
+
+.levels_all_items {
+	display: inline-flex;
+}
+
+.levels_all_items {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.levels_item_header {
+	color: #1be1f0;
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.levels_item_header span {
+	font-weight: normal;
+}
+
+.levels_item {
+	margin: 0 20px;
+}
+
+.levels_clock-image {
+	text-align: center;
+}
+
+.levels_clock_image img {
+
+	max-width: 100px;
+}
+
+.levels_clock {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	text-align: center;
+}
+
+.levels_clock_time {
+	position: absolute;
+	bottom: 25px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+.levels_clock_hms {
+	font-size: 18px;
+	line-height: 18px;
+}
+
+.levels-clock {
+	margin: 10px 0;
+}
+
+//button scss
+
+.button_container{
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+}
+.button_text {
+	font-size: 50px;
+	margin-left: 32px;
+	padding: 10px 30px;
+	cursor: pointer;
+	display: inline-block;
+	border-radius: 30px;
+	box-shadow: inset 0px 4px 5px -1px #3c3c3c;
+}
+.button_container.available .button_text {
+	color: #00be00;
+	border: 4px solid #00be00;
+}
+.button_container.unavailable .button_text {
+	color: red;
+	border: 4px solid red;
+}
+
+//table scss
+
+.live_info_table_container {
+	background: url(../../assets/outside/outsideImages/HOM_04.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 700px;
+	background-size: contain;
+	height: 500px;
+	margin: 0 auto;
+	margin-top: 100px;
+	position: relative;
+}
+
+.live_info_table {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.live_info_table {
+	width: 100%;
+	max-width: 500px;
+	text-align: center;
+}
+
+.live_info_row {
+	display: inline-flex;
+	width: 80%;
+	margin: 4px;
+}
+
+.live_info_title {
+	color: #f0f1f2;
+	font-size: 20px;
+	line-height: 22px;
+	text-align: center;
+	width: 70%;
+	background: rgb(30, 34, 55);
+	background: linear-gradient( 180deg, rgba(30, 34, 55, 1) 0%, rgba(30, 34, 55, 1) 80%, rgb(202 182 96) 101%);
+	padding: 5px 0;
+	margin-right: 5px;
+}
+
+.live_info_result {
+	color: #f0f1f2;
+	font-size: 20px;
+	line-height: 22px;
+	text-align: center;
+	width: 30%;
+	background: rgb(30, 34, 55);
+	background: linear-gradient( 180deg, rgba(30, 34, 55, 1) 0%, rgba(30, 34, 55, 1) 80%, rgb(202 182 96) 101%);
+	padding: 5px 0;
+}
+
+.label_live_info {
+	width: 100%;
+	max-width: 450px;
+	display: inline-block;
+	position: absolute;
+	top: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.live_info_label_text {
+	font-size: 35px;
+	position: absolute;
+	top: 14px;
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	color: #ddc144;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+.live_info_label_text span{
+	display: block;
+	color: #dbb541;
+	font-size: 24px;
+}
+.live_info_img {
+	text-align: center;
+}
+.header_team_name{
+	width: 70%;color: #dbb541;
+	font-size: 24px;
+}
+.header_total_points{
+	width: 30%;color: #dbb541;
+	font-size: 24px;
+}
+.live_info_row:nth-of-type(2) .live_info_title,
+.live_info_row:nth-of-type(2) .live_info_result{
+	background: linear-gradient( 180deg, rgba(66, 60, 64, 1) 0%, rgba(106, 98, 80, 1) 25%,
+					rgba(118, 95, 53, 1) 50%, rgb(202 182 96) 101%);
+}
+.live_info_row:nth-of-type(3) .live_info_title,
+.live_info_row:nth-of-type(3) .live_info_result{
+	background: linear-gradient( 180deg, rgba(66, 69, 63, 1) 0%, rgba(122, 125, 142, 1) 25%,
+					rgba(131, 134, 145, 1) 50%, rgb(240, 241, 241) 101%);
+}
+.live_info_row:nth-of-type(4) .live_info_title,
+.live_info_row:nth-of-type(4) .live_info_result{
+	background: linear-gradient( 180deg, rgba(73, 67, 86, 1) 0%, rgba(95, 77, 84, 1) 25%,
+					rgba(163, 160, 166, 1) 50%, rgb(153, 112, 97) 101%);
+}
+
+

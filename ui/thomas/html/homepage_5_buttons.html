@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>The Maze Registration</title>
+      <link rel="stylesheet" type="text/css" href="styles/themaze.css">
+      <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+   </head>
+	<style>
+	.three-buttons-item {
+	color: #fff;
+	display: inline-flex;
+	width: auto;
+	text-align: center;
+	justify-content: center;
+	flex-wrap: nowrap;
+		padding: 0 10px;
+}
+
+.three-buttons-container {
+    width: 75%;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-30%) translateX(-50%);
+    left: 50%;
+    margin: 50px auto;
+    align-items: center;
+    text-align: center;
+}
+	
+	.two-buttons-item {
+	color: #fff;
+	display: inline-flex;
+	width: auto;
+	text-align: center;
+	justify-content: center;
+	flex-wrap: nowrap;
+		padding: 0 10px;
+}
+
+.two-buttons-container {
+    width: 75%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    margin: 50px auto;
+    align-items: center;
+    text-align: center;
+}
+		.three-buttons-container .btn_game,.two-buttons-container .btn_game{
+			padding: 14px 30px !important;
+		}
+	</style>
+   <body style="margin: 0">
+      <div class="the-maze-wrapper">
+         <!-- particles.js container --> 
+         <div id="particles-js"></div>
+         <!-- stats - count particles --> <!--<div class="count-particles"> <span class="js-count-particles">--</span> particles </div>--><!-- particles.js lib - https://github.com/VincentGarreau/particles.js --> <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib --> <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+         
+		  <div class="the-maze-container">
+			 
+			 
+            <div class="three-buttons-container">
+               <div class="three-buttons-item">
+                  <div class="btn_game effect_click" style="">
+                     <div class="btn_bg_color"></div>
+                     <div class="btn_container">
+                        <div class="header-btn">WHAT IS</div>
+                        <div class="bottom-btn">THE MAZE</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="three-buttons-item">
+                  <div class="btn_game effect_click" style="">
+                     <div class="btn_bg_color"></div>
+                     <div class="btn_container">
+                        <div class="header-btn">REGISTER</div>
+                        <div class="bottom-btn">AND THE TEAM MERGE</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="three-buttons-item">
+                  <div class="btn_game effect_click" style="">
+                     <div class="btn_bg_color"></div>
+                     <div class="btn_container">
+                        <div class="header-btn">ENTERING</div>
+                        <div class="bottom-btn">THE MISSIONS</div>
+                     </div>
+                  </div>
+               </div>
+               </div>
+			<div class="two-buttons-container">
+               <div class="two-buttons-item">
+                  <div class="btn_game effect_click" style="">
+                     <div class="btn_bg_color"></div>
+                     <div class="btn_container">
+                        <div class="header-btn">PLAYING</div>
+                        <div class="bottom-btn">THE GAME</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="two-buttons-item">
+                  <div class="btn_game effect_click" style="">
+                     <div class="btn_bg_color"></div>
+                     <div class="btn_container">
+                        <div class="header-btn">STATISTICS</div>
+                        <div class="bottom-btn">AND POINTS</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+			 
+			 
+			 
+         </div>
+		  
+		  <div class="bottom_menu_container">
+			  <div class="home_icon">
+			  <img src="images/home_icon.png"/>
+			  </div>
+			 	<div class="bottom_menu">
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_03.png"/>
+					 <div class="language_option">ENGLISH</div>
+				</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_04.png"/>
+					 <div class="language_option">FRANCAIS</div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_logo">
+					 <div class="img_logo_the_maze">
+					<img src="images/FOT_02.png"/>
+					 </div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_04.png"/>
+					 <div class="language_option">DEUTSCH</div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_06.png"/>
+					 <div class="language_option">NEDERLANDS</div>
+					</div>
+				 </div>
+			 </div>
+      </div>
+      <script src="js/themaze.js"></script>
+   </body>
+</html>

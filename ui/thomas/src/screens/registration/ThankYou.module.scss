@@ -1,0 +1,86 @@
+@import '../../components/Button/button';
+
+.wristband_wrapper {
+	z-index: 1;
+	position: absolute;
+	top: 10%;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+
+.wristband_wrapper h2 {
+	color: #fff;
+	padding: 0;
+	margin: 10px 0;
+	font-size: 70px;
+	line-height: 70px;
+	max-width: 1000px
+}
+.wristband_wrapper h3 {
+	color: #fff;
+	padding: 0;
+	margin: 10px 0;
+	font-size: 40px;
+	line-height: 50px;
+	max-width: 1100px
+}
+
+.wristband_container {
+	z-index: 100;
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+	padding: 25px 20px;
+	border-radius: 20px;
+	overflow: hidden;
+	position: relative;
+	opacity: 1;
+}
+
+.wristband_container:before {
+	content: "";
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: .5;
+	display: block;
+	z-index: -1;
+}
+.wristband_content{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 1000px;
+}
+
+.two-buttons-container {
+	display: inline-flex;
+	width: 100%;
+	position: relative;
+	justify-content: center;
+	margin-top: 50px;
+}
+.mauve-btns .header-btn,.mauve-btns .bottom-btn{
+	color: #c593f9 !important;
+}
+.two-buttons-item {
+	color: #fff;
+	display: inline-block;
+	width: auto;
+	text-align: center;
+	justify-content: center;
+	flex-wrap: nowrap;
+}
+
+
+.btn_game {
+	padding: 10px 40px;
+	width: auto;
+}

@@ -1,0 +1,107 @@
+.live_info_table_container {
+	background: url(src/assets/outside/outsideImages/HOM_04.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 700px;
+	background-size: contain;
+	height: 500px;
+	margin: 0 auto;
+	margin-top: 100px;
+	position: relative;
+}
+
+.live_info_table {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.live_info_table {
+	width: 100%;
+	max-width: 500px;
+	text-align: center;
+}
+
+.live_info_row {
+	display: inline-flex;
+	width: 80%;
+	margin: 4px;
+}
+
+.live_info_title {
+	color: #f0f1f2;
+	font-size: 20px;
+	line-height: 22px;
+	text-align: center;
+	width: 70%;
+	background: rgb(30, 34, 55);
+	background: linear-gradient( 180deg, rgba(30, 34, 55, 1) 0%, rgba(30, 34, 55, 1) 80%, rgb(202 182 96) 101%);
+	padding: 5px 0;
+	margin-right: 5px;
+}
+
+.live_info_result {
+	color: #f0f1f2;
+	font-size: 20px;
+	line-height: 22px;
+	text-align: center;
+	width: 30%;
+	background: rgb(30, 34, 55);
+	background: linear-gradient( 180deg, rgba(30, 34, 55, 1) 0%, rgba(30, 34, 55, 1) 80%, rgb(202 182 96) 101%);
+	padding: 5px 0;
+}
+
+.label_live_info {
+	width: 100%;
+	max-width: 450px;
+	display: inline-block;
+	position: absolute;
+	top: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.live_info_label_text {
+	font-size: 35px;
+    position: absolute;
+    top: 14px;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    color: #ddc144;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.live_info_label_text span{
+    display: block;
+    color: #dbb541;
+    font-size: 24px;
+}
+.live_info_img {
+	text-align: center;
+}
+.header_team_name{
+	width: 70%;color: #dbb541;
+    font-size: 24px;
+}
+.header_total_points{
+	width: 30%;color: #dbb541;
+    font-size: 24px;
+}
+.live_info_row:nth-of-type(2) .live_info_title,
+.live_info_row:nth-of-type(2) .live_info_result{
+       background: linear-gradient( 180deg, rgba(66, 60, 64, 1) 0%, rgba(106, 98, 80, 1) 25%,
+        rgba(118, 95, 53, 1) 50%, rgb(202 182 96) 101%);
+}
+.live_info_row:nth-of-type(3) .live_info_title,
+.live_info_row:nth-of-type(3) .live_info_result{
+       background: linear-gradient( 180deg, rgba(66, 69, 63, 1) 0%, rgba(122, 125, 142, 1) 25%,
+        rgba(131, 134, 145, 1) 50%, rgb(240, 241, 241) 101%);
+}
+.live_info_row:nth-of-type(4) .live_info_title,
+.live_info_row:nth-of-type(4) .live_info_result{
+       background: linear-gradient( 180deg, rgba(73, 67, 86, 1) 0%, rgba(95, 77, 84, 1) 25%,
+        rgba(163, 160, 166, 1) 50%, rgb(153, 112, 97) 101%);
+}

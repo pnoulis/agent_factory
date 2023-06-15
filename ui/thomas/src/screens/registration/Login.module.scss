@@ -1,0 +1,245 @@
+@font-face {
+	font-family: 'password';
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://jsbin-user-assets.s3.amazonaws.com/rafaelcastrocouto/password.ttf);
+}
+
+.form_wrapper {
+	z-index: 1;
+	position: fixed;
+	top: 10%;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+
+.form_wrapper h1 {
+	color: #fff;
+	padding: 0 !important;
+    margin: 10px 0;
+}
+
+.form_container {
+	z-index: 100;
+	width: 92%;
+	margin: 0 auto;
+	text-align: center;
+	padding: 25px 20px;
+	border-radius: 20px;
+	overflow: hidden;
+	position: absolute;
+	transform: translateX(-50%);
+	left: 50%;
+	top: -50%;
+	opacity: 1;
+}
+
+.form_container:before {
+	content: "";
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: .5;
+	display: block;
+	z-index: -1;
+}
+
+.inputs_container {
+	display: inline-flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn_login_container {
+	display: inline-flex;
+}
+
+.btn_login_container .btn_game.medium_button,
+.btn_login_container .btn_game.small_button {
+	padding: 10px 20px;
+	margin: 0 auto;
+}
+
+.btn_game.small_button {
+	width: auto;
+	padding: 5px 20px;
+	margin: 0 10px;
+}
+
+.medium_button .header_btn {
+	font-size: 22px;
+	font-weight: normal
+}
+
+.small_button .header_btn {
+	font-size: 18px;
+	font-weight: normal
+}
+
+.form_login header {
+	display: inline-block;
+}
+
+.btn_game.medium_button:before,
+.btn_game.small_button:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -13px;
+	width: 100%;
+	opacity: 1;
+	height: 1px;
+	background-color: transparent;
+	box-shadow: 1px 0px 4px 2px #fff;
+	padding: 0 10px;
+	margin: 0 10px;
+	z-index: 1;
+	opacity: .9;
+}
+
+.btn_game.medium_button:after,
+.btn_game.small_button:after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: -13px;
+	width: 100%;
+	height: 1px;
+	background-color: transparent;
+	box-shadow: 1px 0px 4px 2px #fff;
+	padding: 0 10px;
+	margin: 0 10px;
+	z-index: 10;
+	opacity: .9;
+}
+
+.form_input label {
+	font-size: 26px;
+	color: #c593f9;
+	font-weight: bold
+}
+
+.form_disclaimer {
+	font-size: 18px;
+	color: #c593f9;
+	font-weight: normal;
+	display: inline-flex;
+	align-items: center;
+	width: 100%;
+	justify-content: center;
+}
+
+.forgot_link {
+	color: #fff;
+}
+
+.form_input input {
+	background-color: #9a83b130;
+	;
+	border: 1px solid #c593f9;
+	padding: 10px;
+	outline: 0 !important;
+	color: #c593f9;
+	margin: 0 10px;
+	text-align: center;
+}
+
+.form_input input:focus {
+	border: 1px solid #fff;
+}
+
+.focused_input {
+	border: 1px solid #fff !important;
+}
+
+.form_input {
+	display: inline-flex;
+	align-items: center;
+	margin: 0 10px;
+}
+
+.btn_login_container {
+	margin: 15px auto 5px
+}
+
+.form_disclaimer {
+	padding: 5px 0;
+}
+.form_disclaimer.error_message{
+	font-size: 30px;
+	font-weight: bolder;
+	color:#ff0000;
+}
+.form_input label{
+    text-align: right;
+}
+.form_input.input_username label{
+    width: 20%;
+}
+.form_input.input_username input{
+    width: 80%;
+}
+.form_input.input_username{
+    display: inline-flex;
+    width: 40%;
+}
+.form_input.input_password{
+    display: inline-flex;
+    width:40%;
+}
+.form_input.input_password input{
+    width: 50%;
+}
+
+//added classes
+
+.btn_game {
+	padding: 30px;
+	border: 2px solid #000;
+	border-radius: 11px;
+	display: inline-block;
+	font-weight: bold;
+	color: #fff;
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	margin: 0 20px;
+	cursor: pointer;
+}
+
+.btn_game:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -13px;
+	width: 100%;
+	opacity: 1;
+	height: 1px;
+	background-color: transparent;
+	box-shadow: 1px 0px 14px 7px #fff;
+	padding: 0 10px;
+	margin: 0 10px;
+	z-index: 1;
+	opacity: .9;
+}
+
+.btn_game:after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: -13px;
+	width: 100%;
+	height: 1px;
+	background-color: transparent;
+	box-shadow: 1px 0px 14px 7px #fff;
+	padding: 0 10px;
+	margin: 0 10px;
+	z-index: 10;
+	opacity: .9;
+}
+

@@ -1,0 +1,168 @@
+//general
+
+.the-maze-inside-container {
+  max-width: 1550px;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+//inside-two-sides
+
+.the-maze-inside-container.inside-two-sides {
+  display: inline-flex;
+  justify-content: center;
+}
+.the-maze-inside-container.inside-two-sides .the-maze-inside-left{
+  width: 30%;
+}
+
+.the-maze-inside-container.inside-two-sides .the-maze-inside-right{
+  width: 40%;
+}
+.logo-inside-right{
+  text-align: center;
+}
+.logo-inside-right img{
+  max-width: 300px;
+  height: auto;
+}
+.text-inside-right{
+  color: #1be1f0;
+  font-size: 35px;
+  width:100%;
+  margin-top: 30px;
+}
+.text-inside-right span{
+  max-width: 400px;
+  display: inline-block;
+  text-align: center;
+  font-weight: 500;
+}
+.the-maze-inside-left{
+  display: flex;
+  align-items:center;
+  justify-content: flex-end;
+}
+.the-maze-inside-left-inner {
+  display: inline-block;
+}
+.the-maze-inside-right{
+  display: flex;
+  align-items:center;
+  justify-content:flex-start;
+}
+.the-maze-inside-right-inner {
+  display: inline-block;
+  width: 100%;
+}
+.text-inside-right{
+  text-align: center;
+}
+
+//card
+
+.card-wrapper {
+  width: 90%;
+  margin: 10px 5%;
+  display: block;
+  position: relative;
+}
+
+.card-container {
+  padding: 20px;
+  position: relative;
+  color: #fff;
+}
+.card-item {
+  position: relative;
+  min-height: 550px;
+  min-width: 380px;
+  display: block;
+  width: auto;
+  display: inline-block;
+  margin: 0 auto;
+}
+.card-video-flame{
+  max-width: 140px;
+  position: absolute;
+  top: -50px;
+  left: -50px;
+}
+
+img.card-img-transparent, .card-img {
+  position: absolute;
+  top: 0;
+  left:0;
+}
+
+.card-container {
+  text-align: center;width: 100%;
+}
+.card-name-container {
+  position: absolute;
+  bottom: 130px;
+  left: calc(50% - 4px);
+  transform: translateX(-50%);
+  width: 250px;
+  height: 115px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-name{
+  font-weight: bold;
+  font-size: 50px;
+}
+
+.blue-card .card-name{
+  color: #01435e;
+}
+video.room-video {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 170px;
+  height: auto;
+  left: calc( 50% - 4px);
+  transform: translateX(-50%);
+}
+
+//countdown
+
+.countdown-inside-right {
+  width: 100%;
+  display: block;
+  text-align: right;
+  margin-top: 20px;
+}
+
+.countdown-inside{
+  display: inline-block;
+  background-color: rgb(1,1,1,.5);
+  padding: 10px 30px;
+  border-radius: 30px;
+  color: #1be1f0;
+  font-size: 40px;
+  font-weight: bold;
+
+
+}
+
+//colors
+
+.active-blue{
+  color: #0bc9d7;
+}
+.active-red{
+  color: #ff0000;
+}
+.active-yellow{
+  color: #ffb000;
+}
+
+

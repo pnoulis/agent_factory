@@ -196,3 +196,174 @@ localhost:9001
 publish at:
 
 /themaze/registration5/emulateScan/r/r
+
+* Connecting to deployment server
+
+--$ ssh root@78.159.98.244 -p 7822                                                        
+mindtr@p
+** configs working
+*** config #1
+#+begin_src conf
+    server {
+    listen 80;
+    listen [::]:80;
+    server_name localhost;
+    root /srv;
+    index index.html;
+
+    location /gameplay {
+        try_files $uri /gameplay.html;
+    }
+
+    location /administration {
+        try_files $uri /admin.html;
+    }
+    location / {
+        try_files $uri /index.html;
+    }
+}
+#+end_src
+
+#+begin_src shell
+  /srv/gameplay.html
+  /srv/admin.html
+  /srv/index.html
+#+end_src
+*** config #2
+
+/srv/gameplay/gameplay.html
+/srv/administration/administration.html
+/srv/index.html
+#+begin_src conf
+    server {
+    listen 80;
+    listen [::]:80;
+    server_name localhost;
+    root /srv;
+    index index.html;
+
+    location /gameplay {
+        try_files $uri /gameplay/gameplay.html;
+    }
+
+    location /administration {
+        try_files $uri /administration/admin.html;
+    }
+    location / {
+        try_files $uri /index.html;
+    }
+}
+#+end_src
+
+*** config #3
+
+However the redirect URL contains the :port
+
+/srv/gameplay/gameplay.html
+/srv/administration/administration.html
+/srv/index.html
+#+begin_src conf
+  server {
+  listen 80;
+  listen [::]:80;
+  server_name localhost;
+  return 301 $scheme://localhost:9000$request_uri;
+  }
+
+  server {
+  listen 9000;
+  listen [::]:9000;
+  server_name localhost;
+  root /srv;
+  index index.html;
+
+  location /gameplay {
+  try_files $uri /gameplay/gameplay.html;
+  }
+
+  location /administration {
+  try_files $uri /administration/admin.html;
+  }
+  location / {
+  try_files $uri /index.html;
+  }
+
+    #+end_src
+
+*** config #4
+#+begin_src conf
+  server {
+  listen 80;
+  listen [::]:80;
+  server_name localhost;
+  root /srv;
+
+  location / {
+  proxy_pass $scheme://localhost:9000;
+  proxy_buffering off;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-HOST $host;
+  proxy_set_header X-Forwarded-PORT $server_port;
+  }
+  }
+
+  server {
+  listen 9000;
+  listen [::]:9000;
+  server_name localhost;
+  root /srv;
+  index index.html;
+
+  location /gameplay {
+  try_files $uri /gameplay/gameplay.html;
+  }
+
+  location /administration {
+  try_files $uri /administration/admin.html;
+  }
+  location / {
+  try_files $uri /index.html;
+  }
+  }
+#+end_src
+** URI
+$uri variable
+refers to:
+
+the URI that nginx is currently processing but after normalization.
+such as:
+
+- removal of the query string
+- consecutive //// characters are condensed to 1 /
+- URL encoded characters are decoded
+** $request_uri
+the original _UNALTERED_ uri
+
+* Building thomas src
+
+** Download yarn
+nvm install --global yarn
+
+** Install packages using yarn
+yarn --install
+
+** Change node version to v16.20.0 (LTS: Gallium)
+change node version to: v16.20.0   (Latest LTS: Gallium)
+nvm install --lts=Gallium
+
+nvm --version
+
+if it is v16.20.0 do nothing else
+nvm use --lts=Gallium
+
+** Build
+NODE_ENVIRONMENT=production npm run build --mode=production
+
+** Build to serve under /gameplay (or any subdirectory)
+
+add property to package.json
+
+"homepage": "/gameplay/",
+
+Then build again
+NODE_ENVIRONMENT=production npm run build --mode=production

@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>Outside</title>
+      <link rel="stylesheet" type="text/css" href="styles/general.css">
+      <link rel="stylesheet" type="text/css" href="styles/card.css">
+      <link rel="stylesheet" type="text/css" href="styles/levels.css">
+      <link rel="stylesheet" type="text/css" href="styles/skills.css">
+      <link rel="stylesheet" type="text/css" href="styles/buttons.css">
+      <link rel="stylesheet" type="text/css" href="styles/table.css">
+      <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+   </head>
+   <body style="margin: 0">
+      <div class="the-maze-outside-wrapper">
+         <video autoplay loop muted playsinline class="video_bg">
+            <source src="images/CMN_02.webm" type="video/webm" />
+         </video>
+         <div class="the-maze-outside-container">
+			 <div class="card-wrapper blue-card">
+				 <div class="card-container">
+				 	<div class="card-item">						
+					 	<img src="images/card_blue.png" class="card-img"/>
+						 <video autoplay loop muted playsinline class="room-video">
+							<source src="images/RoomVideo.webm" type="video/webm" />
+						 </video>						
+					 	<img src="images/card_blue_transparent.png" class="card-img-transparent"/>
+						 <video autoplay loop muted playsinline class="card-video-flame">
+							<source src="images/flame.webm" type="video/webm" />
+						 </video>
+					 	<div class="card-name-container">
+					 	<div class="card-name">
+							ALLEY OOPS!
+						</div>
+						</div>
+					 </div>
+				 </div>
+			 </div>
+			 <div class="levels-wrapper">
+				<div class="levels-container">
+				   <div class="levels-text">
+					  Do you like the basketball? Have you always imagined what if feels like to score a buzzer-beater, when time is pressing? Get inside Alley Oops, hoot and score as many hoops as you can and become the next MVP!
+				   </div>
+				   <div class="levels-divider"></div>
+				   <div class="levels-header">Score as many targets as you can.</div>
+				   <div class="levels-all-items">
+					  <div class="levels-item">
+						 <div class="levels-item-header">Easy</div>
+						 <div class="levels-item-header">10 targets/<span>per player</span></div>
+						 <div class="levels-clock">
+							<div class="levels-clock-image">
+							   <img src="images/HOM_03.png" />
+							</div>
+							<div class="levels-clock-time">
+								5
+							<div class="levels-clock-hms">min</div>
+							 </div>
+						 </div>
+					  </div>
+					  <div class="levels-item">
+						 <div class="levels-item-header">Medium</div>
+						 <div class="levels-item-header">15 targets/<span>per player</span></div>
+						 <div class="levels-clock">
+							<div class="levels-clock-image">
+							   <img src="images/HOM_03.png" />
+							</div>
+							<div class="levels-clock-time">
+								4
+							<div class="levels-clock-hms">min</div>
+							 </div>
+						 </div>
+					  </div>
+					  <div class="levels-item">
+						 <div class="levels-item-header">Hard</div>
+						 <div class="levels-item-header">20 targets/<span>per player</span></div>
+						 <div class="levels-clock">
+							<div class="levels-clock-image">
+							   <img src="images/HOM_03.png" />
+							</div>
+							<div class="levels-clock-time">
+								3
+							<div class="levels-clock-hms">min</div>
+							 </div>
+						 </div>
+					  </div>
+				   </div>
+				</div>
+			 </div>
+            <div class="skills-container">
+               <div class="skill-item">
+                  <div class="skill-text">FITNESS</div>
+                  <div class="skill-score">
+                     <div class="point achieved"></div>
+                     <div class="point achieved"></div>
+                     <div class="point achieved"></div>
+                     <div class="point"></div>
+                     <div class="point"></div>
+                     <div class="point"></div>
+                  </div>
+               </div>
+               <div class="skill-item">
+                  <div class="skill-text">INTELLIGENCE</div>
+                  <div class="skill-score">
+                     <div class="point achieved"></div>
+                     <div class="point achieved"></div>
+                     <div class="point"></div>
+                     <div class="point"></div>
+                     <div class="point"></div>
+                     <div class="point"></div>
+                  </div>
+               </div>
+               <div class="skill-item">
+                  <div class="skill-text">SKILLS</div>
+                  <div class="skill-score">
+                     <div class="point achieved"></div>
+                     <div class="point achieved"></div>
+                     <div class="point achieved"></div>
+                     <div class="point achieved"></div>
+                     <div class="point achieved"></div>
+                     <div class="point achieved"></div>
+                  </div>
+               </div>
+            </div>
+            <div class="button-container available"><!--unavailable class on relative case-->
+               <div class="button-text">ROOM AVAILABLE</div>
+            </div>
+            <div class="scoreboard-container">
+               			 <div class="live_info_wrapper">
+			  <div class="live_info_container">
+				 <div class="live_info_table_container">
+					 <div class="label_live_info">
+					 <div class="live_info_img">
+					 	<img src="images/HOM_05.png" />
+					 </div>
+						 <div class="live_info_label_text">
+							 <span>MISSION'S</span>
+							 <span>HALL OF FAME</span>
+						 </div>
+					 </div>
+				  <div class="live_info_table">
+					  <div class="live_info_row the_header">
+						  <div class="header_team_name">Team Name</div>
+						  <div class="header_total_points">Total Points</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					   <div class="live_info_row">
+					  <div class="live_info_title">the mazeades</div>
+					  <div class="live_info_result">21.693</div>
+					  </div>
+					 </div>
+				  </div>
+				 </div>
+			  </div>
+            </div>
+         </div>
+      </div>
+      <script src="js/index.js"></script>
+   </body>
+</html>

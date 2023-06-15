@@ -1,0 +1,72 @@
+.the-maze-wrapper.black-screen{
+  background-color: #231f22;
+  background-image: unset;
+  z-index: 100;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.the-maze-wrapper.black-screen .keyboard-container{
+  padding: 20px !important;
+}
+.the-maze-wrapper.black-screen .keyboard-container:before{
+  background: transparent;
+}
+.the-maze-wrapper.black-screen .keyboard_letter{
+  background-color: #413d3e;
+}
+
+.black-screen .logo_container{
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  transform: scale(0.7);
+}
+.black-screen .enter_team_name_form_input input,
+.black-screen .enter_team_name_form_input input:focus,
+.black-screen .enter_team_name_form_input input:focus-visible{
+  width: 100%;
+  border: 1px solid #c593f9;
+  background-color: #444242;
+  padding: 10px;
+  text-align: center;
+  color: #c593f9;
+  outline: 0;
+  font-size: 30px;
+}
+.enter_team_name_form_title{
+  font-size: 44px;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  color: #c593f9;
+}
+.enter_team_name_form_error{
+  font-size: 18px;
+  color: #c20a0a;
+  font-weight: normal;
+  text-align: center;
+  margin: 10px;
+}
+
+.enter_team_name_form_button{
+  font-size: 44px;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  color: #c593f9;
+}
+.enter_team_name_form_container {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.enter_team_name_form_button:after {
+  content: ' \25B6';
+}

@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>The Maze Registration</title>
+      <link rel="stylesheet" type="text/css" href="styles/themaze.css">
+      <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+   </head>
+   <body style="margin: 0">
+      <div class="the-maze-wrapper">
+         <!-- particles.js container --> 
+         <div id="particles-js"></div>
+         <!-- stats - count particles --> <!--<div class="count-particles"> <span class="js-count-particles">--</span> particles </div>--><!-- particles.js lib - https://github.com/VincentGarreau/particles.js --> <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib --> <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+         <div class="how-top-play-container">
+			 <div class="how-to-play">
+			 	HOW TO PLAY THE MAZE!
+			 </div>
+		  </div>
+		  <div class="the-maze-container">
+			 
+			 
+
+			 
+			 
+			 
+         </div>
+		  
+		  <div class="bottom_menu_container">
+			  <div class="home_icon">
+			  <img src="images/home_icon.png"/>
+			  </div>
+			 	<div class="bottom_menu">
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_03.png"/>
+					 <div class="language_option">ENGLISH</div>
+				</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_04.png"/>
+					 <div class="language_option">FRANCAIS</div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_logo">
+					 <div class="img_logo_the_maze">
+					<img src="images/FOT_02.png"/>
+					 </div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_04.png"/>
+					 <div class="language_option">DEUTSCH</div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_06.png"/>
+					 <div class="language_option">NEDERLANDS</div>
+					</div>
+				 </div>
+			 </div>
+		  <style>
+.keyboard-wrapper {
+    z-index:1;
+	position: fixed;
+	bottom: 0;
+    width: 100%;
+    margin: 0 auto;
+
+}
+.keyboard-container {
+    bottom: 50%;
+	z-index: 100;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px 20px 10% 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+	}
+.keyboard-container:before{
+    content:"";
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    top: 0;
+    opacity: .5;
+    display: block;
+    z-index: 1;
+}
+
+.keyboard_line{
+    z-index:10;
+    position:relative;
+    
+}
+
+
+.keyboard_line{
+	width: 100%;
+    display: inline-flex;
+    margin: 2px 0;
+    justify-content: flex-end;
+}
+.keyboard_letter{
+    width: 9%;
+    color: #c593f9;
+    border: 1px solid #c593f9;
+    margin: 0 2px;
+    padding: 10px 0;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 22px;
+    background-color: #2a262e96;
+	-webkit-user-select: none;
+			  user-select: :none
+}
+.twenty_percent{
+width: 20%;
+}
+.forty_percent{
+width: 40%;
+}
+.fifty_percent{
+width: 50%;
+}
+.ten_percent{
+width: 10%;
+}
+.forty_percent{
+width: 40%; 
+}
+.back_keyboard .keyboard_letter{
+	color: #fff;
+    border: 1px solid #fff;
+}
+.keyboard_letter.noborder{
+    border: 1px solid #2a262e96;
+}
+			  .front_keyboard{
+				  display: block;
+			  }
+			  .back_keyboard{
+				  display: none;
+			  }
+.show_back_keyboard .front_keyboard {
+    display: none;
+}
+.show_back_keyboard .back_keyboard {
+    display: block;
+}
+.keyboard_letter{
+transition: .5s;
+}
+.keyboard_letter:hover{
+  animation-name: click_font;
+  animation-duration: .35s;
+}
+
+@keyframes click_font {
+  0% {    background-color: #2a262e96;}
+  75% {    background-color: #3e3e3e;}
+  100% {    background-color: #2a262e96;}
+}
+			  .keyboard-wrapper{
+				  display: block;
+			  }
+			  .keyboard-wrapper.show_keyboard{
+				  display: block;
+			  }
+			  .keyboard-container{
+				 bottom: -250px;
+				  opacity: 0;animation-name: hideKeyboard;
+					  animation-duration: 1s;
+			  }
+			  .keyboard-wrapper.show_keyboard .keyboard-container{
+				    animation-name: showKeyboard;
+					  animation-duration: 1s;bottom: 0px;
+				  opacity: 1;
+}
+
+@keyframes hideKeyboard {
+    0% { 
+				 bottom: 0px;
+				  opacity: 1;}
+	75%{
+		display: block;
+	}
+	100% {
+				 bottom: -350px;
+				  opacity: 0;
+		display: none;}
+
+}
+@keyframes showKeyboard {
+  0% {
+				 bottom: -250px;
+				  opacity: 0.5;
+		display: block;}
+  100% { 
+				 bottom: 0px;
+				  opacity: 1;
+		display: block;}
+}
+</style>
+		  <div class="keyboard-wrapper show_keyboard">
+			<div class="keyboard-container">
+				<div class="front_keyboard">
+				<div class="keyboard_line keyboard_firstLine">
+					<div class="keyboard_letter">Q</div>
+					<div class="keyboard_letter">W</div>
+					<div class="keyboard_letter">E</div>
+					<div class="keyboard_letter">R</div>
+					<div class="keyboard_letter">T</div>
+					<div class="keyboard_letter">Y</div>
+					<div class="keyboard_letter">U</div>
+					<div class="keyboard_letter">I</div>
+					<div class="keyboard_letter">O</div>
+					<div class="keyboard_letter">P</div>
+					<div class="keyboard_letter">&#60;</div>
+				</div>
+				<div class="keyboard_line keyboard_secondLine">
+					<div class="keyboard_letter">A</div>
+					<div class="keyboard_letter">S</div>
+					<div class="keyboard_letter">D</div>
+					<div class="keyboard_letter">F</div>
+					<div class="keyboard_letter">G</div>
+					<div class="keyboard_letter">H</div>
+					<div class="keyboard_letter">J</div>
+					<div class="keyboard_letter">K</div>
+					<div class="keyboard_letter">L</div>
+					<div class="keyboard_letter">LOG IN</div>
+				</div>
+				<div class="keyboard_line keyboard_thirdLine">
+					<div class="keyboard_letter">&#94;</div>
+					<div class="keyboard_letter">Z</div>
+					<div class="keyboard_letter">X</div>
+					<div class="keyboard_letter">C</div>
+					<div class="keyboard_letter">V</div>
+					<div class="keyboard_letter">B</div>
+					<div class="keyboard_letter">N</div>
+					<div class="keyboard_letter">M</div>
+					<div class="keyboard_letter">&#64;</div>
+					<div class="keyboard_letter">&#46;</div>
+					<div class="keyboard_letter">&#94;</div>
+				</div>
+				<div class="keyboard_line keyboard_fourthLine">
+					<div class="keyboard_letter ten_percent" onClick="toggleKeyboardSide()">&#46;&#63;123</div>
+					<div class="keyboard_letter twenty_percent">&#32;</div>
+					<div class="keyboard_letter forty_percent">&#32;</div>
+					<div class="keyboard_letter ten_percent">&#95;</div>
+					<div class="keyboard_letter ten_percent">&#45;</div>
+					<div class="keyboard_letter ten_percent noborder"></div>
+				</div>
+				</div>
+				<div class="back_keyboard">
+				<div class="keyboard_line keyboard_firstLine">
+					<div class="keyboard_letter">1</div>
+					<div class="keyboard_letter">2</div>
+					<div class="keyboard_letter">3</div>
+					<div class="keyboard_letter">4</div>
+					<div class="keyboard_letter">5</div>
+					<div class="keyboard_letter">6</div>
+					<div class="keyboard_letter">7</div>
+					<div class="keyboard_letter">8</div>
+					<div class="keyboard_letter">9</div>
+					<div class="keyboard_letter">0</div>
+					<div class="keyboard_letter">&#60;</div>
+				</div>
+				<div class="keyboard_line keyboard_secondLine">
+					<div class="keyboard_letter">&#58;</div>
+					<div class="keyboard_letter">&#59;</div>
+					<div class="keyboard_letter">&#37;</div>
+					<div class="keyboard_letter">&#35;</div>
+					<div class="keyboard_letter">&#40;</div>
+					<div class="keyboard_letter">&#41;</div>
+					<div class="keyboard_letter">&#123;</div>
+					<div class="keyboard_letter">&#125;</div>
+					<div class="keyboard_letter">&#34;</div>
+					<div class="keyboard_letter">LOG IN</div>
+				</div>
+				<div class="keyboard_line keyboard_thirdLine">
+					<div class="keyboard_letter">&#94;</div>
+					<div class="keyboard_letter">&#39;</div>
+					<div class="keyboard_letter">&#33;</div>
+					<div class="keyboard_letter">&#42;</div>
+					<div class="keyboard_letter">&#61;</div>
+					<div class="keyboard_letter">&#43;</div>
+					<div class="keyboard_letter">&#47;</div>
+					<div class="keyboard_letter">&#92;</div>
+					<div class="keyboard_letter">&#124;</div>
+					<div class="keyboard_letter">&#46;</div>
+					<div class="keyboard_letter">&#94;</div>
+				</div>
+				<div class="keyboard_line keyboard_fourthLine">
+					<div class="keyboard_letter ten_percent" onClick="toggleKeyboardSide()">ABC</div>
+					<div class="keyboard_letter twenty_percent">&#32;</div>
+					<div class="keyboard_letter forty_percent">&#32;</div>
+					<div class="keyboard_letter ten_percent">&#95;</div>
+					<div class="keyboard_letter ten_percent">&#45;</div>
+					<div class="keyboard_letter ten_percent noborder"></div>
+					</div>
+			</div>
+		  </div>
+      </div>
+      <script src="js/themaze.js"></script>
+   </body>
+</html>

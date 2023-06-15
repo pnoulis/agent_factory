@@ -1,0 +1,41 @@
+.the-maze-outside-wrapper {
+  font-family: Agency;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow: hidden;
+  &.blue {
+    background-image: url("../../assets/outside/blue/CMN_01.png");
+  }
+  &.red {
+    background-image: url("../../assets/outside/red/CMN_01.png");
+  }
+  &.yellow {
+    background-image: url("../../assets/outside/yellow/CMN_01.png");
+  }
+}
+.the-maze-outside-container {
+  max-width: 1920px;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  flex-direction: row;
+  transform: translateX(-50%);
+}
+.the-maze-outside-wrapper .video_bg{
+  position:relative;
+  height: 100%;
+  width:auto;
+  display: block;
+}
+.the-maze-outside-wrapper .video_bg source{
+  position:absolute;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,118 @@
+.mergeteam-wrapper {
+	width: 90%;
+	margin: 10px 5%;
+	display: block;
+	position: relative;
+}
+
+.mergeteam-container {padding: 20px;color: #fff;display: block;position: relative;height: 1000px;margin: 50px 0 50px;width: 932px;}
+.mergeteam-card {
+    display: inline-block;
+    position: absolute;
+    top: 72%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mergeteam-one {
+    position: absolute;
+    top: 11%;
+    left: -14%;
+}
+.mergeteam-two {
+    position: absolute;
+    top: 11%;
+    left: 53%;
+}
+.mergeteam-three {
+    position: absolute;
+    top: 45%;
+    left: -14%;
+}
+.mergeteam-four {
+    position: absolute;
+    top: 45%;
+    left: 53%;
+}
+.mergeteam-five {
+    position: absolute;
+    top: -7%;
+    left: 5%;
+}
+.mergeteam-six {
+    position: absolute;
+    top: -7%;
+    left: 32%;
+}
+.card-name-container {
+	position: absolute;
+	bottom: 130px;
+	left: calc(50% - 4px);
+	transform: translateX(-50%);
+	width: 250px;
+	height: 115px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.card-name{
+	font-weight: bold;
+    font-size: 50px;
+}
+.mergeteam-blue .card-name{
+	color: #01435e;
+}
+.mergeteam-container .card-name-container{
+	    position: absolute;
+    bottom: 90px;
+    left: calc(50% - 4px);
+    transform: translateX(-50%);
+    width: 250px;
+    height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mergeteam-item {
+	width: 600px;
+	height: 600px;
+}
+.mergeteam-item video.merge-team-flame {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+.mergeteam-one video.merge-team-flame {
+    top: 144px;
+    left: 231px;
+}
+.mergeteam-two video.merge-team-flame {
+    top: 144px;
+    left: 269px;
+}
+.mergeteam-three video.merge-team-flame {
+    top: 150px;
+    left: 235px;
+}
+.mergeteam-four video.merge-team-flame {
+    top: 150px;
+    left: 269px;
+}
+.mergeteam-five video.merge-team-flame {
+    top: 149px;
+    left: 200px;
+}
+.mergeteam-six video.merge-team-flame {
+    top: 145px;
+    left: 305px;
+}
+.mergeteam-helptext-container{
+	margin: 0 auto;
+	 width: 100%;
+
+}
+.mergeteam-helptext{
+	color: #1be1f0;
+	font-size: 40px;
+    text-align: center;
+}

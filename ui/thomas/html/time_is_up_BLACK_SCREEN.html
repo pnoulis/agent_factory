@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>The Maze Registration</title>
+      <link rel="stylesheet" type="text/css" href="styles/themaze.css">
+      <link rel="stylesheet" type="text/css" href="styles/keyboard.css">
+      <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+	   <style>
+		   .the-maze-wrapper.black-screen{
+			   background-color: #231f22;
+			   background-image: unset;
+		   }
+		   .the-maze-wrapper.black-screen .keyboard-container{
+			   padding: 20px !important;
+		   }
+		   .the-maze-wrapper.black-screen .keyboard-container:before{
+			   background: transparent;
+		   }
+		   .the-maze-wrapper.black-screen .keyboard_letter{
+			   background-color: #413d3e;
+		   }
+		   
+		   .black-screen .time_is_up_logo_container{
+			   display: inline-block;
+    transform: scale(1.1);
+			   margin: 0 0 40px;
+		   }
+		   .black-screen .enter_team_name_form_input input,
+		   .black-screen .enter_team_name_form_input input:focus,
+		   .black-screen .enter_team_name_form_input input:focus-visible{
+			   width: 100%;
+    border: 1px solid #c593f9;
+    background-color: #444242;
+    padding: 10px;
+    text-align: center;
+    color: #c593f9;
+			   outline: 0;
+			   font-size: 30px;
+		   }
+		   .disclaimer_black_screen_title{
+			   font-size: 70px;
+			   font-weight: bold;
+    padding: 0px;
+    text-align: center;
+    color: #c593f9;
+		   }
+
+.disclaimer_black_screen_container {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+		   .disclaimer_black_screen_container.team_ready .disclaimer_black_screen_title{
+			   margin: 0 auto;
+			   max-width: 700px;
+			   
+		   }
+		   		   .go_button{
+			   font-size: 60px;
+			   font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    color: #c593f9;
+					   position: relative;
+		   }
+		   .go_button:after {
+content: ' \25B6';
+    font-size: 40px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 14px;
+}
+	</style>
+   </head>
+   <body style="margin: 0">
+      <div class="the-maze-wrapper black-screen">
+
+		  <div class="the-maze-container"> 
+			  
+			  <div class="disclaimer_black_screen_container team_is_up">
+				  <div class="disclaimer_black_screen_title">
+					  			<div class="time_is_up_logo_container">
+			  <img src="images/FOT_02.png"/>
+			 </div> 
+					  <div class="disclaimer_black_screen_title">
+					  TIME IS UP
+					  </div>
+					  <div class="disclaimer_black_screen_title">
+					  PLEASE SCAN YOUR WRISTBAND AGAIN!
+					  </div>
+					  <div class="buttons_disclaimer">
+					  	<div class="go_button">
+						  GO
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+         </div>
+		  
+
+      <script src="js/themaze.js"></script>
+   </body>
+</html>

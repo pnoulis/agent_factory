@@ -1,0 +1,496 @@
+//livescores_table
+
+.live_info_container.livescores .live_info_table_container {
+  background: url(../../assets/scoresboard/livescores_bg.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 1250px;
+  background-size: contain;
+  height: 750px;
+  margin: 0 auto;
+  margin-top: 100px;
+  position: relative;
+}
+
+.live_info_container.livescores .live_info_table {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.live_info_container.livescores .live_info_table {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.live_info_container.livescores .live_info_row {
+  display: inline-flex;
+  width: 80%;
+  margin: 2px;
+}
+.live_info_container.livescores .live_info_num {
+  color: #f0f1f2;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  background: rgb(30, 34, 55);
+  padding: 5px 0;
+}
+.live_info_container.livescores .live_info_title {
+  color: #f0f1f2;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  background: rgb(30, 34, 55);
+  padding: 5px 0;
+}
+
+.live_info_container.livescores .live_info_result,
+.live_info_container.livescores .live_info_num ,
+.live_info_container.livescores .live_info_title,
+.live_info_container.livescores .live_info_number_of_players,
+.live_info_container.livescores .live_info_time_used,
+.live_info_container.livescores .live_info_played,
+.live_info_container.livescores .live_info_won,
+.live_info_container.livescores .live_info_lost,
+.live_info_container.livescores .live_info_result
+{
+  color: #f0f1f2;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  background: rgb(30, 34, 55);
+  padding: 5px 0;
+}
+.live_info_container.livescores .live_info_num {
+  width: 5%;}
+.live_info_container.livescores .live_info_title {
+  width: 20%;}
+.live_info_container.livescores .live_info_number_of_players {
+  width: 15%;}
+.live_info_container.livescores .live_info_time_used {
+  width: 15%;}
+.live_info_container.livescores .live_info_played {
+  width: 10%;}
+.live_info_container.livescores .live_info_won {
+  width: 10%;}
+.live_info_container.livescores .live_info_lost {
+  width: 10%;}
+.live_info_container.livescores .live_info_result {
+  width: 15%;color: #d1aeff;}
+.live_info_container.livescores .title_frame.header_team_name{width: 25% !important;}
+.live_info_container.livescores .title_frame.header_number_players{width: 15% !important;}
+.live_info_container.livescores .title_frame.header_time_used{width: 15%;}
+.live_info_container.livescores .title_frame.header_played{width: 10%;}
+.live_info_container.livescores .title_frame.header_won{width: 10%;}
+.live_info_container.livescores .title_frame.header_lost{width: 10%;}
+.live_info_container.livescores .title_frame.header_total_points{width: 15% !important;}
+.live_info_container.livescores .label_live_info {
+  width: 100%;
+  max-width: 450px;
+  display: inline-block;
+  position: absolute;
+  top: -110px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.live_info_container.livescores .dafnes_pic {
+  width: 100%;
+  display: inline-block;
+  position: absolute;
+  top: -50px;
+  left: 100%;
+  transform: translateX(-50%);
+}
+.live_info_container.livescores .live_info_label_text {
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  color: #ddc144;
+  font-weight: bold;
+  letter-spacing: 1px;
+  left: 50%;
+  transform: translate(-42%, -63%);
+}
+.live_info_container.livescores .live_info_label_text span{
+  display: block;
+  color: #dbb541;
+  font-size: 24px;
+}
+.live_info_container.livescores .live_info_img {
+  text-align: center;
+}
+.live_info_container.livescores .header_team_name{
+}
+.live_info_container.livescores .title_frame span{
+  background-image: linear-gradient( #56297c, #300e50 );
+  border-radius: 10px;
+  color: #fff;
+  border: 2px solid #cb80ff;
+  padding: 8px 18px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.live_info_container.livescores .title_frame.header_team_name {
+  margin-right: 10px;
+}
+
+.live_info_container.livescores{
+  position: relative;
+}
+
+.live_info_container.livescores .red_info {
+  width: 100%;
+  max-width: 450px;
+  display: inline-block;
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.live_info_container.livescores .red_info_img {
+  width:100px;
+  position: absolute;
+  left: 23px;
+}
+.live_info_container.livescores .red_info_img img {
+  width:100px;
+
+}
+.live_info_container.livescores .red_info_title{
+  position: absolute;
+  color: #cbb041;
+  font-size: 18px;
+  font-weight: bold;
+  top: 20px;
+  left: 38px;
+}
+.live_info_container.livescores .live_info_num{
+  position: relative;
+}
+.live_info_container.livescores .live_info_num:before {
+  position: absolute;
+  content: "";
+  width: 46px;
+  height: 35px;
+  display: inline-block;
+  background-image: url(../../assets/scoresboard/icon_position_1.png);
+  background-repeat: no-repeat;
+  background-position: 10% 0%;
+  background-size: 65%;
+}
+.live_info_container.livescores .live_info_row.the_header {
+  margin: 0 0 15px !important;
+}
+.live_info_container.livescores .live_info_row:nth-of-type(2) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_1.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(3) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_2.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(4) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_3.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(5) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_4.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(6) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_5.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(7) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_6.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(8) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_7.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(9) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_8.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(10) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_9.png);
+}
+.live_info_container.livescores .live_info_row:nth-of-type(11) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_10.png);
+}
+
+//scoreboard_template
+
+
+html, body, #root {
+  height:100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+.the-maze-wrapper {
+  background-color: grey;
+  font-family: Agency;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/scoresboard/BG.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow: hidden
+}
+
+.the-maze-container {
+  max-width: 1550px;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.home_icon {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+.home_icon img{
+  max-width: 150px;
+  width: 100%;
+  cursor: pointer;
+}
+.bottom_menu_container{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.scoreboard_wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.scoreboard_container{
+  display: inline-flex;
+  width: 100%;
+  max-width:1600px;
+  align-items: center;
+}
+.livescores_container{
+  width: 70%;
+}
+.top_ten_container{
+  width: 30%;
+
+}
+
+//top_ten
+
+.live_info_container.top_ten .live_info_table_container {
+  background: url("../../assets/scoresboard/top_ten_bg.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 700px;
+  background-size: contain;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: 100px;
+  position: relative;
+}
+
+.live_info_container.top_ten .live_info_table {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.live_info_container.top_ten .live_info_table {
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+}
+
+.live_info_container.top_ten .live_info_row {
+  display: inline-flex;
+  width: 80%;
+  margin: 2px;
+}
+.live_info_container.top_ten .live_info_num {
+  color: #f0f1f2;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  width: 5%;
+  background: rgb(30, 34, 55);
+  padding: 5px 0;
+}
+.live_info_container.top_ten .live_info_title {
+  color: #f0f1f2;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  width: 55%;
+  background: rgb(30, 34, 55);
+  padding: 5px 0;
+}
+
+.live_info_container.top_ten .live_info_result {
+  color: #f0f1f2;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  width: 40%;
+  background: rgb(30, 34, 55);
+  padding: 5px 0;
+}
+
+.live_info_container.top_ten .label_live_info {
+  width: 100%;
+  max-width: 450px;
+  display: inline-block;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.live_info_container.top_ten .dafnes_pic {
+  width: 100%;
+  display: inline-block;
+  position: absolute;
+  top: -50px;
+  left: 100%;
+  transform: translateX(-50%);
+}
+.live_info_container.top_ten .live_info_label_text {
+  font-size: 35px;
+  position: absolute;
+  top: 14px;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  color: #ddc144;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding-top: 7px;
+}
+.live_info_container.top_ten .live_info_label_text span{
+  display: block;
+  color: #dbb541;
+  font-size: 24px;
+}
+.live_info_container.top_ten .live_info_img {
+  text-align: center;
+}
+.live_info_container.top_ten .header_team_name{
+  width: 60%;color: #dbb541;
+  font-size: 24px;
+}
+.live_info_container.top_ten .header_total_points{
+  width: 40%;color: #dbb541;
+  font-size: 24px;
+}
+.live_info_container.top_ten .title_frame span{
+  background-image: linear-gradient( #a18d6f, #8a7a3d );
+  border-radius: 10px;
+  color: #fff;
+  border: 2px solid #cbb041;
+  padding: 5px 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.live_info_container.top_ten .title_frame.header_team_name {
+  margin-right: 10px;
+}
+
+.live_info_container.top_ten{
+  position: relative;
+}
+.live_info_container.top_ten:before{
+  background-image: url(../../assets/scoresboard/Asset_4.png);
+  position: absolute;
+  content:"";
+  width: 210px;
+  height: 160px;
+  top: -100px;
+  left: 100%;
+  transform: translateX(-50%);
+  display: inline-block;
+}
+.live_info_container.top_ten .red_info {
+  width: 100%;
+  max-width: 450px;
+  display: inline-block;
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.live_info_container.top_ten .red_info_img {
+  width:100px;
+  position: absolute;
+  left: 23px;
+}
+.live_info_container.top_ten .red_info_img img {
+  width:100px;
+
+}
+.live_info_container.top_ten .red_info_title{
+  position: absolute;
+  color: #cbb041;
+  font-size: 18px;
+  font-weight: bold;
+  top: 20px;
+  left: 38px;
+}
+.live_info_container.top_ten .live_info_num{
+  position: relative;
+}
+.live_info_container.top_ten .live_info_num:before {
+  position: absolute;
+  content: "";
+  width: 46px;
+  height: 35px;
+  display: inline-block;
+  background-image: url(../../assets/scoresboard/icon_position_1.png);
+  background-repeat: no-repeat;
+  background-position: 10% 0%;
+  background-size: 65%;
+}
+.live_info_container.top_ten .live_info_row.the_header {
+  margin-bottom: 7px !important;
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(2) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_1.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(3) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_2.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(4) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_3.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(5) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_4.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(6) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_5.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(7) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_6.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(8) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_7.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(9) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_8.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(10) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_9.png);
+}
+.live_info_container.top_ten .live_info_row:nth-of-type(11) .live_info_num:before {
+  background-image: url(../../assets/scoresboard/icon_position_10.png);
+}

@@ -1,0 +1,15 @@
+.timer_container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1;
+}
+
+.timer_time {
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  left: 45px;
+  top: 6px;
+}

@@ -1,0 +1,39 @@
+.panic-button-container {
+    display: inline-flex;
+    width: 170px;
+    height: 120px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 50px; */
+}
+.panic-button-header{
+    position: absolute;
+    top: -30px;
+    left: calc( 50% + 5px );
+    transform: translate(-50%, -50%);
+}
+.panic-button-img{
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.panic-button-container img{
+    width: 100%;
+    height: auto;
+}
+.inside-home-panic-container{
+    position: fixed;
+    bottom:0;
+    display: inline-flex;
+    align-items: flex-start;
+	cursor: pointer;
+}
+.home-button{
+    display: inline-block;
+    background-color: rgba(0,0,0,0.5);
+    padding: 5px 50px;
+    border-radius: 40px;
+	cursor: pointer;
+}

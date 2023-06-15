@@ -1,0 +1,104 @@
+.bottom_menu {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+  opacity: 0;
+  transform: translateY(150px);
+  transition: 1s;
+  transition-delay: .2s;
+}
+
+.bottom_menu_container{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.show_bottom_menu{
+opacity: 1;
+transform: translateY(0);
+}
+.bottom_menu_logo{
+  position: relative;
+}
+
+.bottom_menu_logo:before{
+  content: "";
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-image: url(../../assets/images/FOT_01.png);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.bottom_menu_logo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 170px;
+}
+
+.show_bottom_menu .img_logo_the_maze img{
+  animation-name: logo_menu;
+  animation-duration: 1.5s;
+  transform: scale(0.75);
+  animation-timing-function: cubic-bezier(0.33, 0.19, 0.04, 2.07);
+}
+
+@keyframes logo_menu {
+  0%   {transform: scale(0);}
+  50%   {transform: scale(0);}
+  100% {transform: scale(0.75);}
+}
+
+.bottom_menu_flag{
+  position: relative;
+}
+
+
+.language_option{
+  position: absolute;
+  bottom: 5px;
+  color: #fff;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+}
+
+
+.home_icon {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1;
+}
+
+.home_icon2 {
+  position: absolute;
+  bottom: 70px;
+  left: 160px;
+  z-index: 1;
+}
+
+.home_icon img{
+  max-width: 150px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.home_button_color{
+  display: inline-block;
+  background-color: rgba(0,0,0,0.5);
+  padding: 5px 50px;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+
+

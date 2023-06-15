@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>The Maze Registration</title>
+      <link rel="stylesheet" type="text/css" href="styles/themaze.css">
+      <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+   </head>
+   <body style="margin: 0">
+      <div class="the-maze-wrapper">
+         <!-- particles.js container --> 
+         <div id="particles-js"></div>
+         <!-- stats - count particles --> <!--<div class="count-particles"> <span class="js-count-particles">--</span> particles </div>--><!-- particles.js lib - https://github.com/VincentGarreau/particles.js --> <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib --> <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+		  <div class="the-maze-container">
+			 
+         </div>
+		  
+		  <div class="bottom_menu_container">
+			  <div class="home_icon">
+			  <img src="images/home_icon.png"/>
+			  </div>
+			 	<div class="bottom_menu">
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_03.png"/>
+					 <div class="language_option">ENGLISH</div>
+				</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_04.png"/>
+					 <div class="language_option">FRANCAIS</div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_logo">
+					 <div class="img_logo_the_maze">
+					<img src="images/FOT_02.png"/>
+					 </div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_04.png"/>
+					 <div class="language_option">DEUTSCH</div>
+					</div>
+				 <div class="bottom_menu_item bottom_menu_flag">
+					<img src="images/FOT_06.png"/>
+					 <div class="language_option">NEDERLANDS</div>
+					</div>
+				 </div>
+			 </div>
+<style>
+.wristband_wrapper {
+	z-index: 1;
+	position: absolute;
+	top: 10%;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+
+.wristband_wrapper h2 {
+	color: #fff;
+    padding: 0;
+    margin: 10px 0;
+    font-size: 70px;
+    line-height: 70px;
+	max-width: 1000px
+}
+.wristband_wrapper h3 {
+	color: #fff;
+    padding: 0;
+    margin: 10px 0;
+    font-size: 40px;
+    line-height: 50px;
+	max-width: 1100px
+}
+
+.wristband_container {
+	z-index: 100;
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+	padding: 25px 20px;
+	border-radius: 20px;
+	overflow: hidden;
+	position: relative;
+	opacity: 1;
+}
+
+.wristband_container:before {
+	content: "";
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: .5;
+	display: block;
+	z-index: -1;
+}
+.wristband_content{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 1000px;
+}
+
+.two-buttons-container {
+    display: inline-flex;
+    width: 100%;
+    position: relative;
+    justify-content: center;
+    margin-top: 50px;
+}
+	.mauve-btns .header-btn,.mauve-btns .bottom-btn{
+		color: #c593f9 !important;
+	}
+.two-buttons-item {
+    color: #fff;
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+
+.btn_game {
+    padding: 10px 40px;
+    width: auto;
+}
+    
+</style>
+		  
+<div class="wristband_wrapper">
+    <div class="wristband_container">
+        <div class="wristband_content">
+            <header>
+				<h2>THANK YOU!</h2>
+			</header>
+            <header>
+				<h3>YOU ARE NOW REGISTERED WITH YOUR INDIVIDUAL WRISTBAND.
+					IF THE REST OF YOUR TEAM HAVE COMPLETED THEIR REGISTRATION, 
+					YOU CAN USE A REGISTRATION POINT TO MERGE YOUR TEAM AND PLAY!</h3>
+			</header>
+
+        </div>
+    </div>
+	
+	<div class="two-buttons-container"><!-- mauve-btns add this class in order to change the color of the button-->
+               <div class="two-buttons-item">
+                  <div class="btn_game effect_click" style="">
+                     <div class="btn_bg_color"></div>
+                     <div class="btn_container">
+                        <div class="header-btn">REGISTER</div>
+                        <div class="bottom-btn">YOUR WRISTBAND</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="two-buttons-item">
+                  <div class="btn_game effect_click" style="">
+                     <div class="btn_bg_color"></div>
+                     <div class="btn_container">
+                        <div class="header-btn">MERGE</div>
+                        <div class="bottom-btn">YOUR TEAM</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+	
+</div>
+
+      </div>
+      <script src="js/themaze.js"></script>
+   </body>
+</html>

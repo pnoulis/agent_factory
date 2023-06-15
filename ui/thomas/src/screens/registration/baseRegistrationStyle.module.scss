@@ -1,0 +1,10 @@
+
+.effect_click{
+    transform: scale(1) translateY(0px);
+    transition: .35s;
+
+}
+.effect_click:hover{
+    transform: scale(.95) translateY(5px);
+    transition: .35s;
+}

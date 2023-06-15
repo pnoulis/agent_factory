@@ -1,0 +1,62 @@
+.btn_game {
+        padding: 20px;
+    border: 2px solid #000;
+    border-radius: 11px;
+    display: inline-block;
+    font-weight: bold;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    font-size: 40px
+}
+
+.btn_game:before{
+    content: "";
+    position:absolute;
+    top:0;
+    left: -13px;
+    width: 100%;
+    opacity: 1;
+    height: 1px;
+    background-color: transparent;
+    box-shadow: 1px 0px 14px 7px #fff;
+    padding: 0 10px;
+    margin: 0 10px;
+    z-index:1;
+    opacity:.9;
+}
+
+.btn_game:after{
+    content: "";
+    position:absolute;
+    bottom:0;
+    left: -13px;
+    width: 100%;
+    height: 1px;
+    background-color: transparent;
+    box-shadow: 1px 0px 14px 7px #fff;
+    padding: 0 10px;
+    margin: 0 10px;
+    z-index:10;
+    opacity:.9;
+}
+.btn_bg_color{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left: 0;
+    background-color: #000;
+    opacity: .2;
+    z-index: 0;
+}
+.btn_container{
+    color: #fff;
+    position: relative;
+    z-index:1;
+}
+
+
+<div class="btn_game" style=""><div class="btn_bg_color"></div>
+    <div class="btn_container">REGISTER</div>
+    </div>
