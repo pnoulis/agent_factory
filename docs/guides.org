@@ -199,7 +199,7 @@ publish at:
 
 * Connecting to deployment server
 
---$ ssh root@78.159.98.244 -p 7822                                                        
+--$ ssh root@78.159.98.244 -p 7822
 mindtr@p
 ** configs working
 *** config #1

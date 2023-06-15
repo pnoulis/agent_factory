@@ -48,6 +48,7 @@ npm-packages:
 .PHONY: release
 release:
 	-rm -rdf $(SRCDIR)/dist/tmp 2>/dev/null
+	-mkdir dist 2>/dev/null
 	cd $(THOMAS); \
 	make release; \
 	cp *.tar.gz $(SRCDIR)/dist/gameplay.tar.gz
@@ -60,6 +61,21 @@ release:
 	tar -xf $(SRCDIR)/dist/administration.tar.gz -C $(SRCDIR)/dist/tmp/srv
 	cp $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/tmp/etc/nginx/conf.d/agent_factory.conf
 	tar -cvaf agent_factory-v0.0.1.tar.gz -C $(SRCDIR)/dist tmp/*
+
+.PHONY: sync
+sync:
+# sync administration
+	rsync -az $(SRCDIR)/dist/administration/* \
+	agent_factory:/var/www/html/administration
+# sync gameplay
+	rsync -az $(SRCDIR)/dist/gameplay/* \
+	agent_factory:/var/www/html/gameplay
+# sync index
+	rsync -az $(SRCDIR)/dist/index.html \
+	agent_factory:/var/www/html
+# sync nginx.conf
+	rsync -az $(SRCDIR)/config/nginx.conf \
+	agent_factory:/etc/nginx/conf.d/agent_factory.conf
 
 
 # ------------------------------ SERVE ------------------------------ #
