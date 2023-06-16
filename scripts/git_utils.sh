@@ -229,3 +229,18 @@ ensureBranchExists() {
     popd >/dev/null
     return 0
 }
+
+ensureAtCommit() {
+    validateArgumentsLength 2 $@
+    local tpath=$(realpath -qe "$1")
+    pushd "$tpath" > /dev/null
+
+    atCommit="$(git rev-parse HEAD)"
+    if [[ "$2" != "${atCommit:-}" ]]; then
+        echoerr ensureOnCommit
+        echoerr branch not at commit $2
+        return 1
+    fi
+    popd >/dev/null
+    return 0
+}

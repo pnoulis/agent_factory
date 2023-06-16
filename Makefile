@@ -12,7 +12,7 @@ AFADMIN_CLIENT = $(SRCDIR)/ui/afadmin_client
 REACT_UTILS = $(SRCDIR)/ui/react_utils
 JS_UTILS = $(SRCDIR)/lib/js_utils
 MQTT_PROXY = $(SRCDIR)/lib/mqtt_proxy
-AF_MACHINE = $(SRCDIR)/core/afmachine
+AFMACHINE = $(SRCDIR)/core/afmachine
 THOMAS =$(SRCDIR)/ui/thomas
 
 # Config directories
@@ -21,7 +21,7 @@ AFADMIN_CLIENT_CONFDIR = $(CONFDIR)/afadmin_client
 
 # git modules
 GITMODULES = $(AFADMIN_CLIENT) $(REACT_UTILS) $(JS_UTILS) \
-$(MQTT_PROXY) $(AF_MACHINE)
+$(MQTT_PROXY) $(AFMACHINE)
 
 .PHONY: all
 all:
