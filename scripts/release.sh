@@ -44,6 +44,7 @@ done
 # Author: pnoul <pavlos.noulis@gmail.com>
 # Date:   Tue May 23 17:10:31 2023 +0300
 # [fix] ConsoloLogger was failing to instantiate if no arguments provided
+echo $JS_UTILS
 cd $JS_UTILS
 git checkout 'ffa84ae2c51'
 #make build
@@ -53,6 +54,7 @@ git checkout 'ffa84ae2c51'
 # Author: pnoul <pavlos.noulis@gmail.com>
 # Date:   Fri May 19 17:06:42 2023 +0300
 # SelectOnlyCombobox default value
+echo $REACT_UTILS
 cd $REACT_UTILS
 git checkout 'fa7bfd105c'
 #make build
@@ -62,6 +64,7 @@ git checkout 'fa7bfd105c'
 # Author: pavlos noulis <pavlos.noulis@gmail.com>
 # Date:   Thu May 11 00:29:09 2023 +0300
 # git ignores emacs hidden temporary files
+echo $MQTT_PROXY
 cd $MQTT_PROXY
 git checkout '5ed10e169'
 #make build
@@ -71,6 +74,7 @@ git checkout '5ed10e169'
 # Author: pnoul <pavlos.noulis@gmail.com>
 # Date:   Thu Jun 1 16:57:40 2023 +0300
 # route subscribeWristbandUnregistration
+echo $AFMACHINE
 cd $AFMACHINE
 git checkout '718e0aa442d'
 #make build
@@ -80,6 +84,7 @@ git checkout '718e0aa442d'
 # Author: pnoul <pavlos.noulis@gmail.com>
 # Date:   Mon May 22 14:34:04 2023 +0300
 # Refactor roadmap
+echo $AFADMIN_CLIENT
 cd $AFADMIN_CLIENT
 #git checkout '54034b4a95'
 
@@ -88,5 +93,6 @@ cd $AFADMIN_CLIENT
 # Author: Pavlos Kapoutsis <pavloskapoutsis@gmail.com>
 # Date:   Fri May 19 12:50:37 2023 +0300
 # --
+echo $BACKEND
 cd $BACKEND
 #git checkout 'c5b6838a3fd9'
