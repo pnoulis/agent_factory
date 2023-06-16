@@ -45,7 +45,12 @@ npm-packages:
 	npm install --workspace afadmin_client
 
 # ------------------------------ RELEASE ------------------------------ #
-.PHONY: release rel .EXPORT_ALL_VARIABLES
+.PHONY: release rel bump-version .EXPORT_ALL_VARIABLES
+
+CALLED_BY_MAKE=true
+bump-version:
+	@set -a; source ./PACKAGE && ./scripts/changeVersion.sh
+
 
 rel: .EXPORT_ALL_VARIABLES
 rel:
