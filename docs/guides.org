@@ -198,7 +198,6 @@ publish at:
 /themaze/registration5/emulateScan/r/r
 
 * Connecting to deployment server
-
 --$ ssh root@78.159.98.244 -p 7822
 mindtr@p
 ** configs working
@@ -367,3 +366,14 @@ add property to package.json
 
 Then build again
 NODE_ENVIRONMENT=production npm run build --mode=production
+
+* Release procedure of individual repositories
+* Realese procedure of the monorepo
+** creating the release branch
+git branch --create release
+** switch to release branch
+git switch release
+** For each submodule switch to the release branch
+Must make sure that all submodules including the superproject are clean.
+
+

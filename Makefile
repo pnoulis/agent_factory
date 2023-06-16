@@ -45,7 +45,12 @@ npm-packages:
 	npm install --workspace afadmin_client
 
 # ------------------------------ RELEASE ------------------------------ #
-.PHONY: release
+.PHONY: release rel .EXPORT_ALL_VARIABLES
+
+rel: .EXPORT_ALL_VARIABLES
+rel:
+	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh
+
 release:
 	-rm -rdf $(SRCDIR)/dist/tmp 2>/dev/null
 	-mkdir dist 2>/dev/null
