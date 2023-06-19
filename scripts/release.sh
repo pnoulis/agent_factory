@@ -19,7 +19,7 @@ for submodule in $BACKEND \
                      $REACT_UTILS \
                      $JS_UTILS \
                      $MQTT_PROXY \
-                     $AF_MACHINE; do
+                     $AFMACHINE; do
     cd $submodule
     isGitClean $submodule || die $submodule
     gitNoUnpushedCommits $submodule || die $submodule
@@ -42,7 +42,7 @@ commit='ffa84ae2c5165ecce9bcebac3d9495c2441151d9'
 echo $JS_UTILS
 ensureAtCommit $JS_UTILS $commit || die
 cd $JS_UTILS
-make build
+make build || die 'Failed to build'
 
 # react utils at:
 commit='fa7bfd105c12a1d462c109b66f133749fbc604d2'
@@ -51,7 +51,7 @@ commit='fa7bfd105c12a1d462c109b66f133749fbc604d2'
 # SelectOnlyCombobox default value
 echo $REACT_UTILS
 ensureAtCommit $REACT_UTILS $commit || die
-make build
+make build || die 'Failed to build'
 
 # mqtt_proxy at:
 commit='5ed10e16927d2f776fb6dca52b2a45b60e470506'
@@ -61,27 +61,27 @@ commit='5ed10e16927d2f776fb6dca52b2a45b60e470506'
 echo $MQTT_PROXY
 ensureAtCommit $MQTT_PROXY $commit || die
 cd $MQTT_PROXY
-make build
+make build || 'Failed to build'
 
 # Afmachine at:
-commit='718e0aa442d6d851f446d3df11696997d5365af2'
+commit='cc7bd416b8903c29f1a54477bc9e400533cb4cad'
 # Author: pnoul <pavlos.noulis@gmail.com>
-# Date:   Thu Jun 1 16:57:40 2023 +0300
-# route subscribeWristbandUnregistration
+# Date:   Mon Jun 19 11:08:17 2023 +0300
+# Running in production mode calls the developments configuration preset
 echo $AFMACHINE
 ensureAtCommit $AFMACHINE $commit || die
 cd $AFMACHINE
-make build-dev
+make build || 'Failed to build'
 
 # afadmin_client at:
-commit='d9a1ac3612141e807495e91ce27cf7680336dbc2'
+commit='60147c900452f3c9b449ef3956c5258bb4a43a67'
 # Author: pnoul <pavlos.noulis@gmail.com>
-# Date:   Thu Jun 15 17:10:49 2023 +0300
-# realease v0.0.2
+# Date:   Mon Jun 19 10:56:33 2023 +0300
+# Mqtt server address in production
 echo $AFADMIN_CLIENT
 ensureAtCommit $AFADMIN_CLIENT $commit || die
 cd $AFADMIN_CLIENT
-make build
+make build || 'Failed to build'
 
 # Backend at:
 commit='c5b6838a3fd96ef1362938d15b85e5cd4b494d4f'
@@ -90,3 +90,10 @@ commit='c5b6838a3fd96ef1362938d15b85e5cd4b494d4f'
 # --
 echo $BACKEND
 ensureAtCommit $BACKEND $commit || die
+
+# Thomas at:
+# The ui/thomas source tree is not a git repository within the agent_factory
+# superproject structure.
+echo $THOMAS
+cd $THOMAS
+make build || die 'Failed to build'

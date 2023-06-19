@@ -350,7 +350,7 @@ yarn --install
 change node version to: v16.20.0   (Latest LTS: Gallium)
 nvm install --lts=Gallium
 
-nvm --version
+nvm current
 
 if it is v16.20.0 do nothing else
 nvm use --lts=Gallium

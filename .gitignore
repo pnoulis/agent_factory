@@ -28,3 +28,4 @@ refactor.*
 
 # Ignore logs
 *.log
+*.tar.gz

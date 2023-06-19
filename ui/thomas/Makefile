@@ -21,3 +21,8 @@ $(PKG_DISTNAME).tar.gz:
 	--transform='s/build/gameplay/' build
 
 
+.PHONY: build
+.ONESHELL:
+build:
+	NVM_DIR="$${HOME}/.nvm" && . "$${NVM_DIR}/nvm.sh"; \
+	nvm exec v16.20.0 npm run build --mode=production

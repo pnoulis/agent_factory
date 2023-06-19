@@ -1,5 +1,8 @@
 #!/usr/bin/make
 
+# Include package information
+include ./PACKAGE
+
 # Make and Shell behavior
 SHELL = /usr/bin/bash
 .DELETE_ON_ERROR:
@@ -51,26 +54,17 @@ CALLED_BY_MAKE=true
 bump-version:
 	@set -a; source ./PACKAGE && ./scripts/changeVersion.sh
 
-
-rel: .EXPORT_ALL_VARIABLES
-rel:
-	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh
-
+release: .EXPORT_ALL_VARIABLES
 release:
-	-rm -rdf $(SRCDIR)/dist/tmp 2>/dev/null
-	-mkdir dist 2>/dev/null
-	cd $(THOMAS); \
-	make release; \
-	cp *.tar.gz $(SRCDIR)/dist/gameplay.tar.gz
-	cd $(AFADMIN_CLIENT); \
-	make release; \
-	cp *.tar.gz $(SRCDIR)/dist/administration.tar.gz
-	mkdir -p $(SRCDIR)/dist/tmp/srv 2>/dev/null
-	mkdir -p $(SRCDIR)/dist/tmp/etc/nginx/conf.d 2>/dev/null
-	tar -xf $(SRCDIR)/dist/gameplay.tar.gz -C $(SRCDIR)/dist/tmp/srv
-	tar -xf $(SRCDIR)/dist/administration.tar.gz -C $(SRCDIR)/dist/tmp/srv
-	cp $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/tmp/etc/nginx/conf.d/agent_factory.conf
-	tar -cvaf agent_factory-v0.0.1.tar.gz -C $(SRCDIR)/dist tmp/*
+	-rm -rdf $(SRCDIR)/dist/*
+	-rm *.tar.gz
+	-mkdir -p $(SRCDIR)/dist 2>/dev/null
+	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh
+	cp -r $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/agent_factory.nginx.conf
+	cp -r $(AFADMIN_CLIENT)/dist $(SRCDIR)/dist/administration
+	cp -r $(THOMAS)/build $(SRCDIR)/dist/gameplay
+	cp -r $(SRCDIR)/PACKAGE $(SRCDIR)/dist/PACKAGE
+	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
 
 .PHONY: sync
 sync:
@@ -80,12 +74,9 @@ sync:
 # sync gameplay
 	rsync -az $(SRCDIR)/dist/gameplay/* \
 	agent_factory:/var/www/html/gameplay
-# sync index
-	rsync -az $(SRCDIR)/dist/index.html \
-	agent_factory:/var/www/html
 # sync nginx.conf
-	rsync -az $(SRCDIR)/config/nginx.conf \
-	agent_factory:/etc/nginx/conf.d/agent_factory.conf
+	rsync -az $(SRCDIR)/dist/agent_factory.nginx.conf \
+	agent_factory:/etc/nginx/conf.d/agent_factory.nginx.conf
 
 
 # ------------------------------ SERVE ------------------------------ #
