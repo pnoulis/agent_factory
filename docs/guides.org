@@ -377,3 +377,21 @@ git switch release
 Must make sure that all submodules including the superproject are clean.
 
 
+
+* Flushing docker mysql state
+** connection info taken from core/backend/.env
+
+MYSQLDB_USER=root
+MYSQLDB_ROOT_PASSWORD=root
+MYSQLDB_DATABASE=agent_factory
+MYSQLDB_LOCAL_PORT=3308
+MYSQLDB_DOCKER_PORT=3306
+** command
+set foreign_key_checks = 0;
+truncate roster_player;
+truncate roster;
+truncate team;
+update wristband set active=0 where active=1;
+truncate player;
+truncate package;
+** mysql client use beekeeper
