@@ -29,3 +29,7 @@ refactor.*
 # Ignore logs
 *.log
 *.tar.gz
+
+# Ignore python script
+__pycache__/
+*.py[cod]
