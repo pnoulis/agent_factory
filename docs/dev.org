@@ -1,0 +1,12 @@
+* Issue new Makefile that makes use of new DOTENV for each submodule
+** DONE mqtt_proxy
+CLOSED: [2023-07-04 Tue 21:41]
+** DONE refactor_afmachine
+CLOSED: [2023-07-04 Tue 21:55]
+
+** DONE js_utils
+CLOSED: [2023-07-04 Tue 22:03]
+** DONE react_utils
+CLOSED: [2023-07-04 Tue 22:03]
+** DONE refactor.afadmin_client
+CLOSED: [2023-07-04 Tue 22:03]
