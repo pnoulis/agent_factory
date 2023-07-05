@@ -1,3 +1,4 @@
+import { getEnvar } from "js_utils/environment";
 /*
   exports:
   - toClient
@@ -30,7 +31,11 @@
   be subscribed or published to.
  */
 
-function MakeTopics() {
+let PREFIX = getEnvar("BACKEND_TOPIC_PREFIX", true, "/themaze/${clientId}/gui");
+function MakeTopics(prefix) {
+  if (prefix) {
+    PREFIX = prefix;
+  }
   this._current = [];
   this.toServer = () => {
     let tmp;
@@ -54,7 +59,6 @@ function MakeTopics() {
   this.get = () => this._current;
 }
 
-const PREFIX = "/themaze/${clientId}/gui";
 const TOPICS = [
   /* ------------------------------ Boot ------------------------------ */
   {
@@ -288,7 +292,7 @@ const TOPICS = [
   {
     alias: "/wristband/register",
     pub: {
-      topic: "/themaze/${clientId}/gui/player/registerWristband",
+      topic: `${PREFIX}/player/registerWristband`,
       payloads: [
         {
           timestamp: 1234678999,
@@ -298,7 +302,7 @@ const TOPICS = [
       ],
     },
     sub: {
-      topic: "/themaze/${clientId}/gui/player/registerWristband/response",
+      topic: `${PREFIX}/player/registerWristband/response`,
       payloads: [
         {
           timestamp: 123456789,
@@ -314,7 +318,7 @@ const TOPICS = [
   {
     alias: "/wristband/unregister",
     pub: {
-      topic: "/themaze/${clientId}/gui/player/unregisterWristband",
+      topic: `${PREFIX}/player/unregisterWristband`,
       payloads: [
         {
           timestamp: 1223456789,
@@ -324,7 +328,7 @@ const TOPICS = [
       ],
     },
     sub: {
-      topic: "/themaze/${clientId}/gui/player/unregisterWristband/response",
+      topic: `${PREFIX}/player/unregisterWristband/response`,
       payloads: [
         {
           timestamp: 1234567890,
@@ -487,8 +491,8 @@ const TOPICS = [
   // Wristband validate
   {
     alias: "/wristband/isValid",
-    pub: "/themaze/${clientId}/gui/player/isValid",
-    sub: "/themaze/${clientId}/gui/player/isValid/response",
+    pub: `${PREFIX}/player/isValid`,
+    sub: `${PREFIX}/player/isValid/response`,
   },
 
   // Wristband info
@@ -512,8 +516,8 @@ const TOPICS = [
   // All Registered players
   {
     alias: "/players/list",
-    pub: "/themaze/${clientId}/gui/player/all/search",
-    sub: "/themaze/${clientId}/gui/player/all/search/response",
+    pub: `${PREFIX}/player/all/search`,
+    sub: `${PREFIX}/player/all/search/response`,
   },
 
   // Packages list
@@ -558,20 +562,20 @@ const TOPICS = [
   // Add package to team
   {
     alias: "/team/package/add",
-    pub: "/themaze/${clientId}/gui/team/package/add",
-    sub: "/themaze/${clientId}/gui/team/package/add/response",
+    pub: `/${PREFIX}/team/package/add`,
+    sub: `/${PREFIX}/team/package/add/response`,
   },
   // Remove package from team
   {
     alias: "/team/package/delete",
-    pub: "/themaze/${clientId}/gui/team/package/delete",
-    sub: "/themaze/${clientId}/gui/team/package/delete/response",
+    pub: `/${PREFIX}/team/package/delete`,
+    sub: `/${PREFIX}/team/package/delete/response`,
   },
   // Active package
   {
     alias: "/team/activate",
-    pub: "/themaze/${clientId}/gui/team/activate",
-    sub: "/themaze/${clientId}/gui/team/activate/response",
+    pub: `${PREFIX}/team/activate`,
+    sub: `${PREFIX}/team/activate/response`,
   },
 ];
 
@@ -579,4 +583,4 @@ const makeTopics = new MakeTopics();
 const toClient = makeTopics.toClient().strip().get();
 const toServer = makeTopics.toServer().strip().get();
 
-export { TOPICS, makeTopics, toClient, toServer };
+export { TOPICS, MakeTopics, toClient, toServer };
