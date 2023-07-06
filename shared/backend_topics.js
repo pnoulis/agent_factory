@@ -1,4 +1,4 @@
-import { getEnvar } from "js_utils/environment";
+import { ENVIRONMENT } from "./config.js";
 /*
   exports:
   - toClient
@@ -31,33 +31,31 @@ import { getEnvar } from "js_utils/environment";
   be subscribed or published to.
  */
 
-let PREFIX = getEnvar("BACKEND_TOPIC_PREFIX", true, "/themaze/${clientId}/gui");
-function MakeTopics(prefix) {
-  if (prefix) {
-    PREFIX = prefix;
+const PREFIX = ENVIRONMENT.BACKEND_MQTT_TOPIC_PREFIX;
+let make;
+
+function makeTopics() {
+  if (!make && this == null) {
+    make = new makeTopics();
   }
-  this._current = [];
-  this.toServer = () => {
-    let tmp;
-    this._current = TOPICS.map((t) => {
-      tmp = t.pub;
-      t.pub = t.sub;
-      t.sub = tmp;
-      return t;
-    });
-    return this;
-  };
-  this.toClient = () => this;
-  this.strip = () => {
-    this._current = TOPICS.map((t) => ({
-      alias: t.alias,
-      pub: t.pub?.topic || t.pub,
-      sub: t.sub?.topic || t.sub,
-    }));
-    return this;
-  };
-  this.get = () => this._current;
+  return make;
 }
+
+makeTopics.prototype.toClient = function toClient() {
+  return TOPICS.map(({ alias, pub, sub }) => ({
+    alias,
+    pub: pub?.topic || pub || null,
+    sub: sub?.topic || sub || null,
+  }));
+};
+
+makeTopics.prototype.toServer = function toServer() {
+  return TOPICS.map(({ alias, pub, sub }) => ({
+    alias,
+    sub: pub?.topic || pub || null,
+    pub: sub?.topic || sub || null,
+  }));
+};
 
 const TOPICS = [
   /* ------------------------------ Boot ------------------------------ */
@@ -579,8 +577,6 @@ const TOPICS = [
   },
 ];
 
-const makeTopics = new MakeTopics();
-const toClient = makeTopics.toClient().strip().get();
-const toServer = makeTopics.toServer().strip().get();
-
-export { TOPICS, MakeTopics, toClient, toServer };
+const toClient = makeTopics().toClient();
+const toServer = makeTopics().toServer();
+export { toClient, toServer };
