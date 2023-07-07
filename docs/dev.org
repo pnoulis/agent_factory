@@ -10,3 +10,9 @@ CLOSED: [2023-07-04 Tue 22:03]
 CLOSED: [2023-07-04 Tue 22:03]
 ** DONE refactor.afadmin_client
 CLOSED: [2023-07-04 Tue 22:03]
+* Write scripts that make use of the serviceBackend API for testing and development purposes
+** TODO registerPlayers
+** TODO registerWristbands
+** TODO registerTeams
+* Write a script that resets the backend database for testing and development purposes
+** TODO flushBackendDB
