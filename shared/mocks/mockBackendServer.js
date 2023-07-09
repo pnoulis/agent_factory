@@ -30,6 +30,17 @@ const NEXT_RESPONSE = [
 
 // mock backend server
 const mockBackendServer = {
+  auto: true,
+  publishersQueue: [],
+  publish(n = 0) {
+    const nextPublisher = mockBackendServer.publishersQueue[n];
+    mockBackendServer.publishersQueue.splice(n, 1);
+    NEXT_RESPONSE[0]((payload) => {
+      console.log(`MOCK RESPONSE on ${nextPublisher.pub}`);
+      console.log(payload);
+      mqttClient.publish(nextPublisher.pub, JSON.stringify(payload));
+    });
+  },
   fail(withPayload) {
     NEXT_RESPONSE[0] = function (publish) {
       publish(
@@ -59,11 +70,15 @@ const mockBackendServer = {
 
 function handleMessage(sub) {
   const pub = SPMAP.get(sub);
-  NEXT_RESPONSE[0]((payload) => {
-    console.log(`MOCK RESPONSE on ${pub}`);
-    console.log(payload);
-    mqttClient.publish(pub, JSON.stringify(payload));
-  });
+  if (mockBackendServer.auto) {
+    NEXT_RESPONSE[0]((payload) => {
+      console.log(`MOCK RESPONSE on ${pub}`);
+      console.log(payload);
+      mqttClient.publish(pub, JSON.stringify(payload));
+    });
+  } else {
+    mockBackendServer.publishersQueue.push({ pub, sub });
+  }
 }
 
 // Subscribe to all client publishes

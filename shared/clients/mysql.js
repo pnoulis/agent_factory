@@ -15,12 +15,16 @@ import * as MYSQLDB_CLIENT_LIB from "mysql2/promise";
  *
  **/
 
-function mysqlClient(url, options = {}) {
+function mysqlClient(url = "", options = {}) {
+  options = {
+    multipleStatements: true,
+    ...options,
+  };
   let urlparams = "";
   let connstr = url;
 
-  for (const [key, value] of Object.entries(options)) {
-    urlparams += `${key}=${value}&`;
+  for (const [k, v] of Object.entries(options)) {
+    urlparams += `${k}=${v}&`;
   }
 
   if (urlparams) {

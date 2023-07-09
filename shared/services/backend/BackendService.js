@@ -1,6 +1,6 @@
 import { MqttProxy } from "mqtt_proxy";
 import { toClient } from "../../backend_topics.js";
-import { TaskRunner } from "js_utils/task_runner";
+import { TaskRunner } from "js_utils/task_runners";
 import { boot } from "./api/boot.js";
 import { loginPlayer } from "./api/loginPlayer.js";
 import { registerPlayer } from "./api/registerPlayer.js";

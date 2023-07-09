@@ -11,11 +11,12 @@
 
   Example:
 
-  ./randomPlayer.js 1
+  ./randomPackage.js 1
 
  */
 
-import { generateRandomName, randomInteger } from "js_utils/misc";
+import { AF_PACKAGES } from "../constants.js";
+import { randomInteger } from "js_utils/misc";
 import { isRuntime } from "js_utils/environment";
 
 /*
@@ -27,27 +28,20 @@ import { isRuntime } from "js_utils/environment";
 if (isRuntime("node") && globalThis.process?.argv?.length > 2) {
   const arg1 = parseInt(process.argv[2]);
   process.argv.splice(2);
-  const players = randomPlayer(arg1);
-  console.log(players);
+  const pkgs = randomPackage(arg1);
+  console.log(pkgs);
 }
 
-function randomPlayer(n = 1) {
-  const players = [];
+function randomPackage(n = 1) {
+  const packages = new Array(n);
+  const lenPkgs = AF_PACKAGES.length;
 
-  while (n > 0) {
-    const username = `${generateRandomName()}_${randomInteger(1, 1000)}`;
-    const [name, surname, password = ""] = username.split("_");
-    players.push({
-      username,
-      email: `${username}@gmail.com`,
-      name,
-      surname,
-      password,
-    });
-    --n;
+  n = 0;
+  while (n < packages.length) {
+    packages[n] = AF_PACKAGES[randomInteger(0, lenPkgs - 1)];
+    n++;
   }
-
-  return players.length > 1 ? players : players.pop();
+  return packages.length > 1 ? packages : packages.pop();
 }
 
-export { randomPlayer };
+export { randomPackage };

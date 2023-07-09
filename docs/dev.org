@@ -11,8 +11,15 @@ CLOSED: [2023-07-04 Tue 22:03]
 ** DONE refactor.afadmin_client
 CLOSED: [2023-07-04 Tue 22:03]
 * Write scripts that make use of the serviceBackend API for testing and development purposes
+** DONE environment loading
+CLOSED: [2023-07-09 Sun 09:07]
+The scripts depend on services which read the environment at runtime. As such if
+the expected symbols are not defined at the appointed location they are unable
+to initialize and fail.
 ** TODO registerPlayers
 ** TODO registerWristbands
 ** TODO registerTeams
+** TODO addPackage
+** TODO startTeam
 * Write a script that resets the backend database for testing and development purposes
 ** TODO flushBackendDB

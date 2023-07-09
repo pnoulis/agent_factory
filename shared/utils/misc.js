@@ -1,3 +1,14 @@
+import { MAX_TEAM_SIZE } from "../constants.js";
+
+function calcTeamSize(nPlayers) {
+  let max = MAX_TEAM_SIZE;
+  let nTeams;
+  do {
+    nTeams = nPlayers / max;
+  } while (--max && nTeams > 0 && nTeams % 1);
+  return [nTeams, max + 1];
+}
+
 function mapPlayerStatus(player = {}) {
   // client side
   if (player?.wristband?.status) {
@@ -103,6 +114,7 @@ function mapWristbandColor(from, color) {
 }
 
 export {
+  calcTeamSize,
   mapWristbandColor,
   mapPackageStatus,
   mapTeam,
