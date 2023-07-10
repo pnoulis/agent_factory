@@ -2,7 +2,11 @@
  * Successful team start payload
  *
  * @typedef {Object} SuccessPayload
- *
+ * @property {string} Result - OK
+ * @property {Object} team
+ * @property {string} team.name
+ * @property {number} team.totalPoints
+ * @property {Object} currentRoster
  */
 
 /**

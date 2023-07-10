@@ -1,4 +1,5 @@
 import * as MYSQLDB_CLIENT_LIB from "mysql2/promise";
+import { ENVIRONMENT } from "../config.js";
 
 /**
  * Connect to a mysql server
@@ -15,7 +16,7 @@ import * as MYSQLDB_CLIENT_LIB from "mysql2/promise";
  *
  **/
 
-function mysqlClient(url = "", options = {}) {
+function getMysqlClient(url = "", options = {}) {
   options = {
     multipleStatements: true,
     ...options,
@@ -34,4 +35,9 @@ function mysqlClient(url = "", options = {}) {
   return MYSQLDB_CLIENT_LIB.createConnection(connstr);
 }
 
-export { mysqlClient };
+const getMysqlClientBackend = getMysqlClient.bind(
+  null,
+  ENVIRONMENT.MYSQLDB_LOGIN_BACKEND_URL
+);
+
+export { getMysqlClient, getMysqlClientBackend };

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
   This script can run in the browser and nodejs, both as a module
   and executable.
@@ -19,18 +17,22 @@ import { generateRandomName, randomInteger } from "js_utils/misc";
 import { isRuntime } from "js_utils/environment";
 
 /*
+  ------------------------------ CLI ------------------------------
   Assume this module has been executed as a script if the parent node process
   has been provided with command line arguments instead of being used as a
   module through an import.
- */
 
-if (isRuntime("node") && globalThis.process?.argv?.length > 2) {
-  const arg1 = parseInt(process.argv[2]);
-  process.argv.splice(2);
-  const players = randomPlayer(arg1);
-  console.log(players);
+  The command line arguments if any; are consumed by this script before
+  importing other scripts which read process.argv to determine their calling
+  context.
+*/
+if (isRuntime("node") && globalThis.process.argv.length > 2) {
+  const arg1 = parseInt(process.argv.splice(2, 1));
+  console.log(randomPlayer(arg1));
+  process.exit();
 }
 
+/* ------------------------------ MODULE ------------------------------ */
 function randomPlayer(n = 1) {
   const players = [];
 

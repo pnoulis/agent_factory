@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
   This script can be executed from the command line or imported
   as a module in a nodejs runtime only. Browser runtime is not supported.
@@ -16,30 +14,29 @@
  */
 
 import process from "node:process";
-import { ENVIRONMENT } from "../config.js";
-import { mysqlClient } from "../clients/mysql.js";
-
-const mysqlClientBackend = await mysqlClient(
-  ENVIRONMENT.MYSQLDB_LOGIN_BACKEND_URL,
+import { getMysqlClientBackend } from "../clients/mysql.js";
+const mysqlClientBackend = await getMysqlClientBackend(
   {
     multipleStatements: true,
   },
 );
 
 /*
+  ------------------------------ CLI ------------------------------
   Assume this module has been executed as a script if the parent node process
   has been provided with command line arguments instead of being used as a
   module through an import.
- */
 
+  The command line arguments if any; are consumed by this script before
+  importing other scripts which read process.argv to determine their calling
+  context.
+*/
 if (process.argv.length > 2) {
-  flushBackendDB()
-    .then((res) => {
-      process.exit();
-    })
-    .catch((err) => console.log(err));
+  process.argv.splice(2);
+  flushBackendDB().finally(process.exit);
 }
 
+/* ------------------------------ MODULE ------------------------------ */
 function flushBackendDB() {
   const sql = [
     "SET foreign_key_checks = 0",
@@ -56,6 +53,7 @@ function flushBackendDB() {
       console.log("Successfull backend mysqldb flush!");
     })
     .catch((err) => {
+      console.log(err);
       console.log("Failed backend mysqldb flush!");
       throw err;
     });

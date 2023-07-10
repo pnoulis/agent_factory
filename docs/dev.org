@@ -16,10 +16,18 @@ CLOSED: [2023-07-09 Sun 09:07]
 The scripts depend on services which read the environment at runtime. As such if
 the expected symbols are not defined at the appointed location they are unable
 to initialize and fail.
-** TODO registerPlayers
-** TODO registerWristbands
-** TODO registerTeams
-** TODO addPackage
-** TODO startTeam
+** DONE registerPlayers
+CLOSED: [2023-07-10 Mon 09:08]
+** DONE registerWristbands
+CLOSED: [2023-07-10 Mon 09:08]
+** DONE registerTeams
+CLOSED: [2023-07-10 Mon 09:08]
+** DONE addPackage
+CLOSED: [2023-07-10 Mon 09:08]
+** DONE startTeam
+CLOSED: [2023-07-10 Mon 09:08]
 * Write a script that resets the backend database for testing and development purposes
-** TODO flushBackendDB
+** DONE flushBackendDB
+CLOSED: [2023-07-10 Mon 09:08]
+
+* TODO Transfer emulateScan to scripts/

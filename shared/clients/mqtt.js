@@ -20,8 +20,13 @@ if (ENVIRONMENT.RUNTIME === "node") {
  *
  * mqttClientBackend.once('connect', () => console.log('connected'));
  **/
-function getMqttClient(url) {
-  return new MQTT_CLIENT_LIB.connect(url);
+function getMqttClient(url, options = {}) {
+  return new MQTT_CLIENT_LIB.connect(url, options);
 }
 
-export { getMqttClient };
+const getMqttClientBackend = getMqttClient.bind(
+  null,
+  ENVIRONMENT.MQTT_LOGIN_BACKEND_URL
+);
+
+export { getMqttClient, getMqttClientBackend };

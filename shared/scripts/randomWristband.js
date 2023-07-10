@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
   This script can run in the browser and nodejs, both as a module
   and executable.
@@ -18,23 +16,26 @@
 import { randomInteger } from "js_utils/misc";
 import { WRISTBAND_COLORS } from "agent_factory.shared/constants.js";
 import { isRuntime } from "js_utils/environment";
-
-/*
-  Assume this module has been executed as a script if the parent node process
-  has been provided with command line arguments instead of being used as a
-  module through an import.
- */
-
 const ids = [];
 let colors = [...WRISTBAND_COLORS];
 
+/*
+  ------------------------------ CLI ------------------------------
+  Assume this module has been executed as a script if the parent node process
+  has been provided with command line arguments instead of being used as a
+  module through an import.
+
+  The command line arguments if any; are consumed by this script before
+  importing other scripts which read process.argv to determine their calling
+  context.
+*/
 if (isRuntime("node") && globalThis.process.argv.length > 2) {
-  const arg1 = parseInt(process.argv[2]);
-  process.argv.splice(2);
-  const wristbands = randomWristband(arg1);
-  console.log(wristbands);
+  const arg1 = parseInt(process.argv.splice(2, 1));
+  console.log(randomWristband(arg1));
+  process.exit();
 }
 
+/* ------------------------------ MODULE ------------------------------ */
 function randomId() {
   const id = randomInteger(1, 900);
   if (ids.some((previousId) => previousId === id)) {

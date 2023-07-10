@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
   This script can be executed from the command line or imported
   as a module in a nodejs runtime only. Browser runtime is not supported.
@@ -14,36 +12,36 @@
   ./registerTeam.js 1
 */
 
-const arg1 = parseInt(process.argv[2]);
-const arg2 = process.argv.splice(3);
 
 import { CreateBackendService } from "../services/backend/CreateBackendService.js";
 import { calcTeamSize } from "../utils/misc.js";
 import { MAX_TEAM_SIZE } from "../constants.js";
 import { generateRandomName } from "js_utils/misc";
-
 const bservice = CreateBackendService();
 
 /*
+  ------------------------------ CLI ------------------------------
   Assume this module has been executed as a script if the parent node process
   has been provided with command line arguments instead of being used as a
   module through an import.
- */
 
+  The command line arguments if any; are consumed by this script before
+  importing other scripts which read process.argv to determine their calling
+  context.
+*/
+let arg1, arg2;
+if (globalThis.process.argv.length > 2) {
+  arg1 = parseInt(process.argv.splice(2, 1));
+  arg2 = process.argv.splice(2);
+}
+const { registerWristband } = await import("./registerWristband.js");
 if (arg1) {
-  const { registerWristband } = await import("./registerWristband.js");
-  globalThis.registerWristband = registerWristband;
-  registerTeam(arg1, ...arg2)
-    .then((res) => {
-      console.log(res);
-      process.exit();
-    })
-    .catch((err) => console.log(err));
-} else {
-  const { registerWristband } = await import("./registerWristband.js");
-  globalThis.registerWristband = registerWristband;
+  registerTeam(arg1, ...arg2).then((res) => {
+    console.dir(res, { depth: null})
+  }).finally(process.exit);
 }
 
+/* ------------------------------ MODULE ------------------------------ */
 /**
  * Register Team.
  * @param {number || string || Array<string>} teams
@@ -102,8 +100,7 @@ async function registerTeam(teams, ...registeredPlayers) {
           typeof p === "string" ? p : p.username,
         );
       } else {
-        jobs[i].players = await globalThis
-          .registerWristband(MAX_TEAM_SIZE)
+        jobs[i].players = await registerWristband(MAX_TEAM_SIZE)
           .then((players) => players.map((p) => p.username));
       }
 
@@ -116,6 +113,7 @@ async function registerTeam(teams, ...registeredPlayers) {
       }
       console.log(`Successfully registered team ${i}`);
     } catch (err) {
+      console.log(err);
       console.log(`Failed to register team ${i}`);
       throw err;
     }

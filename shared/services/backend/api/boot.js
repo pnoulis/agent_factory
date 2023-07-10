@@ -23,6 +23,13 @@
  */
 
 function boot() {
+  if (this.booted)
+    return Promise.resolve({
+      result: "OK",
+      deviceId: this.id,
+      roomName: this.roomName,
+      deviceType: this.deviceType,
+    });
   return this.proxy
     .publish("/boot", {
       deviceId: this.id,

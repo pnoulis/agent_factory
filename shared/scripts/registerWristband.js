@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
   This script can be executed from the command line or imported
   as a module in a nodejs runtime only. Browser runtime is not supported.
@@ -18,38 +16,35 @@
 
 */
 
-const arg1 = parseInt(process.argv[2]);
-const arg2 = process.argv.splice(3);
-const { randomPlayer } = await import("./randomPlayer.js");
-const { randomWristband } = await import("./randomWristband.js");
-
 import { CreateBackendService } from "../services/backend/CreateBackendService.js";
-
 const bservice = CreateBackendService();
+const ERR_DUPLICATE_PLAYER = "This username already exists";
+const ERR_PLAYER_HAS_WRISTBAND = "player has already a registered wristband";
 
 /*
+  ------------------------------ CLI ------------------------------
   Assume this module has been executed as a script if the parent node process
   has been provided with command line arguments instead of being used as a
   module through an import.
- */
 
+  The command line arguments if any; are consumed by this script before
+  importing other scripts which read process.argv to determine their calling
+  context.
+*/
+let arg1, arg2;
+if (globalThis.process.argv.length > 2) {
+  arg1 = parseInt(process.argv.splice(2, 1));
+  arg2 = process.argv.splice(2);
+}
+const { randomWristband } = await import("./randomWristband.js");
+const { registerPlayer } = await import("./registerPlayer.js");
 if (arg1) {
-  const { registerPlayer } = await import("./registerPlayer.js");
-  globalThis.registerPlayer = registerPlayer;
-  __registerWristband(false, arg1, ...arg2)
-    .then((res) => {
-      console.log(res);
-      process.exit();
-    })
-    .catch((err) => console.log(err));
-} else {
-  const { registerPlayer, registerDuplicatePlayer } = await import(
-    "./registerPlayer.js"
-  );
-  globalThis.registerPlayer = registerPlayer;
-  globalThis.registerDuplicatePlayer = registerDuplicatePlayer;
+  __registerWristband(false, arg1).then((res) => {
+    console.dir(res, { depth: null })
+  }).finally(process.exit);
 }
 
+/* ------------------------------ MODULE ------------------------------ */
 /**
  * Register Wristband
  * @param {number || Object || Array<Object> || null} wristbands
@@ -78,9 +73,6 @@ if (arg1) {
  * registerWristband([5, {number: 5}], p1) -> 5 players where 1st gets
  * wristband number 5
  */
-
-const ERR_DUPLICATE_PLAYER = "This username already exists";
-const ERR_PLAYER_HAS_WRISTBAND = "player has already a registered wristband";
 async function __registerWristband(dupNoErr, wristbands, ...registeredPlayers) {
   let i = 0;
   let jobs = null;
@@ -112,10 +104,10 @@ async function __registerWristband(dupNoErr, wristbands, ...registeredPlayers) {
       if (dupNoErr) {
         player = await globalThis.registerDuplicatePlayer(player);
       } else if (!player) {
-        player = await globalThis.registerPlayer();
+        player = await registerPlayer();
       } else {
         try {
-          player = await globalThis.registerPlayer(player);
+          player = await registerPlayer(player);
         } catch (err) {
           if (err.cause === ERR_DUPLICATE_PLAYER) {
             throw err;
@@ -163,6 +155,7 @@ async function __registerWristband(dupNoErr, wristbands, ...registeredPlayers) {
       delete jobs[i].wristband.color;
       console.log(`Successfully registered player wristband ${i}`);
     } catch (err) {
+      console.log(err);
       console.log(`Failed to register player wristband ${i}`);
       throw err;
     }

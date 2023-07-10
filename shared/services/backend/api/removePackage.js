@@ -15,7 +15,7 @@
  *
  * @param {Object} payload
  * @param {string} payload.teamName
- * @param {number || string} payload.packageId
+ * @param {number} payload.packageId
  *
  * @returns {Promise} - SuccessPayload or FailurePayload
  * @throws {TimeoutError}

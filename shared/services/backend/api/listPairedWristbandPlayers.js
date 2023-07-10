@@ -1,0 +1,3 @@
+function listPairedWristbandPlayers() {}
+
+export { listPaired };

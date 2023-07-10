@@ -75,7 +75,7 @@ test: mode := 'testing'
 test: suite := *
 test: env
 	set -a; source ./.env && \
-	$(TESTER) run --reporter verbose --mode=$(mode) $(suite)
+	$(TESTER) run --reporter='verbose' --mode=$(mode) $(suite)
 
 # ------------------------------ LINT ------------------------------ #
 .PHONY: lint

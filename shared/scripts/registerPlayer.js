@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
   This script can be executed from the command line or imported
   as a module in a nodejs runtime only. Browser runtime is not supported.
@@ -17,30 +15,33 @@
   ./registerPlayer.js 1
  */
 
-const arg1 = parseInt(process.argv[2]);
-process.argv.splice(2);
-const { randomPlayer } = await import("./randomPlayer.js");
-
 
 import { CreateBackendService } from "../services/backend/CreateBackendService.js";
-
 const bservice = CreateBackendService();
+const ERR_DUPLICATE_PLAYER = "This username already exists";
 
 /*
+  ------------------------------ CLI ------------------------------
   Assume this module has been executed as a script if the parent node process
   has been provided with command line arguments instead of being used as a
   module through an import.
- */
 
+  The command line arguments if any; are consumed by this script before
+  importing other scripts which read process.argv to determine their calling
+  context.
+*/
+let arg1;
+if (globalThis.process.argv.length > 2) {
+  arg1 = parseInt(process.argv.splice(2, 1));
+}
+const { randomPlayer } = await import("./randomPlayer.js");
 if (arg1) {
-  __registerPlayer(false, arg1)
-    .then((res) => {
-      console.log(res);
-      process.exit();
-    })
-    .catch((err) => console.log(err));
+  __registerPlayer(false, arg1).then((res) => {
+    console.dir(res, { depth: null})
+  }).finally(process.exit);
 }
 
+/* ------------------------------ MODULE ------------------------------ */
 /**
  * Register player
  *
@@ -66,8 +67,6 @@ if (arg1) {
  * registerDuplicatePlayer({username: "p1"}) -> 1 player
  * registerDuplicatePlayer({username: "p1"}) -> 1 player
  **/
-
-const ERR_DUPLICATE_PLAYER = "This username already exists";
 async function __registerPlayer(dupNoErr, ...players) {
   let i = 0;
   let jobs = null;
@@ -112,6 +111,7 @@ async function __registerPlayer(dupNoErr, ...players) {
       }
       console.log(`Successfully registered player ${i}`);
     } catch (err) {
+      console.log(err);
       console.log(`Failed to register player ${i}`);
       throw err;
     }

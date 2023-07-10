@@ -1,5 +1,5 @@
-function listRegisteredPlayers() {
-  return this.publish("/players/list");
+function listRegisteredPlayers(payload) {
+  return this.publish("/players/list", payload);
 }
 
 export { listRegisteredPlayers };

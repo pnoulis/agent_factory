@@ -33,3 +33,6 @@ refactor.*
 # Ignore python script
 __pycache__/
 *.py[cod]
+
+# Ignore ini files
+*.ini

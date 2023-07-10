@@ -1,9 +1,9 @@
 import { ENVIRONMENT } from "../../config.js";
 import { BackendService } from "./BackendService.js";
-import { getMqttClient } from "../../clients/mqtt.js";
+import { getMqttClientBackend } from "../../clients/mqtt.js";
 
 // mqtt backend client
-const backendMqttClient = getMqttClient(ENVIRONMENT.MQTT_LOGIN_BACKEND_URL);
+const backendMqttClient = getMqttClientBackend();
 backendMqttClient.once("connect", () => {
   console.log("Mqtt client connected!");
 });
@@ -13,7 +13,7 @@ const defaultInstance = new BackendService(
   backendMqttClient,
   ENVIRONMENT.BACKEND_MQTT_ROOM_NAME,
   ENVIRONMENT.BACKEND_MQTT_DEVICE_TYPE,
-  ENVIRONMENT.BACKEND_MQTT_CLIENT_ID,
+  ENVIRONMENT.BACKEND_MQTT_CLIENT_ID
 );
 
 defaultInstance
@@ -28,9 +28,11 @@ defaultInstance
   });
 
 function CreateBackendService(id, roomName, deviceType) {
-  if (this === undefined) {
+  if (!this || typeof this !== CreateBackendService) {
     return defaultInstance;
   } else {
+    console.log("this was provided");
+    console.log(this);
     ++instances;
     if (!id) {
       id = instances.toString().padStart(3, "0");
@@ -39,7 +41,7 @@ function CreateBackendService(id, roomName, deviceType) {
       backendMqttClient,
       roomName || ENVIRONMENT.BACKEND_MQTT_ROOM_NAME,
       deviceType || ENVIRONMENT.BACKEND_MQTT_DEVICE_TYPE,
-      id,
+      id
     );
   }
 }
