@@ -122,6 +122,7 @@ async function __registerWristband(dupNoErr, wristbands, ...registeredPlayers) {
           }
         }
       }
+
       Object.assign(jobs[i], {
         ...registeredPlayers[i],
         ...player,

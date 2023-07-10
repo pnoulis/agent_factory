@@ -560,14 +560,14 @@ const TOPICS = [
   // Add package to team
   {
     alias: "/team/package/add",
-    pub: `/${PREFIX}/team/package/add`,
-    sub: `/${PREFIX}/team/package/add/response`,
+    pub: `${PREFIX}/team/package/add`,
+    sub: `${PREFIX}/team/package/add/response`,
   },
   // Remove package from team
   {
     alias: "/team/package/delete",
-    pub: `/${PREFIX}/team/package/delete`,
-    sub: `/${PREFIX}/team/package/delete/response`,
+    pub: `${PREFIX}/team/package/delete`,
+    sub: `${PREFIX}/team/package/delete/response`,
   },
   // Active package
   {

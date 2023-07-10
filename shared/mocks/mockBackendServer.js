@@ -1,23 +1,15 @@
-import { detectRuntime, getEnvar } from "js_utils/environment";
+import { ENVIRONMENT } from "../config.js";
+import { getMqttClient } from "../clients/mqtt.js";
 import { toServer } from "agent_factory.shared/backend_topics.js";
 
-let LIB_MQTT = undefined;
-if (detectRuntime() === "node") {
-  LIB_MQTT = await import("mqtt");
-} else {
-  LIB_MQTT = await import("precompiled-mqtt");
-}
-
-const BACKEND_URL = getEnvar("BACKEND_URL", true);
-
-// mqtt client
-const mqttClient = new LIB_MQTT.connect(BACKEND_URL);
-mqttClient.once("connect", function () {
-  console.log("Mock backend server connected");
-});
-
+const mqttClientMockBackend = getMqttClient(ENVIRONMENT.MQTT_LOGIN_BACKEND_URL);
 // sub - pub map
-const SPMAP = new Map(toServer.map(({ sub, pub }) => [sub, pub]));
+const SPMAP = new Map(
+  toServer.map(({ sub, pub }) => [
+    sub && sub.replace(/\$\{clientId\}/, ENVIRONMENT.BACKEND_MQTT_CLIENT_ID),
+    pub && pub.replace(/\$\{clientId\}/, ENVIRONMENT.BACKEND_MQTT_CLIENT_ID),
+  ]),
+);
 
 const NEXT_RESPONSE = [
   function (publish) {
@@ -36,9 +28,7 @@ const mockBackendServer = {
     const nextPublisher = mockBackendServer.publishersQueue[n];
     mockBackendServer.publishersQueue.splice(n, 1);
     NEXT_RESPONSE[0]((payload) => {
-      console.log(`MOCK RESPONSE on ${nextPublisher.pub}`);
-      console.log(payload);
-      mqttClient.publish(nextPublisher.pub, JSON.stringify(payload));
+      mqttClientMockBackend.publish(nextPublisher.pub, JSON.stringify(payload));
     });
   },
   fail(withPayload) {
@@ -47,7 +37,7 @@ const mockBackendServer = {
         withPayload || {
           result: "NOK",
           timestamp: 12345456789,
-        }
+        },
       );
     };
   },
@@ -57,7 +47,7 @@ const mockBackendServer = {
         withPayload || {
           result: "OK",
           timestamp: 12345456789,
-        }
+        },
       );
     };
   },
@@ -72,9 +62,8 @@ function handleMessage(sub) {
   const pub = SPMAP.get(sub);
   if (mockBackendServer.auto) {
     NEXT_RESPONSE[0]((payload) => {
-      console.log(`MOCK RESPONSE on ${pub}`);
-      console.log(payload);
-      mqttClient.publish(pub, JSON.stringify(payload));
+      console.log(`MOCK PUBLISHING AT ${pub}`);
+      mqttClientMockBackend.publish(pub, JSON.stringify(payload));
     });
   } else {
     mockBackendServer.publishersQueue.push({ pub, sub });
@@ -82,20 +71,23 @@ function handleMessage(sub) {
 }
 
 // Subscribe to all client publishes
-for (const sub of SPMAP.keys()) {
-  if (!sub) continue;
-  mqttClient.subscribe(sub, function (err) {
-    if (err) {
-      console.log(`error trying to subscribe to topic:${sub}`);
-    } else {
-      console.log(`listening to:${sub}`);
-    }
-  });
-}
+mqttClientMockBackend.on("connect", () => {
+  console.log("Mock backend server connected!");
+  for (const sub of SPMAP.keys()) {
+    if (!sub) continue;
+    mqttClientMockBackend.subscribe(sub, function (err) {
+      if (err) {
+        console.log(`error trying to subscribe to topic:${sub}`);
+      } else {
+        console.log(`listening to:${sub}`);
+      }
+    });
+  }
+});
 
 // Intercept all message events
-mqttClient.on("message", function (sub, msg) {
-  console.log(`MOCK REQUEST on ${sub}`);
+mqttClientMockBackend.on("message", function (sub, msg) {
+  console.log(`MOCK RECEIVED REQUEST on ${sub}`);
   console.log(msg.toString());
   handleMessage(sub);
 });

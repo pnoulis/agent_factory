@@ -48,6 +48,7 @@ function flushBackendDB() {
     "UPDATE wristband set active = 0 where active = 1",
     "TRUNCATE player",
     "TRUNCATE package",
+    "SET foreign_key_checks = 1"
   ];
   return mysqlClientBackend
     .query(sql.join(";"))

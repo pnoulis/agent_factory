@@ -36,7 +36,7 @@ all: build
 # ------------------------------ RUN ------------------------------ #
 .PHONY: run
 run: mode := 'development'
-file := '$(SRCDIR)/tmp/scratch.js'
+run: file := '$(SRCDIR)/tmp/scratch.js'
 run: env
 	set -a; source ./.env && \
 	$(INTERPRETER) $(file) \
@@ -72,30 +72,30 @@ build: env
 # ------------------------------ TEST ------------------------------ #
 .PHONY: test
 test: mode := 'testing'
-suite := *
+test: suite := *
 test: env
 	set -a; source ./.env && \
 	$(TESTER) run --reporter verbose --mode=$(mode) $(suite)
 
 # ------------------------------ LINT ------------------------------ #
 .PHONY: lint
-file := '.'
+lint: file := '.'
 lint:
 	$(LINTER) --ext js,jsx --fix $(file)
 
 .PHONY: lint-check
-file := '.'
+lint-check: file := '.'
 lint-check:
 	$(LINTER) --ext js,jsx $(file)
 
 # ------------------------------ FORMAT ------------------------------ #
 .PHONY: fmt
-file := '.'
+fmt: file := '.'
 fmt:
 	$(FORMATER) --write $(file)
 
 .PHONY: fmt-check
-file := '.'
+fmt-check: file := '.'
 fmt-check:
 	$(FORMATER) --check $(file)
 
