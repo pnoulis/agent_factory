@@ -9,7 +9,7 @@
 /**
  * List available teams.
  *
- * @returns {Promise} - SuccessPayload
+ * @returns {Promise} response
  * @throws {TimeoutError}
  **/
 function listTeams() {

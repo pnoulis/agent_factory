@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
   This script can be executed from the command line or imported
   as a module in a nodejs runtime only. Browser runtime is not supported.
@@ -11,7 +9,12 @@
 
   Example:
 
-  ./emulateScan.js 1 2
+  node emulateScan.js 1 2
+
+  Unfortunately the script cannot accept a shebang #!/usr/bin/env node which it
+  would allow for its execution without the need to prefix it with 'node'
+  because in some contexts it breaks importing the script as a module.
+
  */
 
 import { exec, spawn } from "node:child_process";

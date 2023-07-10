@@ -15,7 +15,6 @@
   ./registerPlayer.js 1
  */
 
-
 import { CreateBackendService } from "../services/backend/CreateBackendService.js";
 const bservice = CreateBackendService();
 const ERR_DUPLICATE_PLAYER = "This username already exists";
@@ -36,9 +35,11 @@ if (globalThis.process.argv.length > 2) {
 }
 const { randomPlayer } = await import("./randomPlayer.js");
 if (arg1) {
-  __registerPlayer(false, arg1).then((res) => {
-    console.dir(res, { depth: null})
-  }).finally(process.exit);
+  __registerPlayer(false, arg1)
+    .then((res) => {
+      console.dir(res, { depth: null });
+    })
+    .finally(process.exit);
 }
 
 /* ------------------------------ MODULE ------------------------------ */
@@ -107,7 +108,10 @@ async function __registerPlayer(dupNoErr, ...players) {
           throw new Error("Failed player registration", { cause: message });
         }
       } else {
-        jobs[i] = player;
+        jobs[i] = {
+          ...player,
+          password: jobs[i].password,
+        };
       }
       console.log(`Successfully registered player ${i}`);
     } catch (err) {

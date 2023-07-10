@@ -1,6 +1,6 @@
 /**
  * Wristband scan listener callback
- * @callback wristbandScanListener
+ * @typedef ScanListenerCallback
  * @param {error} error
  * @param {Object} backendWristband
  * @param {number} backendWristband.wristbandNumber
@@ -10,19 +10,19 @@
 /**
  * Subscribe wristband scan
  *
- * @param {wristbandScanListener} listener - Message handler
+ * @param {ScanListenerCallback} listener - Message handler
  * @param {Object} options
  * @param {string} options.mode - If persistent keep the channel
  * open until unsubscription.
- * @returns {Promise<SuccessfullSubscription>}
- * @throws {FailedSubscription}
+ * @returns {Promise<UnsubscribeFn>}
+ * @throws {TimeoutError}
  */
 
-function subscribeWristbandScan(payload) {
+function subscribeWristbandScan(listener, options) {
   return this.subscribe(
     "/wristband/scan",
-    payload.listener,
-    payload.options || { mode: "persistent" }
+    listener,
+    options || { mode: "persistent" },
   );
 }
 

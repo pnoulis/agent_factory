@@ -17,11 +17,8 @@
  *
  * @param {Object} payload
  * @param {string} payload.teamName
- * @param {Array<Objects>} payload.groupPlayers
- * @param {Object} groupPlayers.any
- * @param {string} groupPlayer.username
- * @param {number} groupPlayer.wristbandNumber
- * @returns {Promise} - SuccessPayload or FailurePayload
+ * @param {Array.<{username: string, wristbandNumber: number}>} payload.groupPlayers
+ * @returns {Promise} response
  * @throws {TimeoutError}
  **/
 function mergeGroupTeam(payload) {
