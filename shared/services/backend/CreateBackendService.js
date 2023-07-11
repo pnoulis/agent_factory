@@ -19,7 +19,7 @@ const defaultInstance = new BackendService(
 defaultInstance
   .boot()
   .then((res) => {
-    console.log(`Backend service ${defaultInstance.id} successful booted!`);
+    console.log(`Backend service ${defaultInstance.id} successful boot!`);
   })
   .catch(function (err) {
     console.log(err);
@@ -31,8 +31,6 @@ function CreateBackendService(id, roomName, deviceType) {
   if (!this || typeof this !== CreateBackendService) {
     return defaultInstance;
   } else {
-    console.log("this was provided");
-    console.log(this);
     ++instances;
     if (!id) {
       id = instances.toString().padStart(3, "0");

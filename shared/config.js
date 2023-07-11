@@ -2,12 +2,17 @@ import { detectRuntime, detectMode, getEnvar } from "js_utils/environment";
 
 const RUNTIME = detectRuntime();
 
-if (typeof __ENV__ !== "undefined") {
-  globalThis.__ENV__ = __ENV__;
+
+if (typeof __STATIC_ENV__ !== "undefined") {
+  // Means application is running within a browser and __STATIC_ENV__ has been
+  // statically defined by a macro preprocessor.
+  globalThis.__ENV__ = __STATIC_ENV__;
 } else if (RUNTIME === "node") {
   const { loadenv } = await import("js_utils/node/loadenv");
   globalThis.__ENV__ = {};
   loadenv(null, globalThis.__ENV__);
+} else {
+  throw new Error("config.js failed to load __ENV__");
 }
 
 const ENVIRONMENT = {

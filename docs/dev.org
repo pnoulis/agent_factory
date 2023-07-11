@@ -48,3 +48,17 @@ CLOSED: [2023-07-10 Mon 20:37]
 ** DONE subscribeWristbandScan
 CLOSED: [2023-07-10 Mon 20:50]
 
+
+* TODO Afmachine
+The afmachine is a superclass holding multiple objects.
+It basically extends the BackendService.
+** DONE Move pipeline to js_utils
+CLOSED: [2023-07-11 Tue 09:33]
+
+** DONE Rename afmachine/src/afmachine to afmachine/src/entities
+CLOSED: [2023-07-11 Tue 09:45]
+
+** DONE Check environment is loaded at afmachine
+CLOSED: [2023-07-11 Tue 10:10]
+
+** TODO Import backend service and logger service
