@@ -12,7 +12,11 @@
 
   Example:
 
-  ./registerWristband.js 1
+  node ./registerWristband.js 1
+
+  The script cannot accept a shebang '#!/usr/bin/env node' which it would allow
+  for its execution without the need to prefix it with 'node' because in some
+  contexts it breaks importing the script as a module.
 
 */
 
@@ -39,9 +43,11 @@ if (globalThis.process.argv.length > 2) {
 const { randomWristband } = await import("./randomWristband.js");
 const { registerPlayer } = await import("./registerPlayer.js");
 if (arg1) {
-  __registerWristband(false, arg1).then((res) => {
-    console.dir(res, { depth: null })
-  }).finally(process.exit);
+  __registerWristband(false, arg1)
+    .then((res) => {
+      console.dir(res, { depth: null });
+    })
+    .finally(process.exit);
 }
 
 /* ------------------------------ MODULE ------------------------------ */

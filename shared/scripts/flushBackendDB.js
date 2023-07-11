@@ -9,17 +9,19 @@
 
   Example:
 
-  ./flushBackendDB.js 1
+  node ./flushBackendDB.js 1
+
+  The script cannot accept a shebang '#!/usr/bin/env node' which it would allow
+  for its execution without the need to prefix it with 'node' because in some
+  contexts it breaks importing the script as a module.
 
  */
 
 import process from "node:process";
 import { getMysqlClientBackend } from "../clients/mysql.js";
-const mysqlClientBackend = await getMysqlClientBackend(
-  {
-    multipleStatements: true,
-  },
-);
+const mysqlClientBackend = await getMysqlClientBackend({
+  multipleStatements: true,
+});
 
 /*
   ------------------------------ CLI ------------------------------
@@ -45,7 +47,7 @@ function flushBackendDB() {
     "UPDATE wristband set active = 0 where active = 1",
     "TRUNCATE player",
     "TRUNCATE package",
-    "SET foreign_key_checks = 1"
+    "SET foreign_key_checks = 1",
   ];
   return mysqlClientBackend
     .query(sql.join(";"))

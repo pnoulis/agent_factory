@@ -12,9 +12,10 @@
 
   node ./randomPackage.js 1
 
-  Unfortunately the script cannot accept a shebang #!/usr/bin/env node which it
-  would allow for its execution without the need to prefix it with 'node'
-  because in some contexts it breaks importing the script as a module.
+  The script cannot accept a shebang '#!/usr/bin/env node' which it would allow
+  for its execution without the need to prefix it with 'node' because in some
+  contexts it breaks importing the script as a module.
+
  */
 
 import { AF_PACKAGES } from "../constants.js";

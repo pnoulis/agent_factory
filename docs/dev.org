@@ -30,4 +30,21 @@ CLOSED: [2023-07-10 Mon 09:08]
 ** DONE flushBackendDB
 CLOSED: [2023-07-10 Mon 09:08]
 
-* TODO Transfer emulateScan to scripts/
+* DONE Transfer emulateScan to scripts/
+CLOSED: [2023-07-10 Mon 19:11]
+
+* DONE Rudimentary tests all api calls
+CLOSED: [2023-07-10 Mon 20:50]
+** DONE infoWristband
+CLOSED: [2023-07-10 Mon 19:58]
+** DONE listTeams
+CLOSED: [2023-07-10 Mon 20:05]
+** DONE loginPlayer
+CLOSED: [2023-07-10 Mon 20:13]
+** DONE searchPlayer
+CLOSED: [2023-07-10 Mon 20:20]
+** DONE mergeGroupTeam
+CLOSED: [2023-07-10 Mon 20:37]
+** DONE subscribeWristbandScan
+CLOSED: [2023-07-10 Mon 20:50]
+

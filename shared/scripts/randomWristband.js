@@ -9,7 +9,11 @@
 
   Example:
 
-  ./randomWristband.js 1
+  node ./randomWristband.js 1
+
+  The script cannot accept a shebang '#!/usr/bin/env node' which it would allow
+  for its execution without the need to prefix it with 'node' because in some
+  contexts it breaks importing the script as a module.
 
  */
 

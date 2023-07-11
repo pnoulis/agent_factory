@@ -9,9 +9,13 @@
 
   Example:
 
-  ./registerTeam.js 1
-*/
+  node ./registerTeam.js 1
 
+  The script cannot accept a shebang '#!/usr/bin/env node' which it would allow
+  for its execution without the need to prefix it with 'node' because in some
+  contexts it breaks importing the script as a module.
+
+*/
 
 import { CreateBackendService } from "../services/backend/CreateBackendService.js";
 import { calcTeamSize } from "../utils/misc.js";
@@ -36,9 +40,11 @@ if (globalThis.process.argv.length > 2) {
 }
 const { registerWristband } = await import("./registerWristband.js");
 if (arg1) {
-  registerTeam(arg1, ...arg2).then((res) => {
-    console.dir(res, { depth: null})
-  }).finally(process.exit);
+  registerTeam(arg1, ...arg2)
+    .then((res) => {
+      console.dir(res, { depth: null });
+    })
+    .finally(process.exit);
 }
 
 /* ------------------------------ MODULE ------------------------------ */
@@ -100,8 +106,9 @@ async function registerTeam(teams, ...registeredPlayers) {
           typeof p === "string" ? p : p.username,
         );
       } else {
-        jobs[i].players = await registerWristband(MAX_TEAM_SIZE)
-          .then((players) => players.map((p) => p.username));
+        jobs[i].players = await registerWristband(MAX_TEAM_SIZE).then(
+          (players) => players.map((p) => p.username),
+        );
       }
 
       const { result, message } = await bservice.mergeTeam({
