@@ -2,7 +2,6 @@ import { detectRuntime, detectMode, getEnvar } from "js_utils/environment";
 
 const RUNTIME = detectRuntime();
 
-
 if (typeof __STATIC_ENV__ !== "undefined") {
   // Means application is running within a browser and __STATIC_ENV__ has been
   // statically defined by a macro preprocessor.
@@ -18,6 +17,7 @@ if (typeof __STATIC_ENV__ !== "undefined") {
 const ENVIRONMENT = {
   RUNTIME,
   MODE: detectMode(),
+  LOGLEVEL: getEnvar("LOGLEVEL", false, "debug"),
   BACKEND_MQTT_CLIENT_ID: getEnvar("BACKEND_MQTT_CLIENT_ID", true),
   BACKEND_MQTT_TOPIC_PREFIX: getEnvar("BACKEND_MQTT_TOPIC_PREFIX", true),
   BACKEND_MQTT_DEVICE_TYPE: getEnvar("BACKEND_MQTT_DEVICE_TYPE", true),

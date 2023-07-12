@@ -17,7 +17,11 @@ import { mergeGroupTeam } from "./api/mergeGroupTeam.js";
 import { listTeams } from "./api/listTeams.js";
 import { searchPlayer } from "./api/searchPlayer.js";
 import { infoWristband } from "./api/infoWristband.js";
-import { subscribeWristbandScan } from "./api/subscribeWristbandScan.js";
+import {
+  getWristbandScan,
+  onWristbandScan,
+  onceWristbandScan,
+} from "./api/subscribeWristbandScan.js";
 
 class BackendService {
   constructor(mqttClient, roomName, deviceType, clientId) {
@@ -42,6 +46,12 @@ class BackendService {
     });
   }
 
+  start() {
+    return this.boot();
+  }
+  stop(cb) {
+    this.mqttClient.end(cb);
+  }
   publish(topic, message, options) {
     return this.tr.run(() => this.proxy.publish(topic, message, options));
   }
@@ -67,6 +77,8 @@ BackendService.prototype.mergeGroupTeam = mergeGroupTeam;
 BackendService.prototype.listTeams = listTeams;
 BackendService.prototype.searchPlayer = searchPlayer;
 BackendService.prototype.infoWristband = infoWristband;
-BackendService.prototype.subscribeWristbandScan = subscribeWristbandScan;
+BackendService.prototype.getWristbandScan = getWristbandScan;
+BackendService.prototype.onWristbandScan = onWristbandScan;
+BackendService.prototype.onceWristbandScan = onceWristbandScan;
 
 export { BackendService };

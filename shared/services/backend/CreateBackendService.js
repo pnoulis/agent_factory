@@ -16,12 +16,13 @@ const defaultInstance = new BackendService(
   ENVIRONMENT.BACKEND_MQTT_CLIENT_ID
 );
 
+// Creating a default instance might be toggled off in production MODE.
 defaultInstance
-  .boot()
-  .then((res) => {
+  .start()
+  .then(function () {
     console.log(`Backend service ${defaultInstance.id} successful boot!`);
   })
-  .catch(function (err) {
+  .catch(function () {
     console.log(err);
     console.log(`Backend service ${defaultInstance.id} failed boot!`);
     throw err;

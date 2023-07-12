@@ -37,4 +37,4 @@ __pycache__/
 # Ignore ini files
 *.ini
 
-newlogic.*
+ui/newlogic.afadmin_client

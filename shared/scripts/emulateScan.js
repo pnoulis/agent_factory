@@ -26,7 +26,7 @@ const AF_SHAREDIR = findNodePkgDir();
 const AF_SRCDIR = path.resolve(AF_SHAREDIR, "../");
 const PYTHON_SCRIPT_PATH = path.resolve(
   AF_SRCDIR,
-  "gregoris/MQTT_API_Emulator/main.py"
+  "gregoris/MQTT_API_Emulator/main.py",
 );
 const mqttClientBackend = getMqttClientBackend();
 
@@ -41,26 +41,27 @@ const mqttClientBackend = getMqttClientBackend();
   context.
 */
 if (globalThis.process.argv.length > 2) {
-  const arg1 = process.argv[2] === "r" ? undefined : parseInt(process.argv[2]);
-  const arg2 = process.argv[2] === "r" ? undefined : parseInt(process.argv[3]);
-  process.argv.splice(2);
-  emulateScan(arg1, arg2).finally(process.exit);
+  const arg1 = parseInt(process.argv.splice(2, 1));
+  const arg2 = parseInt(process.argv.splice(2, 1));
+  emulateScan(arg1 || "r", arg2 || "r").finally(() => {
+    // for some reason emulate scan needs to write to stdout
+    // in order to not exit prematurely.
+    console.log("done");
+    process.exit;
+  });
 }
 
 /* ------------------------------ MODULE ------------------------------ */
-function runPythonScript(tries) {
+function runPythonScript() {
   return new Promise((resolve, reject) => {
-    if (tries > 1) {
-      reject(new Error(`Could not execute ${PYTHON_SCRIPT_PATH}`));
-    }
     exec("ps aux | grep 'python.*./main.py$'", (err, stdout, stderr) => {
       if (err) {
         spawn("python", [PYTHON_SCRIPT_PATH], {
           stdio: "ignore",
           detached: true,
         }).unref();
-        console.log(`Initiated ${PYTHON_SCRIPT_PATH}`);
-        return runPythonScript(tries + 1);
+        console.log("Spawned main.py!");
+        resolve();
       } else {
         resolve();
       }
@@ -69,15 +70,15 @@ function runPythonScript(tries) {
 }
 
 function emulateScan(number = "r", color = "r") {
-  return runPythonScript(0)
+  return runPythonScript()
     .then(() => {
       return mqttClientBackend.publish(
-        `/themaze/registration5/emulateScan/${number}/${color}`
+        `/themaze/registration5/emulateScan/${number}/${color}`,
       );
     })
     .then(() => {
       console.log(
-        `Successfully published wristband scan. number:${number} color:${color}`
+        `Successfully published wristband scan. number:${number} color:${color}`,
       );
       return [number, color];
     })

@@ -18,23 +18,22 @@
  * @throws {TimeoutError}
  */
 
-function subscribeWristbandScan(listener, options) {
-  return this.subscribe(
-    "/wristband/scan",
-    listener,
-    options || { mode: "persistent" },
-  );
+function getWristbandScan() {
+  return new Promise((resolve, reject) => {
+    this.subscribe(
+      "/wristband/scan",
+      (err, wristband) => (err ? reject(err) : resolve(wristband)),
+      { mode: "response" },
+    ).catch(reject);
+  });
 }
 
-// function getWristbandScan() {
-//   return new Promise((resolve, reject) => {
-//     subscribeWristbandScan({
-//       listener: (err, wristband) => (err ? reject(err) : resolve(wristband)),
-//       options: {
-//         mode: "response",
-//       },
-//     }).catch(reject);
-//   });
-// }
+function onWristbandScan(listener) {
+  return this.subscribe("/wristband/scan", listener, { mode: "persistent" });
+}
 
-export { subscribeWristbandScan };
+function onceWristbandScan(listener) {
+  return this.subscribe("/wristband/scan", listener, { mode: "response" });
+}
+
+export { getWristbandScan, onWristbandScan, onceWristbandScan };
