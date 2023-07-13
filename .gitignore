@@ -38,3 +38,4 @@ __pycache__/
 *.ini
 
 ui/newlogic.afadmin_client
+__pycache__

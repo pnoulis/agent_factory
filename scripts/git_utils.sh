@@ -118,18 +118,18 @@ function isGitClean() {
         echoerr isGitClean
         echoerr "$tpath"
         echoerr working directory is dirty
+        popd > /dev/null
         return 1
     }
     popd > /dev/null
-
     return 0
 }
 
-# 
+#
 #  @return {integer} 0 or 1
 #   0 - no unpushed commits
 #   1 - error or pushed commits
-# 
+#
 gitNoUnpushedCommits() {
     # input validation
     ## 1. one parameter has been provided

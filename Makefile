@@ -18,21 +18,41 @@ MQTT_PROXY = $(SRCDIR)/lib/mqtt_proxy
 AFMACHINE = $(SRCDIR)/core/afmachine
 THOMAS =$(SRCDIR)/ui/thomas
 
+# Temporary refactoring
+NEWLOGIC_AFADMIN = $(SRCDIR)/ui/newlogic.afadmin_client
+REFACTOR_AFMACHINE = $(SRCDIR)/core/refactor.afmachine
+REFACTORDIRS := $(NEWLOGIC_AFADMIN) $(REFACTOR_AFMACHINE)
+
 # Config directories
 CONFDIR = $(SRCDIR)/config
 AFADMIN_CLIENT_CONFDIR = $(CONFDIR)/afadmin_client
 
 # git modules
-GITMODULES = $(AFADMIN_CLIENT) $(REACT_UTILS) $(JS_UTILS) \
+GITMODULES := $(AFADMIN_CLIENT) $(REACT_UTILS) $(JS_UTILS) \
 $(MQTT_PROXY) $(AFMACHINE)
 
 .PHONY: all
 all:
 	@echo Supply recipe to run.
 
+# ------------------------------ GIT ------------------------------ #
+.PHONY: git-check
+git-check:
+	@source $(SRCDIR)/scripts/git_utils.sh; \
+	DIRTY=0; \
+	for submodule in $(SRCDIR) $(GITMODULES) $(REFACTORDIRS); do \
+	echo $${submodule##*agent_factory/}; \
+	cd $$submodule;\
+	git status -sb $$submodule; \
+	isGitClean $$submodule 2>/dev/null; \
+	if (( $$? )); then \
+	DIRTY=1; \
+	fi; \
+	done; \
+	if [[ "$$DIRTY" == 1 ]]; then exit 1; fi;
+
 # ------------------------------ SETUP ------------------------------ #
 .PHONY: setup
-
 setup: modules npm-packages
 
 modules:
@@ -114,8 +134,16 @@ serve-backend:
 	cd $(BACKEND) && docker-compose up -d
 
 # ------------------------------ BUILD ------------------------------ #
-.PHONY: build build-dev build-staging build-prod
-build: build-prod
+.PHONY: build-dev build-staging build-prod
+
+.PHONY: build
+build:
+	@for submodule in $(GITMODULES) $(REFACTORDIRS); do \
+	echo $${submodule##*agent_factory/}; \
+	cd $$submodule; \
+	git status -sb $$submodule; \
+	make build mode=development; \
+	done
 
 build-dev:
 	@for gitmodule in $(GITMODULES); do \
