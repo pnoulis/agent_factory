@@ -20,7 +20,7 @@
  * Info wristband
  *
  * @param {Object} payload
- * @param {string} payload.wristbandNumber
+ * @param {number} payload.wristbandNumber
  * @returns {Promise} SuccessPayload or FailurePayload
  * @throws {TimeoutError}
  **/

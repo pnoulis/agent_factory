@@ -10,8 +10,8 @@ function LoggerService(clientId, name) {
       level: (label, number) => ({ level: number }),
     },
     base: {
-      mode: clientId,
-      id: name,
+      mode: ENVIRONMENT.MODE,
+      id: clientId,
     },
     browser: ENVIRONMENT.RUNTIME === "browser" ? { asObject: true } : undefined,
   });

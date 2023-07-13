@@ -1,3 +1,4 @@
+import * as Errors from "../../../errors.js";
 /**
  * Wristband scan listener callback
  * @typedef ScanListenerCallback
@@ -18,13 +19,25 @@
  * @throws {TimeoutError}
  */
 
-function getWristbandScan() {
+function getWristbandScan(unsubcb) {
   return new Promise((resolve, reject) => {
     this.subscribe(
       "/wristband/scan",
-      (err, wristband) => (err ? reject(err) : resolve(wristband)),
+      (unsubed, err, wristband) => {
+        if (unsubed) {
+          reject(new Errors.ERR_UNSUBSCRIBED());
+        } else if (err) {
+          reject(err);
+        } else {
+          resolve(wristband);
+        }
+      },
       { mode: "response" },
-    ).catch(reject);
+    )
+      .then(unsubcb)
+      .catch(reject);
+  }).catch((err) => {
+    throw err;
   });
 }
 
