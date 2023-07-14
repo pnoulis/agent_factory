@@ -24,6 +24,7 @@
  *
  * @param {Object} player
  * @param {string} player.username
+ * @param {string} player.surname
  * @param {string} player.name
  * @param {string} player.email
  * @param {string} [player.password]
