@@ -20,7 +20,6 @@ THOMAS =$(SRCDIR)/ui/thomas
 
 # Temporary refactoring
 NEWLOGIC_AFADMIN = $(SRCDIR)/ui/newlogic.afadmin_client
-REFACTOR_AFMACHINE = $(SRCDIR)/core/refactor.afmachine
 REFACTORDIRS := $(NEWLOGIC_AFADMIN) $(REFACTOR_AFMACHINE)
 
 # Config directories

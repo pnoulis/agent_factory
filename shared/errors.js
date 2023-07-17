@@ -1,7 +1,7 @@
 import { MAX_TEAM_SIZE } from "./constants.js";
 class AgentFactoryError extends Error {
-  constructor(message = "") {
-    super(message);
+  constructor(message = "", cause) {
+    super(message, { cause });
     this.name = "AgentFactoryError";
   }
 }
@@ -9,12 +9,6 @@ class AgentFactoryError extends Error {
 class ERR_UNSUBSCRIBED extends AgentFactoryError {
   constructor() {
     super("Unsubscribed");
-  }
-}
-
-class ERR_WRISTBAND_LOCK extends AgentFactoryError {
-  constructor() {
-    super("Wristband scan handle locked!");
   }
 }
 
@@ -33,9 +27,76 @@ class ERR_STATE_ACTION_BLOCK extends AgentFactoryError {
   }
 }
 
+class ERR_TIMEOUT extends AgentFactoryError {
+  constructor(route, req) {
+    super(route);
+    this.req = req;
+    this.statusCode = 408;
+    this.statusLabel = "Request Timeout";
+  }
+}
+
+/* ------------------------------ BACKEND SERVICES ERRORS ------------------------------ */
+class ERR_BACKEND_VALIDATION extends AgentFactoryError {
+  constructor(route, req, validationErrors) {
+    super(route);
+    this.req = req;
+    this.res = validationErrors;
+    this.statusCode = 400;
+    this.statusLabel = "Bad request";
+  }
+}
+
+class ERR_BACKEND_MODEL extends AgentFactoryError {
+  constructor(route, req, res) {
+    super(route);
+    this.req = req;
+    this.res = res;
+    this.statusCode = 409;
+    this.statusLabel = "Conflict";
+  }
+}
+
+/* ------------------------------ WRISTBAND ERRORS ------------------------------ */
+class ERR_WRISTBAND_LOCK extends AgentFactoryError {
+  constructor() {
+    super("Wristband scan handle locked!");
+  }
+}
+
+class ERR_WRISTBAND_BOUND extends AgentFactoryError {
+  constructor(number) {
+    super(`Scanned wristband ${number} is paired to another player`);
+  }
+}
+
+class ERR_SUPERSEDED_ACTION extends AgentFactoryError {
+  constructor() {
+    super();
+  }
+}
+/* ------------------------------ PLAYER ERRORS ------------------------------ */
+class ERR_PLAYER_REGISTERED extends AgentFactoryError {
+  constructor(player) {
+    super(`${player.username} already registered`);
+  }
+}
+
 export {
   ERR_UNSUBSCRIBED,
-  ERR_WRISTBAND_LOCK,
   ERR_MAX_ROSTER_SIZE,
   ERR_STATE_ACTION_BLOCK,
+  ERR_TIMEOUT,
+
+  // Backend Service Errors
+  ERR_BACKEND_VALIDATION,
+  ERR_BACKEND_MODEL,
+
+  // Wristband Errors
+  ERR_WRISTBAND_LOCK,
+  ERR_WRISTBAND_BOUND,
+  ERR_SUPERSEDED_ACTION,
+
+  // Player errors
+  ERR_PLAYER_REGISTERED,
 };
