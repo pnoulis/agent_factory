@@ -7,9 +7,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mysql2": "^3.4.5"
+    "mqtt": "^4.3.7",
+    "mysql2": "^3.4.5",
+    "pino": "^8.14.1",
+    "precompiled-mqtt": "^4.3.14-beta"
   },
   "devDependencies": {
+    "pino-prettier": "^1.0.1",
     "vitest": "^0.30.1"
   }
 }
