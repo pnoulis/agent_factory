@@ -18,10 +18,6 @@ MQTT_PROXY = $(SRCDIR)/lib/mqtt_proxy
 AFMACHINE = $(SRCDIR)/core/afmachine
 THOMAS =$(SRCDIR)/ui/thomas
 
-# Temporary refactoring
-NEWLOGIC_AFADMIN = $(SRCDIR)/ui/newlogic.afadmin_client
-REFACTORDIRS := $(NEWLOGIC_AFADMIN)
-
 # Config directories
 CONFDIR = $(SRCDIR)/config
 AFADMIN_CLIENT_CONFDIR = $(CONFDIR)/afadmin_client
