@@ -1,4 +1,5 @@
 import { MAX_TEAM_SIZE } from "./constants.js";
+
 class AgentFactoryError extends Error {
   constructor(message = "", cause) {
     super(message, { cause });
@@ -28,9 +29,8 @@ class ERR_STATE_ACTION_BLOCK extends AgentFactoryError {
 }
 
 class ERR_TIMEOUT extends AgentFactoryError {
-  constructor(route, req) {
-    super(route);
-    this.req = req;
+  constructor(err) {
+    super("timeout", err && { cause: err });
     this.statusCode = 408;
     this.statusLabel = "Request Timeout";
   }
@@ -38,20 +38,17 @@ class ERR_TIMEOUT extends AgentFactoryError {
 
 /* ------------------------------ BACKEND SERVICES ERRORS ------------------------------ */
 class ERR_BACKEND_VALIDATION extends AgentFactoryError {
-  constructor(route, req, validationErrors) {
-    super(route);
-    this.req = req;
-    this.res = validationErrors;
+  constructor(message, validationErrors) {
+    super(message);
+    this.validationErrors = validationErrors;
     this.statusCode = 400;
     this.statusLabel = "Bad request";
   }
 }
 
 class ERR_BACKEND_MODEL extends AgentFactoryError {
-  constructor(route, req, res) {
-    super(route);
-    this.req = req;
-    this.res = res;
+  constructor(message) {
+    super(message);
     this.statusCode = 409;
     this.statusLabel = "Conflict";
   }

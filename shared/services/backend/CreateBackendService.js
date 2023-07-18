@@ -29,7 +29,7 @@ defaultInstance
   });
 
 function CreateBackendService(id, roomName, deviceType) {
-  if (!this || typeof this !== CreateBackendService) {
+  if (!this && typeof this !== CreateBackendService) {
     return defaultInstance;
   } else {
     ++instances;

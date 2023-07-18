@@ -66,6 +66,7 @@ function handleMessage(sub) {
       mqttClientMockBackend.publish(pub, JSON.stringify(payload));
     });
   } else {
+    console.log('adding to publishers queue');
     mockBackendServer.publishersQueue.push({ pub, sub });
   }
 }
