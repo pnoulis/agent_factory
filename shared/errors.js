@@ -80,6 +80,7 @@ class ERR_PLAYER_REGISTERED extends AgentFactoryError {
 }
 
 export {
+  AgentFactoryError,
   ERR_UNSUBSCRIBED,
   ERR_MAX_ROSTER_SIZE,
   ERR_STATE_ACTION_BLOCK,
