@@ -3,7 +3,7 @@ import { detectRuntime, detectMode, getEnvar } from "js_utils/environment";
 const RUNTIME = detectRuntime();
 
 if (typeof __STATIC_ENV__ !== "undefined") {
-  // Means application is running within a browser and __STATIC_ENV__ has been
+  // Means application is running within a browser and env has been
   // statically defined by a macro preprocessor.
   globalThis.__ENV__ = __STATIC_ENV__;
 } else if (RUNTIME === "node") {

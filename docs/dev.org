@@ -65,3 +65,14 @@ CLOSED: [2023-07-11 Tue 10:10]
 ** TODO Different pairing definition
 * LOG 17/07/23
 ** Player registration
+* LOG 18/07/23
+sessionId
+slaves
+clientId
+
+
+* LOG 19/07/23
+** registerUser
+** Form error handling
+In case of validation errors the form should display a message one for each of the
+perpetrator fields displayed beneath the field itself.

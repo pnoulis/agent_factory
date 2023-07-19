@@ -3,7 +3,7 @@ import { MAX_TEAM_SIZE } from "./constants.js";
 class AgentFactoryError extends Error {
   constructor(message = "", cause) {
     super(message, { cause });
-    this.name = "AgentFactoryError";
+    this.name = this.constructor.name;
   }
 }
 
@@ -38,8 +38,9 @@ class ERR_TIMEOUT extends AgentFactoryError {
 
 /* ------------------------------ BACKEND SERVICES ERRORS ------------------------------ */
 class ERR_BACKEND_VALIDATION extends AgentFactoryError {
-  constructor(message, validationErrors) {
-    super(message);
+  constructor(validationErrors) {
+    super("");
+    this.name = this.constructor.name;
     this.validationErrors = validationErrors;
     this.statusCode = 400;
     this.statusLabel = "Bad request";
