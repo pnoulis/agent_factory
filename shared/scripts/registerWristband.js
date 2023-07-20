@@ -22,6 +22,9 @@
 
 import { CreateBackendService } from "../services/backend/CreateBackendService.js";
 const bservice = CreateBackendService();
+bservice.start().then(() => {
+  bservice.booted = true;
+})
 const ERR_DUPLICATE_PLAYER = "This username already exists";
 const ERR_PLAYER_HAS_WRISTBAND = "player has already a registered wristband";
 

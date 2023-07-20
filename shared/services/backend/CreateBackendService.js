@@ -13,13 +13,14 @@ const defaultInstance = new BackendService(
   backendMqttClient,
   ENVIRONMENT.BACKEND_MQTT_ROOM_NAME,
   ENVIRONMENT.BACKEND_MQTT_DEVICE_TYPE,
-  ENVIRONMENT.BACKEND_MQTT_CLIENT_ID
+  ENVIRONMENT.BACKEND_MQTT_CLIENT_ID,
 );
 
 // Creating a default instance might be toggled off in production MODE.
 defaultInstance
   .start()
   .then(function () {
+    defaultInstance.booted = true;
     console.log(`Backend service ${defaultInstance.id} successful boot!`);
   })
   .catch(function () {
@@ -40,7 +41,7 @@ function CreateBackendService(id, roomName, deviceType) {
       backendMqttClient,
       roomName || ENVIRONMENT.BACKEND_MQTT_ROOM_NAME,
       deviceType || ENVIRONMENT.BACKEND_MQTT_DEVICE_TYPE,
-      id
+      id,
     );
   }
 }

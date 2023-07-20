@@ -18,6 +18,9 @@
 
 import { CreateBackendService } from "../services/backend/CreateBackendService.js";
 const bservice = CreateBackendService();
+bservice.start().then(() => {
+  bservice.booted = true;
+})
 
 /*
   ------------------------------ CLI ------------------------------

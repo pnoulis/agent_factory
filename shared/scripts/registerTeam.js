@@ -22,6 +22,9 @@ import { calcTeamSize } from "../utils/misc.js";
 import { MAX_TEAM_SIZE } from "../constants.js";
 import { generateRandomName } from "js_utils/misc";
 const bservice = CreateBackendService();
+bservice.start().then(() => {
+  bservice.booted = true;
+})
 
 /*
   ------------------------------ CLI ------------------------------

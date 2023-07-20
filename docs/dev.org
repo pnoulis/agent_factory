@@ -211,3 +211,10 @@ perpetrator fields displayed beneath the field itself.
 
 #+end_src
 
+
+* LOG 20/07/23
+** DONE test route registerPlayer
+CLOSED: [2023-07-20 Thu 10:32]
+** DONE test route searchPlayer
+CLOSED: [2023-07-20 Thu 10:32]
+** TODO ComboboxSearchPlayer

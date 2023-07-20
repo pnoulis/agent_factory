@@ -69,7 +69,7 @@ function mapPackageStatus(from, status) {
 }
 
 function mapWristbandColor(from, color) {
-  if (!color) return "";
+  if (color !== 0 && color == null) return "";
   if (from === "color") {
     switch (color) {
       case "black":
