@@ -43,12 +43,7 @@ const mqttClientBackend = getMqttClientBackend();
 if (globalThis.process.argv.length > 2) {
   const arg1 = parseInt(process.argv.splice(2, 1));
   const arg2 = parseInt(process.argv.splice(2, 1));
-  emulateScan(arg1 || "r", arg2 || "r").finally(() => {
-    // for some reason emulate scan needs to write to stdout
-    // in order to not exit prematurely.
-    console.log("done");
-    process.exit;
-  });
+  emulateScan(arg1 || "r", arg2 || "r");
 }
 
 /* ------------------------------ MODULE ------------------------------ */

@@ -39,7 +39,7 @@ class ERR_TIMEOUT extends AgentFactoryError {
 /* ------------------------------ BACKEND SERVICES ERRORS ------------------------------ */
 class ERR_BACKEND_VALIDATION extends AgentFactoryError {
   constructor(validationErrors) {
-    super("");
+    super("Validation Errors");
     this.name = this.constructor.name;
     this.validationErrors = validationErrors;
     this.statusCode = 400;
@@ -52,6 +52,13 @@ class ERR_BACKEND_MODEL extends AgentFactoryError {
     super(message);
     this.statusCode = 409;
     this.statusLabel = "Conflict";
+  }
+}
+
+class ERR_MQTT_TANGLED_MSG extends AgentFactoryError {
+  constructor(message) {
+    super(message);
+    this.name = this.constructor.name;
   }
 }
 
@@ -90,6 +97,7 @@ export {
   // Backend Service Errors
   ERR_BACKEND_VALIDATION,
   ERR_BACKEND_MODEL,
+  ERR_MQTT_TANGLED_MSG,
 
   // Wristband Errors
   ERR_WRISTBAND_LOCK,
