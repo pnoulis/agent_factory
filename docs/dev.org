@@ -218,3 +218,5 @@ CLOSED: [2023-07-20 Thu 10:32]
 ** DONE test route searchPlayer
 CLOSED: [2023-07-20 Thu 10:32]
 ** TODO ComboboxSearchPlayer
+* LOG 21/07/23
+** TODO player info cards
