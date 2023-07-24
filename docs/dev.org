@@ -220,3 +220,458 @@ CLOSED: [2023-07-20 Thu 10:32]
 ** TODO ComboboxSearchPlayer
 * LOG 21/07/23
 ** TODO player info cards
+* LOG 22/07/23
+** Data normalization
+The frontend and backend systems that make up agent_factory do not use the same
+schemas for their standard entities. Take notice that the entities returned by
+the backend api may not correspond to the actual database schema used internally
+by the backend system itself. For example the backend defines a wristband as an
+object with the following properties.
+
+#+begin_src js
+
+  // Wristband schema as defined within the backend system
+  const backendWristband = {
+    wristbandNumber: Integer,
+    wristbandColor: Integer
+    active: Boolean
+  }
+
+#+end_src
+
+In my opinion the backend's implementation of the wristband schema could have
+been better or equally served its purpose if it was defined differently, which
+is why the frontend introduces a new wristband schema. More than that the
+frontent must make sure to conserve its memory footprint for reasons of network
+speed and other such constraints or for optimization reasons.
+
+#+begin_src js
+
+  // Wristband schema as defined within the afmachine subsystem
+  const afmachineWristband = {
+    id: Integer,
+    color: Integer,
+    status: String,
+  }
+
+#+end_src
+
+Given that example, *Data normalization* refers to the process that maps backend
+schemas as returned by their *api* not by the actual *db schema* to the frontend
+schemas.
+
+I proceed by documenting
+
+1. Database schemas
+2. Backend api schemas
+3. Frontend schemas
+4. Frontend class entities
+
+*** Wristband schema
+
+#+begin_src js
+
+  // Database schema
+  const dbSchema = {
+    id: bigint,
+    created: datetime,
+    updated: datetime,
+    active: bit,
+    wristband_color: varchar(255),
+    wristband_number: int,
+  }
+
+  // Backend API
+  const BWristband = {
+    wristbandNumber: Integer,
+    wristbandColor: Integer,
+    active: Boolean,
+  }
+
+  // Frontend mappings
+  const FWristband = {
+    id: Integer,
+    color: Integer,
+    state: String, // unpaired, pairing, paired, registered
+  }
+
+#+end_src
+
+*** Player schema
+
+#+begin_src js
+
+  // Database schema
+  const dbSchema = {
+    id: bigint,
+    created: datetime,
+    updated: datetime,
+    email: varchar(255),
+    is_temporary: bit,
+    name: varchar(255),
+    online_account: bit,
+    password: varchar(255),
+    surname: varchar(255),
+    username: varchar(255),
+    wristband_merged: bit,
+    registered_wristband_id: bigint,
+  }
+
+  // Backend API
+  const BPlayer = {
+    name: String,
+    surname: String,
+    email: String,
+    username: String,
+    wristbandMerged: Boolean,
+    // The B in BWristband is an abbreviation for 'Backend', the entity
+    // defined within the Wristband schema entry.
+    wristband: BWristband
+  }
+
+  // Frontend mappings
+  const FPlayer = {
+    name: String,
+    surname: String,
+    email: String,
+    username: String,
+    // The F in FWristband is an abbreviation for 'Frontend', the entity
+    // defined within the Wristband schema entry.
+    wristband: FWristband,
+    state: String, // forming, registered, inTeam, inGame
+  }
+
+#+end_src
+
+*** Package schema
+
+#+begin_src js
+
+  // Database schema
+  const dbSchema = {
+    type: varchar(31)
+    id: bigint, // auto increment
+    created: datetime(6),
+    updated: datetime(6),
+    cost: double,
+    ended: datetime(6),
+
+    // Signifies, if true, that amongst the set of packages owned by a team, this
+    // one is the one currently being used.
+    is_active: bit,
+
+    name: varchar(255),
+    started: datetime(6),
+    missions: bigint,
+    missions_played: bigint,
+    duration: decimal(21,0),
+
+    // Signifies, if true, that the package is currently being *spend*. To spend a
+    // package means to play it. In particular a *TIME* package is being spend
+    // when it has run out of time. a *MISSIONS* package is spend when all if its
+    // missions have been played and so on...
+    is_paused: bit(1),
+    team_id: bigint,
+  }
+
+  // Backend API
+  // The contents of a BPackage is not uniform across all api calls.
+
+  // For example the listPackages route is intended to be used within the package
+  // selection and forming process. On the other hand the listTeams route returns
+  // a 'live' package, a package which has been added to a team. That package
+  // object carries more information within it and its contents are dependent on
+  // the type of the package.
+
+  // Backend Package as returned by listPackages
+  const listPackagesPackage = {
+    name: String,
+    amount: Integer,
+    type: String,
+    cost: Integer,
+  }
+
+  // Mission type package as returned by listTeams
+  const listTeamsMissionType = {
+    id: Integer,
+    name: String,
+    cost: Real,
+    started: Integer, // timestamp
+    ended: Integer, // timestamp
+    missions: Integer,
+    missionsPlayed: Integer,
+    active: Boolean
+  }
+
+  // Time type package as returned by listTeams
+  const listTeamsTimeType = {
+    id: Integer,
+    name: String,
+    cost: Real,
+    started: Integer, // timestamp
+    ended: Integer, // timestamp
+    duration: Integer,
+    paused: Boolean,
+    active: Boolean,
+  }
+
+  // All BPackage properties combined
+  const CombinedBPackage = {
+    id: Integer,
+    name: String,
+    cost: Real,
+    started: Integer,
+    ended: Integer,
+    active: Boolean,
+    type: String,
+    amount: Integer,
+    duration: Integer,
+    paused: Boolean,
+    missions: Integer,
+    missionsPlayed: Integer,
+  }
+
+  // Frontend Mappings
+  const FPackage = {
+    id: Integer,
+    name: String,
+    type: String,
+    cost: Real,
+    amount: Integer,
+    started: Integer,
+    ended: Integer,
+    remainder: Real,
+    state: String, // forming, unpaid, paid, playing, paused, completed
+  }
+
+#+end_src
+
+*** Roster schema
+
+#+begin_src js
+
+  // Database schema
+  const dbSchema = {
+    id: bigint,
+    created: datetime(6),
+    updated: datetime(6),
+    version: bigint,
+    team_id: bigint,
+  }
+
+  // Backend API
+  const backend = {
+    version: Integer,
+    players: [
+      {
+        username: String,
+        wristbandNumber: Integer,
+        wristbandColor: Integer
+      }
+    ]
+  }
+
+  // Frontend
+  const FRoster = [
+    FPlayer,
+  ]
+
+#+end_src
+
+*** Team schema
+
+#+begin_src js
+
+  // Datebase schema
+  const dbSchema = {
+    id: bigint,
+    created: datetime(6),
+    updated: datetime(6),
+    last_register_attempt_time: datetime(6),
+    name: varchar(32),
+    state: varchar(255),
+    total_points: int,
+    latest_roster_id: bigint,
+  }
+
+  // Backend API
+  const BTeam = {
+    name: String,
+    totalPoints: Integer,
+    teamState: String,
+    currentRoster: BRoster,
+  }
+
+  // Frontent
+  const FTeam = {
+    name: String,
+    points: Integer,
+    roster: FRoster,
+    state: String, // forming, registered, merged
+  }
+
+#+end_src
+
+*** Cashier schema
+*** Mapping State functions
+
+The general task of mapping properties from one name to another is not
+difficult.
+
+#+begin_src js
+
+  // For example mapping the BWristband 'wristbandNumber' property to the FWrisband's 'id' property
+  // is performed like so:
+
+  const BWrisband = {
+    wristbandNumber: Integer,
+  }
+
+  const FWristband = {
+    id: BWristband.wristbandNumber,
+  }
+
+#+end_src
+
+What needs more carefull thought is the notion of states. The backend subsystem
+does not make use of states in the same way the frontend does. The frontend
+implements nested state machines which require a detailed and distinct mapping
+of each entities states at any point in time. The backend however, has no need
+for such granularity. The little 'states' it needs it implements through the use
+of 'random' properties scattered among the entities.
+
+For example the *BWristband* uses the 'active' property to communicate that the
+wristband is registered to some player.
+
+However the *FWristband* uses the 'state' property to communicate:
+
+1. The wristband is paired.
+2. The wristband is not paired.
+3. The wristband is in the process of being registered.
+4. The wristband is registered.
+
+Notice how the word 'paired' is used and not 'registered'. That is because the
+wristband can be in the middle state of being attached to a user but without
+being registered as such at least for some unknown length of time.
+
+So the issue of state mapping becomes one where the frontend must reason a state
+out of a Backend entity.
+
+#+begin_src js
+
+  // It is quite easy for the Wristband entity.
+
+  const BWristband = {
+    active: true,
+  }
+
+  const FWristband = {
+    status: 'registered';
+  }
+  // Since the BWristband is active that means the FWristband
+  // has superseded the states: unpaired, pairing, paired.
+
+  // However what happens if the BWristband is found in the inactive state:
+
+  const BWristband = {
+    active: false,
+    wrisbandNumber: 5,
+  }
+
+  // Hence there is no way of telling if the wristband 5 is either unpaired,
+  // pairing or paired. The only way to know this is to search through the
+  // frontend connected clients for the wristband 5. However that would be too
+  // much of a pain so an inactive BWristband is interpreted to mean that the
+  // wristband is in the unpaired state. If wristband 5 then ends up being used by
+  // more that one connected client, then the client who tries and registers it
+  // first to a player shall succeed whilst the second client shall fail.
+
+  const FWristband = {
+    status: 'unpaired'
+  }
+
+#+end_src
+
+**** Wristband
+
+#+begin_src js
+
+  // active = true
+  const BWristband = {
+    active: true
+  }
+  const FWristband = {
+    state: 'registered'
+  }
+
+  // active = false
+  const BWristband = {
+    active: false,
+  }
+  const FWristband = {
+    state: 'paired'
+  }
+
+#+end_src
+
+**** Player
+
+#+begin_src js
+
+  // wristbandMerged = true
+  const BPlayer = {
+    wristbandMerged: true
+  }
+  // Unfortunately one cannot discern just by the 'wristbandMerged' property if
+  // the player's team is actually at this very moment playing. His team might
+  // have paused the game. If one wanted to force checking, one would have to:
+  // 1. Request a list of all active teams.
+  // 2. Rule out those teams with a paused package.
+  // 2. Loop through each remaining team roster.
+  // 3. If a match is found the player is inGame otherwise he remains inTeam.
+  const FPlayer = {
+    state: 'inTeam'
+  }
+
+
+  // wristbandMerged = false
+  // wristband.active = true
+  const BPlayer = {
+    wristbandMerged: false,
+    wristband: {
+      active: true,
+    }
+  }
+  const FPlayer = {
+    state: 'registered',
+  }
+
+  // wristbandMerged = false
+  // wristband.active = false
+  const BPlayer = {
+    wristbandMerged: false,
+    wristband: {
+      active: false,
+    }
+  }
+  // If a player is found within the backend subsystem that means in the least
+  // that they are registered, which is why the registered instead of the
+  // unregistered state is used.
+  const FPlayer = {
+    state: 'registered',
+  }
+
+#+end_src
+
+*** Route data mapping
+**** Rules
+Each route accepts only frontend entities and returns frontend entities.
+
+**** register player
+***** inputs to route
+#+begin_src js
+  
+#+end_src
+input to route -> BPlayer | FPlayer
+
+FPlayer -> BPlayer -> FPlayer

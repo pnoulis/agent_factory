@@ -24,7 +24,7 @@ import { CreateBackendService } from "../services/backend/CreateBackendService.j
 const bservice = CreateBackendService();
 bservice.start().then(() => {
   bservice.booted = true;
-})
+});
 const ERR_DUPLICATE_PLAYER = "This username already exists";
 
 /*
@@ -43,7 +43,6 @@ if (globalThis.process.argv.length > 2) {
 }
 const { randomPlayer } = await import("./randomPlayer.js");
 if (arg1) {
-  console.log("REGISTER PLAYER THINKS IS A COMMAND LINE PROGRAM");
   __registerPlayer(false, arg1)
     .then((res) => {
       console.dir(res, { depth: null });

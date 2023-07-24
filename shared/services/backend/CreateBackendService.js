@@ -23,7 +23,7 @@ defaultInstance
     defaultInstance.booted = true;
     console.log(`Backend service ${defaultInstance.id} successful boot!`);
   })
-  .catch(function () {
+  .catch(function (err) {
     console.log(err);
     console.log(`Backend service ${defaultInstance.id} failed boot!`);
     throw err;
