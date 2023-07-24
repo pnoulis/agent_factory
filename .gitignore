@@ -41,3 +41,4 @@ ui/newlogic.afadmin_client
 __pycache__
 .env
 
+ui/af-design-style

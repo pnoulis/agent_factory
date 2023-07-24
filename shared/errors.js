@@ -80,6 +80,12 @@ class ERR_SUPERSEDED_ACTION extends AgentFactoryError {
     super();
   }
 }
+
+class ERR_WRISTBAND_COLOR_OUT_OF_BOUNDS extends AgentFactoryError {
+  constructor(colorCode) {
+    super(`Wristband colorCode ${colorCode} failed to match any color`);
+  }
+}
 /* ------------------------------ PLAYER ERRORS ------------------------------ */
 class ERR_PLAYER_REGISTERED extends AgentFactoryError {
   constructor(player) {
@@ -103,6 +109,7 @@ export {
   ERR_WRISTBAND_LOCK,
   ERR_WRISTBAND_BOUND,
   ERR_SUPERSEDED_ACTION,
+  ERR_WRISTBAND_COLOR_OUT_OF_BOUNDS,
 
   // Player errors
   ERR_PLAYER_REGISTERED,

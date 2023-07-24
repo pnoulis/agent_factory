@@ -11,6 +11,8 @@ const WRISTBAND_COLORS = [
   "orange",
 ];
 
+const MAX_WRISTBAND_ID = 900;
+
 const AF_PACKAGES = [
   {
     ...PACKAGE_MISSIONS_SCHEMA,
@@ -46,4 +48,4 @@ const AF_PACKAGES = [
   },
 ];
 
-export { MAX_TEAM_SIZE, WRISTBAND_COLORS, AF_PACKAGES };
+export { MAX_TEAM_SIZE, MAX_WRISTBAND_ID, WRISTBAND_COLORS, AF_PACKAGES };

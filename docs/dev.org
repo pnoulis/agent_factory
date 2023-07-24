@@ -675,3 +675,58 @@ Each route accepts only frontend entities and returns frontend entities.
 input to route -> BPlayer | FPlayer
 
 FPlayer -> BPlayer -> FPlayer
+
+* LOG 24/07/23
+** process of wristband registration
+Check refactor.afadmin
+
+** Standardizing route inputs and outputs
+*** template
+
+#+begin_src js
+
+  // ROUTE INPUTS
+  const RInput = "";
+
+  // BACKEND INPUTS
+  const BInput = "";
+
+  // BACKEND OUTPUTS
+  const BOutput = "";
+
+  // ROUTE OUTPUTS
+  const ROutput = "";
+
+#+end_src
+
+*** Player registration
+
+#+begin_src js
+
+  // ROUTE INPUTS
+  const RInput = FPlayer || FLivePlayer;
+  // or
+  const RInput = {
+    player: FLivePlayer or FPlayer
+  }
+
+  // BACKEND INPUTS
+  const BInput = {
+    username: String,
+    surname: String,
+    name: String,
+    email: String,
+    password: String,
+  }
+
+  // BACKEND OUTPUTS
+  const BOutput = {
+    result: String,
+    message: String,
+    validationErrors: [ name: "error", surname: "error", ],
+  }
+
+  // ROUTE OUTPUT
+  const ROutput = FPlayer;
+
+#+end_src
