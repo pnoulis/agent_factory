@@ -31,8 +31,16 @@
  * @returns {Promise} - SuccessPayload or FailurePayload
  * @throws {TimeoutError}
  */
-function unregisterWristband(payload) {
-  return this.publish("/wristband/unregister", payload);
+function unregisterWristband({
+  timestamp = "",
+  username = "",
+  wristbandNumber = "",
+} = {}) {
+  return this.publish("/wristband/unregister", {
+    timestamp,
+    username,
+    wristbandNumber,
+  });
 }
 
 export { unregisterWristband };

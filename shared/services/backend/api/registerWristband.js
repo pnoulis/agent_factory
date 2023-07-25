@@ -24,8 +24,16 @@
  * @returns {Promise} - SuccessPayload or FailurePayload
  * @throws {TimeoutError}
  */
-function registerWristband(payload) {
-  return this.publish("/wristband/register", payload);
+function registerWristband({
+  timestamp = "",
+  username = "",
+  wristbandNumber = "",
+} = {}) {
+  return this.publish("/wristband/register", {
+    timestamp,
+    username,
+    wristbandNumber,
+  });
 }
 
 export { registerWristband };

@@ -699,19 +699,19 @@ Check refactor.afadmin
 
 #+end_src
 
-*** Player registration
+*** DONE Player registration
+CLOSED: [2023-07-24 Mon 22:52]
 
 #+begin_src js
 
   // ROUTE INPUTS
-  const RInput = FPlayer || FLivePlayer;
-  // or
-  const RInput = {
-    player: FLivePlayer or FPlayer
+  const RInput = BPlayer || FPlayer || FLivePlayer || {
+    player: BPlayer || FPlayer || FLivePlayer
   }
 
   // BACKEND INPUTS
   const BInput = {
+    timestamp: Date.now(),
     username: String,
     surname: String,
     name: String,
@@ -730,3 +730,62 @@ Check refactor.afadmin
   const ROutput = FPlayer;
 
 #+end_src
+
+*** DONE Wristband registration
+CLOSED: [2023-07-24 Mon 22:52]
+
+#+begin_src js
+
+  // ROUTE INPUTS
+  const RInput = BPlayer || FPlayer || FLivePlayer || {
+    player: BPlayer || FPlayer || FLivePlayer || String (username),
+    wristband: BWristband || FWristband || FLiveWristband || Number (wristbandNumber)
+  }
+
+  // BACKEND INPUTS
+  const BInput = {
+    timestamp: Date.now(),
+    username: String,
+    wristbandNumber: Number,
+  }
+
+  // BACKEND OUTPUTS
+  const BOutput = {
+    result: String,
+    message: String,
+  }
+
+  // ROUTE OUTPUTS
+  const ROutput = FPlayer
+
+#+end_src
+
+*** DONE Wristband unregistration
+CLOSED: [2023-07-24 Mon 23:25]
+
+#+begin_src js
+
+  // ROUTE INPUTS
+  const RInput = BPlayer || FPlayer || FLivePlayer  || {
+    player: BPlayer || FPlayer || FLivePlayer || String (username),
+    wristband: BWristband || FWristband || FLiveWristband || Number (wristbandNumber)
+  }
+
+  // BACKEND INPUTS
+  const BInput = {
+    timestamp: Date.now(),
+    username: String,
+    wristbandNumber: Number,
+  }
+
+  // BACKEND OUTPUTS
+  const BOutput = {
+    result: String,
+    message: String,
+  }
+
+  // ROUTE OUTPUTS
+  const ROutput = FPlayer,
+
+#+end_src
+
