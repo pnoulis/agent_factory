@@ -21,7 +21,7 @@ class ERR_MAX_ROSTER_SIZE extends AgentFactoryError {
 
 class ERR_STATE_ACTION_BLOCK extends AgentFactoryError {
   constructor(entity, state, action) {
-    super(`${entity} in state ${state} cannot run ${action}`);
+    super(`${state} ${entity} cannot ${action}`);
     this.entity = entity;
     this.state = state;
     this.action = action;

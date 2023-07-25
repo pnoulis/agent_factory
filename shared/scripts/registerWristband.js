@@ -157,9 +157,9 @@ async function __registerWristband(dupNoErr, wristbands, ...registeredPlayers) {
           throw new Error("Failed wristband registration", { cause: message });
         }
       }
-      jobs[i].wristband.wristbandNumber ||= jobs[i].wristband.number;
-      jobs[i].wristband.wristbandColor ||= jobs[i].wristband.color;
-      jobs[i].wristband.active ||= jobs[i].wristband.active || null;
+      jobs[i].wristband.wristbandNumber ??= jobs[i].wristband.number;
+      jobs[i].wristband.wristbandColor ??= jobs[i].wristband.color;
+      jobs[i].wristband.active = true;
       delete jobs[i].wristband.number;
       delete jobs[i].wristband.color;
       console.log(`Successfully registered player wristband ${i}`);
