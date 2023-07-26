@@ -36,4 +36,18 @@ function registerWristband({
   });
 }
 
-export { registerWristband };
+function onWristbandRegistration(listener) {
+  return this.subscribe("/wristband/register", listener, {
+    mode: "persistent",
+  });
+}
+
+function onceWristbandRegistration(listener) {
+  return this.subscribe("/wristband/register", listener, { mode: "response" });
+}
+
+export {
+  registerWristband,
+  onWristbandRegistration,
+  onceWristbandRegistration,
+};

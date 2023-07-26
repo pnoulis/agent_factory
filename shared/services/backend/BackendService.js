@@ -4,7 +4,11 @@ import { TaskRunner } from "js_utils/task_runners";
 import { boot } from "./api/boot.js";
 import { loginPlayer } from "./api/loginPlayer.js";
 import { registerPlayer } from "./api/registerPlayer.js";
-import { registerWristband } from "./api/registerWristband.js";
+import {
+  registerWristband,
+  onWristbandRegistration,
+  onceWristbandRegistration,
+} from "./api/registerWristband.js";
 import { unregisterWristband } from "./api/unregisterWristband.js";
 import { mergeTeam } from "./api/mergeTeam.js";
 import { addPackage } from "./api/addPackage.js";
@@ -65,6 +69,8 @@ BackendService.prototype.boot = boot;
 BackendService.prototype.loginPlayer = loginPlayer;
 BackendService.prototype.registerPlayer = registerPlayer;
 BackendService.prototype.registerWristband = registerWristband;
+BackendService.prototype.onWristbandRegistration = onWristbandRegistration;
+BackendService.prototype.onceWristbandRegistration = onceWristbandRegistration;
 BackendService.prototype.unregisterWristband = unregisterWristband;
 BackendService.prototype.mergeTeam = mergeTeam;
 BackendService.prototype.addPackage = addPackage;

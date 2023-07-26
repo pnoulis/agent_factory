@@ -789,3 +789,9 @@ CLOSED: [2023-07-24 Mon 23:25]
 
 #+end_src
 
+* LOG 25/07/23
+** Implement and Test a LivePlayer's wristband pairing and registration
+** Rename LivePlayer to PersistentPlayer
+** create a class named TemporaryPlayer
+* LOG 26/07/23
+** player wristband registration process
