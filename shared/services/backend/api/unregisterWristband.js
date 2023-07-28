@@ -43,4 +43,16 @@ function unregisterWristband({
   });
 }
 
-export { unregisterWristband };
+function onUnregisterWristband(listener) {
+  return this.subscribe("/wristband/unregister", listener, {
+    mode: "persistent",
+  });
+}
+
+function onceUnregisterWristband(listener) {
+  return this.subscribe("/wristband/unregister", listener, {
+    mode: "response",
+  });
+}
+
+export { unregisterWristband, onUnregisterWristband, onceUnregisterWristband };

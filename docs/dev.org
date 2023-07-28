@@ -795,3 +795,6 @@ CLOSED: [2023-07-24 Mon 23:25]
 ** create a class named TemporaryPlayer
 * LOG 26/07/23
 ** player wristband registration process
+* LOG 27/07/23
+** team
+team -> should fill its roster

@@ -6,10 +6,14 @@ import { loginPlayer } from "./api/loginPlayer.js";
 import { registerPlayer } from "./api/registerPlayer.js";
 import {
   registerWristband,
-  onWristbandRegistration,
-  onceWristbandRegistration,
+  onRegisterWristband,
+  onceRegisterWristband,
 } from "./api/registerWristband.js";
-import { unregisterWristband } from "./api/unregisterWristband.js";
+import {
+  unregisterWristband,
+  onUnregisterWristband,
+  onceUnregisterWristband,
+} from "./api/unregisterWristband.js";
 import { mergeTeam } from "./api/mergeTeam.js";
 import { addPackage } from "./api/addPackage.js";
 import { removePackage } from "./api/removePackage.js";
@@ -68,10 +72,16 @@ class BackendService {
 BackendService.prototype.boot = boot;
 BackendService.prototype.loginPlayer = loginPlayer;
 BackendService.prototype.registerPlayer = registerPlayer;
+
+// --------------------------  REGISTER WRISTBAND  -------------------------- //
 BackendService.prototype.registerWristband = registerWristband;
-BackendService.prototype.onWristbandRegistration = onWristbandRegistration;
-BackendService.prototype.onceWristbandRegistration = onceWristbandRegistration;
+BackendService.prototype.onRegisterWristband = onRegisterWristband;
+BackendService.prototype.onceRegisterWristband = onceRegisterWristband;
+// -------------------------  UNREGISTER WRISTBAND  ------------------------- //
+
 BackendService.prototype.unregisterWristband = unregisterWristband;
+BackendService.prototype.onUnregisterWristband = onUnregisterWristband;
+BackendService.prototype.onceUnregisterWristband = onceUnregisterWristband;
 BackendService.prototype.mergeTeam = mergeTeam;
 BackendService.prototype.addPackage = addPackage;
 BackendService.prototype.removePackage = removePackage;

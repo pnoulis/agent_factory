@@ -1,5 +1,6 @@
 import { PACKAGE_MISSIONS_SCHEMA, PACKAGE_TIME_SCHEMA } from "./schemas.js";
 const MAX_TEAM_SIZE = 6;
+const MIN_TEAM_SIZE = 2;
 
 const WRISTBAND_COLORS = [
   "black",
@@ -48,4 +49,10 @@ const AF_PACKAGES = [
   },
 ];
 
-export { MAX_TEAM_SIZE, MAX_WRISTBAND_ID, WRISTBAND_COLORS, AF_PACKAGES };
+export {
+  MAX_TEAM_SIZE,
+  MIN_TEAM_SIZE,
+  MAX_WRISTBAND_ID,
+  WRISTBAND_COLORS,
+  AF_PACKAGES,
+};

@@ -93,6 +93,34 @@ class ERR_PLAYER_REGISTERED extends AgentFactoryError {
   }
 }
 
+/* ------------------------------ TEAM ERRORS ------------------------------ */
+class ERR_TEAM_MERGE_MISSING_NAME extends AgentFactoryError {
+  constructor() {
+    super("Missing team name");
+  }
+}
+class ERR_TEAM_MERGE_INSUFFICIENT_PLAYERS extends AgentFactoryError {
+  constructor() {
+    super("Team requires a minimum of 2 players to merge");
+  }
+}
+
+class ERR_TEAM_MERGE_UNPAIRED_PLAYERS extends AgentFactoryError {
+  constructor(unpairedPlayers) {
+    const ln = unpairedPlayers.length;
+    super(
+      `Player${ln > 1 ? "s" : ""} ${unpairedPlayers.join(", ")} need${ln > 1 ? "" : "s"
+      } to pair a wristband`,
+    );
+  }
+}
+
+class ERR_TEAM_MERGE_DUPLICATE_COLORS extends AgentFactoryError {
+  constructor(color) {
+    super(`Duplicate ${color} wristband found in team`);
+  }
+}
+
 export {
   AgentFactoryError,
   ERR_UNSUBSCRIBED,
@@ -113,4 +141,10 @@ export {
 
   // Player errors
   ERR_PLAYER_REGISTERED,
+
+  // Team errors
+  ERR_TEAM_MERGE_MISSING_NAME,
+  ERR_TEAM_MERGE_INSUFFICIENT_PLAYERS,
+  ERR_TEAM_MERGE_UNPAIRED_PLAYERS,
+  ERR_TEAM_MERGE_DUPLICATE_COLORS,
 };
