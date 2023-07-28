@@ -1,227 +1,4 @@
-* Issue new Makefile that makes use of new DOTENV for each submodule
-** DONE mqtt_proxy
-CLOSED: [2023-07-04 Tue 21:41]
-** DONE refactor_afmachine
-CLOSED: [2023-07-04 Tue 21:55]
-
-** DONE js_utils
-CLOSED: [2023-07-04 Tue 22:03]
-** DONE react_utils
-CLOSED: [2023-07-04 Tue 22:03]
-** DONE refactor.afadmin_client
-CLOSED: [2023-07-04 Tue 22:03]
-* Write scripts that make use of the serviceBackend API for testing and development purposes
-** DONE environment loading
-CLOSED: [2023-07-09 Sun 09:07]
-The scripts depend on services which read the environment at runtime. As such if
-the expected symbols are not defined at the appointed location they are unable
-to initialize and fail.
-** DONE registerPlayers
-CLOSED: [2023-07-10 Mon 09:08]
-** DONE registerWristbands
-CLOSED: [2023-07-10 Mon 09:08]
-** DONE registerTeams
-CLOSED: [2023-07-10 Mon 09:08]
-** DONE addPackage
-CLOSED: [2023-07-10 Mon 09:08]
-** DONE startTeam
-CLOSED: [2023-07-10 Mon 09:08]
-* Write a script that resets the backend database for testing and development purposes
-** DONE flushBackendDB
-CLOSED: [2023-07-10 Mon 09:08]
-
-* DONE Transfer emulateScan to scripts/
-CLOSED: [2023-07-10 Mon 19:11]
-
-* DONE Rudimentary tests all api calls
-CLOSED: [2023-07-10 Mon 20:50]
-** DONE infoWristband
-CLOSED: [2023-07-10 Mon 19:58]
-** DONE listTeams
-CLOSED: [2023-07-10 Mon 20:05]
-** DONE loginPlayer
-CLOSED: [2023-07-10 Mon 20:13]
-** DONE searchPlayer
-CLOSED: [2023-07-10 Mon 20:20]
-** DONE mergeGroupTeam
-CLOSED: [2023-07-10 Mon 20:37]
-** DONE subscribeWristbandScan
-CLOSED: [2023-07-10 Mon 20:50]
-
-
-* TODO Afmachine
-The afmachine is a superclass holding multiple objects.
-It basically extends the BackendService.
-** DONE Move pipeline to js_utils
-CLOSED: [2023-07-11 Tue 09:33]
-
-** DONE Rename afmachine/src/afmachine to afmachine/src/entities
-CLOSED: [2023-07-11 Tue 09:45]
-
-** DONE Check environment is loaded at afmachine
-CLOSED: [2023-07-11 Tue 10:10]
-
-** TODO Import backend service and logger service
-** TODO Different pairing definition
-* LOG 17/07/23
-** Player registration
-* LOG 18/07/23
-sessionId
-slaves
-clientId
-
-
-* LOG 19/07/23
-** registerUser
-** Form error handling
-In case of validation errors the form should display a message one for each of the
-perpetrator fields displayed beneath the field itself.
-** Routes input/output standardaziation
-*** Route input
-
-#+begin_src js
-
-  // All routes at invocation time are designed to receive a variable number of arguments.
-  function route(...args) {};
-
-  // At which point the route shall construct a new context object.
-  const context = {
-    args,
-    req: {},
-    res: {},
-  }
-
-  // And pass it along the middleware chain, where each middleware will most propably
-  // perform its own mutations to the context object.
-
-#+end_src
-
-*** Creating the request object
-#+begin_src js
-
-  // The first middleware of each route pipeline parses its argument list into the
-  // proper request object.
-
-  /* Example
-
-     Consider the case where the registerPlayer() route is provided with the following
-     arguments:
-
-     Afmachine.registerPlayer({username: "oetuheontuh"}, options);
-
-     The Route instance shall create the following context object:
-  ,*/
-
-  const context = {
-    args = [ { username: "toehuneotuh", }, options ]
-    req: {},
-    res: {},
-  }
-
-  /*
-    The first middleware responsible for parsing the arguments will proceed to
-    mutate the context object in a similar fashion:
-  ,*/
-
-  function constructRequestObject(context, next) {
-    const [request = {}, options = {}] = context.args;
-    context.req = {
-      timestamp: Date.now(),
-      username: request?.username || "",
-      surname: request?.surname || "",
-      name: request?.name || "",
-      email: request?.email || "",
-      password: request?.password || "",
-    }
-    await next();
-  }
-
-#+end_src
-
-*** Creating the response object
-#+begin_src js
-
-  // Following from the player example of the previous heading
-
-  // Given the response
-
-  const { result = "OK", timestamp: 123434324, player = { username: 'oethuen', ...props }, } = backendService.registerPlayer();
-
-  // The following middleware shall mutate it to:
-
-  function constructResponseObject(context, next) {
-    context.res.payload = {
-      msg: `Registered player ${player.username}`;
-      data: {
-        name: player?.name,
-        surname: player?.surname,
-        username: player?.username,
-        email: player?.email,
-      }
-    }
-  }
-
-#+end_src
-*** Route output
-#+begin_src js
-
-  // At the end of the middleware pipeline the result shall be
-  // either a thrown exception or a portion of the context object
-
-
-  // For example, given the following context object at the end of a pipeline
-  const context = {
-    args: [player, options],
-    req: {
-      timestamp: 123424,
-      username: 'yolo',
-      ...props,
-    }
-    res: {
-      result: "OK",
-      timestamp: 1234234,
-      player: {
-        username: 'yolo',
-        ...props
-      }
-      payload: {
-        msg: "registered player yolo",
-        data: {
-          username: 'yolo',
-          ...props,
-        }
-      }
-    }
-  }
-
-  // The output of the pipeline shall be:
-
-  const output = {
-    route: "/register/player",
-    req,
-    res: {
-      msg: "registered player yolo",
-      data: {
-        username: "yolo",
-        ...props,
-      }
-    }
-  }
-
-
-#+end_src
-
-
-* LOG 20/07/23
-** DONE test route registerPlayer
-CLOSED: [2023-07-20 Thu 10:32]
-** DONE test route searchPlayer
-CLOSED: [2023-07-20 Thu 10:32]
-** TODO ComboboxSearchPlayer
-* LOG 21/07/23
-** TODO player info cards
-* LOG 22/07/23
-** Data normalization
+* Data normalization
 The frontend and backend systems that make up agent_factory do not use the same
 schemas for their standard entities. Take notice that the entities returned by
 the backend api may not correspond to the actual database schema used internally
@@ -267,7 +44,7 @@ I proceed by documenting
 3. Frontend schemas
 4. Frontend class entities
 
-*** Wristband schema
+* Wristband schema
 
 #+begin_src js
 
@@ -297,7 +74,7 @@ I proceed by documenting
 
 #+end_src
 
-*** Player schema
+* Player schema
 
 #+begin_src js
 
@@ -342,8 +119,7 @@ I proceed by documenting
   }
 
 #+end_src
-
-*** Package schema
+* Package schema
 
 #+begin_src js
 
@@ -446,7 +222,7 @@ I proceed by documenting
 
 #+end_src
 
-*** Roster schema
+* Roster schema
 
 #+begin_src js
 
@@ -478,7 +254,7 @@ I proceed by documenting
 
 #+end_src
 
-*** Team schema
+* Team schema
 
 #+begin_src js
 
@@ -512,8 +288,8 @@ I proceed by documenting
 
 #+end_src
 
-*** Cashier schema
-*** Mapping State functions
+* Cashier schema
+* Mapping State functions
 
 The general task of mapping properties from one name to another is not
 difficult.
@@ -592,7 +368,7 @@ out of a Backend entity.
 
 #+end_src
 
-**** Wristband
+** Wristband
 
 #+begin_src js
 
@@ -614,7 +390,7 @@ out of a Backend entity.
 
 #+end_src
 
-**** Player
+** Player
 
 #+begin_src js
 
@@ -662,13 +438,12 @@ out of a Backend entity.
   }
 
 #+end_src
-
-*** Route data mapping
-**** Rules
+* Route data mapping
+** Rules
 Each route accepts only frontend entities and returns frontend entities.
 
-**** register player
-***** inputs to route
+** register player
+*** inputs to route
 #+begin_src js
   
 #+end_src
@@ -676,127 +451,7 @@ input to route -> BPlayer | FPlayer
 
 FPlayer -> BPlayer -> FPlayer
 
-* LOG 24/07/23
-** process of wristband registration
-Check refactor.afadmin
 
-** Standardizing route inputs and outputs
-*** template
-
-#+begin_src js
-
-  // ROUTE INPUTS
-  const RInput = "";
-
-  // BACKEND INPUTS
-  const BInput = "";
-
-  // BACKEND OUTPUTS
-  const BOutput = "";
-
-  // ROUTE OUTPUTS
-  const ROutput = "";
-
-#+end_src
-
-*** DONE Player registration
-CLOSED: [2023-07-24 Mon 22:52]
-
-#+begin_src js
-
-  // ROUTE INPUTS
-  const RInput = BPlayer || FPlayer || FLivePlayer || {
-    player: BPlayer || FPlayer || FLivePlayer
-  }
-
-  // BACKEND INPUTS
-  const BInput = {
-    timestamp: Date.now(),
-    username: String,
-    surname: String,
-    name: String,
-    email: String,
-    password: String,
-  }
-
-  // BACKEND OUTPUTS
-  const BOutput = {
-    result: String,
-    message: String,
-    validationErrors: [ name: "error", surname: "error", ],
-  }
-
-  // ROUTE OUTPUT
-  const ROutput = FPlayer;
-
-#+end_src
-
-*** DONE Wristband registration
-CLOSED: [2023-07-24 Mon 22:52]
-
-#+begin_src js
-
-  // ROUTE INPUTS
-  const RInput = BPlayer || FPlayer || FLivePlayer || {
-    player: BPlayer || FPlayer || FLivePlayer || String (username),
-    wristband: BWristband || FWristband || FLiveWristband || Number (wristbandNumber)
-  }
-
-  // BACKEND INPUTS
-  const BInput = {
-    timestamp: Date.now(),
-    username: String,
-    wristbandNumber: Number,
-  }
-
-  // BACKEND OUTPUTS
-  const BOutput = {
-    result: String,
-    message: String,
-  }
-
-  // ROUTE OUTPUTS
-  const ROutput = FPlayer
-
-#+end_src
-
-*** DONE Wristband unregistration
-CLOSED: [2023-07-24 Mon 23:25]
-
-#+begin_src js
-
-  // ROUTE INPUTS
-  const RInput = BPlayer || FPlayer || FLivePlayer  || {
-    player: BPlayer || FPlayer || FLivePlayer || String (username),
-    wristband: BWristband || FWristband || FLiveWristband || Number (wristbandNumber)
-  }
-
-  // BACKEND INPUTS
-  const BInput = {
-    timestamp: Date.now(),
-    username: String,
-    wristbandNumber: Number,
-  }
-
-  // BACKEND OUTPUTS
-  const BOutput = {
-    result: String,
-    message: String,
-  }
-
-  // ROUTE OUTPUTS
-  const ROutput = FPlayer,
-
-#+end_src
-
-* LOG 25/07/23
-** Implement and Test a LivePlayer's wristband pairing and registration
-** Rename LivePlayer to PersistentPlayer
-** create a class named TemporaryPlayer
-* LOG 26/07/23
-** player wristband registration process
-* LOG 27/07/23
-** team
-team -> should fill its roster
-
-* LOG 28/07/23
+* Team data normalization function
+** Roster.asArray
+If deep it will call the asObjects function of each nested entity
