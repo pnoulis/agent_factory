@@ -20,7 +20,7 @@ class ERR_MAX_ROSTER_SIZE extends AgentFactoryError {
 }
 
 class ERR_STATE_ACTION_BLOCK extends AgentFactoryError {
-  constructor(entity, state, action) {
+  constructor(state, entity, action) {
     super(`${state} ${entity} cannot ${action}`);
     this.entity = entity;
     this.state = state;
@@ -101,7 +101,9 @@ class ERR_TEAM_MERGE_MISSING_NAME extends AgentFactoryError {
 }
 class ERR_TEAM_MERGE_INSUFFICIENT_PLAYERS extends AgentFactoryError {
   constructor() {
-    super("Team requires a minimum of 2 players to merge");
+    super(
+      "Team requires a minimum of 2 players with paired wristbands to merge",
+    );
   }
 }
 
@@ -109,7 +111,8 @@ class ERR_TEAM_MERGE_UNPAIRED_PLAYERS extends AgentFactoryError {
   constructor(unpairedPlayers) {
     const ln = unpairedPlayers.length;
     super(
-      `Player${ln > 1 ? "s" : ""} ${unpairedPlayers.join(", ")} need${ln > 1 ? "" : "s"
+      `Player${ln > 1 ? "s" : ""} ${unpairedPlayers.join(", ")} need${
+        ln > 1 ? "" : "s"
       } to pair a wristband`,
     );
   }
@@ -118,6 +121,39 @@ class ERR_TEAM_MERGE_UNPAIRED_PLAYERS extends AgentFactoryError {
 class ERR_TEAM_MERGE_DUPLICATE_COLORS extends AgentFactoryError {
   constructor(color) {
     super(`Duplicate ${color} wristband found in team`);
+  }
+}
+
+/* --------------- GROUP PARTY ERRORS ----------------------------- */
+class ERR_GP_EMPTY extends AgentFactoryError {
+  constructor() {
+    super("Group party is empty!.");
+  }
+}
+
+class ERR_PKG_IS_REGISTERED extends AgentFactoryError {
+  constructor(pkg, team) {
+    super(`Package ${pkg.id} is already registered to ${team.name}`);
+  }
+}
+
+class ERR_UNIQUE_ACTIVE_PKG extends AgentFactoryError {
+  constructor() {
+    super(
+      `Multiple packages per team are prohibited. Finish playing the package, then add another.`,
+    );
+  }
+}
+
+class ERR_RM_ACTIVE_PKG extends AgentFactoryError {
+  constructor(pkg) {
+    super(`Active package ${pkg.id} cannot be deleted.`);
+  }
+}
+
+class ERR_TEAM_ACTIVATE extends AgentFactoryError {
+  constructor(message) {
+    super(message);
   }
 }
 
@@ -147,4 +183,14 @@ export {
   ERR_TEAM_MERGE_INSUFFICIENT_PLAYERS,
   ERR_TEAM_MERGE_UNPAIRED_PLAYERS,
   ERR_TEAM_MERGE_DUPLICATE_COLORS,
+  ERR_TEAM_ACTIVATE,
+
+  // Group party errors
+  ERR_GP_EMPTY,
+
+  // Packages
+  ERR_PKG_IS_REGISTERED,
+  ERR_UNIQUE_ACTIVE_PKG,
+  ERR_RM_ACTIVE_PKG,
+
 };

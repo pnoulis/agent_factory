@@ -39,7 +39,6 @@ const PACKAGE_TIME_SCHEMA = {
   duration: null,
   paused: null,
   active: null,
-  status: "",
   type: "time",
 };
 
@@ -52,7 +51,6 @@ const PACKAGE_MISSIONS_SCHEMA = {
   missions: null,
   missionsPlayed: 0,
   active: false,
-  status: "",
   type: "mission",
 };
 

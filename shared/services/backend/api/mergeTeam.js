@@ -45,4 +45,12 @@ function mergeTeam(payload) {
   return this.publish("/team/merge", payload);
 }
 
-export { mergeTeam };
+function onMergeTeam(listener) {
+  return this.subscribe("/team/merge", listener, { mode: "persistent" });
+}
+
+function onceMergeTeam(listener) {
+  return this.subscribe("/team/merge", listener, { mode: "response" });
+}
+
+export { mergeTeam, onMergeTeam, onceMergeTeam };

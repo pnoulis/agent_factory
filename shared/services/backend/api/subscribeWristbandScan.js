@@ -24,9 +24,8 @@ function getWristbandScan(unsubcb) {
     this.subscribe(
       "/wristband/scan",
       (unsubed, err, wristband) => {
-        if (unsubed) {
-          reject(new Errors.ERR_UNSUBSCRIBED());
-        } else if (err) {
+        if (unsubed) return;
+        if (err) {
           reject(err);
         } else {
           resolve(wristband);

@@ -800,3 +800,18 @@ CLOSED: [2023-07-24 Mon 23:25]
 team -> should fill its roster
 
 * LOG 28/07/23
+* LOG 01/08/23
+** ScannedWristband
+** VerifiedWristband
+** RegisteredWristband
+** TemporaryPlayer
+** GroupParty
+* LOG 03/08/23
+** DONE Base entities should not be stateful
+CLOSED: [2023-08-03 Thu 23:25]
+** DONE Less calling normalize
+CLOSED: [2023-08-03 Thu 23:25]
+** TODO packages
+* Lessons
+** backend api should return the full schema of all related tables. JOIN etc.
+

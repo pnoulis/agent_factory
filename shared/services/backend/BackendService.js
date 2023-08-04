@@ -14,7 +14,7 @@ import {
   onUnregisterWristband,
   onceUnregisterWristband,
 } from "./api/unregisterWristband.js";
-import { mergeTeam } from "./api/mergeTeam.js";
+import { mergeTeam, onMergeTeam, onceMergeTeam } from "./api/mergeTeam.js";
 import { addPackage } from "./api/addPackage.js";
 import { removePackage } from "./api/removePackage.js";
 import { listRegisteredPlayers } from "./api/listRegisteredPlayers.js";
@@ -83,6 +83,8 @@ BackendService.prototype.unregisterWristband = unregisterWristband;
 BackendService.prototype.onUnregisterWristband = onUnregisterWristband;
 BackendService.prototype.onceUnregisterWristband = onceUnregisterWristband;
 BackendService.prototype.mergeTeam = mergeTeam;
+BackendService.prototype.onMergeTeam = onMergeTeam;
+BackendService.prototype.onceMergeTeam = onceMergeTeam;
 BackendService.prototype.addPackage = addPackage;
 BackendService.prototype.removePackage = removePackage;
 BackendService.prototype.listRegisteredPlayers = listRegisteredPlayers;

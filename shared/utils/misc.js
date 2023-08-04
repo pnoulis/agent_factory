@@ -9,6 +9,21 @@ function calcTeamSize(nPlayers) {
   return [nTeams, max + 1];
 }
 
+function distributePlayers(players = 2) {
+  // How many teams of 2 can be made out of players
+  const teamsOf2 = Math.floor(Math.abs(players / 2));
+  // // Remaining players
+  let remainder = players > 2 ? Math.floor(Math.abs(players % 2)) : 0;
+  const teams = new Array(teamsOf2);
+  for (let i = 0; i < teams.length; i++) {
+    teams[i] = new Array(2);
+    teams[i][0] = null;
+    teams[i][1] = null;
+    if (remainder-- > 0) teams[i].push(null);
+  }
+  return teams;
+}
+
 function mapPlayerStatus(player = {}) {
   // client side
   if (player?.wristband?.status) {
@@ -113,11 +128,39 @@ function mapWristbandColor(from, color) {
   }
 }
 
+/**
+ * stoms
+ * Seconds to MilliSeconds
+ */
+function t_stoms(seconds) {
+  return seconds * 1000;
+}
+
+/**
+ * t_mtos
+ * Minutes to Seconds
+ */
+function t_mtos(minutes) {
+  return minutes * 60;
+}
+
+/**
+ * t_mstom
+ * Milliseconds to minutes
+ */
+function t_mstom(milliseconds) {
+  return (milliseconds / 1000) / 60;
+}
+
 export {
   calcTeamSize,
+  distributePlayers,
   mapWristbandColor,
   mapPackageStatus,
   mapTeam,
   mapPackage,
   mapPlayerStatus,
+  t_mtos,
+  t_stoms,
+  t_mstom,
 };

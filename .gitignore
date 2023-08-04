@@ -42,3 +42,4 @@ __pycache__
 .env
 
 ui/af-design-style
+tmp.*

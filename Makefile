@@ -100,7 +100,8 @@ sync:
 serve: serve-backend serve-afadmin_client
 	@echo ngix was build
 
-dockernginx: nginx-image
+.PHONY: dockernginx
+dockernginx:
 	@docker run \
 	--name agent_factory.nginx \
 	--detach \
@@ -117,6 +118,7 @@ dockernginx: nginx-image
 	target=/etc/nginx/conf.d/default.conf \
 	agent_factory/nginx
 
+.PHONY: nginx-image
 nginx-image:
 	@docker images | grep agent_factory/nginx; \
 	if (( $$? > 0 )); then \

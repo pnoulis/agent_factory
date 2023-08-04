@@ -216,6 +216,7 @@ I proceed by documenting
     amount: Integer,
     started: Integer,
     ended: Integer,
+    played: Integer,
     remainder: Real,
     state: String, // forming, unpaid, paid, playing, paused, completed
   }
@@ -455,3 +456,110 @@ FPlayer -> BPlayer -> FPlayer
 * Team data normalization function
 ** Roster.asArray
 If deep it will call the asObjects function of each nested entity
+
+* return from addpakcaeg
+  timestamp: 1691116740432,
+  result: 'OK',
+  team: {
+    name: 'gracious_Finrod',
+    totalPoints: 0,
+    teamState: null,
+    currentRoster: {
+      version: 1,
+      players: [
+        {
+          username: 'naughty_Fingolfin_462',
+          wristbandNumber: 478,
+          wristbandColor: null
+        },
+        {
+          username: 'stoic_Saruman_672',
+          wristbandNumber: 185,
+          wristbandColor: null
+        },
+        {
+          username: 'serene_Merry_839',
+          wristbandNumber: 845,
+          wristbandColor: null
+        },
+        {
+          username: 'elated_Radagast_668',
+          wristbandNumber: 177,
+          wristbandColor: null
+        },
+        {
+          username: 'hopeful_Galadriel_699',
+          wristbandNumber: 682,
+          wristbandColor: null
+        },
+        {
+          username: 'nice_Gimli_1',
+          wristbandNumber: 424,
+          wristbandColor: null
+        }
+      ]
+    },
+    roomType: null,
+    packages: [
+      {
+        id: 3,
+        name: 'Per Time 60',
+        cost: null,
+        started: null,
+        ended: null,
+        duration: 3600,
+        paused: false,
+        active: false
+      }
+    ]
+  },
+  payload: {
+    ok: true,
+    msg: 'Successfuly added Per Time 60 package to gracious_Finrod',
+    data: [Circular *1]
+  }
+} wS
+
+* LIST PACKAGES
+** DONE should return an array of normalized packages
+CLOSED: [2023-08-04 Fri 14:28]
+#+begin_src js
+  [
+    {
+      id:  null,
+      name: 'Missions...',
+      type: 'mission',
+      amount: 30,
+      cost: 30.0, // something
+      t_start: null,
+      t_end: null,
+      remainder: 30, // somethin
+      state: 'new',
+    }
+  ]
+#+end_src
+* LIST TEAMS
+** TODO should return an array of normalized teams
+#+begin_src js
+  {
+    name: "team name",
+    points: 0,
+    roster: [
+      {
+        username: "name",
+        state: "registered",
+        wristband: {
+          id: 2,
+          color: 2,
+          state: "paired",
+        }
+      }
+    ]
+    packages: [
+      {
+        state: "registered" || "playing" || "paused";
+      }
+    ]
+    state: "merged",
+  }
+#+end_src
