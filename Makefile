@@ -81,7 +81,12 @@ release:
 	cp -r $(SRCDIR)/PACKAGE $(SRCDIR)/dist/PACKAGE
 	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
 
-.PHONY: sync
+
+.PHONY: sync sync-afadmin
+
+sync-afadmin:
+	rsync -az $(AFADMIN_CLIENT)/dist/* agent_factory:/var/www/html/administration
+
 sync:
 # sync administration
 	rsync -az $(SRCDIR)/dist/administration/* \

@@ -1,4 +1,4 @@
-const { default: Pino } = await import("pino");
+import Pino from "pino";
 import { ENVIRONMENT } from "../../config.js";
 
 function LoggerService(clientId, name) {

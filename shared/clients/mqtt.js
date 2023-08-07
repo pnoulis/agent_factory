@@ -1,11 +1,5 @@
-import { ENVIRONMENT } from "../config.js";
-
-let MQTT_CLIENT_LIB = undefined;
-if (ENVIRONMENT.RUNTIME === "node") {
-  MQTT_CLIENT_LIB = await import("mqtt");
-} else {
-  MQTT_CLIENT_LIB = await import("precompiled-mqtt");
-}
+import { ENVIRONMENT } from '../config.js';
+import MQTT_CLIENT_LIB from "__MQTT_CLIENT_LIB__";
 
 /**
  * Connect to a mqtt server
@@ -26,7 +20,7 @@ function getMqttClient(url, options = {}) {
 
 const getMqttClientBackend = getMqttClient.bind(
   null,
-  ENVIRONMENT.MQTT_LOGIN_BACKEND_URL
+  ENVIRONMENT.MQTT_LOGIN_BACKEND_URL,
 );
 
 export { getMqttClient, getMqttClientBackend };

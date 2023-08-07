@@ -19,11 +19,11 @@ const defaultInstance = new BackendService(
 // Creating a default instance might be toggled off in production MODE.
 defaultInstance
   .start()
-  .then(function () {
+  .then(() => {
     defaultInstance.booted = true;
     console.log(`Backend service ${defaultInstance.id} successful boot!`);
   })
-  .catch(function (err) {
+  .catch((err) => {
     console.log(err);
     console.log(`Backend service ${defaultInstance.id} failed boot!`);
     throw err;
