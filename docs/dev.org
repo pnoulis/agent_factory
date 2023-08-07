@@ -814,4 +814,45 @@ CLOSED: [2023-08-03 Thu 23:25]
 ** TODO packages
 * Lessons
 ** backend api should return the full schema of all related tables. JOIN etc.
-
+* Administrator
+** Cashout
+*** Cash out button
+*** TextArea comments
+*** Number of packages added by cashier
+*** Cashiers name
+*** time of session start
+*** time of session finish
+*** all info that one can get from stats.
+* Statistics
+** amount of packages added throughout the day
+use listTeams to count the total number of packages
+** amount of packages added within the session
+use localStorage
+** amount of active packages within the session
+use listTeams to fetch all teams and their packages
+iterate over the teams packages
+select those packages that have the active flag on.
+** amount of inactive packages within the session
+use listTeams to fetch all teams and their packages.
+loop over the packages of each team
+select inactive packages.
+** amount of teams added throughout the day
+use listTeams to fetch all teams.
+length of list
+** amount of teams added within the session
+use localStorage
+** amount of new players registered
+use localStorage
+** amount of playing players
+use listTeams to fetch all teams.
+iterate over all teams.
+count the number of players in each teams roster.
+** cost of packages added throughout the day
+use listTeams to fetch all teams and their packages.
+iterate over the teams and their packages.
+get the sum of all package's cost of all teams.
+** cost of packages within the session
+use localStorage
+** currently logged in cashiers.
+** Number of cashiers that have logged in so far
+* LocalStorage

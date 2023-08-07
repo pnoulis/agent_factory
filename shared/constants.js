@@ -2,6 +2,7 @@ import { PACKAGE_MISSIONS_SCHEMA, PACKAGE_TIME_SCHEMA } from "./schemas.js";
 import { t_mtos } from "./utils/misc.js";
 const MAX_TEAM_SIZE = 6;
 const MIN_TEAM_SIZE = 2;
+const CLIENT_STORAGE_GLOBAL_SESSION_ID = "session";
 
 const WRISTBAND_COLORS = [
   "black",
@@ -74,10 +75,17 @@ const AF_PACKAGES = [
   },
 ];
 
+const AF_PACKAGES_MAP = AF_PACKAGES.reduce(function (car, cdr) {
+  car[cdr.name] = cdr;
+  return car;
+}, {});
+
 export {
   MAX_TEAM_SIZE,
   MIN_TEAM_SIZE,
   MAX_WRISTBAND_ID,
   WRISTBAND_COLORS,
   AF_PACKAGES,
+  AF_PACKAGES_MAP,
+  CLIENT_STORAGE_GLOBAL_SESSION_ID,
 };

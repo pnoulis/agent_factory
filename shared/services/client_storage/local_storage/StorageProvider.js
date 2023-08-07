@@ -2,8 +2,37 @@ class StorageProvider {
   constructor(storageProvider, db = null) {
     this.storageProvider = storageProvider;
     this.db = db;
+    if (this.db && !this.dbget(this.db)) {
+      this.dbset(db, {});
+    }
   }
 }
+
+StorageProvider.prototype.dbset = function dbset(...args) {
+  switch (args.length) {
+    case 2:
+      this.storageProvider.setItem(args[0], JSON.stringify(args[1]));
+      break;
+    case 3:
+      const store = JSON.parse(this.storageProvider.getItem(args[0]));
+      store[args[1]] = args[2];
+      this.storageProvider.setItem(args[0], JSON.stringify(store));
+      break;
+    default:
+      throw new Error("dbset invalid arguments");
+  }
+};
+
+StorageProvider.prototype.dbget = function dbget(...args) {
+  switch (args.length) {
+    case 1:
+      return JSON.parse(this.storageProvider.getItem(args[0]));
+    case 2:
+      return JSON.parse(this.storageProvider.getItem(args[0]))?.[args[1]];
+    default:
+      throw new Error("dbget invalid arguments");
+  }
+};
 
 /**
  * Set value of key in storage
@@ -77,7 +106,7 @@ StorageProvider.prototype.remove = function remove(key) {
   if (this.db) {
     const store = this.get() || {};
     delete store[key];
-    this.storageProvider.setItem(db, JSON.stringify(store));
+    this.storageProvider.setItem(this.db, JSON.stringify(store));
   } else {
     this.storageProvider.removeItem(key);
   }
@@ -88,7 +117,7 @@ StorageProvider.prototype.remove = function remove(key) {
  */
 StorageProvider.prototype.drop = function drop() {
   if (this.db) {
-    this.storageProvider.removeItem(db);
+    this.storageProvider.removeItem(this.db);
   } else {
     this.storageProvider.clear();
   }

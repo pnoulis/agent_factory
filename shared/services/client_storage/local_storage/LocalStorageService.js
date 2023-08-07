@@ -1,58 +1,45 @@
-import { smallid }from "js_utils/uuid";
+import { smallid } from "js_utils/uuid";
 import { StorageProvider } from "./StorageProvider.js";
 
+/**
+ * LocalStorageService
+ * A wrapper to the window.localStorage and window.sessionStorage
+ *
+ * Client: A client of the localStorageService is a window in a browser.
+ *
+ */
+
 class LocalStorageService {
-  constructor(sessionId, clientId) {
-    this.sessionId = sessionId || smallid();
-    this.clientId = clientId || smallid();
+  constructor(db = null) {
+    this.persistent = new StorageProvider(window.localStorage, db);
+    this.temporary = new StorageProvider(window.sessionStorage, db);
+    this.db = db;
+  }
 
-    // Global shared storage
-    this.global = new StorageProvider(globalThis.window.localStorage);
-
-    // session
-    this.session;
-
-    // client initialization
-    this.client = new StorageProvider(
-      globalThis.window.sessionStorage,
-      this.clientId,
-    );
+  get(key) {
+    return this.persistent.get(key);
+  }
+  set(key, value) {
+    return this.persistent.set(key, value);
+  }
+  remove(key) {
+    return this.persistent.remove(key);
+  }
+  drop() {
+    return this.persistent.drop();
+  }
+  getCache(key, value) {
+    return this.temporary.get(key, value);
+  }
+  setCache(key, value) {
+    return this.temporary.set(key, value);
+  }
+  removeCache(key) {
+    return this.temporary.remove(key);
+  }
+  dropCache() {
+    return this.temporary.drop();
   }
 }
-
-LocalStorageService.prototype.start = function start() {
-  const session = this.global.get("sessionId");
-  if (!session) {
-    // Initialize session
-    this.global.set("sessionId", this.sessionId);
-    this.global.set(this.sessionId, {});
-  } else {
-    this.sessionId = session;
-  }
-  this.session = new StorageProvider(
-    globalThis.window.localStorage,
-    this.sessionId,
-  );
-  this.global.set('clients', []);
-
-  const clientSession = this.global
-    .get("clients")
-    .find((client) => client === this.clientId);
-  if (!clientSession) {
-    // Register client to session
-    this.global.set((store) => {
-      store.clients.push(this.clientId);
-      return store;
-    });
-    // Initialize client session
-    globalThis.window.sessionStorage.setItem(this.clientId, JSON.stringify({}));
-  }
-};
-
-LocalStorageService.prototype.stop = function stop() {
-  // Drop client session
-  this.client.drop();
-  // Unregister client from session's records
-};
 
 export { LocalStorageService };
