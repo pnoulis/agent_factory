@@ -856,3 +856,9 @@ use localStorage
 ** currently logged in cashiers.
 ** Number of cashiers that have logged in so far
 * LocalStorage
+* Styling tables
+** expand cell over multiple columns (span)
+colSpan='5'
+** align cell contents
+align='center | inherit | justify | left | right'
+
