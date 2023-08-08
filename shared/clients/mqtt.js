@@ -1,5 +1,5 @@
-import { ENVIRONMENT } from '../config.js';
-import MQTT_CLIENT_LIB from "__MQTT_CLIENT_LIB__";
+import { ENVIRONMENT } from "../config.js";
+import MQTT_CLIENT_LIB from "import.meta.env.__MQTT_CLIENT_LIB__";
 
 /**
  * Connect to a mqtt server
