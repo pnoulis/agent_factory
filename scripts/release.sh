@@ -35,65 +35,65 @@ done
 # ORDER OF make build is important
 
 # js_utils at:
-commit='ffa84ae2c5165ecce9bcebac3d9495c2441151d9'
-# Author: pnoul <pavlos.noulis@gmail.com>
-# Date:   Tue May 23 17:10:31 2023 +0300
-# [fix] ConsoloLogger was failing to instantiate if no arguments provided
+commit='d613833cd43daea9808bd3a38129c237fa1f1607' 
+# Author: pavlos noulis <pavlos.noulis@gmail.com>
+# Date:   Sun Aug 13 20:53:36 2023 +0300
+# Makefile NODE was tied to version v20.4.0, it has been now switched to the node currently installed in the system
 echo $JS_UTILS
 ensureAtCommit $JS_UTILS $commit || die
 cd $JS_UTILS
-make build || die 'Failed to build'
+make build mode=production || die 'Failed to build'
 
 # react utils at:
-commit='fa7bfd105c12a1d462c109b66f133749fbc604d2'
-# Author: pnoul <pavlos.noulis@gmail.com>
-# Date:   Fri May 19 17:06:42 2023 +0300
-# SelectOnlyCombobox default value
+commit='7a0289b1461ea0ae94afa62639769c35930099d3'
+# Author: pavlos noulis <pavlos.noulis@gmail.com>
+# Date:   Mon Aug 7 07:53:18 2023 +0300
+# inputs/TextArea
 echo $REACT_UTILS
 ensureAtCommit $REACT_UTILS $commit || die
-make build || die 'Failed to build'
+make build mode=production || die 'Failed to build'
 
 # mqtt_proxy at:
-commit='5ed10e16927d2f776fb6dca52b2a45b60e470506'
-# Author: pavlos noulis <pavlos.noulis@gmail.com>
-# Date:   Thu May 11 00:29:09 2023 +0300
-# git ignores emacs hidden temporary files
+commit='205be884b41f94b8ba0ff364bbde1e41ac417156'
+# Author: pnoul <pavlos.noulis@gmail.com>
+# Date:   Tue Jul 18 09:04:27 2023 +0300
+# removed unnecessary packages
 echo $MQTT_PROXY
 ensureAtCommit $MQTT_PROXY $commit || die
 cd $MQTT_PROXY
-make build || 'Failed to build'
+make build mode=production || 'Failed to build'
 
 # Afmachine at:
-commit='cc7bd416b8903c29f1a54477bc9e400533cb4cad'
+commit='8ca80fbd6052b80641c436d4a732d2f60e48185b'
 # Author: pnoul <pavlos.noulis@gmail.com>
-# Date:   Mon Jun 19 11:08:17 2023 +0300
-# Running in production mode calls the developments configuration preset
+# Date:   Mon Aug 7 16:47:15 2023 +0300
+# cashout console.log not outping
 echo $AFMACHINE
 ensureAtCommit $AFMACHINE $commit || die
 cd $AFMACHINE
-make build || 'Failed to build'
+make build mode=production || 'Failed to build'
 
 # afadmin_client at:
-commit='60147c900452f3c9b449ef3956c5258bb4a43a67'
-# Author: pnoul <pavlos.noulis@gmail.com>
-# Date:   Mon Jun 19 10:56:33 2023 +0300
-# Mqtt server address in production
+commit='9fed525255d6afad19d9ece7acaf1883c873af8a'
+# Author: pavlos noulis <pavlos.noulis@gmail.com>
+# Date:   Sun Aug 13 20:28:22 2023 +0300
+# agent_factory now uses M4 preprocessor to conditionally import either an MQTT_CLIENT_LIB fit for a browser runtime or one for a nodejs runtime
 echo $AFADMIN_CLIENT
 ensureAtCommit $AFADMIN_CLIENT $commit || die
 cd $AFADMIN_CLIENT
-make build || 'Failed to build'
+make build mode=production || 'Failed to build'
 
 # Backend at:
-commit='c5b6838a3fd96ef1362938d15b85e5cd4b494d4f'
+commit='8f64fca25ec13f0a40b187ee005f51cba5eb01e4'
 # Author: Pavlos Kapoutsis <pavloskapoutsis@gmail.com>
-# Date:   Fri May 19 12:50:37 2023 +0300
-# --
+# Date:   Sat Aug 5 19:14:18 2023 +0300
+# color game init
 echo $BACKEND
 ensureAtCommit $BACKEND $commit || die
 
 # Thomas at:
 # The ui/thomas source tree is not a git repository within the agent_factory
 # superproject structure.
-echo $THOMAS
-cd $THOMAS
-make build || die 'Failed to build'
+# echo $THOMAS
+# cd $THOMAS
+# make build || die 'Failed to build'

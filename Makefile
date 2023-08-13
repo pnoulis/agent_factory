@@ -66,18 +66,18 @@ npm-packages:
 .PHONY: release rel bump-version .EXPORT_ALL_VARIABLES
 
 CALLED_BY_MAKE=true
+bump-version: .EXPORT_ALL_VARIABLES
 bump-version:
 	@set -a; source ./PACKAGE && ./scripts/changeVersion.sh
 
 release: .EXPORT_ALL_VARIABLES
 release:
 	-rm -rdf $(SRCDIR)/dist/*
-	-rm *.tar.gz
+	-rm *.tar.gz 2>/dev/null
 	-mkdir -p $(SRCDIR)/dist 2>/dev/null
 	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh
 	cp -r $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/agent_factory.nginx.conf
 	cp -r $(AFADMIN_CLIENT)/dist $(SRCDIR)/dist/administration
-	cp -r $(THOMAS)/build $(SRCDIR)/dist/gameplay
 	cp -r $(SRCDIR)/PACKAGE $(SRCDIR)/dist/PACKAGE
 	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
 

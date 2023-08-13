@@ -1,0 +1,63 @@
+--------------------------------------------------------------------------------
+[AUTOMATED RELEASE] Sunday_13_August_2023_20:46
+0.0.1 -> 0.1.0
+
+JS_UTILS
+/home/pnoul/dev/intelligent_entertainment/agent_factory/lib/js_utils
+origin	git@github.com:pnoulis/js_utils.git (fetch)
+origin	git@github.com:pnoulis/js_utils.git (push)
+commit d46f905954194602484f91954847df315a3c93f2
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Fri Aug 4 23:39:01 2023 +0300
+
+    multiple stateful ancestors allowed
+
+REACT_UTILS
+/home/pnoul/dev/intelligent_entertainment/agent_factory/ui/react_utils
+origin	git@github.com:pnoulis/react_utils.git (fetch)
+origin	git@github.com:pnoulis/react_utils.git (push)
+commit 7a0289b1461ea0ae94afa62639769c35930099d3
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Mon Aug 7 07:53:18 2023 +0300
+
+    inputs/TextArea
+
+AFMACHINE
+/home/pnoul/dev/intelligent_entertainment/agent_factory/core/afmachine
+origin	git@github.com:pnoulis/afmachine.git (fetch)
+origin	git@github.com:pnoulis/afmachine.git (push)
+commit 8ca80fbd6052b80641c436d4a732d2f60e48185b
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Mon Aug 7 16:47:15 2023 +0300
+
+    cashout console.log not outping
+
+MQTT_PROXY
+/home/pnoul/dev/intelligent_entertainment/agent_factory/lib/mqtt_proxy
+origin	git@github.com:pnoulis/mqtt_proxy.git (fetch)
+origin	git@github.com:pnoulis/mqtt_proxy.git (push)
+commit 205be884b41f94b8ba0ff364bbde1e41ac417156
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Tue Jul 18 09:04:27 2023 +0300
+
+    removed unnecessary packages
+
+AFADMIN_CLIENT
+/home/pnoul/dev/intelligent_entertainment/agent_factory/ui/afadmin_client
+origin	git@github.com:pnoulis/afadmin_client.git (fetch)
+origin	git@github.com:pnoulis/afadmin_client.git (push)
+commit 9fed525255d6afad19d9ece7acaf1883c873af8a
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Sun Aug 13 20:28:22 2023 +0300
+
+    agent_factory now uses M4 preprocessor to conditionally import either an MQTT_CLIENT_LIB fit for a browser runtime or one for a nodejs runtime
+
+BACKEND
+/home/pnoul/dev/intelligent_entertainment/agent_factory/core/backend
+origin	git@github.com:IsThisRealLife/agent_factory_services.git (fetch)
+origin	git@github.com:IsThisRealLife/agent_factory_services.git (push)
+commit 8f64fca25ec13f0a40b187ee005f51cba5eb01e4
+Author: Pavlos Kapoutsis <pavloskapoutsis@gmail.com>
+Date:   Sat Aug 5 19:14:18 2023 +0300
+
+    color game init
