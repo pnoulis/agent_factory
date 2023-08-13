@@ -1,5 +1,10 @@
 import { ENVIRONMENT } from "../config.js";
-import MQTT_CLIENT_LIB from "precompiled-mqtt"
+dnl/*
+ifelse(RUNTIME, `browser`,
+     import MQTT_CLIENT_LIB from "precompiled-mqtt",
+     import MQTT_CLIENT_LIB from "mqtt"
+     )
+dnl*/
 
 /**
 * Connect to a mqtt server
