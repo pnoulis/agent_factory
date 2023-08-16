@@ -48,3 +48,4 @@ tmp.*
 # M4 macro expands shared/mqtt/client.js.m4 into shared/mqtt/client.js
 shared/mqtt/client.js
 
+ui/afadmin_new_client.git 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 201.28 490.96">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: .5;
+      }
+
+      .cls-2 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect width="201.28" height="490.96" rx="11" ry="11"/>
+    </clipPath>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g class="cls-1">
+      <rect width="201.28" height="490.96" rx="11" ry="11"/>
+      <g class="cls-2">
+        <image width="792" height="1080" transform="translate(-127.64 -23.03) scale(.61 .49)" xlink:href="../../../../../../../2.GRAPHIC DEPARTMENT/annaliapo/Agent Factory/Website/Agent Factory_Website_ Files for Web Developer/Linked files_Desktop Display/gold texture__792x1080.png"/>
+      </g>
+    </g>
+  </g>
+</svg>

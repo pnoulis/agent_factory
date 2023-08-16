@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 462.95 55.98">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ccc;
+        font-family: SairaRoman-Regular, Saira;
+        font-size: 22.97px;
+        font-variation-settings: 'wght' 400, 'wdth' 100;
+      }
+
+      .cls-2 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <text class="cls-1" transform="translate(0 19.39)"><tspan x="0" y="0">The Page you a</tspan><tspan class="cls-4" x="164.43" y="0">r</tspan><tspan class="cls-2" x="172.75" y="0">e looking </tspan><tspan class="cls-3" x="274.21" y="0">f</tspan><tspan class="cls-2" x="282.64" y="0">or does n</tspan><tspan class="cls-4" x="380" y="0">o</tspan><tspan x="393.14" y="0">t exi</tspan><tspan class="cls-4" x="437.98" y="0">s</tspan><tspan x="449.33" y="0">t </tspan><tspan x="27.23" y="27.57">or one of our agents has gone missing.</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54.25 59.3">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5 {
+        fill: #c19042;
+      }
+
+      .cls-2 {
+        font-family: SairaRoman-Medium, Saira;
+        font-size: 11.6px;
+        font-variation-settings: 'wght' 500, 'wdth' 100;
+        font-weight: 500;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <rect class="cls-5" width="54.25" height="59.3" rx="6.94" ry="6.94"/>
+      <text class="cls-2" transform="translate(12.57 53.47)"><tspan x="0" y="0">S</tspan><tspan class="cls-3" x="7.24" y="0">A</tspan><tspan class="cls-4" x="14.67" y="0">VE</tspan></text>
+      <path class="cls-1" d="M42.13,16.17v20.24c0,.94-.32,1.73-.96,2.37s-1.43,.96-2.37,.96H15.45c-.94,0-1.73-.32-2.37-.96s-.96-1.43-.96-2.37V13.07c0-.94,.32-1.73,.96-2.37s1.43-.96,2.37-.96h20.24l6.43,6.43Zm-15,16.41c.91,0,1.7-.33,2.37-.98,.67-.65,1-1.45,1-2.39s-.33-1.7-.98-2.37c-.65-.67-1.45-1-2.39-1s-1.7,.33-2.37,.98c-.67,.65-1,1.45-1,2.39s.33,1.7,.98,2.37c.65,.67,1.45,1,2.39,1Zm-9.62-11.81h13.63v-5.65h-13.63v5.65Z"/>
+    </g>
+  </g>
+</svg>

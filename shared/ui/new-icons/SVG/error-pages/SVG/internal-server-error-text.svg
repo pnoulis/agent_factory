@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 826.82 109.6">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-4 {
+        fill: #ccc;
+        font-family: SairaRoman-Regular, Saira;
+        font-size: 88.6px;
+        font-variation-settings: 'wght' 400, 'wdth' 100;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <text class="cls-4" transform="translate(0 74.78)"><tspan x="0" y="0">In</tspan><tspan class="cls-2" x="78.41" y="0">t</tspan><tspan x="109.69" y="0">ernal Ser</tspan><tspan class="cls-3" x="476.23" y="0">v</tspan><tspan x="522.3" y="0">er Er</tspan><tspan class="cls-1" x="711.11" y="0">r</tspan><tspan x="743.18" y="0">or</tspan></text>
+  </g>
+</svg>

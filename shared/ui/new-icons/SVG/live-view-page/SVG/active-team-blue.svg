@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1558 106">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: SairaRoman-Light, Saira;
+        font-variation-settings: 'wght' 300, 'wdth' 100;
+        font-weight: 300;
+      }
+
+      .cls-1, .cls-2 {
+        font-size: 17px;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-4 {
+        letter-spacing: -.08em;
+      }
+
+      .cls-2 {
+        font-family: SairaRoman-Medium, Saira;
+        font-variation-settings: 'wght' 500, 'wdth' 100;
+        font-weight: 500;
+      }
+
+      .cls-5 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-6 {
+        fill: #6e80cb;
+        opacity: .5;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <rect class="cls-6" width="1558" height="106"/>
+    <path d="M36.05,18.13c-7.75,0-14.01,6.25-14.01,13.99s6.26,14.01,14.01,14.01,14-6.26,14-14.01-6.26-13.99-14-13.99h0Z"/>
+    <polygon class="cls-3" points="45.27 32.13 30.39 23.54 30.39 40.72 45.27 32.13"/>
+    <path d="M36.05,60.02c-7.75,0-14.01,6.25-14.01,13.99s6.26,14.01,14.01,14.01,14-6.26,14-14.01-6.26-13.99-14-13.99h0Z"/>
+    <rect class="cls-3" x="28.64" y="66.61" width="14.82" height="14.82"/>
+    <text class="cls-1" transform="translate(149.8 59.32)"><tspan x="0" y="0">Noulis</tspan><tspan class="cls-4" x="49.37" y="0">T</tspan><tspan x="57.88" y="0">eam</tspan></text>
+    <text class="cls-2" transform="translate(739.11 58.99)"><tspan x="0" y="0">2</tspan></text>
+    <text class="cls-2" transform="translate(585.46 58.99)"><tspan x="0" y="0">2</tspan></text>
+    <text class="cls-2" transform="translate(882.28 57.92)"><tspan x="0" y="0">-</tspan></text>
+    <text class="cls-2" transform="translate(1207.99 58.99)"><tspan x="0" y="0">2</tspan></text>
+    <text class="cls-2" transform="translate(1361.54 58.92)"><tspan x="0" y="0">13</tspan></text>
+    <text class="cls-2" transform="translate(1499.97 58.92)"><tspan x="0" y="0">13:52</tspan></text>
+    <text class="cls-1" transform="translate(320.47 57.58)"><tspan class="cls-5" x="0" y="0">P</tspan><tspan x="10.34" y="0">ACKAGE_RUNNING</tspan></text>
+    <text class="cls-1" transform="translate(993.86 59.32)"><tspan x="0" y="0">Per Time 90</tspan></text>
+  </g>
+</svg>
