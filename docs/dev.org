@@ -862,3 +862,7 @@ colSpan='5'
 ** align cell contents
 align='center | inherit | justify | left | right'
 
+
+* LOG 17/08/23
+** UI re-design
+*** copy over popoverasyncstate and its dependecies
