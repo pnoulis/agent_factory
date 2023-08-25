@@ -19,7 +19,7 @@
 
 import { exec, spawn } from "node:child_process";
 import path from "node:path";
-import { getMqttClientBackend } from "../clients/mqtt.js";
+import { getMqttClientBackend } from "../clients/mqtt.node.js";
 import { findNodePkgDir } from "js_utils/node";
 
 const AF_SHAREDIR = findNodePkgDir();
