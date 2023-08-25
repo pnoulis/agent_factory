@@ -118,9 +118,17 @@ class ERR_TEAM_MERGE_UNPAIRED_PLAYERS extends AgentFactoryError {
   }
 }
 
-class ERR_TEAM_MERGE_DUPLICATE_COLORS extends AgentFactoryError {
-  constructor(color) {
-    super(`Duplicate ${color} wristband found in team`);
+class ERR_TEAM_DUPLICATE_WCOLOR extends AgentFactoryError {
+  constructor(color, action = "add player to team") {
+    super(`A ${color} wristband is already part of the team`);
+    this.action = action;
+  }
+}
+
+class ERR_TEAM_DUPLICATE_PLAYER extends AgentFactoryError {
+  constructor(username, action = "add player to team") {
+    super(`Player ${username} is already part of the team`);
+    this.action = action;
   }
 }
 
@@ -182,8 +190,9 @@ export {
   ERR_TEAM_MERGE_MISSING_NAME,
   ERR_TEAM_MERGE_INSUFFICIENT_PLAYERS,
   ERR_TEAM_MERGE_UNPAIRED_PLAYERS,
-  ERR_TEAM_MERGE_DUPLICATE_COLORS,
+  ERR_TEAM_DUPLICATE_WCOLOR,
   ERR_TEAM_ACTIVATE,
+  ERR_TEAM_DUPLICATE_PLAYER,
 
   // Group party errors
   ERR_GP_EMPTY,
@@ -192,5 +201,4 @@ export {
   ERR_PKG_IS_REGISTERED,
   ERR_UNIQUE_ACTIVE_PKG,
   ERR_RM_ACTIVE_PKG,
-
 };
