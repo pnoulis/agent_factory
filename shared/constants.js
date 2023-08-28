@@ -5,7 +5,7 @@ const MIN_TEAM_SIZE = 2;
 const CLIENT_STORAGE_GLOBAL_SESSION_ID = "session";
 
 const WRISTBAND_COLORS = [
-  "black",
+  "1based",
   "red",
   "purple",
   "green",

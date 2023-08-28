@@ -41,8 +41,8 @@ const mqttClientBackend = getMqttClientBackend();
   context.
 */
 if (globalThis.process.argv.length > 2) {
-  const arg1 = parseInt(process.argv.splice(2, 1));
-  const arg2 = parseInt(process.argv.splice(2, 1));
+  const arg1 = process.argv.splice(2, 1);
+  const arg2 = process.argv.splice(2, 1);
   emulateScan(arg1 || "r", arg2 ?? "r");
 }
 
