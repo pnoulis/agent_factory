@@ -867,3 +867,4 @@ align='center | inherit | justify | left | right'
 *** copy over popoverasyncstate and its dependecies
 * LOG 22/08/23
 ** TODO Finish the registration ui page
+* LOG 29/08/23

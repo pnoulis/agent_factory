@@ -104,6 +104,7 @@ class ERR_TEAM_MERGE_INSUFFICIENT_PLAYERS extends AgentFactoryError {
     super(
       "Team requires a minimum of 2 players with paired wristbands to merge",
     );
+    this.action = "merge team";
   }
 }
 
@@ -115,12 +116,13 @@ class ERR_TEAM_MERGE_UNPAIRED_PLAYERS extends AgentFactoryError {
         ln > 1 ? "" : "s"
       } to pair a wristband`,
     );
+    this.action = "merge team";
   }
 }
 
 class ERR_TEAM_DUPLICATE_WCOLOR extends AgentFactoryError {
   constructor(color, action = "add player to team") {
-    super(`A ${color} wristband is already part of the team`);
+    super(`A wristband with the color ${color} is already part of the team.`);
     this.action = action;
   }
 }
