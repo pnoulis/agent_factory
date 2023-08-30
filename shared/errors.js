@@ -14,8 +14,9 @@ class ERR_UNSUBSCRIBED extends AgentFactoryError {
 }
 
 class ERR_MAX_ROSTER_SIZE extends AgentFactoryError {
-  constructor() {
+  constructor(action = "add player") {
     super(`Roster size cannot exceed ${MAX_TEAM_SIZE}`);
+    this.action = action;
   }
 }
 
@@ -136,10 +137,13 @@ class ERR_TEAM_DUPLICATE_PLAYER extends AgentFactoryError {
 
 /* --------------- GROUP PARTY ERRORS ----------------------------- */
 class ERR_GP_EMPTY extends AgentFactoryError {
-  constructor() {
-    super("Group party is empty!.");
+  constructor(action = "") {
+    super("Group party is empty!");
+    this.action = action;
   }
 }
+
+/* ------------------------------ PKG ERRORS ------------------------------ */
 
 class ERR_PKG_IS_REGISTERED extends AgentFactoryError {
   constructor(pkg, team) {

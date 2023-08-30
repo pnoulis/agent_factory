@@ -1,4 +1,4 @@
-import { MAX_TEAM_SIZE } from "../constants.js";
+import { MAX_TEAM_SIZE, MIN_TEAM_SIZE } from "../constants.js";
 
 function calcTeamSize(nPlayers) {
   let max = MAX_TEAM_SIZE;
@@ -19,6 +19,37 @@ function distributePlayers(players = 2) {
     teams[i] = new Array(2);
     teams[i][0] = null;
     teams[i][1] = null;
+    if (remainder-- > 0) teams[i].push(null);
+  }
+  return teams;
+}
+
+function distributePlayersRatio(players = 0, ratio) {
+  // How many teams of _ratio_ can be made out of _players_
+  let teamsOfRatio = Math.floor(Math.abs(players / ratio));
+  // When ratio > players, then _teamsOfRatio_ is 0.
+  // If that is the case then figure out if players can be split in teams
+  // of MIN_TEAM_SIZE else place them all in one team.
+  if (!teamsOfRatio || (teamsOfRatio === 1 && players % ratio >= 2)) {
+    if (players >= MIN_TEAM_SIZE * 2) {
+      ratio = Math.floor(Math.abs(players / 2));
+      teamsOfRatio = 2;
+    } else {
+      ratio = players;
+      teamsOfRatio = 1;
+    }
+  }
+  // Remaining players
+  let remainder =
+    players > MIN_TEAM_SIZE ? Math.floor(Math.abs(players % ratio)) : 0;
+
+  const teams = new Array(teamsOfRatio);
+  if (teamsOfRatio === 1) {
+    teams[0] = new Array(players).fill(null);
+    return teams;
+  }
+  for (let i = 0; i < teams.length; i++) {
+    teams[i] = new Array(ratio).fill(null);
     if (remainder-- > 0) teams[i].push(null);
   }
   return teams;
@@ -149,7 +180,7 @@ function t_mtos(minutes) {
  * Milliseconds to minutes
  */
 function t_mstom(milliseconds) {
-  return (milliseconds / 1000) / 60;
+  return milliseconds / 1000 / 60;
 }
 
 export {
@@ -163,4 +194,5 @@ export {
   t_mtos,
   t_stoms,
   t_mstom,
+  distributePlayersRatio,
 };
