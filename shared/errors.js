@@ -101,9 +101,11 @@ class ERR_TEAM_MERGE_MISSING_NAME extends AgentFactoryError {
   }
 }
 class ERR_TEAM_MERGE_INSUFFICIENT_PLAYERS extends AgentFactoryError {
-  constructor() {
+  constructor(teamName, action) {
     super(
-      "Team requires a minimum of 2 players with paired wristbands to merge",
+      `${
+        teamName || "team"
+      } requires a minimum of 2 players with paired wristbands to merge`,
     );
     this.action = "merge team";
   }
@@ -137,7 +139,7 @@ class ERR_TEAM_DUPLICATE_PLAYER extends AgentFactoryError {
 
 /* --------------- GROUP PARTY ERRORS ----------------------------- */
 class ERR_GP_EMPTY extends AgentFactoryError {
-  constructor(action = "") {
+  constructor(action = "merge group party") {
     super("Group party is empty!");
     this.action = action;
   }
