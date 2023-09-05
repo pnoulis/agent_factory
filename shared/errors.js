@@ -21,10 +21,8 @@ class ERR_MAX_ROSTER_SIZE extends AgentFactoryError {
 }
 
 class ERR_STATE_ACTION_BLOCK extends AgentFactoryError {
-  constructor(state, entity, action) {
-    super(`${state} ${entity} cannot ${action}`);
-    this.entity = entity;
-    this.state = state;
+  constructor(message, action) {
+    super(message);
     this.action = action;
   }
 }
@@ -71,8 +69,9 @@ class ERR_WRISTBAND_LOCK extends AgentFactoryError {
 }
 
 class ERR_WRISTBAND_BOUND extends AgentFactoryError {
-  constructor(number) {
+  constructor(number, action = "pair wristband") {
     super(`Scanned wristband ${number} is paired to another player`);
+    this.action = action;
   }
 }
 

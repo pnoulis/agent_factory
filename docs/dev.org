@@ -868,3 +868,7 @@ align='center | inherit | justify | left | right'
 * LOG 22/08/23
 ** TODO Finish the registration ui page
 * LOG 29/08/23
+* log 05/09/23
+** test if i can merge a temporary team
+** check what happens when a merged team tries to re-merge
+
