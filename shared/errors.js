@@ -144,6 +144,13 @@ class ERR_GP_EMPTY extends AgentFactoryError {
   }
 }
 
+class ERR_GP_DISTRIBUTE_MERGED extends AgentFactoryError {
+  constructor() {
+    super("Cannot distribute a group party that contains a merged team");
+    this.action = "distribute group party";
+  }
+}
+
 /* ------------------------------ PKG ERRORS ------------------------------ */
 
 class ERR_PKG_IS_REGISTERED extends AgentFactoryError {
@@ -203,6 +210,7 @@ export {
 
   // Group party errors
   ERR_GP_EMPTY,
+  ERR_GP_DISTRIBUTE_MERGED,
 
   // Packages
   ERR_PKG_IS_REGISTERED,
