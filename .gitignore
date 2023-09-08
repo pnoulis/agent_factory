@@ -50,3 +50,4 @@ shared/mqtt/client.js
 
 ui/afadmin_new_client.git 
 ui/afadmin_client.* 
+ui/user-router/
