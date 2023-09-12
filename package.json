@@ -26,11 +26,12 @@
   ],
   "type": "module",
   "workspaces": [
-    "ui/react_utils",
+    "lib/js_utils",
     "lib/mqtt_proxy",
     "core/afmachine",
-    "ui/afadmin_client",
-    "lib/js_utils",
+    "ui/react_utils",
+    "ui/afadmin_new_client.git",
+    "ui/react-action-router",
     "shared"
   ]
 }

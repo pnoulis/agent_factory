@@ -56,12 +56,13 @@ modules:
 	git submodule update --init --recursive
 
 npm-packages:
-	npm install --workspace js_utils
-	npm install --workspace mqtt_proxy
-	npm install --workspace shared
-	npm install --workspace afmachine
-	npm install --workspace react_utils
-	npm install --workspace afadmin_client
+	npm install --workspace ./lib/js_utils
+	npm install --workspace ./lib/mqtt_proxy
+	npm install --workspace ./shared
+	npm install --workspace ./core/afmachine
+	npm install --workspace ./ui/react_utils
+	npm install --workspace ./ui/afadmin_new_client.git
+	npm install --workspace ./ui/react-action-router
 
 # ------------------------------ RELEASE ------------------------------ #
 .PHONY: release rel bump-version .EXPORT_ALL_VARIABLES

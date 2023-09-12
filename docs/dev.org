@@ -896,3 +896,15 @@ loses the new Data Router functionality offered from version 6.0 and upwards.
 
 As such i want to be able to continue using the new Data routers but at the same
 time have a UI that is able to respond both on location and user actions.
+
+* log 12/9/23
+** UPDATE dependencies across all packages
+*** DONE react-utils
+CLOSED: [2023-09-12 Tue 14:25]
+
+*** DONE js_utils
+CLOSED: [2023-09-12 Tue 14:29]
+*** DONE mqtt_proxy
+CLOSED: [2023-09-12 Tue 14:29]
+*** DONE afmachine
+CLOSED: [2023-09-12 Tue 14:29]
