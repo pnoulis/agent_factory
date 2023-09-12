@@ -16,3 +16,6 @@
 [submodule "backend"]
 	path = core/backend
 	url = git@github.com:IsThisRealLife/agent_factory_services.git
+[submodule "ui/react-action-router"]
+	path = ui/react-action-router
+	url = git@github.com:pnoulis/react-action-router
