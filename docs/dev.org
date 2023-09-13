@@ -918,3 +918,6 @@ and pageTeam.
 ** TODO Remove history-toolbar component leftovers
 ** Create a panel-toolbar-router common to all panels
 ** Refactor pages to make use of the new panel-toolbar-router
+* log 13/09/23
+** PackageConfiguratorContext moved up the tree, remove unnecessary contexts
+** complete package removal
