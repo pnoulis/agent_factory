@@ -160,10 +160,9 @@ class ERR_PKG_IS_REGISTERED extends AgentFactoryError {
 }
 
 class ERR_UNIQUE_ACTIVE_PKG extends AgentFactoryError {
-  constructor() {
-    super(
-      `Multiple packages per team are prohibited. Finish playing the package, then add another.`,
-    );
+  constructor(action = "register new packgae") {
+    super(`Only one package per team allowed`);
+    this.action = action;
   }
 }
 
