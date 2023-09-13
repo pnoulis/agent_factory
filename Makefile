@@ -11,7 +11,7 @@ SHELL = /usr/bin/bash
 # Source directories
 SRCDIR := $(shell pwd)
 BACKEND = $(SRCDIR)/core/backend
-AFADMIN_CLIENT = $(SRCDIR)/ui/afadmin_client
+AFADMIN_CLIENT = $(SRCDIR)/ui/afadmin_new_client.git
 REACT_UTILS = $(SRCDIR)/ui/react_utils
 JS_UTILS = $(SRCDIR)/lib/js_utils
 MQTT_PROXY = $(SRCDIR)/lib/mqtt_proxy

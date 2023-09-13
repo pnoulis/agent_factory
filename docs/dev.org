@@ -908,3 +908,13 @@ CLOSED: [2023-09-12 Tue 14:29]
 CLOSED: [2023-09-12 Tue 14:29]
 *** DONE afmachine
 CLOSED: [2023-09-12 Tue 14:29]
+
+** Integrate react-action-router
+
+Removed history-toolbar context and related components from pageliveview
+and pageTeam.
+
+
+** TODO Remove history-toolbar component leftovers
+** Create a panel-toolbar-router common to all panels
+** Refactor pages to make use of the new panel-toolbar-router
