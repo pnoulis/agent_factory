@@ -24,4 +24,14 @@ function removePackage(payload) {
   return this.publish("/team/package/delete", payload);
 }
 
-export { removePackage };
+function onRemovePackage(listener) {
+  return this.subscribe("/team/package/delete", listener, {
+    mode: "persistent",
+  });
+}
+
+function onceRemovePackage(listener) {
+  return this.subscribe("/team/package/delete", listener, { mode: "response" });
+}
+
+export { removePackage, onRemovePackage, onceRemovePackage };

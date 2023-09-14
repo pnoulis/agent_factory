@@ -29,4 +29,12 @@ function startTeam(payload) {
   return this.publish("/team/activate", payload);
 }
 
-export { startTeam };
+function onStartTeam(listener) {
+  return this.subscribe("/team/activate", listener, { mode: "persistent" });
+}
+
+function onceStartTeam(listener) {
+  return this.subscribe("/team/activate", listener, { mode: "response" });
+}
+
+export { startTeam, onStartTeam, onceStartTeam };

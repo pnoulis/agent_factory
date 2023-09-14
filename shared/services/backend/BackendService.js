@@ -15,12 +15,16 @@ import {
   onceUnregisterWristband,
 } from "./api/unregisterWristband.js";
 import { mergeTeam, onMergeTeam, onceMergeTeam } from "./api/mergeTeam.js";
-import { addPackage } from "./api/addPackage.js";
-import { removePackage } from "./api/removePackage.js";
+import { addPackage, onAddPackage, onceAddPackage } from "./api/addPackage.js";
+import {
+  removePackage,
+  onRemovePackage,
+  onceRemovePackage,
+} from "./api/removePackage.js";
 import { listRegisteredPlayers } from "./api/listRegisteredPlayers.js";
 import { listWristbandPlayers } from "./api/listPairedWristbandPlayers.js";
 import { listPackages } from "./api/listPackages.js";
-import { startTeam } from "./api/startTeam.js";
+import { startTeam, onStartTeam, onceStartTeam } from "./api/startTeam.js";
 import { mergeGroupTeam } from "./api/mergeGroupTeam.js";
 import { listTeams } from "./api/listTeams.js";
 import { searchPlayer } from "./api/searchPlayer.js";
@@ -86,11 +90,17 @@ BackendService.prototype.mergeTeam = mergeTeam;
 BackendService.prototype.onMergeTeam = onMergeTeam;
 BackendService.prototype.onceMergeTeam = onceMergeTeam;
 BackendService.prototype.addPackage = addPackage;
+BackendService.prototype.onAddPackage = onAddPackage;
+BackendService.prototype.onceAddPackage = onceAddPackage;
 BackendService.prototype.removePackage = removePackage;
+BackendService.prototype.onRemovePackage = onRemovePackage;
+BackendService.prototype.onceRemovePackage = onceRemovePackage;
 BackendService.prototype.listRegisteredPlayers = listRegisteredPlayers;
 BackendService.prototype.listWristbandPlayers = listWristbandPlayers;
 BackendService.prototype.listPackages = listPackages;
 BackendService.prototype.startTeam = startTeam;
+BackendService.prototype.onStartTeam = onStartTeam;
+BackendService.prototype.onceStartTeam = onceStartTeam;
 BackendService.prototype.mergeGroupTeam = mergeGroupTeam;
 BackendService.prototype.listTeams = listTeams;
 BackendService.prototype.searchPlayer = searchPlayer;

@@ -26,4 +26,12 @@ function addPackage(payload) {
   return this.publish("/team/package/add", payload);
 }
 
-export { addPackage };
+function onAddPackage(listener) {
+  return this.subscribe("/team/package/add", listener, { mode: "persistent" });
+}
+
+function onceAddPackage(listener) {
+  return this.subscribe("/team/package/add", listener, { mode: "response" });
+}
+
+export { addPackage, onAddPackage, onceAddPackage };
