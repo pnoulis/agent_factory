@@ -34,6 +34,10 @@ import {
   onWristbandScan,
   onceWristbandScan,
 } from "./api/subscribeWristbandScan.js";
+import { signupAdmin } from "./api/signupAdmin.js";
+import { loginAdmin } from "./api/loginAdmin.js";
+import { startSession } from "./api/startSession.js";
+import { stopSession } from "./api/stopSession.js";
 
 class BackendService {
   constructor(mqttClient, roomName, deviceType, clientId) {
@@ -108,5 +112,9 @@ BackendService.prototype.infoWristband = infoWristband;
 BackendService.prototype.getWristbandScan = getWristbandScan;
 BackendService.prototype.onWristbandScan = onWristbandScan;
 BackendService.prototype.onceWristbandScan = onceWristbandScan;
+BackendService.prototype.signupAdmin = signupAdmin;
+BackendService.prototype.loginAdmin = loginAdmin;
+BackendService.prototype.startSession = startSession;
+BackendService.prototype.stopSession = stopSession;
 
 export { BackendService };

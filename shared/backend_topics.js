@@ -575,6 +575,30 @@ const TOPICS = [
     pub: `${PREFIX}/team/activate`,
     sub: `${PREFIX}/team/activate/response`,
   },
+  // sign up admin
+  {
+    alias: "/admin/signup",
+    pub: "/themaze/signup",
+    sub: "/themaze/signup/response",
+  },
+  // login admin
+  {
+    alias: "/admin/login",
+    pub: "/themaze/signin",
+    sub: "/themaze/signin/response",
+  },
+  // start session
+  {
+    alias: "/session/start",
+    pub: "/themaze/startSession",
+    sub: "/themaze/startSession/response",
+  },
+  // stop session
+  {
+    alias: "/session/stop",
+    pub: "/themaze/endSession",
+    sub: "/themaze/endSession/response",
+  },
 ];
 
 const toClient = makeTopics().toClient();
