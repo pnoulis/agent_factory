@@ -183,6 +183,14 @@ function t_mstom(milliseconds) {
   return milliseconds / 1000 / 60;
 }
 
+/**
+ * t_mtoms
+ * Minutes to milliseconds
+ */
+function t_mtoms(minutes) {
+  return minutes * 60 * 1000;
+}
+
 export {
   calcTeamSize,
   distributePlayers,
@@ -194,5 +202,6 @@ export {
   t_mtos,
   t_stoms,
   t_mstom,
+  t_mtoms,
   distributePlayersRatio,
 };

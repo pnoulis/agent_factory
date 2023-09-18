@@ -921,3 +921,5 @@ and pageTeam.
 * log 13/09/23
 ** PackageConfiguratorContext moved up the tree, remove unnecessary contexts
 ** complete package removal
+* log 17-09-2023
+** Finish the tables
