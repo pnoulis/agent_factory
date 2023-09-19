@@ -25,7 +25,11 @@ import { listRegisteredPlayers } from "./api/listRegisteredPlayers.js";
 import { listWristbandPlayers } from "./api/listPairedWristbandPlayers.js";
 import { listPackages } from "./api/listPackages.js";
 import { startTeam, onStartTeam, onceStartTeam } from "./api/startTeam.js";
-import { mergeGroupTeam } from "./api/mergeGroupTeam.js";
+import {
+  mergeGroupTeam,
+  onMergeGroupTeam,
+  onceMergeGroupTeam,
+} from "./api/mergeGroupTeam.js";
 import { listTeams } from "./api/listTeams.js";
 import { searchPlayer } from "./api/searchPlayer.js";
 import { infoWristband } from "./api/infoWristband.js";
@@ -106,6 +110,8 @@ BackendService.prototype.startTeam = startTeam;
 BackendService.prototype.onStartTeam = onStartTeam;
 BackendService.prototype.onceStartTeam = onceStartTeam;
 BackendService.prototype.mergeGroupTeam = mergeGroupTeam;
+BackendService.prototype.onMergeGroupTeam = onMergeGroupTeam;
+BackendService.prototype.onceMergeGroupTeam = onceMergeGroupTeam;
 BackendService.prototype.listTeams = listTeams;
 BackendService.prototype.searchPlayer = searchPlayer;
 BackendService.prototype.infoWristband = infoWristband;

@@ -25,4 +25,12 @@ function mergeGroupTeam(payload) {
   return this.publish("groupteam/merge", payload);
 }
 
-export { mergeGroupTeam };
+function onMergeGroupTeam(listener) {
+  return this.subscribe("/groupteam/merge", listener, { mode: "persistent" });
+}
+
+function onceMergeGroupTeam(listener) {
+  return this.subscribe("/groupteam/merge", listener, { mode: "response" });
+}
+
+export { mergeGroupTeam, onMergeGroupTeam, onceMergeGroupTeam };
