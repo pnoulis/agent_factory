@@ -17,18 +17,8 @@
 
  */
 
-import { exec, spawn } from "node:child_process";
-import path from "node:path";
-import { getMqttClientBackend } from "../clients/mqtt.node.js";
-import { findNodePkgDir } from "js_utils/node";
-
-const AF_SHAREDIR = findNodePkgDir();
-const AF_SRCDIR = path.resolve(AF_SHAREDIR, "../");
-const PYTHON_SCRIPT_PATH = path.resolve(
-  AF_SRCDIR,
-  "gregoris/MQTT_API_Emulator/main.py",
-);
-const mqttClientBackend = getMqttClientBackend();
+import { createRPIReaderService } from "../services/backend/createRPIReaderService.js";
+import { WRISTBAND_COLORS } from "../constants.js";
 
 /*
   ------------------------------ CLI ------------------------------
@@ -41,41 +31,26 @@ const mqttClientBackend = getMqttClientBackend();
   context.
 */
 if (globalThis.process.argv.length > 2) {
-  const arg1 = process.argv.splice(2, 1);
-  const arg2 = process.argv.splice(2, 1);
-  emulateScan(arg1 || "r", arg2 ?? "r");
+  emulateScan(process.argv[2], process.argv[3]).finally(process.exit);
 }
 
 /* ------------------------------ MODULE ------------------------------ */
-function runPythonScript() {
-  return new Promise((resolve, reject) => {
-    exec("ps aux | grep 'python.*./main.py$'", (err, stdout, stderr) => {
-      if (err) {
-        spawn("python", [PYTHON_SCRIPT_PATH], {
-          stdio: "ignore",
-          detached: true,
-        }).unref();
-        console.log("Spawned main.py!");
-        resolve();
-      } else {
-        resolve();
-      }
-    });
-  });
-}
 
-function emulateScan(number = "r", color = "r") {
-  return runPythonScript()
-    .then(() => {
-      return mqttClientBackend.publish(
-        `/themaze/registration5/emulateScan/${number}/${color}`,
-      );
-    })
-    .then(() => {
+async function emulateScan(number, color) {
+  return createRPIReaderService()
+    .then((reader) =>
+      reader.scanWristband(
+        number === "r" ? null : number,
+        color === "r" ? null : color,
+      ),
+    )
+    .then((scannedWristband) => {
       console.log(
-        `Successfully published wristband scan. number:${number} color:${color}`,
+        `Successfully published wristband scan. number:${
+          scannedWristband.id
+        } color:${WRISTBAND_COLORS[scannedWristband.color]}`,
       );
-      return [number, color];
+      return scannedWristband;
     })
     .catch((err) => {
       console.log(err);

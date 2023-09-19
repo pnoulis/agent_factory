@@ -54,6 +54,12 @@ def consumeMessage(topic,msg,gos,retain):
         EmulateMergeGroupTeam()
 
 
+async def taskPopulate():
+    while True:
+        noulisDummy()
+        await asyncio.sleep(5)
+
+
 def EmulateMergeGroupTeam():
     global BootedReader
          
@@ -111,13 +117,17 @@ def EmulateWristbandScan(obj,typeofscan):
         if wristbandColor  == 'r': wristbandColor  = randint(1, 6)  
         readerId = f"{roomName}Reader"
            
+        print('new message')
         if BootedReader==False:
             msg = {	"timestamp" : myTimestamp(),  "deviceId": readerId, "roomName": roomName, "deviceType": "RPI_READER" }
+            print('will boot')
+            print(msg)
             client.publish("/themaze/booted", json.dumps(msg))
             BootedReader=True
             sleep(1)
 
         RegistrationWristbandScan = f"/themaze/{readerId}/rpi/wristbandScan"
+        print(RegistrationWristbandScan)
         if wristbandNumber == 'all' and wristbandColor=='all':
             for x in range(6):
                 msg = { "timestamp" : myTimestamp(), "wristbandNumber": x+1, "wristbandColor": x+1 }
@@ -128,6 +138,12 @@ def EmulateWristbandScan(obj,typeofscan):
             client.publish(f"{RegistrationWristbandScan}",json.dumps(msg))
 
     
+
+def noulisDummy():
+    NoulisTopic = '/themaze/registrationPoint1/gui/player/wristbandScan'
+    NoulisMsg = 'Hi this a fucking test'
+    client.publish(NoulisTopic, NoulisMsg)
+
 loop = asyncio.get_event_loop()
 try:
     clientInit(consumeMessage,topics)

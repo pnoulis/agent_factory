@@ -37,6 +37,12 @@ function boot() {
       deviceType: this.deviceType,
     })
     .then((res) => {
+      console.log({
+        deviceId: this.id,
+        roomName: this.roomName,
+        deviceType: this.deviceType,
+
+      })
       this.booted = true;
       return res;
     });

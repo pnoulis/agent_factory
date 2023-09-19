@@ -30,6 +30,8 @@ FORMATER = npx prettier
 DOTENV = ~/bin/dotenv
 PRETTY_OUTPUT = npx pino-pretty
 
+ENVARS := "$$RUNTIME"
+
 .PHONY: all
 all: build
 
@@ -44,6 +46,8 @@ run: env
 
 .PHONY: scratch
 scratch: mode := 'development'
+scratch: RUNTIME ?= 'node'
+scratch: ENVARS := $(ENVARS);BUNDLED=false
 scratch: env
 	set -a; source ./.env && \
 	$(INTERPRETER) ./tmp/scratch.js \
@@ -110,10 +114,14 @@ distclean: clean
 # ------------------------------ ENV ------------------------------#
 .PHONY: env env-dry
 mode ?= 'development'
-env:
-	$(DOTENV) --mode=$(mode) $(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
+env: mqtt
+	$(DOTENV) --mode=$(mode) --environment='$(ENVARS)' $(ENVDIRS) \
+	| $(SORT) > $(SRCDIR)/.env
 
 env-dry:
-	$(DOTENV) --mode=$(mode) $(ENVDIRS) | $(SORT)
+	$(DOTENV) --mode=$(mode) --environment='$(ENVARS)' $(ENVDIRS) | $(SORT)
 
 # ------------------------------ VARIOUS ------------------------------ #
+
+mqtt:
+	m4 -D RUNTIME=$(RUNTIME) ./utils/macros.m4 .//clients/mqtt.js.m4 > .//clients/mqtt.js

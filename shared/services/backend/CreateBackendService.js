@@ -5,7 +5,7 @@ import { getMqttClientBackend } from "../../clients/mqtt.js";
 // mqtt backend client
 const backendMqttClient = getMqttClientBackend();
 backendMqttClient.once("connect", () => {
-  console.log("Mqtt client connected!");
+  console.log(`Mqtt client connected to ${backendMqttClient.options.href}`);
 });
 
 let instances = 1;
