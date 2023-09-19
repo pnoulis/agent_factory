@@ -1,3 +1,25 @@
+* Release procedure
+** Prepare a new release.sh
+The release.sh script is used to identify the latest release.
+
+The preparation of a new release requires:
+
+1. The selection of a new commit from each submodule to go into the new release.
+   for example, the latest commit.
+2. Updating of the commit hash and other metadata within release.sh.
+   (check release.sh for an example of a commit description)
+3. Run release.sh through make (make release) to ensure that each submodule of
+   the monorepo is at the specified commit.
+
+** run make release
+
+release.sh requires for all submodules that:
+
+1. The working tree is clean
+2. That the remote repository contains all new changes of the current branch
+3. That a release branch exists and points to the specified release commit
+4. That it builds successfully
+
 * Issue new Makefile that makes use of new DOTENV for each submodule
 ** DONE mqtt_proxy
 CLOSED: [2023-07-04 Tue 21:41]

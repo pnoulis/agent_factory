@@ -16,7 +16,7 @@ PKGDIR=$(cd -- "$(dirname "$(dirname -- "${BASH_SOURCE[0]}")")" 2>/dev/null && p
 logfile=${PKGDIR}/checkVersions.log
 tmplog=$(mktemp --quiet)
 modules=(
-    ${PKGDIR}/ui/afadmin_new_client.git
+    ${PKGDIR}/ui/afadmin_client
     ${PKGDIR}/ui/react_utils
     ${PKGDIR}/ui/react-action-router
     ${PKGDIR}/lib/js_utils

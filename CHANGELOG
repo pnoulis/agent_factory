@@ -61,3 +61,66 @@ Author: Pavlos Kapoutsis <pavloskapoutsis@gmail.com>
 Date:   Sat Aug 5 19:14:18 2023 +0300
 
     color game init
+--------------------------------------------------------------------------------
+[AUTOMATED RELEASE] Tuesday_19_September_2023_ 6:48
+0.1.0 -> 1.0.0
+
+JS_UTILS
+/home/pnoul/dev/intelligent_entertainment/agent_factory/lib/js_utils
+origin	git@github.com:pnoulis/js_utils.git (fetch)
+origin	git@github.com:pnoulis/js_utils.git (push)
+commit c25792602e47b360aacf31688d7c686d7aecc114
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Fri Sep 15 16:59:22 2023 +0300
+
+    filterObject
+
+REACT_UTILS
+/home/pnoul/dev/intelligent_entertainment/agent_factory/ui/react_utils
+origin	git@github.com:pnoulis/react_utils.git (fetch)
+origin	git@github.com:pnoulis/react_utils.git (push)
+commit 64d8ca64d503f0bba8daa5e6b2008ed00a63285d
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 05:59:55 2023 +0300
+
+    removed console.log statements
+
+AFMACHINE
+/home/pnoul/dev/intelligent_entertainment/agent_factory/core/afmachine
+origin	git@github.com:pnoulis/afmachine.git (fetch)
+origin	git@github.com:pnoulis/afmachine.git (push)
+commit eca4b63c02a57a4d80d80d9185b14b3d6f4460f3
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 05:59:08 2023 +0300
+
+    removed console.log statements
+
+MQTT_PROXY
+/home/pnoul/dev/intelligent_entertainment/agent_factory/lib/mqtt_proxy
+origin	git@github.com:pnoulis/mqtt_proxy.git (fetch)
+origin	git@github.com:pnoulis/mqtt_proxy.git (push)
+commit 8b60f80d4a98964a5f6eec0dec204464b0852766
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Tue Sep 12 14:28:57 2023 +0300
+
+    All dependencies updated to latest version
+
+AFADMIN_CLIENT
+/home/pnoul/dev/intelligent_entertainment/agent_factory/ui/afadmin_client
+origin	git@github.com:pnoulis/afadmin_client.git (fetch)
+origin	git@github.com:pnoulis/afadmin_client.git (push)
+commit 8b705dd9f5eb182a553e68a72fb5c91de5ed1000
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 06:01:23 2023 +0300
+
+    removed console.log and debug statements
+
+BACKEND
+/home/pnoul/dev/intelligent_entertainment/agent_factory/core/backend
+origin	git@github.com:IsThisRealLife/agent_factory_services.git (fetch)
+origin	git@github.com:IsThisRealLife/agent_factory_services.git (push)
+commit 557adbb763ec176e249be6eb3de662a3da6ff909
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 02:13:01 2023 +0300
+
+    Disabled scoreboard scheduled task at ScheduleTasksService.java

@@ -19,6 +19,7 @@ for submodule in $BACKEND \
                      $REACT_UTILS \
                      $JS_UTILS \
                      $MQTT_PROXY \
+                     $REACT_ACTION_ROUTER \
                      $AFMACHINE; do
     cd $submodule
     isGitClean $submodule || die $submodule
@@ -35,61 +36,99 @@ done
 # ORDER OF make build is important
 
 # js_utils at:
-commit='d613833cd43daea9808bd3a38129c237fa1f1607' 
-# Author: pavlos noulis <pavlos.noulis@gmail.com>
-# Date:   Sun Aug 13 20:53:36 2023 +0300
-# Makefile NODE was tied to version v20.4.0, it has been now switched to the node currently installed in the system
+commit='c25792602e47b360aacf31688d7c686d7aecc114'
+# Author: pnoul <pavlos.noulis@gmail.com>
+# Date:   Fri Sep 15 16:59:22 2023 +0300
+# filterObject
 echo $JS_UTILS
-ensureAtCommit $JS_UTILS $commit || die
+ensureAtCommit $JS_UTILS $commit || {
+    git log -n 1
+    die
+}
 cd $JS_UTILS
-make build mode=production || die 'Failed to build'
+make build mode=production || die '------------------------------ FAILED BUILD ' $JS_UTILS
+echo '------------------------------ SUCCESS BUILD ' $JS_UTILS
 
 # react utils at:
-commit='7a0289b1461ea0ae94afa62639769c35930099d3'
+commit='64d8ca64d503f0bba8daa5e6b2008ed00a63285d'
 # Author: pavlos noulis <pavlos.noulis@gmail.com>
-# Date:   Mon Aug 7 07:53:18 2023 +0300
-# inputs/TextArea
+# Date:   Tue Sep 19 05:59:55 2023 +0300
+# removed console.log statements
 echo $REACT_UTILS
-ensureAtCommit $REACT_UTILS $commit || die
-make build mode=production || die 'Failed to build'
+ensureAtCommit $REACT_UTILS $commit || {
+    git log -n 1
+    die
+}
+cd $REACT_UTILS
+make build mode=production || die '------------------------------ FAILED BUILD ' $REACT_UTILS
+echo '------------------------------ SUCCESS BUILD ' $REACT_UTILS
 
 # mqtt_proxy at:
-commit='205be884b41f94b8ba0ff364bbde1e41ac417156'
+commit='8b60f80d4a98964a5f6eec0dec204464b0852766'
 # Author: pnoul <pavlos.noulis@gmail.com>
-# Date:   Tue Jul 18 09:04:27 2023 +0300
-# removed unnecessary packages
+# Date:   Tue Sep 12 14:28:57 2023 +0300
+# All dependencies updated to latest version
 echo $MQTT_PROXY
-ensureAtCommit $MQTT_PROXY $commit || die
+ensureAtCommit $MQTT_PROXY $commit || {
+    git log -n 1
+    die
+}
 cd $MQTT_PROXY
-make build mode=production || 'Failed to build'
+make build mode=production || die '------------------------------ FAILED BUILD ' $MQTT_PROXY
+echo '------------------------------ SUCCESS BUILD ' $MQTT_PROXY
 
 # Afmachine at:
-commit='8ca80fbd6052b80641c436d4a732d2f60e48185b'
-# Author: pnoul <pavlos.noulis@gmail.com>
-# Date:   Mon Aug 7 16:47:15 2023 +0300
-# cashout console.log not outping
-echo $AFMACHINE
-ensureAtCommit $AFMACHINE $commit || die
-cd $AFMACHINE
-make build mode=production || 'Failed to build'
-
-# afadmin_client at:
-commit='9fed525255d6afad19d9ece7acaf1883c873af8a'
+commit='eca4b63c02a57a4d80d80d9185b14b3d6f4460f3'
 # Author: pavlos noulis <pavlos.noulis@gmail.com>
-# Date:   Sun Aug 13 20:28:22 2023 +0300
-# agent_factory now uses M4 preprocessor to conditionally import either an MQTT_CLIENT_LIB fit for a browser runtime or one for a nodejs runtime
-echo $AFADMIN_CLIENT
-ensureAtCommit $AFADMIN_CLIENT $commit || die
-cd $AFADMIN_CLIENT
-make build mode=production || 'Failed to build'
+# Date:   Tue Sep 19 05:59:08 2023 +0300
+# removed console.log statements
+echo $AFMACHINE
+ensureAtCommit $AFMACHINE $commit || {
+    git log -n 1
+    die
+}
+cd $AFMACHINE
+make build mode=production || die '------------------------------ FAILED BUILD ' $AFMACHINE
+echo '------------------------------ SUCCESS BUILD ' $AFMACHINE
 
 # Backend at:
-commit='8f64fca25ec13f0a40b187ee005f51cba5eb01e4'
-# Author: Pavlos Kapoutsis <pavloskapoutsis@gmail.com>
-# Date:   Sat Aug 5 19:14:18 2023 +0300
-# color game init
+commit='557adbb763ec176e249be6eb3de662a3da6ff909'
+# Author: pavlos noulis <pavlos.noulis@gmail.com>
+# Date:   Tue Sep 19 02:13:01 2023 +0300
+# Disabled scoreboard scheduled task at ScheduleTasksService.java
 echo $BACKEND
-ensureAtCommit $BACKEND $commit || die
+ensureAtCommit $BACKEND $commit || {
+    git log -n 1
+    die
+}
+
+# react-action-router at:
+commit='b7ff2f2567ee73371d737519303fdd7169536245'
+# Author: pavlos noulis <pavlos.noulis@gmail.com>
+# Date:   Tue Sep 19 06:26:23 2023 +0300
+# make distclean
+echo $REACT_ACTION_ROUTER
+ensureAtCommit $REACT_ACTION_ROUTER $commit || {
+    git log -n 1
+    die
+}
+cd $REACT_ACTION_ROUTER
+make build mode=production || die '------------------------------ FAILED BUILD ' $REACT_ACTION_ROUTER
+echo '------------------------------ SUCCESS BUILD ' $REACT_ACTION_ROUTER
+
+# afadmin_client at:
+commit='8b705dd9f5eb182a553e68a72fb5c91de5ed1000'
+# Author: pavlos noulis <pavlos.noulis@gmail.com>
+# Date:   Tue Sep 19 06:01:23 2023 +0300
+# removed console.log and debug statements
+echo $AFADMIN_CLIENT
+ensureAtCommit $AFADMIN_CLIENT $commit || {
+    git log -n 1
+    die
+}
+cd $AFADMIN_CLIENT
+make build mode=production || die '------------------------------ FAILED BUILD ' $AFADMIN_CLIENT
+echo '------------------------------ SUCCESS BUILD ' $AFADMIN_CLIENT
 
 # Thomas at:
 # The ui/thomas source tree is not a git repository within the agent_factory

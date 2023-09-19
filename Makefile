@@ -11,7 +11,7 @@ SHELL = /usr/bin/bash
 # Source directories
 SRCDIR := $(shell pwd)
 BACKEND = $(SRCDIR)/core/backend
-AFADMIN_CLIENT = $(SRCDIR)/ui/afadmin_new_client.git
+AFADMIN_CLIENT = $(SRCDIR)/ui/afadmin_client
 REACT_UTILS = $(SRCDIR)/ui/react_utils
 JS_UTILS = $(SRCDIR)/lib/js_utils
 MQTT_PROXY = $(SRCDIR)/lib/mqtt_proxy
@@ -61,7 +61,7 @@ npm-packages:
 	npm install --workspace ./shared
 	npm install --workspace ./core/afmachine
 	npm install --workspace ./ui/react_utils
-	npm install --workspace ./ui/afadmin_new_client.git
+	npm install --workspace ./ui/afadmin_client
 	npm install --workspace ./ui/react-action-router
 
 # ------------------------------ RELEASE ------------------------------ #
@@ -77,7 +77,7 @@ release:
 	-rm -rdf $(SRCDIR)/dist/*
 	-rm *.tar.gz 2>/dev/null
 	-mkdir -p $(SRCDIR)/dist 2>/dev/null
-	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh
+	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh && exit
 	cp -r $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/agent_factory.nginx.conf
 	cp -r $(AFADMIN_CLIENT)/dist $(SRCDIR)/dist/administration
 	cp -r $(SRCDIR)/PACKAGE $(SRCDIR)/dist/PACKAGE
@@ -117,7 +117,7 @@ dockernginx:
 	--publish 9090:9090 \
 	--mount \
 	type=bind,\
-	source=$(SRCDIR)/dist,\
+	source=$(AFADMIN_CLIENT)/dist,\
 	target=/srv \
 	--mount \
 	type=bind,\
@@ -183,7 +183,6 @@ distclean: clean
 dockercleannginx:
 	-docker stop agent_factory.nginx 2>/dev/null
 	-docker rm agent_factory.nginx 2>/dev/null
-	-docker image rm agent_factory/nginx
 
 dockercontclean:
 	docker stop agent_factory.nginx 2>/dev/null || exit 0
@@ -201,4 +200,16 @@ allclean:
 	make dockerclean
 	make distclean
 
+
 # ------------------------------ VARIOUS ------------------------------ #
+
+.PHONY: cloc
+cloc:
+	cloc --git --exclude-ext='svg,ini' \
+	ui/afadmin_client/src \
+	ui/react_utils/src \
+	ui/react-action-router/src \
+	lib/js_utils/src \
+	lib/mqtt_proxy/src \
+	core/afmachine/src \
+	./shared
