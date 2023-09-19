@@ -1,4 +1,83 @@
 --------------------------------------------------------------------------------
+[AUTOMATED RELEASE] Tuesday 19 September 2023 11:22:42 v1.0.0 -> v1.0.1
+
+
+AGENT_FACTORY
+/home/pnoul/projects/intelligent_entertainment/agent_factory
+origin	git@github.com:pnoulis/agent_factory.git (fetch)
+origin	git@github.com:pnoulis/agent_factory.git (push)
+commit 07a526dac65cd4e1fce81a190871f405d88898e5
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 11:22:30 2023 +0300
+
+    release.sh does not actually commit the release, it is left up to the user
+
+
+AFADMIN_CLIENT
+/home/pnoul/projects/intelligent_entertainment/agent_factory/ui/afadmin_client
+origin	git@github.com:pnoulis/afadmin_client.git (fetch)
+origin	git@github.com:pnoulis/afadmin_client.git (push)
+commit d2937fb7b7221e651f2a57ab3379aa658e779f51
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 09:13:47 2023 +0300
+
+    LiveViewTable white background
+
+
+REACT_UTILS
+/home/pnoul/projects/intelligent_entertainment/agent_factory/ui/react_utils
+origin	git@github.com:pnoulis/react_utils.git (fetch)
+origin	git@github.com:pnoulis/react_utils.git (push)
+commit 64d8ca64d503f0bba8daa5e6b2008ed00a63285d
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 05:59:55 2023 +0300
+
+    removed console.log statements
+
+
+JS_UTILS
+/home/pnoul/projects/intelligent_entertainment/agent_factory/lib/js_utils
+origin	git@github.com:pnoulis/js_utils.git (fetch)
+origin	git@github.com:pnoulis/js_utils.git (push)
+commit c25792602e47b360aacf31688d7c686d7aecc114
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Fri Sep 15 16:59:22 2023 +0300
+
+    filterObject
+
+
+MQTT_PROXY
+/home/pnoul/projects/intelligent_entertainment/agent_factory/lib/mqtt_proxy
+origin	git@github.com:pnoulis/mqtt_proxy.git (fetch)
+origin	git@github.com:pnoulis/mqtt_proxy.git (push)
+commit 8b60f80d4a98964a5f6eec0dec204464b0852766
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Tue Sep 12 14:28:57 2023 +0300
+
+    All dependencies updated to latest version
+
+
+AFMACHINE
+/home/pnoul/projects/intelligent_entertainment/agent_factory/core/afmachine
+origin	git@github.com:pnoulis/afmachine.git (fetch)
+origin	git@github.com:pnoulis/afmachine.git (push)
+commit eca4b63c02a57a4d80d80d9185b14b3d6f4460f3
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 05:59:08 2023 +0300
+
+    removed console.log statements
+
+
+REACT-ACTION-ROUTER
+/home/pnoul/projects/intelligent_entertainment/agent_factory/ui/react-action-router
+origin	git@github.com:pnoulis/react-action-router (fetch)
+origin	git@github.com:pnoulis/react-action-router (push)
+commit b7ff2f2567ee73371d737519303fdd7169536245
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 19 06:26:23 2023 +0300
+
+    make distclean
+--------------------------------------------------------------------------------
 [AUTOMATED RELEASE] Sunday_13_August_2023_20:46
 0.0.1 -> 0.1.0
 
