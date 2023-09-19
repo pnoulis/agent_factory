@@ -10,6 +10,7 @@ SHELL = /usr/bin/bash
 
 # Source directories
 SRCDIR := $(shell pwd)
+AGENT_FACTORY = $(SRCDIR)
 BACKEND = $(SRCDIR)/core/backend
 AFADMIN_CLIENT = $(SRCDIR)/ui/afadmin_client
 REACT_UTILS = $(SRCDIR)/ui/react_utils
@@ -56,16 +57,10 @@ modules:
 	git submodule update --init --recursive
 
 npm-packages:
-	npm install --workspace ./lib/js_utils
-	npm install --workspace ./lib/mqtt_proxy
-	npm install --workspace ./shared
-	npm install --workspace ./core/afmachine
-	npm install --workspace ./ui/react_utils
-	npm install --workspace ./ui/afadmin_client
-	npm install --workspace ./ui/react-action-router
+	npm install
 
 # ------------------------------ RELEASE ------------------------------ #
-.PHONY: release rel bump-version .EXPORT_ALL_VARIABLES
+.PHONY: release release2 rel bump-version .EXPORT_ALL_VARIABLES
 
 CALLED_BY_MAKE=true
 bump-version: .EXPORT_ALL_VARIABLES
@@ -77,8 +72,8 @@ release:
 	-rm -rdf $(SRCDIR)/dist/*
 	-rm *.tar.gz 2>/dev/null
 	-mkdir -p $(SRCDIR)/dist 2>/dev/null
-	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh && exit
-	cp -r $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/agent_factory.nginx.conf
+	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh
+	cp $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/agent_factory.nginx.conf
 	cp -r $(AFADMIN_CLIENT)/dist $(SRCDIR)/dist/administration
 	cp -r $(SRCDIR)/PACKAGE $(SRCDIR)/dist/PACKAGE
 	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist

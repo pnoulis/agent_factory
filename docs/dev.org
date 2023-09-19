@@ -20,6 +20,24 @@ release.sh requires for all submodules that:
 3. That a release branch exists and points to the specified release commit
 4. That it builds successfully
 
+** new release process
+The new release procedure performs the following steps:
+
+*** Demand clean working directories for each submodule
+*** Request a new version number
+*** Produce a new PROJECT
+*** produce a new CHANGELOG
+*** produce a new package.json
+*** produce a RELEASE
+
+The new release process does not require explicitly specifying commits for
+submodules.
+
+Rather, release.sh creates a new release based off the currently checked out
+commit for each submodule.
+
+If a submodule's working directory is dirty the new release is aborted.
+
 * Issue new Makefile that makes use of new DOTENV for each submodule
 ** DONE mqtt_proxy
 CLOSED: [2023-07-04 Tue 21:41]
