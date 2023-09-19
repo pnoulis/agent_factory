@@ -54,12 +54,6 @@ def consumeMessage(topic,msg,gos,retain):
         EmulateMergeGroupTeam()
 
 
-async def taskPopulate():
-    while True:
-        noulisDummy()
-        await asyncio.sleep(5)
-
-
 def EmulateMergeGroupTeam():
     global BootedReader
          
@@ -134,12 +128,6 @@ def EmulateWristbandScan(obj,typeofscan):
             client.publish(f"{RegistrationWristbandScan}",json.dumps(msg))
 
     
-
-def noulisDummy():
-    NoulisTopic = '/themaze/registrationPoint1/gui/player/wristbandScan'
-    NoulisMsg = 'Hi this a fucking test'
-    client.publish(NoulisTopic, NoulisMsg)
-
 loop = asyncio.get_event_loop()
 try:
     clientInit(consumeMessage,topics)

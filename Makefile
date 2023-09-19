@@ -29,8 +29,7 @@ GITMODULES := $(AFADMIN_CLIENT) $(REACT_UTILS) $(JS_UTILS) \
 $(MQTT_PROXY) $(AFMACHINE) $(REACT_ACTION_ROUTER)
 
 .PHONY: all
-all:
-	@echo Supply recipe to run.
+all: build
 
 # ------------------------------ GIT ------------------------------ #
 .PHONY: git-check
@@ -69,15 +68,14 @@ bump-version:
 
 release: .EXPORT_ALL_VARIABLES
 release:
-	-rm -rdf $(SRCDIR)/dist/*
-	-rm *.tar.gz 2>/dev/null
-	-mkdir -p $(SRCDIR)/dist 2>/dev/null
 	CALLED_BY_MAKE=true $(SRCDIR)/scripts/release.sh
-	cp $(SRCDIR)/config/nginx.conf $(SRCDIR)/dist/agent_factory.nginx.conf
-	cp -r $(AFADMIN_CLIENT)/dist $(SRCDIR)/dist/administration
-	cp -r $(SRCDIR)/PACKAGE $(SRCDIR)/dist/PACKAGE
-	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
 
+.PHONY: deploy
+deploy:
+	rsync --recursive \
+	--archive \
+	--compress \
+	$(AFADMIN_CLIENT)/dist/* agent_factory:/var/www/html/administration
 
 .PHONY: sync sync-afadmin
 
@@ -133,31 +131,21 @@ serve-backend:
 	cd $(BACKEND) && docker-compose up -d
 
 # ------------------------------ BUILD ------------------------------ #
-.PHONY: build-dev build-staging build-prod
-
 .PHONY: build
 build:
-	@for submodule in $(GITMODULES) $(REFACTORDIRS); do \
-	echo $${submodule##*agent_factory/}; \
-	cd $$submodule; \
-	git status -sb $$submodule; \
-	make build mode=development; \
-	done
+	-rm -rdf $(SRCDIC)/dist/* 2>/dev/null
+	-mkdir -p $(SRCDIR)/dist/administration  2>/dev/null
+	make -C $(JS_UTILS) build mode=production
+	make -C $(MQTT_PROXY) build mode=production
+	make -C $(REACT_UTILS) build mode=production
+	make -C $(REACT_ACTION_ROUTER) build mode=production
+	make -C $(AFADMIN_CLIENT) build mode=production
+	cp $(SRCDIR)/PACKAGE $(SRCDIR)/dist
+	cp $(SRCDIR)/RELEASE $(SRCDIR)/dist
+	cp $(SRCDIR)/README.md $(SRCDIR)/dist
+	cp -r $(AFADMIN_CLIENT)/dist/* $(SRCDIR)/dist/administration
+	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
 
-build-dev:
-	@for gitmodule in $(GITMODULES); do \
-		make -C "$$gitmodule" build; \
-	done
-
-build-staging:
-	@for gitmodule in $(GITMODULES); do \
-		make -C "$$gitmodule" build-staging; \
-	done
-
-build-prod:
-	@for gitmodule in $(GITMODULES); do \
-		make -C "$$gitmodule" build-prod; \
-	done
 
 # ------------------------------ CLEAN ------------------------------ #
 .PHONY: clean distclean dockerclean dockercleannginx \

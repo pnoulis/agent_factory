@@ -34,9 +34,6 @@ refactor.*
 __pycache__/
 *.py[cod]
 
-# Ignore ini files
-*.ini
-
 ui/newlogic.afadmin_client
 __pycache__
 .env

@@ -1,3 +1,14 @@
+* Deployment targets
+** server at work through LAN
+ssh host: afserver.local
+ssh host port: 22
+username: Mindtrap
+password: 123
+mqtt port: 9001
+server root path: C:laragon/www/administration
+** localhost at devmachine
+** server at devmachine
+** public testing server
 * Release procedure
 ** Prepare a new release.sh
 The release.sh script is used to identify the latest release.
