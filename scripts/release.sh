@@ -26,7 +26,7 @@ stagdir=$(mktemp -d)
 
 # 1. Ensuring VCS "integrity"
 source scripts/git_utils.sh
-for submodule in $SRCDIR $GITMODULES; do
+for submodule in $GITMODULES; do
     pushd $submodule 2>&1 >/dev/null || die "Missing submodule $submodule"
     isGitClean $submodule || die
     gitNoUnpushedCommits $submodule || die
@@ -83,17 +83,20 @@ $(git log -n 1)
 EOF
     popd 2>&1 >/dev/null
 done
+cat CHANGELOG >> $stagdir/CHANGELOG
 
 ## package.json
 jq ".version = \"$NEXT_VERSION\"" package.json > $stagdir/package.json
 
+## RELEASE
+echo "$releaseId" > $stagdir/RELEASE
+
+# Produce annotated tag
+git tag -a "v$NEXT_VERSION" -m "$releaseId"
+
 # Copy over files from $stagdir
 cp $stagdir/* $SRCDIR
 
-# Produce annotated tag
-git tag -a "v$NEXT_VERSION"
-
 # Commit release
 git add .
-git commit -m "[AUTOMATED_RELEASE]"
 
