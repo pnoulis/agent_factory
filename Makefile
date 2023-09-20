@@ -74,7 +74,8 @@ release:
 deploy:
 # -C compress
 # -r recursively
-	@scp -C -r ./dist/administration Mindtrap@afserver.local:C:/laragon/www
+	-ssh Mindtrap@afserver.local 'rmdir /s /q C:\laragon\www\administration'
+	@scp -C -r ./dist Mindtrap@afserver.local:C:/laragon/www/administration
 
 .PHONY: sync sync-afadmin
 
@@ -132,8 +133,8 @@ serve-backend:
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build
 build:
-	-rm -rdf $(SRCDIC)/dist/* 2>/dev/null
-	-mkdir -p $(SRCDIR)/dist/administration  2>/dev/null
+	-rm -rdf $(SRCDIR)/dist/* 2>/dev/null
+	-mkdir -p $(SRCDIR)/dist 2>/dev/null
 	make -C $(JS_UTILS) build mode=production
 	make -C $(MQTT_PROXY) build mode=production
 	make -C $(REACT_UTILS) build mode=production
@@ -142,7 +143,7 @@ build:
 	cp $(SRCDIR)/PACKAGE $(SRCDIR)/dist
 	cp $(SRCDIR)/RELEASE $(SRCDIR)/dist
 	cp $(SRCDIR)/README.md $(SRCDIR)/dist
-	cp -r $(AFADMIN_CLIENT)/dist/* $(SRCDIR)/dist/administration
+	cp -r $(AFADMIN_CLIENT)/dist/* $(SRCDIR)/dist
 	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
 
 
