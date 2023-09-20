@@ -1,6 +1,0 @@
-agent_factory -> google drive
-agent_factory/software/
-
-./configure
-
-agent_factory/meetings/meeting_20-1
