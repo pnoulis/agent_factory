@@ -26,12 +26,14 @@ function boot() {
   if (this.booted)
     return Promise.resolve({
       result: "OK",
+      timestamp: Date.now(),
       deviceId: this.id,
       roomName: this.roomName,
       deviceType: this.deviceType,
     });
   return this.proxy
     .publish("/boot", {
+      timestamp: Date.now(),
       deviceId: this.id,
       roomName: this.roomName,
       deviceType: this.deviceType,

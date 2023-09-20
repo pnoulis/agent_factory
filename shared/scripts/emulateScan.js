@@ -31,19 +31,22 @@ import { WRISTBAND_COLORS } from "../constants.js";
   context.
 */
 if (globalThis.process.argv.length > 2) {
-  emulateScan(process.argv[2], process.argv[3]).finally(process.exit);
+  try {
+    const { getMqttClientBackend } = await import("../clients/mqtt.node.js");
+    const rpiReaderService = await createRPIReaderService(
+      getMqttClientBackend(),
+    );
+    await emulateScan(rpiReaderService);
+  } finally {
+    process.exit();
+  }
 }
 
 /* ------------------------------ MODULE ------------------------------ */
 
-async function emulateScan(number, color) {
-  return createRPIReaderService()
-    .then((reader) =>
-      reader.scanWristband(
-        number === "r" ? null : number,
-        color === "r" ? null : color,
-      ),
-    )
+function emulateScan(rpiReaderService, number, color) {
+  return rpiReaderService
+    .scanWristband(number === "r" ? null : number, color === "r" ? null : color)
     .then((scannedWristband) => {
       console.log(
         `Successfully published wristband scan. number:${

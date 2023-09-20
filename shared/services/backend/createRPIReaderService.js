@@ -1,42 +1,40 @@
 import { ENVIRONMENT } from "../../config.js";
 import { BackendService } from "./BackendService.js";
-import { getMqttClientBackend } from "../../clients/mqtt.js";
 import { randomInteger } from "js_utils/misc";
-import { smallid } from "js_utils/uuid";
 import { WRISTBAND_COLORS } from "../../constants.js";
 
-// mqtt backend client
-const backendMqttClient = getMqttClientBackend();
-backendMqttClient.once("connect", () => {
-  console.log(`Mqtt client connected to ${backendMqttClient.options.href}`);
-});
+const DEVICE_TYPE = "RPI_READER";
 
-const deviceId = `${ENVIRONMENT.BACKEND_MQTT_ROOM_NAME}Reader`;
-const deviceType = "RPI_READER";
-const rpiReaderService = new BackendService(
-  backendMqttClient,
-  ENVIRONMENT.BACKEND_MQTT_ROOM_NAME,
-  deviceType,
-  deviceId,
-);
-console.log(rpiReaderService);
-
-rpiReaderService.proxy.registry.strict = false;
-
-rpiReaderService.scanWristband = function (id, color) {
-  // 0 or null or undefined trigger random
-  id ||= randomInteger(1, 5000);
+function scanWristband(id, color) {
+  id ||= randomInteger(1, 999);
   color ||= randomInteger(1, WRISTBAND_COLORS.length - 1);
-  return rpiReaderService
-    .publish(`/themaze/${deviceId}/rpi/wristbandScan`, {
-      timestamp: Date.now(),
-      wristbandNumber: id,
-      wristbandColor: color,
-    })
-    .then(() => ({ id, color }));
-};
+  return this.publish(`/themaze/${this.id}/rpi/wristbandScan`, {
+    timestamp: Date.now(),
+    wristbandNumber: id,
+    wristbandColor: color,
+  }).then(() => ({ id, color }));
+}
 
-function createRPIReaderService() {
+async function createRPIReaderService(mqttClient, options = {}) {
+  options.roomName ||= ENVIRONMENT.BACKEND_MQTT_ROOM_NAME;
+  options.deviceId ||= `${ENVIRONMENT.BACKEND_MQTT_ROOM_NAME}Reader`;
+  if (!mqttClient) {
+    const { getMqttClientBackend } = await import(
+      `../../clients/mqtt.${ENVIRONMENT.RUNTIME}.js`
+    );
+    mqttClient = getMqttClientBackend();
+  }
+  mqttClient.once("connect", function () {
+    console.log(`Mqtt client connected to ${mqttClient.options.href}`);
+  });
+  const rpiReaderService = new BackendService(
+    mqttClient,
+    options.roomName,
+    DEVICE_TYPE,
+    options.deviceId,
+  );
+  rpiReaderService.proxy.registry.strict = false;
+  rpiReaderService.scanWristband = scanWristband.bind(rpiReaderService);
   return rpiReaderService
     .start()
     .then(() => {

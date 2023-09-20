@@ -29,29 +29,29 @@ LINTER = npx eslint
 FORMATER = npx prettier
 DOTENV = ~/bin/dotenv
 PRETTY_OUTPUT = npx pino-pretty
+LOADENV = set -o allexport; source .env
 
-ENVARS := "$$RUNTIME"
+ENVARS = $$RUNTIME
 
 .PHONY: all
 all: build
+.EXPORT_ALL_VARIABLES:
 
 # ------------------------------ RUN ------------------------------ #
 .PHONY: run
 run: mode := 'development'
 run: file := '$(SRCDIR)/tmp/scratch.js'
 run: env
-	set -a; source ./.env && \
+	$(LOADENV) && \
 	$(INTERPRETER) $(file) \
 	| $(PRETTY_OUTPUT)
 
 .PHONY: scratch
-scratch: mode := 'development'
-scratch: RUNTIME ?= 'node'
+scratch: mode ?= 'development'
+scratch: RUNTIME ?= node
 scratch: ENVARS := $(ENVARS);BUNDLED=false
 scratch: env
-	set -a; source ./.env && \
-	$(INTERPRETER) ./tmp/scratch.js \
-	| $(PRETTY_OUTPUT)
+	$(LOADENV) && $(INTERPRETER) ./tmp/scratch.js
 
 .PHONY: run-build
 run-build:
@@ -113,9 +113,11 @@ distclean: clean
 
 # ------------------------------ ENV ------------------------------#
 .PHONY: env env-dry
-mode ?= 'development'
-env: mqtt
-	$(DOTENV) --mode=$(mode) --environment='$(ENVARS)' $(ENVDIRS) \
+env: mode ?= 'development'
+env: ENVARS := RUNTIME=$(RUNTIME);$(ENVARS)
+env:
+	$(DOTENV) --mode=$(mode) \
+	--environment='$(ENVARS)' $(ENVDIRS) \
 	| $(SORT) > $(SRCDIR)/.env
 
 env-dry:

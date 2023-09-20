@@ -72,10 +72,9 @@ release:
 
 .PHONY: deploy
 deploy:
-	rsync --recursive \
-	--archive \
-	--compress \
-	$(AFADMIN_CLIENT)/dist/* agent_factory:/var/www/html/administration
+# -C compress
+# -r recursively
+	@scp -C -r ./dist/administration Mindtrap@afserver.local:C:/laragon/www
 
 .PHONY: sync sync-afadmin
 
