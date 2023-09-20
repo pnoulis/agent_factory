@@ -1,3 +1,24 @@
+* Agent factory cloud storage
+** gdrive via rclone
+https://rclone.org/drive/#making-your-own-client-id
+* scoreboard development
+topic: /themaze/backend
+
+Data returned from /themaze/backend:
+
+- Are they limited to the teams of the day?
+  If yes then which topic retrieves a full history?
+
+- Required data points
+  won
+  lost,
+  time used
+  played,
+
+** How are rooms organized.
+
+Each room (roomId, roomName) 
+
 * Deployment targets
 ** server at work through LAN
 ssh host: afserver.local

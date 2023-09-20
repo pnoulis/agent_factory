@@ -19,8 +19,13 @@ stagdir=$(mktemp -d)
 
 # The release script tasks:
 # 1. Ensuring VCS "integrity"
+#    Meaning that all submodules and super are clean and pushed to remote
 # 2. Bumping the version
+#    Selection of a semantic version segment to bump
 # 3. Producing release Metadata
+#    3.1 Such as which commit all submodules and super are at the time of the release
+#    3.2 Old version
+#    3.3 New version
 # 4. Producing a git tag
 # 5. Pushing the release and tag
 

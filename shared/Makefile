@@ -31,7 +31,7 @@ DOTENV = ~/bin/dotenv
 PRETTY_OUTPUT = npx pino-pretty
 LOADENV = set -o allexport; source .env
 
-ENVARS = $$RUNTIME
+ENVARS = RUNTIME:node
 
 .PHONY: all
 all: build

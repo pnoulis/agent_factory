@@ -1,6 +1,6 @@
 import { ENVIRONMENT } from "../../config.js";
 import { BackendService } from "./BackendService.js";
-import { getMqttClientBackend } from "../../clients/mqtt.js";
+import { getMqttClientBackend } from "../../clients/mqtt.node.js";
 
 // mqtt backend client
 const backendMqttClient = getMqttClientBackend();
