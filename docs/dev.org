@@ -16,6 +16,50 @@ Data returned from /themaze/backend:
   played,
 
 ** How are rooms organized.
+*** limited data formate
+
+#+begin_src json
+
+  {
+    "teamName" : "team13",
+    "totalPoints" : 210
+  }
+  #+end_src
+  
+*** per room
+Full history
+*** per element
+full history
+*** live
+The teams are limited to:
+
+1. have an activated package
+2. Last attempt < 30 minutes
+
+
+#+begin_src json
+
+  {
+    "teamName":"team6",
+    "numberOfPlayers":2,
+    "timeUsed":"",
+    "played":10,
+    "won":10,
+    "lost":0,
+    "totalPoints":754
+  },
+
+
+#+end_src
+
+*** Team monthly
+
+Their last successfull attempt to join a room has
+been within the last Month.
+
+*** Team daily
+
+Last attempt within > 00:00 (midnight).
 
 Each room (roomId, roomName) 
 
