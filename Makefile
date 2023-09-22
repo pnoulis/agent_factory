@@ -142,6 +142,7 @@ build:
 	make -C $(AFADMIN_CLIENT) build mode=production
 	cp $(SRCDIR)/PACKAGE $(SRCDIR)/dist
 	cp $(SRCDIR)/RELEASE $(SRCDIR)/dist
+	cp $(SRCDIR)/CHANGELOG $(SRCDIR)/dist
 	cp $(SRCDIR)/README.md $(SRCDIR)/dist
 	cp -r $(AFADMIN_CLIENT)/dist/* $(SRCDIR)/dist
 	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
