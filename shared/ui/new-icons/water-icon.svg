@@ -1,24 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32.75 32.86">
-  <defs>
-    <style>
-      .cls-1 {
-        filter: url(#outer-glow-1);
-        opacity: .9;
-      }
-    </style>
-    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="0"/>
-      <feGaussianBlur result="blur" stdDeviation=".6"/>
-      <feFlood flood-color="#00e7ff" flood-opacity=".9"/>
-      <feComposite in2="blur" operator="in"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
-  </defs>
-  <g id="Layer_1-2" data-name="Layer 1">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32.75 32.86">
+<g>
     <g>
       <path d="M32.75,17.05v-1.23h-1.24c-.15-3.66-1.59-6.98-3.87-9.54l.94-.94-.87-.87-.93,.93c-2.58-2.45-6.01-4-9.79-4.15V0h-1.23V1.24c-3.71,.15-7.09,1.65-9.65,4.02l-.93-.94-.87,.87,.93,.94C2.88,8.7,1.39,12.09,1.24,15.81H0v1.23H1.24c.15,3.73,1.64,7.11,4,9.68l-.94,.94,.87,.87,.94-.94c2.56,2.37,5.93,3.87,9.65,4.02v1.24h1.23v-1.24c3.78-.15,7.21-1.7,9.79-4.15l.93,.93,.87-.87-.94-.94c2.29-2.55,3.72-5.88,3.87-9.54h1.24Zm-16.37,13.35c-7.67,0-13.92-6.26-13.92-13.97S8.7,2.47,16.37,2.47s13.92,6.26,13.92,13.97-6.24,13.97-13.92,13.97Z"/>
-      <g class="cls-1">
+      <g>
         <rect x="20.01" y="10.66" width=".66" height=".67"/>
         <rect x="22.12" y="8.4" width=".66" height=".67"/>
         <rect x="27.75" y="16.72" width=".66" height=".67"/>
