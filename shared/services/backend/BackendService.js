@@ -42,6 +42,10 @@ import { signupAdmin } from "./api/signupAdmin.js";
 import { loginAdmin } from "./api/loginAdmin.js";
 import { startSession } from "./api/startSession.js";
 import { stopSession } from "./api/stopSession.js";
+import { listScoreboardTeams } from "./api/listScoreboardTeams.js";
+import { listScoreboardViews } from "./api/listScoreboardViews.js";
+import { setScoreboardViews } from "./api/setScoreboardViews.js";
+import { listScoreboardDevices } from "./api/listScoreboardDevices.js";
 
 class BackendService {
   constructor(mqttClient, roomName, deviceType, clientId) {
@@ -122,5 +126,9 @@ BackendService.prototype.signupAdmin = signupAdmin;
 BackendService.prototype.loginAdmin = loginAdmin;
 BackendService.prototype.startSession = startSession;
 BackendService.prototype.stopSession = stopSession;
+BackendService.prototype.listScoreboardTeams = listScoreboardTeams;
+BackendService.prototype.listScoreboardViews = listScoreboardViews;
+BackendService.prototype.setScoreboardViews = setScoreboardViews;
+BackendService.prototype.listScoreboardDevices = listScoreboardDevices;
 
 export { BackendService };

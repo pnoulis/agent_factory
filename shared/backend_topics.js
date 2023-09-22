@@ -599,6 +599,30 @@ const TOPICS = [
     pub: "/themaze/endSession",
     sub: "/themaze/endSession/response",
   },
+  // list teams scores
+  {
+    alias: "/scoreboard/teams",
+    pub: "/themaze/scoreboard",
+    sub: "/themaze/scoreboard/response",
+  },
+  // Get the list of available views
+  {
+    alias: "/scoreboard/devices/views/get",
+    pub: "/themaze/devices/scoreboard/updateStatus/options",
+    sub: "/themaze/devices/scoreboard/updateStatus/options/response",
+  },
+  // Set the view of a scoreboard device
+  {
+    alias: "/scoreboard/devices/views/set",
+    pub: "/themaze/devices/scoreboard/updateStatus",
+    sub: "/themaze/devices/scoreboard/updateStatus/response",
+  },
+  // Get a list of scoreboard devices
+  {
+    alias: "/scoreboard/devices",
+    pub: "/themaze/devices/scoreboard",
+    sub: "/themaze/devices/scoreboard/response",
+  },
 ];
 
 const toClient = makeTopics().toClient();
