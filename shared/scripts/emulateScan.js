@@ -36,7 +36,7 @@ if (globalThis.process.argv.length > 2) {
     const rpiReaderService = await createRPIReaderService(
       getMqttClientBackend(),
     );
-    await emulateScan(rpiReaderService);
+    await emulateScan(rpiReaderService, process.argv[2], process.argv[3]);
   } finally {
     process.exit();
   }
@@ -46,7 +46,7 @@ if (globalThis.process.argv.length > 2) {
 
 function emulateScan(rpiReaderService, number, color) {
   return rpiReaderService
-    .scanWristband(number === "r" ? null : number, color === "r" ? null : color)
+    .scanWristband(number == "r" ? null : number, color == "r" ? null : color)
     .then((scannedWristband) => {
       console.log(
         `Successfully published wristband scan. number:${
