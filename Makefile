@@ -190,6 +190,7 @@ allclean:
 .PHONY: cloc
 cloc:
 	cloc --git --exclude-ext='svg,ini' \
+	core/backend/src \
 	ui/afadmin_client/src \
 	ui/react_utils/src \
 	ui/react-action-router/src \

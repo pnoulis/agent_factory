@@ -51,4 +51,8 @@ function registerPlayer({
   });
 }
 
-export { registerPlayer };
+function onRegisterPlayer(listener) {
+  return this.subscribe("/player/register", listener, { mode: "persistent" });
+}
+
+export { registerPlayer, onRegisterPlayer };

@@ -3,7 +3,7 @@ import { toClient } from "../../backend_topics.js";
 import { TaskRunner } from "js_utils/task_runners";
 import { boot } from "./api/boot.js";
 import { loginPlayer } from "./api/loginPlayer.js";
-import { registerPlayer } from "./api/registerPlayer.js";
+import { registerPlayer, onRegisterPlayer } from "./api/registerPlayer.js";
 import {
   registerWristband,
   onRegisterWristband,
@@ -45,7 +45,12 @@ import { stopSession } from "./api/stopSession.js";
 import { listScoreboardTeams } from "./api/listScoreboardTeams.js";
 import { listScoreboardViews } from "./api/listScoreboardViews.js";
 import { setScoreboardViews } from "./api/setScoreboardViews.js";
-import { listScoreboardDevices } from "./api/listScoreboardDevices.js";
+import {
+  listScoreboardDevices,
+  onScoreboardDevicesUpdate,
+} from "./api/listScoreboardDevices.js";
+import { listAllPlayers } from "./api/listAllPlayers.js";
+import { onScoreboardUpdate } from "./api/onScoreboardUpdate.js";
 
 class BackendService {
   constructor(mqttClient, roomName, deviceType, clientId) {
@@ -88,6 +93,7 @@ class BackendService {
 BackendService.prototype.boot = boot;
 BackendService.prototype.loginPlayer = loginPlayer;
 BackendService.prototype.registerPlayer = registerPlayer;
+BackendService.prototype.onRegisterPlayer = onRegisterPlayer;
 
 // --------------------------  REGISTER WRISTBAND  -------------------------- //
 BackendService.prototype.registerWristband = registerWristband;
@@ -130,5 +136,8 @@ BackendService.prototype.listScoreboardTeams = listScoreboardTeams;
 BackendService.prototype.listScoreboardViews = listScoreboardViews;
 BackendService.prototype.setScoreboardViews = setScoreboardViews;
 BackendService.prototype.listScoreboardDevices = listScoreboardDevices;
+BackendService.prototype.listAllPlayers = listAllPlayers;
+BackendService.prototype.onScoreboardUpdate = onScoreboardUpdate;
+BackendService.prototype.onScoreboardDevicesUpdate = onScoreboardDevicesUpdate;
 
 export { BackendService };

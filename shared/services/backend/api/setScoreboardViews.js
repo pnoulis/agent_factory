@@ -1,8 +1,8 @@
-function setScoreboardViews({ deviceId = "", view = "" } = {}) {
+function setScoreboardViews({ deviceId = "", status = "" } = {}) {
   return this.publish("/scoreboard/devices/views/set", {
     timestamp: Date.now(),
-    deviceId: deviceId || this.id,
-    status: "ROTATING",
+    deviceId,
+    status,
   });
 }
 

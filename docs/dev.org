@@ -2,6 +2,9 @@
 ** gdrive via rclone
 https://rclone.org/drive/#making-your-own-client-id
 * scoreboard development
+** 3 secs updates
+/themaze/scoreboard/response
+
 topic: /themaze/backend
 
 Data returned from /themaze/backend:

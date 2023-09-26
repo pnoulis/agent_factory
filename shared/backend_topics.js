@@ -374,6 +374,12 @@ const TOPICS = [
     },
   },
 
+  {
+    alias: "/players/list/all",
+    pub: `${PREFIX}/player/all/search`,
+    sub: `${PREFIX}/player/all/search/response`,
+  },
+
   // ------------------------------ MERGE TEAM ------------------------------------ //
   {
     alias: "/team/merge",
@@ -622,6 +628,16 @@ const TOPICS = [
     alias: "/scoreboard/devices",
     pub: "/themaze/devices/scoreboard",
     sub: "/themaze/devices/scoreboard/response",
+  },
+  // // subscribe to device changes
+  // {
+  //   alias: "/scoreboard/devices/updates",
+  //   sub: "/themaze/devices/scoreboard/response",
+  // },
+  // subscribe to scoreboard changes
+  {
+    alias: "/scoreboard/updates",
+    sub: "/themaze/scoreboard/response",
   },
 ];
 
