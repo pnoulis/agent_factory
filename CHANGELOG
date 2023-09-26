@@ -1,4 +1,83 @@
 --------------------------------------------------------------------------------
+[AUTOMATED RELEASE] Tuesday 26 September 2023  7:18:56 v1.0.5 -> v1.0.6
+
+
+AGENT_FACTORY
+/home/pnoul/dev/intelligent_entertainment/agent_factory
+origin	git@github.com:pnoulis/agent_factory.git (fetch)
+origin	git@github.com:pnoulis/agent_factory.git (push)
+commit 376c77af0e3da8dd203a09c6e3d09dae5cbd55ad
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 26 07:18:45 2023 +0300
+
+    updated submodules
+
+
+AFADMIN_CLIENT
+/home/pnoul/dev/intelligent_entertainment/agent_factory/ui/afadmin_client
+origin	git@github.com:pnoulis/afadmin_client.git (fetch)
+origin	git@github.com:pnoulis/afadmin_client.git (push)
+commit e73e31fb99b328c43c1cb47773fb51554b11a7ae
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 26 06:31:37 2023 +0300
+
+    subscriptions
+
+
+REACT_UTILS
+/home/pnoul/dev/intelligent_entertainment/agent_factory/ui/react_utils
+origin	git@github.com:pnoulis/react_utils.git (fetch)
+origin	git@github.com:pnoulis/react_utils.git (push)
+commit ecd095f0a58cda52b0eb49ba2bd45353ed8719c8
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 26 06:32:09 2023 +0300
+
+    searchableCombobox can handle multiple handlers for the same clck
+
+
+JS_UTILS
+/home/pnoul/dev/intelligent_entertainment/agent_factory/lib/js_utils
+origin	git@github.com:pnoulis/js_utils.git (fetch)
+origin	git@github.com:pnoulis/js_utils.git (push)
+commit c25792602e47b360aacf31688d7c686d7aecc114
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Fri Sep 15 16:59:22 2023 +0300
+
+    filterObject
+
+
+MQTT_PROXY
+/home/pnoul/dev/intelligent_entertainment/agent_factory/lib/mqtt_proxy
+origin	git@github.com:pnoulis/mqtt_proxy.git (fetch)
+origin	git@github.com:pnoulis/mqtt_proxy.git (push)
+commit 8b60f80d4a98964a5f6eec0dec204464b0852766
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Tue Sep 12 14:28:57 2023 +0300
+
+    All dependencies updated to latest version
+
+
+AFMACHINE
+/home/pnoul/dev/intelligent_entertainment/agent_factory/core/afmachine
+origin	git@github.com:pnoulis/afmachine.git (fetch)
+origin	git@github.com:pnoulis/afmachine.git (push)
+commit 94351d639eb15bec56ae39118b8cd0177d2d4965
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 26 07:18:26 2023 +0300
+
+    scorebard updates subss
+
+
+REACT-ACTION-ROUTER
+/home/pnoul/dev/intelligent_entertainment/agent_factory/ui/react-action-router
+origin	git@github.com:pnoulis/react-action-router.git (fetch)
+origin	git@github.com:pnoulis/react-action-router.git (push)
+commit a5b9aff4e66d754e918d227432acc0f5e470cd88
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Thu Sep 21 14:13:48 2023 +0300
+
+    Location.pathname is decoded prior to being tested against a Route.path for a match
+--------------------------------------------------------------------------------
 [AUTOMATED RELEASE] Thursday 21 September 2023 14:14:56 v1.0.4 -> v1.0.5
 
 
