@@ -84,14 +84,14 @@ sync-afadmin:
 
 sync:
 # sync administration
-	rsync -az $(SRCDIR)/dist/administration/* \
+	rsync -az ./dist \
 	agent_factory:/var/www/html/administration
-# sync gameplay
-	rsync -az $(SRCDIR)/dist/gameplay/* \
-	agent_factory:/var/www/html/gameplay
-# sync nginx.conf
-	rsync -az $(SRCDIR)/dist/agent_factory.nginx.conf \
-	agent_factory:/etc/nginx/conf.d/agent_factory.nginx.conf
+# # sync gameplay
+# 	rsync -az $(SRCDIR)/dist/gameplay/* \
+# 	agent_factory:/var/www/html/gameplay
+# # sync nginx.conf
+# 	rsync -az $(SRCDIR)/dist/agent_factory.nginx.conf \
+# 	agent_factory:/etc/nginx/conf.d/agent_factory.nginx.conf
 
 
 # ------------------------------ SERVE ------------------------------ #
@@ -110,7 +110,7 @@ dockernginx:
 	--publish 9090:9090 \
 	--mount \
 	type=bind,\
-	source=$(AFADMIN_CLIENT)/dist,\
+	source=$(SRCDIR)/dist,\
 	target=/srv \
 	--mount \
 	type=bind,\

@@ -66,6 +66,11 @@ Last attempt within > 00:00 (midnight).
 
 Each room (roomId, roomName) 
 
+** Per room
+the totalPoints field represents the highest score ever
+achieved by a team.
+The other field is that of the team that achiveed this.
+
 * Deployment targets
 ** server at work through LAN
 ssh host: afserver.local

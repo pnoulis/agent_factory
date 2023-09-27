@@ -1,5 +1,6 @@
 import { ENVIRONMENT } from "../../config.js";
 import { BackendService } from "./BackendService.js";
+import { getMqttClientBackend } from "../../clients/mqtt.browser.js";
 
 const DEVICE_TYPE = "REGISTRATION_SCREEN";
 
@@ -7,9 +8,9 @@ async function createRegistrationService(mqttClient, options = {}) {
   options.roomName ||= ENVIRONMENT.BACKEND_MQTT_ROOM_NAME;
   options.deviceId ||= ENVIRONMENT.BACKEND_MQTT_CLIENT_ID;
   if (!mqttClient) {
-    const { getMqttClientBackend } = await import(
-      `../../clients/mqtt.${ENVIRONMENT.RUNTIME}.js`
-    );
+    // const { getMqttClientBackend } = await import(
+    //   `../../clients/mqtt.${ENVIRONMENT.RUNTIME}.js`
+    // );
     mqttClient = getMqttClientBackend();
   }
   mqttClient.once("connect", function () {
