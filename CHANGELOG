@@ -1,4 +1,83 @@
 --------------------------------------------------------------------------------
+[AUTOMATED RELEASE] Wednesday 27 September 2023 10:48:00 v1.0.6 -> v1.0.7
+
+
+AGENT-FACTORY-SOFTWARE
+/home/pnoul/projects/intelligent_entertainment/agent-factory-software
+origin	git@github.com:pnoulis/agent_factory.git (fetch)
+origin	git@github.com:pnoulis/agent_factory.git (push)
+commit 2cb70e06703d0049a246700945dabad2ea6cff14
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Wed Sep 27 10:47:51 2023 +0300
+
+    updated submodules
+
+
+AFADMIN_CLIENT
+/home/pnoul/projects/intelligent_entertainment/agent-factory-software/ui/afadmin_client
+origin	git@github.com:pnoulis/afadmin_client.git (fetch)
+origin	git@github.com:pnoulis/afadmin_client.git (push)
+commit 6d330d56321528912e8e0298bf835d59dd3b3086
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Wed Sep 27 10:47:35 2023 +0300
+
+    teamName placeholders at page grouparty are patched for now
+
+
+REACT_UTILS
+/home/pnoul/projects/intelligent_entertainment/agent-factory-software/ui/react_utils
+origin	git@github.com:pnoulis/react_utils.git (fetch)
+origin	git@github.com:pnoulis/react_utils.git (push)
+commit ecd095f0a58cda52b0eb49ba2bd45353ed8719c8
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Tue Sep 26 06:32:09 2023 +0300
+
+    searchableCombobox can handle multiple handlers for the same clck
+
+
+JS_UTILS
+/home/pnoul/projects/intelligent_entertainment/agent-factory-software/lib/js_utils
+origin	git@github.com:pnoulis/js_utils.git (fetch)
+origin	git@github.com:pnoulis/js_utils.git (push)
+commit c25792602e47b360aacf31688d7c686d7aecc114
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Fri Sep 15 16:59:22 2023 +0300
+
+    filterObject
+
+
+MQTT_PROXY
+/home/pnoul/projects/intelligent_entertainment/agent-factory-software/lib/mqtt_proxy
+origin	git@github.com:pnoulis/mqtt_proxy.git (fetch)
+origin	git@github.com:pnoulis/mqtt_proxy.git (push)
+commit 8b60f80d4a98964a5f6eec0dec204464b0852766
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Tue Sep 12 14:28:57 2023 +0300
+
+    All dependencies updated to latest version
+
+
+AFMACHINE
+/home/pnoul/projects/intelligent_entertainment/agent-factory-software/core/afmachine
+origin	git@github.com:pnoulis/afmachine.git (fetch)
+origin	git@github.com:pnoulis/afmachine.git (push)
+commit 138eb87ec268f949b6fcfd27197323b0dce44ab0
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Wed Sep 27 10:46:45 2023 +0300
+
+    merge does not allow empty team names
+
+
+REACT-ACTION-ROUTER
+/home/pnoul/projects/intelligent_entertainment/agent-factory-software/ui/react-action-router
+origin	git@github.com:pnoulis/react-action-router (fetch)
+origin	git@github.com:pnoulis/react-action-router (push)
+commit 945fd1444c813cd026e45e8794a851c6ffdcd44b
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Wed Sep 27 10:46:11 2023 +0300
+
+    decodeURI used on all possible instances of an encoded path
+--------------------------------------------------------------------------------
 [AUTOMATED RELEASE] Tuesday 26 September 2023  7:18:56 v1.0.5 -> v1.0.6
 
 
