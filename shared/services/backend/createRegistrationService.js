@@ -1,6 +1,6 @@
 import { ENVIRONMENT } from "../../config.js";
 import { BackendService } from "./BackendService.js";
-import { getMqttClientBackend } from "../../clients/mqtt.browser.js";
+import { getMqttClientBackend } from "../../clients/mqtt.js";
 
 const DEVICE_TYPE = "REGISTRATION_SCREEN";
 

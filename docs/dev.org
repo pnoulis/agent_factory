@@ -1047,3 +1047,44 @@ and pageTeam.
 ** complete package removal
 * log 17-09-2023
 ** Finish the tables
+** log 16/10/23
+* Agent Factory Devices
+** DONE Gather all new topics related to devices management
+CLOSED: [2023-10-16 Mon 16:31]
+*** /themaze/{clientId}/gui/devices/action
+
+The deviceId property is used to select the device for which the ACTION shall
+be applied to.
+
+In case the deviceId property fails to specify a known DEVICE, the selector is
+interpreted to mean ALL DEVICES, in which case the ACTION is applied to all
+devices.
+
+ #+begin_src js
+  const payload = {
+    timestamp: 1,
+    devicesAction: "WAKE_UP",
+    deviceId: "someId",
+  }
+#+end_src
+*** /themaze/devices[/response]
+** DONE Catalog them into agent_factory/shared/backend_topics.js
+CLOSED: [2023-10-16 Mon 16:31]
+** Devices actions
+*** RESTART
+*** SHUTDOWN
+*** WAKEUP
+*** RESTART_ALL
+*** SHUTDOWN_ALL
+*** WAKEUP_ALL
+** DONE Add them to the backend service at agent_factory/shared/services/backend/api/
+CLOSED: [2023-10-16 Mon 16:31]
+** DONE Add them to the afmachine router at agent_factory/core/afmachine/routes/backend/
+CLOSED: [2023-10-16 Mon 16:31]
+** Build the new Features UI
+*** Sub Route Devices in administration
+*** Table of all miniPC's of agent factory
+*** Mass RESET
+*** Mass SHUTDOWN
+*** Mass WAKEUP
+*** atomic RESET SHUTDOWN WAKEUP for each device

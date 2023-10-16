@@ -639,6 +639,18 @@ const TOPICS = [
     alias: "/scoreboard/updates",
     sub: "/themaze/scoreboard/response",
   },
+  // Get a list of all devices
+  {
+    alias: "/devices",
+    pub: "/themaze/devices",
+    sub: "/themaze/devices/response",
+  },
+  // Initiate a device Action
+  {
+    alias: "/devices/action",
+    pub: `${PREFIX}/devices/action`,
+    sub: `${PREFIX}/devices/action/response`,
+  },
 ];
 
 const toClient = makeTopics().toClient();

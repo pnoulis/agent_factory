@@ -51,6 +51,10 @@ import {
 } from "./api/listScoreboardDevices.js";
 import { listAllPlayers } from "./api/listAllPlayers.js";
 import { onScoreboardUpdate } from "./api/onScoreboardUpdate.js";
+import { listDevices } from "./api/listDevices.js";
+import { wakeupDevice } from './api/wakeupDevice.js';
+import { shutdownDevice } from './api/shutdownDevice.js';
+import { restartDevice } from './api/restartDevice.js';
 
 class BackendService {
   constructor(mqttClient, roomName, deviceType, clientId) {
@@ -139,5 +143,9 @@ BackendService.prototype.listScoreboardDevices = listScoreboardDevices;
 BackendService.prototype.listAllPlayers = listAllPlayers;
 BackendService.prototype.onScoreboardUpdate = onScoreboardUpdate;
 BackendService.prototype.onScoreboardDevicesUpdate = onScoreboardDevicesUpdate;
+BackendService.prototype.listDevices = listDevices;
+BackendService.prototype.wakeupDevice = wakeupDevice;
+BackendService.prototype.shutdownDevice = shutdownDevice;
+BackendService.prototype.restartDevice = restartDevice;
 
 export { BackendService };
