@@ -3,7 +3,7 @@ function signupAdmin({ username = "", email = "", password = "", role = "" }) {
     username,
     email,
     password,
-    role,
+    role: ["ROLE_" + role],
   });
 }
 

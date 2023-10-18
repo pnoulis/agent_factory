@@ -4,6 +4,8 @@ const MAX_TEAM_SIZE = 6;
 const MIN_TEAM_SIZE = 2;
 const CLIENT_STORAGE_GLOBAL_SESSION_ID = "session";
 
+const CASHIER_ROLES = ["CASHIER", "MANAGER", "ADMIN"];
+
 const WRISTBAND_COLORS = [
   "1based",
   "red",
@@ -88,4 +90,5 @@ export {
   AF_PACKAGES,
   AF_PACKAGES_MAP,
   CLIENT_STORAGE_GLOBAL_SESSION_ID,
+  CASHIER_ROLES,
 };
