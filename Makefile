@@ -132,6 +132,7 @@ serve-backend:
 
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build
+build: mode?=production
 build:
 	-rm -rdf $(SRCDIR)/dist/* 2>/dev/null
 	-mkdir -p $(SRCDIR)/dist 2>/dev/null
@@ -139,13 +140,14 @@ build:
 	make -C $(MQTT_PROXY) build mode=production
 	make -C $(REACT_UTILS) build mode=production
 	make -C $(REACT_ACTION_ROUTER) build mode=production
-	make -C $(AFADMIN_CLIENT) build mode=production
+	make -C $(AFADMIN_CLIENT) build mode=$(mode)
 	cp $(SRCDIR)/PACKAGE $(SRCDIR)/dist
 	cp $(SRCDIR)/RELEASE $(SRCDIR)/dist
 	cp $(SRCDIR)/CHANGELOG $(SRCDIR)/dist
 	cp $(SRCDIR)/README.md $(SRCDIR)/dist
 	cp -r $(AFADMIN_CLIENT)/dist/* $(SRCDIR)/dist
 	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
+
 
 
 # ------------------------------ CLEAN ------------------------------ #
