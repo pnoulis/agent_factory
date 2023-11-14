@@ -1088,3 +1088,373 @@ CLOSED: [2023-10-16 Mon 16:31]
 *** Mass SHUTDOWN
 *** Mass WAKEUP
 *** atomic RESET SHUTDOWN WAKEUP for each device
+* Language translations
+** About
+The provision of agent-factory(AF) in LOCALES other than English.
+
+** Map
+| description | target(url, ...[components])                      | english                                                                             |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | / site-navbar                                     | registration                                                                        |
+| admin       | / site-navbar                                     | merge                                                                               |
+| admin       | / site-navbar                                     | grouparty                                                                           |
+| admin       | / site-navbar                                     | live view                                                                           |
+| admin       | / site-navbar                                     | scoreboard                                                                          |
+| admin       | / site-navbar                                     | administration                                                                      |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /registration/player panel                        | register player                                                                     |
+| admin       | /registration/player panel                        | register wristband                                                                  |
+| admin       | /registration/player panel                        | players                                                                             |
+| admin       | /registration/player form                         | first name                                                                          |
+| admin       | /registration/player form                         | last name                                                                           |
+| admin       | /registration/player form                         | email                                                                               |
+| admin       | /registration/player form                         | username                                                                            |
+| admin       | /registration/player form                         | password OPTIONAL                                                                   |
+| admin       | /registration/player form                         | register                                                                            |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /registration/player/wristband form add players   | add players                                                                         |
+| admin       | /registration/player/wristband form add players   | search                                                                              |
+| admin       | /registration/player/wristband form add players   | no player found with the name: <...>                                                |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /registration/player/history table header         | N0, username, first name, last name, email                                          |
+| admin       | /registration/player/history table footer         | rows per page                                                                       |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /merge panel                                      | merge team                                                                          |
+| admin       | /merge form add players                           | add players                                                                         |
+| admin       | /merge form add players                           | username                                                                            |
+| admin       | /merge form add players                           | No available players found!                                                         |
+| admin       | /merge form team name                             | team name                                                                           |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /groupParty panel                                 | new group party                                                                     |
+| admin       | /groupParty panel                                 | add team                                                                            |
+| admin       | /groupParty panel                                 | merge group party                                                                   |
+| admin       | /groupParty panel                                 | distribute                                                                          |
+| admin       | /groupParty form #players                         | number of players                                                                   |
+| admin       | /groupParty form #players                         | new group party                                                                     |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /live-view panel                                  | live view                                                                           |
+| admin       | /live-view table header                           | NO  (index, number)                                                                 |
+| admin       | /live-view table header                           | name                                                                                |
+| admin       | /live-view table header                           | status                                                                              |
+| admin       | /live-view table header                           | players                                                                             |
+| admin       | /live-view table header                           | points                                                                              |
+| admin       | /live-view table header                           | total packages                                                                      |
+| admin       | /live-view table header                           | total packages cost                                                                 |
+| admin       | /live-view table header                           | active package                                                                      |
+| admin       | /live-view table header                           | active package cost                                                                 |
+| admin       | /live-view table header                           | active package type                                                                 |
+| admin       | /live-view table header                           | active package amount                                                               |
+| admin       | /live-view table header                           | active package amount                                                               |
+| admin       | /live-view table header                           | active package remainder                                                            |
+| admin       | /live-view table header                           | active package start time                                                           |
+| admin       | /live-view table footer                           | rows per page                                                                       |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /live-view/{team} panel                           | live view                                                                           |
+| admin       | /live-view/{team} tooltip                         | add package                                                                         |
+| admin       | /live-view/{team} tooltip                         | remove package                                                                      |
+| admin       | /live-view/{team} tooltip                         | activate package                                                                    |
+| admin       | /live-view/{team} tooltip                         | save package                                                                        |
+| admin       | /live-view/{team} tooltip                         | back                                                                                |
+| admin       | /live-view/{team} tooltip                         | team roster                                                                         |
+| admin       | /live-view/{team} dropdown title                  | time                                                                                |
+| admin       | /live-view/{team} dropdown description            | amount of time                                                                      |
+| admin       | /live-view/{team} dropdown prompt                 | select time                                                                         |
+| admin       | /live-view/{team} dropdown option                 | 30' minutes                                                                         |
+| admin       | /live-view/{team} dropdown option                 | 60' minutes                                                                         |
+| admin       | /live-view/{team} dropdown option                 | 90' minutes                                                                         |
+| admin       | /live-view/{team} dropdown option                 | 120' minutes                                                                        |
+| admin       | /live-view/{team} dropdown title                  | mission                                                                             |
+| admin       | /live-view/{team} dropdown description            | number of missions                                                                  |
+| admin       | /live-view/{team} dropdown prompt                 | select mission                                                                      |
+| admin       | /live-view/{team} dropdown option                 | 5' missions                                                                         |
+| admin       | /live-view/{team} dropdown option                 | 10' missions                                                                        |
+| admin       | /live-view/{team} dropdown option                 | 15' missions                                                                        |
+| admin       | /live-view/{team} dropdown option                 | 20' missions                                                                        |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /scoreboard panel                                 | live                                                                                |
+| admin       | /scoreboard panel                                 | top 10                                                                              |
+| admin       | /scoreboard table header                          | NO (index, number)                                                                  |
+| admin       | /scoreboard table header                          | name                                                                                |
+| admin       | /scoreboard table header                          | status                                                                              |
+| admin       | /scoreboard table header                          | players                                                                             |
+| admin       | /scoreboard table header                          | played                                                                              |
+| admin       | /scoreboard table header                          | wins                                                                                |
+| admin       | /scoreboard table header                          | losses                                                                              |
+| admin       | /scoreboard table header                          | points                                                                              |
+| admin       | /scoreboard table footer                          | rows per page                                                                       |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /scoreboard/top10 filter                          | air                                                                                 |
+| admin       | /scoreboard/top10 filter                          | fire                                                                                |
+| admin       | /scoreboard/top10 filter                          | earth                                                                               |
+| admin       | /scoreboard/top10 filter                          | water                                                                               |
+| admin       | /scoreboard/top10 filter                          | all time                                                                            |
+| admin       | /scoreboard/top10 filter                          | day                                                                                 |
+| admin       | /scoreboard/top10 filter                          | week                                                                                |
+| admin       | /scoreboard/top10 filter                          | month                                                                               |
+| admin       | /scoreboard/top10 filter rooms title              | select top 10 in room                                                               |
+| admin       | /scoreboard/top10 table header                    | NO (index, number )                                                                 |
+| admin       | /scoreboard/top10 table header                    | name                                                                                |
+| admin       | /scoreboard/top10 table header                    | time created                                                                        |
+| admin       | /scoreboard/top10 table header                    | players                                                                             |
+| admin       | /scoreboard/top10 table header                    | points                                                                              |
+| admin       | /scoreboard/top10 table footer                    | rows per page                                                                       |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /administrator panel                              | cash out                                                                            |
+| admin       | /administrator panel                              | scoreboard devices                                                                  |
+| admin       | /administrator panel                              | devices                                                                             |
+| admin       | /administrator panel                              | cashiers                                                                            |
+| admin       | /administrator panel                              | wristbands                                                                          |
+| admin       | /administrator form cashout                       | number of packages                                                                  |
+| admin       | /administrator form cashout                       | comments                                                                            |
+| admin       | /administrator form cashout                       | cashier's name                                                                      |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /administrator/scoreboard-devices dropdown        | rotating                                                                            |
+| admin       | /administrator/scoreboard-devices dropdown option | monthly                                                                             |
+| admin       | /administrator/scoreboard-devices dropdown option | weekly                                                                              |
+| admin       | /administrator/scoreboard-devices dropdown option | daily                                                                               |
+| admin       | /administrator/scoreboard-devices dropdown option | all time                                                                            |
+| admin       | /administrator/scoreboard-devices dropdown option | elements                                                                            |
+| admin       | /administrator/scoreboard-devices dropdown option | rooms                                                                               |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /administrator/devices table header               | NO (index, number)                                                                  |
+| admin       | /administrator/devices table header               | device type                                                                         |
+| admin       | /administrator/devices table header               | device id                                                                           |
+| admin       | /administrator/devices table header               | time booted                                                                         |
+| admin       | /administrator/devices table footer               | rows per page                                                                       |
+| admin       | /administrator/devices tooltip                    | shutdown                                                                            |
+| admin       | /administrator/devices tooltip                    | restart                                                                             |
+| admin       | /administrator/devices tooltip                    | boot                                                                                |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | /administrator/cashiers form cashier              | username                                                                            |
+| admin       | /administrator/cashiers form cashier              | email                                                                               |
+| admin       | /administrator/cashiers form cashier              | password                                                                            |
+| admin       | /administrator/cashiers form cashier              | cashier role                                                                        |
+| admin       | /administrator/cashiers form cashier              | register cashier                                                                    |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | CARD player                                       | name                                                                                |
+| admin       | card player                                       | username                                                                            |
+| admin       | card player                                       | email                                                                               |
+| admin       | card player                                       | status (unregistered, registered, inTeam, playing )                                 |
+| admin       | card player                                       | rfid                                                                                |
+| admin       | card player                                       |                                                                                     |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | ACTION CARD player tooltip                        | unpair wristband                                                                    |
+| admin       | ACTION CARD tooltip                               | pair wristband                                                                      |
+| admin       | ACTION CARD tooltip                               | remove player                                                                       |
+| admin       | ACTION CARD empty state                           | player                                                                              |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | ACTION CARD team  tooltip                         | add player                                                                          |
+| admin       | ACTION CARD team tooltip                          | remove team                                                                         |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | CARD package                                      | status(new, registered, paused, completed)                                          |
+| admin       | CARD package                                      | type(missions, time)                                                                |
+| admin       | CARD package                                      | cost(200$)                                                                          |
+| admin       | CARD package                                      | purchased (20 missions...)                                                          |
+| admin       | CARD package                                      | started (time)                                                                      |
+| admin       | CARD package                                      | finished (time)                                                                     |
+| admin       | CARD package                                      | remainder (20 missions...)                                                          |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | FLASH MESSAGE                                     | failed to set scoreboard device {} view                                             |
+| admin       | FLASH MESSAGE                                     | failed to unpair {} from wristband {}                                               |
+| admin       | FLASH MESSAGE                                     | Successfully unpaired {} from wristband {}                                          |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to wristband unergistration topic                               |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to scoreboard devices update topic                              |
+| admin       | FLASH MESSAGE                                     | Failed to list teams                                                                |
+| admin       | FLASH MESSAGE                                     | Failed to add {} package to {}                                                      |
+| admin       | FLASH MESSAGE                                     | Successfully added {} package to {}                                                 |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to package add topic                                            |
+| admin       | FLASH MESSAGE                                     | Failed to switch off device: {}                                                     |
+| admin       | FLASH MESSAGE                                     | Successfully switched off device: {}                                                |
+| admin       | FLASH MESSAGE                                     | Failed to search player {}                                                          |
+| admin       | FLASH MESSAGE                                     | Successfully started device: {}                                                     |
+| admin       | FLASH MESSAGE                                     | Failed to cashout!                                                                  |
+| admin       | FLASH MESSAGE                                     | Successful cashout!                                                                 |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to scoreboard update topic                                      |
+| admin       | FLASH MESSAGE                                     | Failed to register player {}                                                        |
+| admin       | FLASH MESSAGE                                     | Successfully registered player: {}                                                  |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to player regitser topic                                        |
+| admin       | FLASH MESSAGE                                     | Failed to retrieve information on wristband {}                                      |
+| admin       | FLASH MESSAGE                                     | {} failed to start a session                                                        |
+| admin       | FLASH MESSAGE                                     | {} successfully started a session                                                   |
+| admin       | FLASH MESSAGE                                     | Failed to merge group team {}                                                       |
+| admin       | FLASH MESSAGE                                     | Merged group team {}                                                                |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to group team merge topic                                       |
+| admin       | FLASH MESSAGE                                     | Failed to pair {} to wristband {}                                                   |
+| admin       | FLASH MESSAGE                                     | Successfully paired {} to wristband {}                                              |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to wristband registration topic                                 |
+| admin       | FLASH MESSAGE                                     | Failed to list scoreboard devices                                                   |
+| admin       | FLASH MESSAGE                                     | Failed to register cashier: {}                                                      |
+| admin       | FLASH MESSAGE                                     | Successfully registered cashier: {}                                                 |
+| admin       | FLASH MESSAGE                                     | Failed to remove package {} from {}                                                 |
+| admin       | FLASH MESSAGE                                     | Successfully removed package {} from {}                                             |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to package remove topic                                         |
+| admin       | FLASH MESSAGE                                     | Failed to scan wristband                                                            |
+| admin       | FLASH MESSAGE                                     | Scanned {} wristband                                                                |
+| admin       | FLASH MESSAGE                                     | Failed to restart device: {}                                                        |
+| admin       | FLASH MESSAGE                                     | Successfully restarted device: {} or ALL                                            |
+| admin       | FLASH MESSAGE                                     | Failed to list devices                                                              |
+| admin       | FLASH MESSAGE                                     | Failed to list packages                                                             |
+| admin       | FLASH MESSAGE                                     | Failed to fetch players with a registered wristband                                 |
+| admin       | FLASH MESSAGE                                     | Failed to list available scoreboard views                                           |
+| admin       | FLASH MESSAGE                                     | Failed to activate team {}                                                          |
+| admin       | FLASH MESSAGE                                     | Successfully activated team {}                                                      |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to start team topic                                             |
+| admin       | FLASH MESSAGE                                     | Failed to login administration {}                                                   |
+| admin       | FLASH MESSAGE                                     | Successfully logged in cashier {}                                                   |
+| admin       | FLASH MESSAGE                                     | Failed to fetch players with a registered wristband                                 |
+| admin       | FLASH MESSAGE                                     | Failed to list teams scores                                                         |
+| admin       | FLASH MESSAGE                                     | Failed to merge team {}                                                             |
+| admin       | FLASH MESSAGE                                     | Merged team {}                                                                      |
+| admin       | FLASH MESSAGE                                     | Failed to subscribe to team merge topic                                             |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | ERRORS                                            | Roster size cannot exceed {}                                                        |
+| admin       | ERRORS                                            | Request timeout                                                                     |
+| admin       | ERRORS                                            | Bad request                                                                         |
+| admin       | ERRORS                                            | Conflict                                                                            |
+| admin       | ERRORS                                            | Validation errors                                                                   |
+| admin       | ERRORS                                            | Wristband scan handle locked!                                                       |
+| admin       | ERRORS                                            | Scanned wristband {} is paired to another player                                    |
+| admin       | ERRORS                                            | Wristband colorCode {} failed to match any color                                    |
+| admin       | ERRORS                                            | {} already registered                                                               |
+| admin       | ERRORS                                            | Missing team name                                                                   |
+| admin       | ERRORS                                            | {(team)} requires a minimum of 2 players with paired wristbands to merge            |
+| admin       | ERRORS                                            | Player {} needs to pair a wristband                                                 |
+| admin       | ERRORS                                            | A wristband with the color {} is already part of the team                           |
+| admin       | ERRORS                                            | Player {} is already part of the team                                               |
+| admin       | ERRORS                                            | Group party is empty                                                                |
+| admin       | ERRORS                                            | Cannot distribute a group party that contains a merged team                         |
+| admin       | ERRORS                                            | Package {} is already registered to {(team)}                                        |
+| admin       | ERRORS                                            | Only one registered package per team allowed                                        |
+| admin       | ERRORS                                            | Active package {} cannot be deleted.                                                |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | RANDOM                                            | add player                                                                          |
+| admin       | RANDOM                                            | pair wristband                                                                      |
+| admin       | RANDOM                                            | unpair wristband                                                                    |
+| admin       | RANDOM                                            | merge team                                                                          |
+| admin       | RANDOM                                            | add player to team                                                                  |
+| admin       | RANDOM                                            | merge group party                                                                   |
+| admin       | RANDOM                                            | distribute group party                                                              |
+| admin       | RANDOM                                            | register new package                                                                |
+| admin       | RANDOM                                            | activate package                                                                    |
+|-------------+---------------------------------------------------+-------------------------------------------------------------------------------------|
+| admin       | DIALOGS                                           | Activate package, Successfully activated {} package: {}                             |
+| admin       | DIALOGS                                           | Back to registered packages, Team does not have any registered packages             |
+| admin       | DIALOGS                                           | Register new package, successfully registered new {} package: {}                    |
+| admin       | DIALOGS                                           | Confirm device boot, boot ALL devices?                                              |
+| admin       | DIALOGS                                           | Confirm device boot, boot selected devices?                                         |
+| admin       | DIALOGS                                           | Confirm device shutdown, shutdown ALL devices?                                      |
+| admin       | DIALOGS                                           | Confirm device shutdown, shutdown selected devices?                                 |
+| admin       | DIALOGS                                           | Confirm device restart, restart ALL devices?                                        |
+| admin       | DIALOGS                                           | Confirm device restart, restart selected devices?                                   |
+| admin       | DIALOGS                                           | Activate package, No package has been selected!                                     |
+| admin       | DIALOGS                                           | Remove package, No package has been selected!                                       |
+| admin       | DIALOGS                                           | Register package, No package has been selected!                                     |
+| admin       | DIALOGS                                           | Register wristband, {(state)} player {} cannot pair a new wristband.                |
+| admin       | DIALOGS                                           | Register wristband, {(player)} has already been selected for wristband registration |
+| admin       | DIALOGS                                           | Merge team, Successfully merged!                                                    |
+| admin       | DIALOGS                                           | Merge group party, {(team)} merged!                                                 |
+| admin       | DIALOGS                                           | Remove package, successfully removed {(pkg type)} package: {(package name) }        |
+| admin       | DIALOGS                                           | Back to registered packages, Team does not have any registered packages             |
+| admin       | DIALOGS                                           | Register new package, Successfully registered new {} package: {}                    |
+
+* Versioning
+The AE software suite is developed and distributed in the following manner.
+
+A VERSION identifies an EXACT SNAPSHOT of the software suite throughout its
+development history made possible through a version control system (VCS).
+
+The syntax of a version follows the SEMANTIC VERSIONING scheme. (semver)
+https://semver.org/
+
+The syntax:
+<app-name>-<core>-<pre-release>+<build>
+
+For example:
+
+af-v0.0.1-testing+pnoul-dirty-0001-timestamp
+
+The <pre-relaese> and <build> segments of the SEMVER are to be used only in the
+DEVELOPMENT PHASE of the software release lifecycle. They shall be used to carry
+meta-information about a version, such as:
+
+- build context
+- developer name
+- commit SHA
+- repository state
+- timestamp
+
+When it is time to DELIVER the software to a customer a PUBLIC RELEASE is
+prepared. A public RELEASE is just a TAGGED VERSION in the canonical repository
+hosting the software developed.
+
+<app-name>-v<version>
+
+
+used internally by the
+developer team only at the development phase of an application and are not to be
+used for distribution.
+
+When a VERSION is ready for distri
+
+A RELEASE distinguishes each iteration of the software suite across its
+development history.
+
+
+the software suite
+across its development history
+
+the totality of the AE software suite in a stage of its
+
+
+The AE software suite is developed in English using an English LOCALE. Each
+RELEASE is identified by a VERSION id.
+
+Each RELEASE is 
+
+A RELEASE is never distributed *as-is* to a customer. Rather a RELEASE is
+packaged into a DISTRIBUTION.
+
+A DISTRIBUTION extends a RELEASE with documentation, internationalization,
+installers, licensing software, updating software and more.
+
+Each distribution 
+
+
+Adding the DISTRIBUTION classification to a software release 
+Adding another level of classification to a software release helps in quickly
+identifying varieties, which is very handy for customer support etc etc..
+
+For example a DISTRIBUTION intended for a customer in an English speaking
+country would be labelled as:
+
+af-v1.0.0.en-us
+
+
+While a DISTRIBUTION formatted in Arabic for example would be labelled as:
+
+af-
+
+
+for specialized editions such as 
+
+Each RELEASE 
+A RELEASE may then be 
+
+that canonical (base) variety of
+the software.
+
+
+The canonical release of AE is the English *edition* of the application software
+suite.
+
+IE provides a new 
+Not all customers demand that AE is provided in their own LOCALE. Those that do
+
+Agent factory customers who wish to have clients translated in their own nat
+Agent factory customers have requested UI Clients in their own native language.
+IE shall not be responsible for carrying out the 
+
+to be translated in their own
+native languages whatever they may be. IE shall not be responsible for the
+translations themselve
+
