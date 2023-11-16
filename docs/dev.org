@@ -1458,3 +1458,5 @@ to be translated in their own
 native languages whatever they may be. IE shall not be responsible for the
 translations themselve
 
+
+* Wristbands should auto-toggle pairing mode in sequence in staging-area.

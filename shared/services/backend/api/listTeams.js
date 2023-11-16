@@ -16,4 +16,12 @@ function listTeams() {
   return this.publish("/teams/all");
 }
 
-export { listTeams };
+function onListTeams(listener) {
+  return this.subscribe("/teams/all", listener, { mode: "persistent" });
+}
+
+function onceListTeams(listener) {
+  return this.subscribe("/teams/all", listener, { mode: "response" });
+}
+
+export { listTeams, onListTeams, onceListTeams };

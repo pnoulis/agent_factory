@@ -30,7 +30,7 @@ import {
   onMergeGroupTeam,
   onceMergeGroupTeam,
 } from "./api/mergeGroupTeam.js";
-import { listTeams } from "./api/listTeams.js";
+import { listTeams, onListTeams, onceListTeams } from "./api/listTeams.js";
 import { searchPlayer } from "./api/searchPlayer.js";
 import { infoWristband } from "./api/infoWristband.js";
 import {
@@ -40,6 +40,8 @@ import {
 } from "./api/subscribeWristbandScan.js";
 import { signupAdmin } from "./api/signupAdmin.js";
 import { loginAdmin } from "./api/loginAdmin.js";
+import { listCashiers } from "./api/listCashiers.js";
+import { removeCashier } from "./api/removeCashier.js";
 import { startSession } from "./api/startSession.js";
 import { stopSession } from "./api/stopSession.js";
 import { listScoreboardTeams } from "./api/listScoreboardTeams.js";
@@ -52,9 +54,9 @@ import {
 import { listAllPlayers } from "./api/listAllPlayers.js";
 import { onScoreboardUpdate } from "./api/onScoreboardUpdate.js";
 import { listDevices } from "./api/listDevices.js";
-import { wakeupDevice } from './api/wakeupDevice.js';
-import { shutdownDevice } from './api/shutdownDevice.js';
-import { restartDevice } from './api/restartDevice.js';
+import { wakeupDevice } from "./api/wakeupDevice.js";
+import { shutdownDevice } from "./api/shutdownDevice.js";
+import { restartDevice } from "./api/restartDevice.js";
 
 class BackendService {
   constructor(mqttClient, roomName, deviceType, clientId) {
@@ -127,6 +129,8 @@ BackendService.prototype.mergeGroupTeam = mergeGroupTeam;
 BackendService.prototype.onMergeGroupTeam = onMergeGroupTeam;
 BackendService.prototype.onceMergeGroupTeam = onceMergeGroupTeam;
 BackendService.prototype.listTeams = listTeams;
+BackendService.prototype.onListTeams = onListTeams;
+BackendService.prototype.onceListTeams= onceListTeams;
 BackendService.prototype.searchPlayer = searchPlayer;
 BackendService.prototype.infoWristband = infoWristband;
 BackendService.prototype.getWristbandScan = getWristbandScan;
@@ -147,5 +151,7 @@ BackendService.prototype.listDevices = listDevices;
 BackendService.prototype.wakeupDevice = wakeupDevice;
 BackendService.prototype.shutdownDevice = shutdownDevice;
 BackendService.prototype.restartDevice = restartDevice;
+BackendService.prototype.listCashiers = listCashiers;
+BackendService.prototype.removeCashier = removeCashier;
 
 export { BackendService };

@@ -593,6 +593,16 @@ const TOPICS = [
     pub: "/themaze/signin",
     sub: "/themaze/signin/response",
   },
+  {
+    alias: "/admin/delete",
+    pub: `${PREFIX}/users/cashiers/delete`,
+    sub: `${PREFIX}/users/cashiers/delete/response`
+  },
+  {
+    alias: "/admin/list",
+    pub: `${PREFIX}/users/cashiers`,
+    sub: `${PREFIX}/users/cashiers/response`
+  },
   // start session
   {
     alias: "/session/start",

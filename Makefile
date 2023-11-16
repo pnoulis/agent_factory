@@ -6,6 +6,7 @@ include ./PACKAGE
 # Make and Shell behavior
 SHELL = /usr/bin/bash
 .DELETE_ON_ERROR:
+.EXPORT_ALL_VARIABLES:
 .DEFAULT_GOAL := all
 
 # Source directories
@@ -132,15 +133,17 @@ serve-backend:
 
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build
+build: RUNTIME=browser
+build: BUNDLED=true
 build: mode?=production
 build:
 	-rm -rdf $(SRCDIR)/dist/* 2>/dev/null
 	-mkdir -p $(SRCDIR)/dist 2>/dev/null
-	make -C $(JS_UTILS) build mode=production
-	make -C $(MQTT_PROXY) build mode=production
-	make -C $(REACT_UTILS) build mode=production
-	make -C $(REACT_ACTION_ROUTER) build mode=production
-	make -C $(AFADMIN_CLIENT) build mode=$(mode)
+	RUNTIME=browser BUNDLED=true make -C $(JS_UTILS) build mode=production
+	RUNTIME=browser BUNDLED=true make -C $(MQTT_PROXY) build mode=production
+	RUNTIME=browser BUNDLED=true make -C $(REACT_UTILS) build mode=production
+	RUNTIME=browser BUNDLED=true make -C $(REACT_ACTION_ROUTER) build mode=production
+	RUNTIME=browser BUNDLED=true make -C $(AFADMIN_CLIENT) build mode=$(mode)
 	cp $(SRCDIR)/PACKAGE $(SRCDIR)/dist
 	cp $(SRCDIR)/RELEASE $(SRCDIR)/dist
 	cp $(SRCDIR)/CHANGELOG $(SRCDIR)/dist

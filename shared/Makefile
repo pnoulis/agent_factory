@@ -127,4 +127,4 @@ env-dry:
 
 .PHONY: mqtt
 mqtt:
-	m4 -D RUNTIME=$(RUNTIME) ./utils/macros.m4 .//clients/mqtt.js.m4 > .//clients/mqtt.js
+	m4 -D RUNTIME=$(RUNTIME) ./utils/macros.m4 ./clients/mqtt.js.m4 > ./clients/mqtt.js
