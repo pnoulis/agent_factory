@@ -2,9 +2,6 @@
   "name": "agent_factory",
   "version": "1.0.7",
   "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "Intelligent Entertainment <info@iegroup.gr> (https://iegroup.gr/)",
   "contributors": [
@@ -24,14 +21,5 @@
       "url": "https://github.com/pnoulis"
     }
   ],
-  "type": "module",
-  "workspaces": [
-    "lib/js_utils",
-    "lib/mqtt_proxy",
-    "core/afmachine",
-    "ui/react_utils",
-    "ui/afadmin_client",
-    "ui/react-action-router",
-    "shared"
-  ]
+  "type": "module"
 }

@@ -1,3 +1,3 @@
 [submodule "backend"]
-	path = core/backend
+	path = backend
 	url = git@github.com:IsThisRealLife/agent_factory_services.git
