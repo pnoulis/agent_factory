@@ -1,0 +1,168 @@
+#!/usr/bin/make
+
+##################################################
+# Make config
+##################################################
+SHELL:=/usr/bin/bash
+.DEFAULT_GOAL:= all
+.DELETE_OR_ERROR:
+.EXPORT_ALL_VARIABLES:
+.SECONDEXPANSION:
+.ONESHELL:
+
+##################################################
+# App description
+##################################################
+pkg_name=IN_PKG_NAME
+pkg_version=IN_PKG_VERSION
+pkg_vversion=IN_PKG_VVERSION
+pkg_distname=IN_PKG_DISTNAME
+api_version=IN_API_VERSION
+api_vversion=IN_API_VVERSION
+
+##################################################
+# App directories
+##################################################
+srcdir_top=IN_SRCDIR
+srcdir_top_abs=IN_SRCDIR_ABS
+buildir_top=IN_CONFIGUREDIR
+buildir_top_abs=IN_CONFIGUREDIR_ABS
+buildir=IN_BUILDIR
+buildir_abs=IN_BUILDIR_ABS
+srcdir=$(srcdir_top)/src
+srcdir_abs=$(srcdir_top_abs)/src
+confdir=$(srcdir_top)/config
+scriptdir=$(srcdir_top)/scripts
+
+##################################################
+# Tools and their configurations
+##################################################
+# node
+node:=IN_NODE
+# dotenv
+dotenv=IN_DOTENV
+dotenvdirs:=IN_CONFIG_ENVFILE $(srcdir_top)
+dotenvfile:=$(srcdir_top_abs)/.env
+loadenv=set -a; source $(dotenvfile)
+# jq
+jq:=IN_JQ
+# esubild
+esbuild=$(realpath $(srcdir_top)/node_modules/.bin/esbuild)
+# pretty output
+pretty_output=$(realpath $(srcdir_top)/node_modules/.bin/pretty)
+
+##################################################
+# Misc
+##################################################
+
+##################################################
+# io
+##################################################
+in_clickpie_server=$(srcdir_abs)/clickpie-server.js
+out_clickpie_server=$(buildir_abs)/clickpie-server.js
+
+
+
+##################################################
+# Default target
+##################################################
+all: build
+
+##################################################
+# Build
+##################################################
+build: buildclean dotenv | $(buildir_abs)
+
+buildclean: | $(buildir_abs)
+	rm -rf $(buildir)/*
+
+##################################################
+# run
+##################################################
+run: file=
+run: dotenv $(file)
+	@if [[ "$${file:-}" == "" ]]; then
+	echo "Usage: 'make run file [args]'"
+	exit 1
+	fi
+	extension="$${file##*.}"
+	$(loadenv)
+	case $$extension in
+	sh)
+	$(SHELL) $(file) $(args)
+	;;
+	js)
+	$(node) $(file) $(args)
+	;;
+	*)
+	echo "Unrecognized extension: $$extension"
+	echo "Failed to 'make $@ $^'"
+	;;
+	esac
+
+##################################################
+# dotenv
+##################################################
+dotenv:
+	$(dotenv) $(dotenvflags) $(dotenvdirs) | sort > $(dotenvfile)
+
+
+##################################################
+# clean
+##################################################
+clean: stop
+	-rm -f *.tar.gz
+	-rm -f $(dotenvfile)
+
+
+##################################################
+# distclean
+##################################################
+distclean: clean
+	-rm -f *~
+	-rm -f .*~
+	-rm -f .#*
+	-rm -rf $(buildir)
+	-rm -rf node_modules
+	-rm -f package-lock.json
+	-rm -f IN_CONFIG_MAKEFILE
+	-rm -f IN_CONFIG_ENVFILE
+	-rm -f IN_CONFIG_MACROSFILE
+
+##################################################
+# misc
+##################################################
+.DEFAULT:
+	@if [ ! -f "$<" ]; then
+	echo "Missing file $${file:-}"
+	exit 1
+	fi
+
+##################################################
+# directories
+##################################################
+$(buildir_abs):
+	mkdir -p $@
+
+
+##################################################
+# help
+##################################################
+help:
+	@cat ./Makefile | grep -i --color=auto 'phony' | cut -d ' ' -f2- | tail --lines=+3
+
+# Software development
+.PHONY: run # read dotenvfile and run any file
+.PHONY: scratch # read dotenvfile and run the scratch file
+.PHONY: build # build application
+.PHONY: start # start application
+.PHONY: stop # stop application
+# Software distribution
+.PHONY: deploy # deploy the application to the consumer, such as a server
+# Cleaning
+.PHONY: clean # Remove files created by make targets
+.PHONY: distclean # Remove files created by configure
+# Misc
+.PHONY: help
+.PHONY: dotenv # write environment into .env
+.PHONY: all # default target

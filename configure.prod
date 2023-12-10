@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+./configure --mode=production
+
+
+            
