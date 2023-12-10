@@ -8,6 +8,7 @@ post_config_env=$(mktemp)
 
 # App description
 export PKG_NAME=afadmin-client
+export PKG_NAME_PRETTY='Agent Factory'
 export PKG_VERSION=2.0.0
 export PKG_VVERSION=v${PKG_VERSION}
 export PKG_DISTNAME=${PKG_NAME}-${PKG_VVERSION}
@@ -52,6 +53,8 @@ main() {
     resolve_options
     resolve_dependencies
     install_npm_packages
+    resolve_afadmin_client_url
+    resolve_afadmin_server_url
     resolve_xdgdirs
     print_chapter "Resolving installation dirs..."
     exit_if_empty WITH_INSTALLDIRS_PRESET 'Missing --with-installdirs-preset'
@@ -60,6 +63,7 @@ main() {
     define_derivedirs
     create_envfile
     create_macrosfile
+    create_vitefile
     create_makefile
     cleanup
 }
@@ -214,6 +218,64 @@ install_npm_packages() {
         fi
     fi
 }
+
+resolve_afadmin_client_url() {
+    print_chapter "Resolving afadmin client url..."
+    exit_if_empty AFADMIN_CLIENT_URL_LOCAL
+    AFADMIN_CLIENT_URL_PUBLIC="${AFADMIN_CLIENT_URL_PUBLIC:-$AFADMIN_CLIENT_URL_LOCAL}"
+
+    # public
+    read -r scheme hostname port basename < <(parseUrl "$AFADMIN_CLIENT_URL_PUBLIC")
+    if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+        error 'afadmin client public url missing either scheme, hostname or port'
+    fi
+    declare -gx AFADMIN_CLIENT_URL_PUBLIC_SCHEME="$scheme"
+    echo "AFADMIN_CLIENT_URL_PUBLIC_SCHEME...|$AFADMIN_CLIENT_URL_PUBLIC_SCHEME"
+    declare -gx AFADMIN_CLIENT_URL_PUBLIC_PORT="$port"
+    echo "AFADMIN_CLIENT_URL_PUBLIC_PORT...|$AFADMIN_CLIENT_URL_PUBLIC_PORT"
+    declare -gx AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME="$hostname"
+    echo "AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME...|$AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME"
+    declare -gx AFADMIN_CLIENT_URL_PUBLIC_BASENAME="$basename"
+    echo "AFADMIN_CLIENT_URL_PUBLIC_BASENAME...|$AFADMIN_CLIENT_URL_PUBLIC_BASENAME"
+    declare -gx AFADMIN_CLIENT_URL_PUBLIC="${scheme}"://"${hostname}":"${port}""${basename}"
+    echo "AFADMIN_CLIENT_URL_PUBLIC...|$AFADMIN_CLIENT_URL_PUBLIC"
+
+    # local
+    read -r scheme hostname port < <(parseUrl "$AFADMIN_CLIENT_URL_LOCAL")
+    if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+        error 'afadmin client local url missing either scheme, hostname or port'
+    fi
+    declare -gx AFADMIN_CLIENT_URL_LOCAL_SCHEME="$scheme"
+    echo "AFADMIN_CLIENT_URL_LOCAL_SCHEME...|$AFADMIN_CLIENT_URL_LOCAL_SCHEME"
+    declare -gx AFADMIN_CLIENT_URL_LOCAL_PORT="$port"
+    echo "AFADMIN_CLIENT_URL_LOCAL_PORT...|$AFADMIN_CLIENT_URL_LOCAL_PORT"
+    declare -gx AFADMIN_CLIENT_URL_LOCAL_HOSTNAME="$hostname"
+    echo "AFADMIN_CLIENT_URL_LOCAL_HOSTNAME...|$AFADMIN_CLIENT_URL_LOCAL_HOSTNAME"
+    declare -gx AFADMIN_CLIENT_URL_LOCAL="${scheme}"://"${hostname}":"${port}"
+    echo "AFADMIN_CLIENT_URL_LOCAL...|$AFADMIN_CLIENT_URL_LOCAL"
+}
+
+resolve_afadmin_server_url() {
+    print_chapter "Resolving afadmin server url..."
+    exit_if_empty AFADMIN_SERVER_URL
+
+    # local
+    read -r scheme hostname port basename < <(parseUrl "$AFADMIN_SERVER_URL")
+    if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+        error 'afadmin server url missing either scheme, hostname or port'
+    fi
+    declare -gx AFADMIN_SERVER_URL_SCHEME="$scheme"
+    echo "AFADMIN_SERVER_URL_SCHEME...|$AFADMIN_SERVER_URL_SCHEME"
+    declare -gx AFADMIN_SERVER_URL_PORT="$port"
+    echo "AFADMIN_SERVER_URL_PORT...|$AFADMIN_SERVER_URL_PORT"
+    declare -gx AFADMIN_SERVER_URL_HOSTNAME="$hostname"
+    echo "AFADMIN_SERVER_URL_HOSTNAME...|$AFADMIN_SERVER_URL_HOSTNAME"
+    declare -gx AFADMIN_SERVER_URL_BASENAME="$basename"
+    echo "AFADMIN_SERVER_URL_BASENAME...|$AFADMIN_SERVER_URL_BASENAME"
+    declare -gx AFADMIN_SERVER_URL="${scheme}"://"${hostname}":"${port}""${basename}"
+    echo "AFADMIN_SERVER_URL...|$AFADMIN_SERVER_URL"
+}
+
 
 resolve_xdgdirs() {
   print_chapter "Resolving XDG dirs..."
@@ -518,6 +580,18 @@ EOF
     echo "OUT_CONFIG_MACROSFILE_ABS...|$OUT_CONFIG_MACROSFILE_abs"
 }
 
+create_vitefile() {
+    print_chapter "Creating vitefile"
+    declare -gx OUT_CONFIG_VITEFILE=${CONFIGUREDIR}/vite.config.js
+    OUT_CONFIG_VITEFILE_abs=${CONFIGUREDIR_ABS}/vite.config.js
+    in_vitefile=${SRCDIR}/vite.config.js.in
+    rm -f $OUT_CONFIG_VITEFILE
+
+    m4 $OUT_CONFIG_MACROSFILE $in_vitefile > $OUT_CONFIG_VITEFILE
+    echo "OUT_CONFIG_VITEFILE...|$OUT_CONFIG_VITEFILE"
+    echo "OUT_CONFIG_VITEFILE_abs...|$OUT_CONFIG_VITEFILE_abs"
+}
+
 create_makefile() {
     print_chapter "Creating makefile..."
     declare -gx OUT_CONFIG_MAKEFILE=${CONFIGUREDIR}/Makefile
@@ -547,9 +621,10 @@ parseUrl() {
     hostname="${hostname##*/}"
     hostname="${hostname#*@}"
     hostname="${hostname%:*}"
-    port="$(echo "$url" | grep -Eo ":[0-9]+(/|$)")"
+    port="$(echo "$url" | grep -Eo ":[0-9]+")"
     port="${port#*:}"
-    echo "$scheme" "$hostname" "$port"
+    path="$(echo "$url" | grep -Eo "/[^.:]*$")"
+    echo "$scheme" "$hostname" "$port" "$path"
 }
 
 expand() {
@@ -570,10 +645,10 @@ isempty() {
 }
 
 flag() {
-    if [ ! -v "${1}" ]; then
-        error "Undefined flag: $1"
-    elif [ "${!1:-}" == "" ]; then
-        error "Empty flag: $1"
+    [ ! -v "${1}" ] && error "Undefined flag: $1"
+    f="${!1:-}"
+    if [ "$f" == "" ]; then
+        error "Empty flag: $f"
     elif [ "$f" == true ]; then
         return 0
     else

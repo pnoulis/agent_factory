@@ -3,13 +3,10 @@
 ./configure --mode=development \
             --skip-npm-install \
             --afadmin-client-url-local='http://localhost:5173' \
-            --afadmin-server-url='mqtt://localhost:9001' \
+            --afadmin-server-url='mqtt://localhost:9001/themaze' \
             --device-id=001 \
             --with-installdirs-preset=gnu-prefix \
             --device-type=REGISTRATION_SCREEN \
             --device-roomname=ADMINISTRATION_1 \
             --loglevel=debug \
             --buildir-stem=build
-
-
-            

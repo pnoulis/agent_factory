@@ -40,9 +40,10 @@ __pycache__
 *.out
 *.tar.gz
 
-# Configuration output
+# configure output
 Makefile
 config.*
+vite.config.js
 
 # ------- Environment variables
 .env

@@ -1,0 +1,35 @@
+/// <reference types="vitest" />
+import { defineConfig } from 'vite';
+import react from "@vitejs/plugin-react";
+import svgr from 'vite-plugin-svgr';
+import { createHtmlPlugin } from 'vite-plugin-html';
+
+// https:vitejs.dev/config
+export default defineConfig({
+  base: 'IN_AFADMIN_CLIENT_URL_PUBLIC_BASENAME',
+  plugins: [
+    react(),
+    svgr(),
+    createHtmlPlugin({
+      minify: false,
+      entry: "/src/index.jsx",
+      template: "/index.html",
+      inject: {
+        data: {
+          title: 'IN_PKG_NAME_PRETTY',
+          BASENAME: 'IN_AFADMIN_CLIENT_URL_PUBLIC_BASENAME',
+        }
+      }
+    })
+  ],
+  build: {
+    outDir: 'IN_BUILDIR',
+    target: "es2022",
+    sourcemap: true,
+    emptyOutDir: true,
+  }
+});
+
+// Local Variables:
+// mode: rjsx
+// End:

@@ -50,6 +50,8 @@ jq:=IN_JQ
 esbuild=$(realpath $(srcdir_top)/node_modules/.bin/esbuild)
 # pretty output
 pretty_output=$(realpath $(srcdir_top)/node_modules/.bin/pretty)
+# vite
+vite=$(realpath $(srcdir_top)/node_modules/.bin/vite)
 
 ##################################################
 # Misc
@@ -60,7 +62,6 @@ pretty_output=$(realpath $(srcdir_top)/node_modules/.bin/pretty)
 ##################################################
 in_clickpie_server=$(srcdir_abs)/clickpie-server.js
 out_clickpie_server=$(buildir_abs)/clickpie-server.js
-
 
 
 ##################################################
@@ -75,6 +76,22 @@ build: buildclean dotenv | $(buildir_abs)
 
 buildclean: | $(buildir_abs)
 	rm -rf $(buildir)/*
+
+##################################################
+# Start
+##################################################
+start: stop
+	-docker-compose -f backend/docker-compose.yml up -d
+	docker logs -f backend-agentfactory-app-1 &> server.log &
+	$(vite) serve --force &> client.log &
+
+##################################################
+# Stop
+##################################################
+stop:
+	-docker-compose -f backend/docker-compose.yml down
+	pkill --echo --full 'node.*vite.*serve'
+	pkill --echo --full 'docker logs -f*'
 
 ##################################################
 # run
@@ -125,9 +142,7 @@ distclean: clean
 	-rm -rf $(buildir)
 	-rm -rf node_modules
 	-rm -f package-lock.json
-	-rm -f IN_CONFIG_MAKEFILE
-	-rm -f IN_CONFIG_ENVFILE
-	-rm -f IN_CONFIG_MACROSFILE
+	-rm -f config.*
 
 ##################################################
 # misc
