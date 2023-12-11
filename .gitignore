@@ -19,7 +19,6 @@ package-lock.json
 .#*
 *~
 .pdf-view-restore
-.dir-locals.el
 
 # vim
 :w
