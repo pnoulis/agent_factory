@@ -82,8 +82,12 @@ buildclean: | $(buildir_abs)
 ##################################################
 start: stop
 	-docker-compose -f backend/docker-compose.yml up -d
-	docker logs -f backend-agentfactory-app-1 &> server.log &
+	docker logs -f backend-agentfactory-app-1 &> backend.log &
+ifdef daemon
 	$(vite) serve --force &> client.log &
+else
+	$(vite) serve --force &> >(tee client.log)
+endif
 
 ##################################################
 # Stop
