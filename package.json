@@ -24,6 +24,7 @@
   "type": "module",
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
+    "js_utils": "github:pnoulis/js_utils",
     "vite": "5.0.7",
     "vite-plugin-svgr": "^4.2.0"
   },
