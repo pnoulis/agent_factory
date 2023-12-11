@@ -9,17 +9,6 @@ export default defineConfig({
   plugins: [
     react(),
     svgr(),
-    createHtmlPlugin({
-      minify: false,
-      entry: "/src/index.jsx",
-      template: "/index.html",
-      inject: {
-        data: {
-          title: 'IN_PKG_NAME_PRETTY',
-          BASENAME: 'IN_AFADMIN_CLIENT_URL_PUBLIC_BASENAME',
-        }
-      }
-    })
   ],
   build: {
     outDir: 'IN_BUILDIR',
