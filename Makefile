@@ -149,7 +149,9 @@ build:
 	cp $(SRCDIR)/CHANGELOG $(SRCDIR)/dist
 	cp $(SRCDIR)/README.md $(SRCDIR)/dist
 	cp -r $(AFADMIN_CLIENT)/dist/* $(SRCDIR)/dist
-	tar -cavf $(PKG_DISTNAME).tar.gz $(SRCDIR)/dist
+	rm -rf $(PKG_DISTNAME)
+	cp -r dist $(PKG_DISTNAME)
+	tar -cavf $(PKG_DISTNAME).tar.gz ./$(PKG_DISTNAME)
 
 
 
