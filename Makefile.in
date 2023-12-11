@@ -127,7 +127,7 @@ dotenv:
 ##################################################
 # clean
 ##################################################
-clean: stop
+clean:
 	-rm -f *.tar.gz
 	-rm -f $(dotenvfile)
 
@@ -143,6 +143,9 @@ distclean: clean
 	-rm -rf node_modules
 	-rm -f package-lock.json
 	-rm -f config.*
+	-rm -f IN_CONFIG_VITEFILE
+	-rm -f IN_CONFIG_INDEXFILE
+	-rm -f IN_CONFIG_MAKEFILE
 
 ##################################################
 # misc

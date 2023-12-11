@@ -1,12 +1,28 @@
 #!/usr/bin/env bash
 
-./configure --mode=development \
-            --skip-npm-install \
-            --afadmin-client-url-local='http://localhost:5173' \
-            --afadmin-server-url='mqtt://localhost:9001/themaze' \
-            --device-id=001 \
-            --with-installdirs-preset=gnu-prefix \
-            --device-type=REGISTRATION_SCREEN \
-            --device-roomname=ADMINISTRATION_1 \
-            --loglevel=debug \
-            --buildir-stem=build
+mode=development
+skip_npm_install=true
+installdirs_preset=gnu-prefix
+buildir_stem=build
+loglevel=debug
+client_url='http://localhost:5173'
+server_url='mqtt://localhost:9001/themaze'
+device_id='001'
+device_type=REGISTRATION_SCREEN
+device_roomname=ADMINISTRATION_1
+
+args="--mode=$mode \
+--with-installdirs-preset=$installdirs_preset \
+--buildir-stem=$buildir_stem \
+--loglevel=$loglevel \
+--afadmin-client-url-local=$client_url \
+--afadmin-server-url=$server_url \
+--device-id=$device_id \
+--device-type=$device_type \
+--device-roomname=$device_roomname"
+
+if [ "${1:-}" != '--dont-skip-npm-install' ]; then
+    args+=" --skip-npm-install"
+fi
+
+./configure $args
