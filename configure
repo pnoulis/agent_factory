@@ -17,7 +17,7 @@ export PKG_DISTNAME=${PKG_NAME}-${PKG_VVERSION}
 export MODE=
 WITH_DEPLOY_TARGET=
 WITH_GCLOUD_TARGET=
-SKIP_NPM_INSTALL=
+SKIP_NPM_INSTALL=false
 BUILDIR_STEM=
 WITH_INSTALLDIRS_PRESET=
 export AFADMIN_SERVER_URL=
@@ -64,6 +64,7 @@ main() {
     create_envfile
     create_macrosfile
     create_vitefile
+    create_indexfile
     create_makefile
     cleanup
 }
@@ -581,7 +582,7 @@ EOF
 }
 
 create_vitefile() {
-    print_chapter "Creating vitefile"
+    print_chapter "Creating vitefile..."
     declare -gx OUT_CONFIG_VITEFILE=${CONFIGUREDIR}/vite.config.js
     OUT_CONFIG_VITEFILE_abs=${CONFIGUREDIR_ABS}/vite.config.js
     in_vitefile=${SRCDIR}/vite.config.js.in
@@ -591,6 +592,19 @@ create_vitefile() {
     echo "OUT_CONFIG_VITEFILE...|$OUT_CONFIG_VITEFILE"
     echo "OUT_CONFIG_VITEFILE_abs...|$OUT_CONFIG_VITEFILE_abs"
 }
+
+create_indexfile() {
+    print_chapter "Creating index.html..."
+    declare -gx OUT_CONFIG_INDEXFILE=${CONFIGUREDIR}/index.html
+    OUT_CONFIG_INDEXFILE_abs=${CONFIGUREDIR_ABS}/index.html
+    in_INDEXFILE=${SRCDIR}/index.html.in
+    rm -f $OUT_CONFIG_INDEXFILE
+
+    m4 $OUT_CONFIG_MACROSFILE $in_INDEXFILE > $OUT_CONFIG_INDEXFILE
+    echo "OUT_CONFIG_INDEXFILE...|$OUT_CONFIG_INDEXFILE"
+    echo "OUT_CONFIG_INDEXFILE_abs...|$OUT_CONFIG_INDEXFILE_abs"
+}
+
 
 create_makefile() {
     print_chapter "Creating makefile..."

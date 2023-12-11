@@ -44,6 +44,8 @@ __pycache__
 Makefile
 config.*
 vite.config.js
+index.html
+
 
 # ------- Environment variables
 .env
