@@ -65,6 +65,7 @@ main() {
     create_macrosfile
     create_vitefile
     create_indexfile
+    create_backend_topicsfile
     create_makefile
     cleanup
 }
@@ -238,6 +239,8 @@ resolve_afadmin_client_url() {
     echo "AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME...|$AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME"
     declare -gx AFADMIN_CLIENT_URL_PUBLIC_BASENAME="$basename"
     echo "AFADMIN_CLIENT_URL_PUBLIC_BASENAME...|$AFADMIN_CLIENT_URL_PUBLIC_BASENAME"
+    declare -gx AFADMIN_CLIENT_URL_PUBLIC_ORIGIN="${scheme}"://"${hostname}":"${port}"
+    echo "AFADMIN_CLIENT_URL_PUBLIC_ORIGIN...|$AFADMIN_CLIENT_URL_PUBLIC_ORIGIN"
     declare -gx AFADMIN_CLIENT_URL_PUBLIC="${scheme}"://"${hostname}":"${port}""${basename}"
     echo "AFADMIN_CLIENT_URL_PUBLIC...|$AFADMIN_CLIENT_URL_PUBLIC"
 
@@ -273,6 +276,8 @@ resolve_afadmin_server_url() {
     echo "AFADMIN_SERVER_URL_HOSTNAME...|$AFADMIN_SERVER_URL_HOSTNAME"
     declare -gx AFADMIN_SERVER_URL_BASENAME="$basename"
     echo "AFADMIN_SERVER_URL_BASENAME...|$AFADMIN_SERVER_URL_BASENAME"
+    declare -gx AFADMIN_SERVER_URL_ORIGIN="${scheme}"://"${hostname}":"${port}"
+    echo "AFADMIN_SERVER_URL_ORIGIN...|$AFADMIN_SERVER_URL_ORIGIN"
     declare -gx AFADMIN_SERVER_URL="${scheme}"://"${hostname}":"${port}""${basename}"
     echo "AFADMIN_SERVER_URL...|$AFADMIN_SERVER_URL"
 }
@@ -575,6 +580,7 @@ create_macrosfile() {
 define(\`IN_$key', \`$value')dnl
 EOF
     done < $unquoted_envars
+    echo "changequote(\`[[[', \`]]]')dnl" >> $OUT_CONFIG_MACROSFILE
 
     rm -f $unquoted_envars
     echo "OUT_CONFIG_MACROSFILE...|$OUT_CONFIG_MACROSFILE"
@@ -605,6 +611,17 @@ create_indexfile() {
     echo "OUT_CONFIG_INDEXFILE_abs...|$OUT_CONFIG_INDEXFILE_abs"
 }
 
+create_backend_topicsfile() {
+    print_chapter "Creating index.html..."
+    declare -gx OUT_CONFIG_BACKEND_TOPICSFILE=${CONFIGUREDIR}/backend-topics.js
+    OUT_CONFIG_BACKEND_TOPICSFILE_abs=${CONFIGUREDIR_ABS}/backend-topics.js
+    in_BACKEND_TOPICSFILE=${SRCDIR}/in.backend-topics.js
+    rm -f $OUT_CONFIG_BACKEND_TOPICSFILE
+
+    m4 $OUT_CONFIG_MACROSFILE $in_BACKEND_TOPICSFILE > $OUT_CONFIG_BACKEND_TOPICSFILE
+    echo "OUT_CONFIG_BACKEND_TOPICSFILE...|$OUT_CONFIG_BACKEND_TOPICSFILE"
+    echo "OUT_CONFIG_BACKEND_TOPICSFILE_abs...|$OUT_CONFIG_BACKEND_TOPICSFILE_abs"
+}
 
 create_makefile() {
     print_chapter "Creating makefile..."
@@ -618,6 +635,7 @@ create_makefile() {
        -DIN_CONFIG_MACROSFILE=$OUT_CONFIG_MACROSFILE \
        -DIN_CONFIG_VITEFILE=$OUT_CONFIG_VITEFILE \
        -DIN_CONFIG_INDEXFILE=$OUT_CONFIG_INDEXFILE \
+       -DIN_CONFIG_BACKEND_TOPICSFILE=$OUT_CONFIG_BACKEND_TOPICSFILE \
        $OUT_CONFIG_MACROSFILE $in_makefile > $OUT_CONFIG_MAKEFILE
 
     echo "OUT_CONFIG_MAKEFILE...|$OUT_CONFIG_MAKEFILE"

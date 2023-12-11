@@ -155,6 +155,7 @@ distclean: clean
 	-rm -f config.*
 	-rm -f IN_CONFIG_VITEFILE
 	-rm -f IN_CONFIG_INDEXFILE
+	-rm -f IN_CONFIG_BACKEND_TOPICSFILE
 	-rm -f IN_CONFIG_MAKEFILE
 
 ##################################################
