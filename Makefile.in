@@ -62,6 +62,8 @@ vite=$(realpath $(srcdir_top)/node_modules/.bin/vite)
 ##################################################
 in_clickpie_server=$(srcdir_abs)/clickpie-server.js
 out_clickpie_server=$(buildir_abs)/clickpie-server.js
+out_client_log=$(srcdir_top_abs)/client.log
+out_backend_log=$(srcdir_top_abs)/backend.log
 
 
 ##################################################
@@ -80,7 +82,8 @@ buildclean: | $(buildir_abs)
 ##################################################
 # Start
 ##################################################
-start: stop
+start: stop dotenv
+	$(loadenv)
 	-docker-compose -f backend/docker-compose.yml up -d
 	docker logs -f backend-agentfactory-app-1 &> backend.log &
 ifdef daemon
@@ -132,6 +135,8 @@ dotenv:
 # clean
 ##################################################
 clean:
+	-rm -f $(out_client_log)
+	-rm -f $(out_backend_log)
 	-rm -f *.tar.gz
 	-rm -f $(dotenvfile)
 
@@ -140,6 +145,7 @@ clean:
 # distclean
 ##################################################
 distclean: clean
+	-rm -f *.log
 	-rm -f *~
 	-rm -f .*~
 	-rm -f .#*
