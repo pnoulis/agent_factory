@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 mode=development
+node_env=development
 skip_npm_install=true
 installdirs_preset=gnu-prefix
 buildir_stem=build
@@ -12,6 +13,7 @@ device_type=REGISTRATION_SCREEN
 device_roomname=ADMINISTRATION_1
 
 args="--mode=$mode \
+--node-env=$node_env \
 --with-installdirs-preset=$installdirs_preset \
 --buildir-stem=$buildir_stem \
 --loglevel=$loglevel \
