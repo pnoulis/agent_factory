@@ -1,5 +1,4 @@
 const stateful = {
-  states: {},
   getState(state) {
     for (const key of Object.keys(this.states)) {
       if (
@@ -26,12 +25,6 @@ const stateful = {
   forStates(fn) {
     Object.values(this.states).forEach(fn);
   },
-  initializeStates(initialState) {
-    for (const State of Object.values(this.states)) {
-      this.states[State.name] = new State(this);
-    }
-    return this.setState(initialState);
-  },
 };
 
 const stateventful = {
@@ -49,26 +42,29 @@ const stateventful = {
   },
 };
 
-function createStateful(BaseClass, StateClasses) {
-  let i = BaseClass;
-  do {
-    if ("states" in i) {
-      Object.assign(i.states, StateClasses);
-      return BaseClass;
-    }
-  } while ((i = i.prototype));
-  class Stateful extends BaseClass {
+function createStateful(Baseclass, Stateclasses) {
+  class Stateful extends Baseclass {
     constructor(...args) {
       super(...args);
       this.states = {};
-      for (const State of Object.values(this.states)) {
+      for (const State of Object.values(this.constructor.prototype.states)) {
         this.states[State.name] = new State(this);
       }
     }
   }
-  Object.assign(Stateful.prototype, stateful);
-  for (let i = 0; i < StateClasses.length; i++) {
-    Stateful.prototype.states[StateClasses[i].name] = StateClasses[i];
+  let i = Baseclass;
+  while (true) {
+    i = Object.getPrototypeOf(i);
+    if (!i.prototype) {
+      Object.assign(Stateful.prototype, stateful);
+      break;
+    } else if ("states" in i.prototype) {
+      break;
+    }
+  }
+  Stateful.prototype.states = Object.assign({}, i.prototype?.states);
+  for (i = 0; i < Stateclasses.length; i++) {
+    Stateful.prototype.states[Stateclasses[i].name] = Stateclasses[i];
   }
   return Stateful;
 }
