@@ -138,6 +138,7 @@ clean:
 	-rm -f $(out_backend_log)
 	-rm -f *.tar.gz
 	-rm -f $(dotenvfile)
+	find $(srcdir_top) -name '*~' -exec rm {}
 
 
 ##################################################
@@ -145,8 +146,6 @@ clean:
 ##################################################
 distclean: clean
 	-rm -f *.log
-	-rm -f *~
-	-rm -f .*~
 	-rm -f .#*
 	-rm -rf $(buildir)
 	-rm -rf node_modules
