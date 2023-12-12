@@ -25,6 +25,8 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
     "js_utils": "github:pnoulis/js_utils",
+    "mqtt": "5.3.3",
+    "mqtt_proxy": "github:pnoulis/mqtt_proxy",
     "vite": "5.0.7",
     "vite-plugin-svgr": "^4.2.0"
   },
