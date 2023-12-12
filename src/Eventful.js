@@ -27,23 +27,16 @@ Eventful.prototype.once = function (event, listener) {
   return this;
 };
 Eventful.prototype.emit = function (event, ...args) {
+  if (event === "error" && this.events.error.length < 1) throw args[0];
   const nextevents = [];
   for (let i = 0; i < this.addEvent(event).length; i++) {
-    try {
-      this.events[event][i].listener(...args);
-    } catch (err) {
-      this.emitError(err);
-    }
+    this.events[event][i].listener(...args);
     if (this.events[event][i].persist) {
       nextevents.push(this.events[event][i]);
     }
   }
   this.events[event] = nextevents;
   return this;
-};
-Eventful.prototype.emitError = function (err) {
-  if (this.events.error.length < 1) throw err;
-  this.emit(err);
 };
 Eventful.prototype.flush = function (event, listener) {
   if (!this.events.hasOwnProperty(event)) {
