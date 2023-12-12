@@ -1,0 +1,21 @@
+* resources
+https://javascript.info/class-inheritance
+https://www.reddit.com/r/gamedev/comments/1hp3jk/oop_game_coding_should_i_create_a_class_to_every/
+http://piemaster.net/2011/07/entity-component-primer/
+https://www.gamedeveloper.com/programming/game-engines-101-the-entity-component-model
+https://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog-development-part-1/
+
+
+  (add-to-list 'auto-mode-alist '("[Mm]akefile\\..*\\'" . makefile-gmake-mode))
+  (setq projectile-switch-project-action 'projectile-dired)
+
+  (auto-completion :variables
+                      auto-completion-enable-help-tooltip 'manual
+                      auto-completion-enable-sort-by-usage t
+                      :disabled-for
+                      org
+                      git
+                      )
+
+                      
+     (ibuffer :variables ibuffer-group-buffers-by 'projects)

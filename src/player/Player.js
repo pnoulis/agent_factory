@@ -1,68 +1,29 @@
-import { stateful } from "js_utils/stateful";
-import { eventful } from "js_utils/eventful";
+import { Unregistered } from "./StateUnregistered.js";
+import { Registered } from "./StateRegistered.js";
+import { InTeam } from "./StateInTeam.js";
+import { Playing } from "./StatePlaying.js";
 
 class Player {
   constructor(player) {
-    this.wristband = player.wristband;
-    this.player = player ?? {};
+    player ??= {};
+    this.username = player.username;
+    this.name = player.name;
+    this.surname = player.surname;
+    this.email = player.email;
+    this.password = player.password;
   }
   static normalize(player) {
     const _player = {
-      age: 22,
+      username: player.username || "",
+      name: player.name || "",
+      surname: player.surname || "",
+      email: player.email || "",
+      password: player.password || "",
     };
     return _player;
   }
+  static register() {}
+  static login() {}
 }
 
-class PlayerFrontend {
-  constructor(player) {
-    super(player);
-  }
-  static normalize(player) {
-    const _player = {
-      ...super.normalize(player),
-    };
-  }
-}
-
-class PlayerStateful extends PlayerFrontend {
-  constructor(player) {
-    super(player);
-    this.player = PlayerStateful.normalize(this.player);
-  }
-  static normalize(player) {
-    const _player = {
-      ...super.normalize(player),
-      name: "pavlos",
-    };
-    return _player;
-  }
-}
-
-// Stateful
-(() => {
-  let extended = false;
-  return () => {
-    if (extended) return;
-    extended = true;
-    stateful(PlayerStateful, [
-      Unregistered,
-      "unregistered",
-      Registered,
-      "registered",
-      InTeam,
-      "inTeam",
-      Playing,
-      "playing",
-    ]);
-  };
-})()();
-
-
-class PlayerEventful extends PlayerStateful {
-  constructor(player) {
-    
-  }
-}
-
-export { PlayerBackend, PlayerStateful };
+export { Player };
