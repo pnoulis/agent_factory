@@ -1,4 +1,5 @@
 const stateful = {
+  states: {},
   getState(state) {
     for (const key of Object.keys(this.states)) {
       if (
@@ -9,10 +10,14 @@ const stateful = {
         return this.states[key];
       }
     }
-    throw new Error(`Non-existent state:${state}`);
+    return null;
   },
   setState(state) {
-    this.state = this.getState(state);
+    const nstate = this.getState(state);
+    if (!nstate) {
+      throw new Error(`Non-existent state:${state}`);
+    }
+    this.state = nstate;
     return this;
   },
   inState(state) {
@@ -23,4 +28,19 @@ const stateful = {
   },
 };
 
-export { stateful };
+const stateventful = {
+  ...stateful,
+  setState(state) {
+    const nstate = this.getState(state);
+    if (!nstate) {
+      // throws if no there are no listeners
+      this.emit("error", new Error(`Non-existent state:${state}`));
+    }
+    const ostate = this.state;
+    this.state = nstate;
+    this.emit("stateChange", nstate?.name, ostate?.name, this);
+    return this;
+  },
+};
+
+export { stateful, stateventful };
