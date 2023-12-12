@@ -1,11 +1,17 @@
-import { stateful } from "js_utils/stateful";
-import { Player } from "./Player.js";
-import { Eventful } from "./Eventful.js";
+import { createPlayerStateful } from "./createPlayerStateful.js";
+import { Unregistered } from "./states/StateUnregistered.js";
+import { Registered } from "./states/StateRegistered.js";
+import { InTeam } from "./states/StateInTeam.js";
+import { Playing } from "./states/StatePlaying.js";
 
-class PlayerPersistent extends Eventful {
-  constructor() {
-    super(["stateChange", "change"]);
-    this.player = new Player();
+class PlayerPersistent extends createPlayerStateful([
+  Unregistered,
+  Registered,
+  InTeam,
+  Playing,
+]) {
+  constructor(player) {
+    super(player);
   }
 }
 
