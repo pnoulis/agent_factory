@@ -1,5 +1,6 @@
 class Eventful {
   constructor(events) {
+    events ??= [];
     for (const event of events) {
       this.events[event] = [];
     }
