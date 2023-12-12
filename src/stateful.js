@@ -26,6 +26,12 @@ const stateful = {
   forStates(fn) {
     Object.values(this.states).forEach(fn);
   },
+  initializeStates(initialState) {
+    for (const State of Object.values(this.states)) {
+      this.states[State.name] = new State(this);
+    }
+    return this.setState(initialState);
+  },
 };
 
 const stateventful = {
@@ -43,4 +49,28 @@ const stateventful = {
   },
 };
 
-export { stateful, stateventful };
+function createStateful(BaseClass, StateClasses) {
+  let i = BaseClass;
+  do {
+    if ("states" in i) {
+      Object.assign(i.states, StateClasses);
+      return BaseClass;
+    }
+  } while ((i = i.prototype));
+  class Stateful extends BaseClass {
+    constructor(...args) {
+      super(...args);
+      this.states = {};
+      for (const State of Object.values(this.states)) {
+        this.states[State.name] = new State(this);
+      }
+    }
+  }
+  Object.assign(Stateful.prototype, stateful);
+  for (let i = 0; i < StateClasses.length; i++) {
+    Stateful.prototype.states[StateClasses[i].name] = StateClasses[i];
+  }
+  return Stateful;
+}
+
+export { stateful, stateventful, createStateful };

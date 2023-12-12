@@ -1,16 +1,14 @@
-class Wristband {
+import { Eventful } from "../Eventful.js";
+import { WRISTBAND_COLORS } from "../constants.js";
+
+class Wristband extends Eventful {
   constructor(wristband) {
-    this.id = "";
-    this.color = "";
-    this.colorCode = "";
+    super(["change"]);
+    wristband ??= {};
+    this.id = wristband.id ?? wristband.wristbandNumber ?? null;
+    this.colorCode = wristband.colorCode ?? wristband.wristbandColor ?? null;
+    this.color = WRISTBAND_COLORS[this.colorCode];
   }
 }
 
-class WristbandFrontend {
-  constructor(wristband) {
-    super(wristband);
-    this.yolo = "yolo";
-  }
-}
-
-export { Wristband, WristbandFrontend };
+export { Wristband };
