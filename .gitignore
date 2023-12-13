@@ -41,7 +41,7 @@ __pycache__
 
 # configure output
 Makefile
-config.*
+/config.*
 vite.config.js
 index.html
 backend-topics.js
