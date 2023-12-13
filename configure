@@ -286,6 +286,8 @@ resolve_afadmin_server_url() {
     echo "AFADMIN_SERVER_URL_BASENAME...|$AFADMIN_SERVER_URL_BASENAME"
     declare -gx AFADMIN_SERVER_URL_ORIGIN="${scheme}"://"${hostname}":"${port}"
     echo "AFADMIN_SERVER_URL_ORIGIN...|$AFADMIN_SERVER_URL_ORIGIN"
+    declare -gx AFADMIN_SERVER_URL_ORIGIN_WS="ws://${hostname}:${port}"
+    echo 'AFADMIN_SERVER_URL_ORIGIN_WS...|$AFADMIN_SERVER_URL_ORIGIN_WS'
     declare -gx AFADMIN_SERVER_URL="${scheme}"://"${hostname}":"${port}""${basename}"
     echo "AFADMIN_SERVER_URL...|$AFADMIN_SERVER_URL"
 }
