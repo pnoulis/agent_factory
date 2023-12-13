@@ -25,4 +25,9 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: true,
   },
+  server: {
+    watch: {
+      ignored: ["**/.env", "!**/src/**"],
+    },
+  },
 });
