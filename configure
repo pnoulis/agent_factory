@@ -25,8 +25,6 @@ export AFADMIN_SERVER_URL=
 export AFADMIN_CLIENT_URL_PUBLIC=
 export AFADMIN_CLIENT_URL_LOCAL=
 export DEVICE_ID=
-export DEVICE_TYPE=
-export DEVICE_ROOMNAME=
 export LOGLEVEL=
 
 # CONSTANTS
@@ -177,10 +175,6 @@ resolve_options() {
     print_chapter "Resolving options..."
     exit_if_empty DEVICE_ID
     echo "DEVICE_ID...|$DEVICE_ID"
-    exit_if_empty DEVICE_TYPE
-    echo "DEVICE_TYPE...|$DEVICE_TYPE"
-    exit_if_empty DEVICE_ROOMNAME
-    echo "DEVICE_ROOMNAME...|$DEVICE_ROOMNAME"
     exit_if_empty LOGLEVEL
     echo "LOGLEVEL...|$LOGLEVEL"
 }
@@ -747,12 +741,6 @@ parse_args(){
                 ;;
             --device-id=* | --device-id*)
                 DEVICE_ID="$(parse_param "$@")" || shift $?
-                ;;
-            --device-type=* | --device-type*)
-                DEVICE_TYPE="$(parse_param "$@")" || shift $?
-                ;;
-            --device-roomname=* | --device-roomname*)
-                DEVICE_ROOMNAME="$(parse_param "$@")" || shift $?
                 ;;
             --with-deploy-target=* | --with-deploy-target*)
                 WITH_DEPLOY_TARGET="$(parse_param "$@")" || shift $?

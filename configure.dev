@@ -9,8 +9,6 @@ loglevel=debug
 client_url='http://localhost:5173'
 server_url='mqtt://localhost:9001/themaze'
 device_id='001'
-device_type=REGISTRATION_SCREEN
-device_roomname=ADMINISTRATION_1
 
 args="--mode=$mode \
 --node-env=$node_env \
@@ -19,9 +17,7 @@ args="--mode=$mode \
 --loglevel=$loglevel \
 --afadmin-client-url-local=$client_url \
 --afadmin-server-url=$server_url \
---device-id=$device_id \
---device-type=$device_type \
---device-roomname=$device_roomname"
+--device-id=$device_id"
 
 if [ "${1:-}" != '--dont-skip-npm-install' ]; then
     args+=" --skip-npm-install"

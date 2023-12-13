@@ -8,4 +8,6 @@ const WRISTBAND_COLORS = [
   "orange",
 ];
 
-export { WRISTBAND_COLORS };
+const DEVICES = ["REGISTRATION_SCREEN", "RPI_READER"];
+
+export { WRISTBAND_COLORS, DEVICES };
