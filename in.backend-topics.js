@@ -1,4 +1,12 @@
-const topics = [
+const rpiReaderTopics = [
+  {
+    alias: "scan",
+    pub: basename("${deviceId}/rpi/wristbandScan"),
+    sub: null,
+  },
+];
+
+const registrationTopics = [
   {
     alias: "boot",
     pub: prefix("booted"),
@@ -187,15 +195,22 @@ if (/backend-topics\.js/.test(scriptPath)) {
   const _toJson = process.argv.includes("--to-json");
   const _toServer = process.argv.includes("--to-server");
   const withOrigin = process.argv.includes("--with-origin");
-  let _topics = topics;
+  let _registrationTopics = registrationTopics;
+  let _rpiReaderTopics = rpiReaderTopics;
+
   if (withOrigin) {
-    _topics = addOrigin(topics);
+    _registrationTopics = addOrigin(_registrationTopics);
+    _rpiReaderTopics = addOrigin(_rpiReaderTopics);
   }
   if (_toServer) {
-    _topics = toServer(_topics);
+    _registrationTopics = toServer(_registrationTopics);
+    _rpiReaderTopics = toServer(_rpiReaderTopics);
   }
+  const _topics = {
+    registration: _registrationTopics,
+    rpiReader: _rpiReaderTopics,
+  };
   console.log(_toJson ? toJson(_topics) : _topics);
 }
 
-export default topics;
-export { topics, toServer, toJson, addOrigin };
+export { registrationTopics, rpiReaderTopics, toServer, toJson, addOrigin };
