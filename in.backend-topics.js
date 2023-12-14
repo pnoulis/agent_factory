@@ -9,8 +9,8 @@ const rpiReaderTopics = [
 const registrationTopics = [
   {
     alias: "boot",
-    pub: prefix("booted"),
-    sub: prefix("booted/${deviceId}"),
+    pub: basename("booted"),
+    sub: basename("booted/${deviceId}"),
   },
   {
     alias: "player/register",
