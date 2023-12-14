@@ -16,6 +16,6 @@ __getEnvar("MODE");
 __getEnvar("NODE_ENV");
 __getEnvar("LOGLEVEL");
 __getEnvar("DEVICE_ID");
-__getEnvar("AFADMIN_SERVER_URL_ORIGIN_WS");
+__getEnvar("AFADMIN_SERVER_URL_ORIGIN_WS", { rename: "AFADMIN_SERVER_URL" });
 
 export { ENV };
