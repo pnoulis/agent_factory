@@ -162,7 +162,7 @@ function basename(path) {
   return `IN_AFADMIN_SERVER_URL_BASENAME/${path}`;
 }
 function prefix(path) {
-  return basename(`IN_DEVICE_ID/gui/${path}`);
+  return basename("${deviceId}/gui/" + path);
 }
 function addOrigin(topics) {
   return topics.map(({ alias, pub, sub }) => ({
