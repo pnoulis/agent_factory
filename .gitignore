@@ -42,9 +42,9 @@ __pycache__
 # configure output
 Makefile
 /config.*
-vite.config.js
-index.html
-backend-topics.js
+/vite.config.js
+/index.html
+/backend-topics.js
 
 
 # ------- Environment variables
