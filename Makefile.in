@@ -84,12 +84,12 @@ buildclean: | $(buildir_abs)
 ##################################################
 start: stop dotenv
 	$(loadenv)
-	-docker-compose -f backend/docker-compose.yml up -d
-	docker logs -f backend-agentfactory-app-1 &> backend.log &
+	cd backend && docker-compose up -d
+	docker logs --follow backend-agentfactory-app-1 &> $(srcdir_top_abs)/backend.log &
 ifdef daemon
-	$(vite) serve --force &> client.log &
+	$(vite) serve --force &> $(srcdir_top_abs)/client.log &
 else
-	$(vite) serve --force &> >(tee client.log)
+	$(vite) serve --force &> >(tee $(srcdir_top_abs)/client.log)
 endif
 
 ##################################################
