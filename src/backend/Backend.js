@@ -12,6 +12,16 @@ class Backend extends MqttProxy {
         strict: strict ?? false,
       },
     });
+
+    this.server.on("connect", () => {
+      console.log(`Backend connected -> ${ENV.AFADMIN_SERVER_URL}`);
+    });
+    this.server.on("end", () => {
+      console.log(`Backend disconnected -> ${ENV.AFADMIN_SERVER_URL}`);
+    });
+  }
+  stop() {
+    this.server.end();
   }
 }
 

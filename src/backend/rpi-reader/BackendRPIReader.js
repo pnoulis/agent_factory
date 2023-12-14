@@ -4,16 +4,19 @@ import { ENV } from "../../config.js";
 import { rpiReaderTopics as topics } from "../../../in.backend-topics.js";
 
 class BackendRPIReader extends Backend {
-  constructor({ deviceId, params, routes, strict } = {}) {
-    deviceId = `${DEVICES[1]}_${deviceId || ENV.DEVICE_ID}`;
+  constructor({ deviceId, roomName, params, routes, strict } = {}) {
     super({
       routes: [].concat(
         Array.isArray(topics) ? topics : [],
         Array.isArray(routes) ? routes : [],
       ),
-      params: Object.assign({}, { deviceId }, params),
+      params,
       strict: strict ?? true,
     });
+    this.deviceType = DEVICES[0];
+    this.deviceId = deviceId || ENV.DEVICE_ID;
+    this.roomName = roomName || ROOMS[0];
+    this.registry.setParam("deviceId", this.deviceId);
   }
 }
 
