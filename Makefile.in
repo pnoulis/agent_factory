@@ -104,7 +104,7 @@ stop:
 # run
 ##################################################
 run: file=
-run: dotenv $(file)
+run: $(file)
 	@if [[ "$${file:-}" == "" ]]; then
 	echo "Usage: 'make run file [args]'"
 	exit 1
