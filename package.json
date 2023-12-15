@@ -6,18 +6,8 @@
   "author": "Intelligent Entertainment <info@iegroup.gr> (https://iegroup.gr/)",
   "contributors": [
     {
-      "name": "grigoris kolasis",
-      "email": "grigoris@iegroup.gr",
-      "url": "https://github.com/gregorykolasis"
-    },
-    {
-      "name": "pavlos kapoutsis",
-      "email": "pavloskapoutsis@gmail.com",
-      "url": "https://github.com/IsThisRealLife"
-    },
-    {
       "name": "pavlos noulis",
-      "email": "pnoulis@iegroup.gr",
+      "email": "pavlos.noulis@gmail.com",
       "url": "https://github.com/pnoulis"
     }
   ],
@@ -31,6 +21,7 @@
     "js_utils": "github:pnoulis/js_utils",
     "mqtt": "5.3.3",
     "mqtt_proxy": "github:pnoulis/mqtt_proxy",
+    "react_utils": "github:pnoulis/react_utils",
     "styled-components": "^6.1.1",
     "vite": "^5.0.7",
     "vite-plugin-svgr": "^4.2.0"
