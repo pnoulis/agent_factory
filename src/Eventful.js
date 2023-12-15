@@ -1,14 +1,13 @@
 class Eventful {
-  constructor(events) {
-    events ??= [];
+  constructor(events = []) {
+    this.events = {
+      error: [],
+    };
     for (const event of events) {
       this.events[event] = [];
     }
   }
 }
-Eventful.prototype.events = {
-  error: [],
-};
 Eventful.prototype.addEvent = function (event) {
   this.events[event] ??= [];
   return this.events[event];
