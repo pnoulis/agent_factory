@@ -1,5 +1,5 @@
-class Empty {
-  static name = "empty";
+class Unpaired {
+  static name = "unpaired";
   static order = 0;
 
   constructor(wristband) {
@@ -7,12 +7,12 @@ class Empty {
   }
 
   get name() {
-    return Empty.name;
+    return Unpaired.name;
   }
 
   get order() {
-    return Empty.order;
+    return Unpaired.order;
   }
 }
 
-export { Empty };
+export { Unpaired };

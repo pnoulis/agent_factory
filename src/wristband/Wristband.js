@@ -9,6 +9,13 @@ class Wristband extends Eventful {
     this.colorCode = wristband.colorCode ?? wristband.wristbandColor ?? null;
     this.color = WRISTBAND_COLORS[this.colorCode];
   }
+
+  pair() {
+    debug(`pair: ${Wristband.name}`);
+  }
+  unpair() {
+    debug(`unpair: ${Wristband.name}`);
+  }
 }
 
 export { Wristband };

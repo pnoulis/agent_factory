@@ -1,17 +1,27 @@
 import { Wristband } from "./Wristband.js";
-import { createStateful } from "../stateful.js";
-import { Empty } from "./states/StateEmpty.js";
-import { Scanning } from "./states/StateScanning.js";
-import { Scanned } from "./states/StateScanned.js";
+import { createStateful, stateventful } from "../stateful.js";
+import { Unpaired } from "./states/StateUnpaired.js";
+import { Pairing } from "./states/StatePairing.js";
+import { Paired } from "./states/StatePaired.js";
 
 class WristbandScannable extends createStateful(Wristband, [
-  Empty,
-  Scanning,
-  Scanned,
+  Unpaired,
+  Pairing,
+  Paired,
 ]) {
   constructor(wristband) {
     super(wristband);
+    this.setState("unpaired");
+  }
+
+  pair() {
+    debug(`pair: ${WristbandScannable.name}`);
+  }
+  unpair() {
+    debug(`unpair: ${WristbandScannable.name}`);
   }
 }
+
+Object.assign(WristbandScannable.prototype, stateventful);
 
 export { WristbandScannable };

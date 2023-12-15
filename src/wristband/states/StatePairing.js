@@ -1,5 +1,5 @@
-class Scanning {
-  static name = "scanning";
+class Pairing {
+  static name = "pairing";
   static order = 1;
 
   constructor(wristband) {
@@ -7,12 +7,12 @@ class Scanning {
   }
 
   get name() {
-    return Scanning.name;
+    return Pairing.name;
   }
 
   get order() {
-    return Scanning.order;
+    return Pairing.order;
   }
 }
 
-export { Scanning };
+export { Pairing };
