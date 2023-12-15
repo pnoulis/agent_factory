@@ -26,12 +26,11 @@ function random(sources, options = {}) {
     );
   }
 
-  return {
-    username: target.username || `${name}_${password}`,
-    name: target.name || name,
-    surname: target.surname || surname,
-    email: target.email || `${name}@gmail.com`,
-    password: target.password || password,
-  };
+  target.username ||= `${name}_${password}`;
+  target.name ||= name;
+  target.surname ||= surname;
+  target.email ||= `${name}@gmail.com`;
+  target.password ||= password;
+  return target;
 }
 export { random };

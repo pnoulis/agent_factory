@@ -3,6 +3,7 @@ import { random } from "./random.js";
 
 class Player extends Eventful {
   static random = random;
+
   constructor(player) {
     super(["change"]);
     player ??= {};
@@ -30,7 +31,7 @@ class Player extends Eventful {
   fill(sources = [], options) {
     return Object.assign(this, Player.random([this, ...sources], options));
   }
-  asObject() {
+  toObject() {
     return {
       name: this.name,
       username: this.username,
