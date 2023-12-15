@@ -28,7 +28,6 @@ const stateful = {
 };
 
 const stateventful = {
-  ...stateful,
   setState(state) {
     const nstate = this.getState(state);
     if (!nstate) {
