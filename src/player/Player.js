@@ -1,8 +1,10 @@
-import { Eventful } from '../Eventful.js';
+import { Eventful } from "../Eventful.js";
+import { random } from "./random.js";
 
 class Player extends Eventful {
+  static random = random;
   constructor(player) {
-    super(['change']);
+    super(["change"]);
     player ??= {};
     this.username = player.username || "";
     this.name = player.name || "";
@@ -22,6 +24,21 @@ class Player extends Eventful {
   }
   register() {}
   login() {}
+  random(sources, options) {
+    return Player.random(sources, options);
+  }
+  fill(sources = [], options) {
+    return Object.assign(this, Player.random([this, ...sources], options));
+  }
+  asObject() {
+    return {
+      name: this.name,
+      username: this.username,
+      surname: this.surname,
+      email: this.email,
+      password: this.password,
+    };
+  }
 }
 
 export { Player };

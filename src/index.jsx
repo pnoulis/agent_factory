@@ -1,10 +1,12 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { ENV } from "./config";
+import { ENV } from './config.js';
+import { Routes } from './Routes.jsx';
 
-console.log(ENV);
+debug(ENV);
+
 ReactDOM.createRoot(document.getElementById("app-react-root")).render(
   <React.StrictMode>
-    <div>hello world!</div>
+    <Routes/>
   </React.StrictMode>,
 );

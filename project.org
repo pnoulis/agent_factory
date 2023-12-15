@@ -19,3 +19,6 @@ https://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog
 
                       
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
+
+* Communication between objects
+Mediator
