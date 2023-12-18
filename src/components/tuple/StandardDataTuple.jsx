@@ -5,7 +5,10 @@ const StandardDataTuple = styled("div")`
   box-sizing: border-box;
   padding: 0 5px;
   letter-spacing: 1px;
-  font-size: var(--tx-xxs);
+  font-size: var(--tx-xs);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 
   .key {
     font-weight: 600;
