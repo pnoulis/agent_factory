@@ -1,6 +1,7 @@
 import IconSignal from "/assets/icons/signal.svg?react";
 import { StandardWidget } from "./StandardWidget.jsx";
 import styled, { css, keyframes } from "styled-components";
+import { mergec } from "../../misc/misc.js";
 
 function WidgetWristband({ $wristbandColor, $pairing, ...props }) {
   return (
@@ -8,6 +9,7 @@ function WidgetWristband({ $wristbandColor, $pairing, ...props }) {
       $pairing={$pairing}
       $wristbandColor={$wristbandColor}
       content={"pair wristband"}
+      className={mergec(props.className, "widget-wristband")}
       {...props}
     >
       <IconSignal />
