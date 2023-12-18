@@ -5,7 +5,7 @@ const StandardDataTuple = styled("div")`
   box-sizing: border-box;
   padding: 0 5px;
   letter-spacing: 1px;
-  font-size: var(--tx-xs);
+  font-size: var(--tx-xxs);
 
   .key {
     font-weight: 600;
@@ -13,7 +13,7 @@ const StandardDataTuple = styled("div")`
 
   .key::after {
     content: ":";
-    margin: 0 5px 0 3px;
+    margin: 0 3px 0 1px;
   }
 
   .value {
