@@ -50,6 +50,12 @@ function paint({ $wristbandColor } = {}) {
 const WristbandWidget = styled(StandardWidget)`
   ${animate}
   ${paint}
+
+&.trigger > svg {
+    position: relative;
+    top: 1.5px;
+    left: 0.5px;
+  }
 `;
 
 export { WidgetWristband };
