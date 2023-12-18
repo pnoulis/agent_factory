@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Widget } from "./Widget.jsx";
 
 const StandardWidget = styled(Widget)`
-  .trigger {
-    cursor: pointer;
+  &.trigger {
+    cursor: ${({ $disable }) => !$disable && "pointer"};
     display: flex;
     box-sizing: border-box;
     justify-content: center;
@@ -13,14 +13,19 @@ const StandardWidget = styled(Widget)`
     border: 3px solid transparent;
     padding: 8px;
     border-radius: 50%;
-    background-color: var(--grey-base);
+    background-color: ${({ color }) => color || "var(--grey-base)"};
   }
 
-  .trigger[data-state="open"] {
-    opacity: 0.8;
+  &.trigger > svg {
+    fill: ${({ fill }) => fill || "black"};
   }
 
-  .tooltip {
+  &.trigger[data-state="open"] {
+    opacity: ${({ $disable }) => !$disable && 0.8};
+  }
+
+  &.tooltip {
+    display: ${({ $disable }) => $disable && "none"};
     padding: 7px 12px;
     border: 1px solid var(--grey-light);
     border-radius: var(--br-sm);

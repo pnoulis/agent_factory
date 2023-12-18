@@ -6,6 +6,7 @@ function Widget({
   placement = "top",
   offset = 20,
   content = "widget",
+  $disabled,
   size,
   className,
   children,
@@ -14,7 +15,7 @@ function Widget({
     <Tooltip placement={placement} offset={offset}>
       <TooltipTrigger
         size={size}
-        onClick={handleClick}
+        onClick={!$disabled && handleClick}
         className={className + " trigger"}
       >
         <Svg>{children}</Svg>
