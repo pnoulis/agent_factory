@@ -30,16 +30,18 @@ function DataTuple({
     children(props)
   ) : (
     <>
-      {!nok && isFunction(renderKey) ? (
-        renderKey(props)
-      ) : (
-        <span className="key">{props.name}</span>
-      )}
-      {!nov && isFunction(renderValue) ? (
-        renderValue(props)
-      ) : (
-        <span className="value">{props.value}</span>
-      )}
+      {!nok &&
+        (isFunction(renderKey) ? (
+          renderKey(props)
+        ) : (
+          <span className="key">{props.name}</span>
+        ))}
+      {!nov &&
+        (isFunction(renderValue) ? (
+          renderValue(props)
+        ) : (
+          <span className="value">{props.value}</span>
+        ))}
     </>
   );
 }
