@@ -19,3 +19,5 @@ function random(sources, options = {}) {
   target.color = WRISTBAND_COLORS[target.colorCode];
   return target;
 }
+
+export { random };
