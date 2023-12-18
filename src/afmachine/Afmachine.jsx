@@ -12,6 +12,7 @@ import { ProvideWristband } from "../components/wristband/ProvideWristband.jsx";
 import { WristbandInfoCard } from "../components/wristband/WristbandInfoCard.jsx";
 import { WidgetWristband } from "../components/widgets/WidgetWristband.jsx";
 import { WidgetAdd } from "../components/widgets/WidgetAdd.jsx";
+import { PlayerActionCard } from "../components/player/PlayerActionCard.jsx";
 
 const Context = React.createContext(null);
 
@@ -55,7 +56,8 @@ function Afmachine() {
       </button>
       <ProvidePlayer fill>
         <ProvideWristband fill>
-          <PlayerInfoCard />
+          {/* <PlayerInfoCard /> */}
+          <PlayerActionCard />
         </ProvideWristband>
       </ProvidePlayer>
       {/* <ProvideWristband fill> */}
