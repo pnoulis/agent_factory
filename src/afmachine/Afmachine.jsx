@@ -6,6 +6,12 @@ import { FM_TIMEOUT } from "../constants.js";
 import { RenderDialogs } from "../components/dialogs/RenderDialogs.jsx";
 import { StandardAlertDialog } from "../components/dialogs/alerts/StandardAlertDialog.jsx";
 import { isFunction } from "js_utils/misc";
+import { PlayerInfoCard } from "../components/player/PlayerInfoCard.jsx";
+import { ProvidePlayer } from "../components/player/ProvidePlayer.jsx";
+import { ProvideWristband } from "../components/wristband/ProvideWristband.jsx";
+import { WristbandInfoCard } from "../components/wristband/WristbandInfoCard.jsx";
+import { WidgetWristband } from "../components/widgets/WidgetWristband.jsx";
+import { WidgetAdd } from "../components/widgets/WidgetAdd.jsx";
 
 const Context = React.createContext(null);
 
@@ -47,6 +53,14 @@ function Afmachine() {
       >
         add dialog
       </button>
+      <ProvidePlayer fill>
+        <ProvideWristband fill>
+          <PlayerInfoCard />
+        </ProvideWristband>
+      </ProvidePlayer>
+      {/* <ProvideWristband fill> */}
+      {/*   <WristbandInfoCard /> */}
+      {/* </ProvideWristband> */}
       <FlashMessages fms={fms} setfms={setfms} />
       <RenderDialogs dialogs={dialogs} />
     </Context.Provider>
