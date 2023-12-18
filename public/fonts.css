@@ -1,0 +1,135 @@
+@font-face {
+  font-family: Saira;
+  src: url("./fonts/saira/variable/Saira-VariableFont.ttf");
+}
+
+@font-face {
+  font-family: Saira-Italic;
+  src: url("./fonts/saira/variable/Saira-VariableFont-Italic.ttf");
+}
+
+/* AFCustom _BOLD_ weight: 700 */
+@font-face {
+  font-family: AgencyFBold;
+  src: url("./fonts/AgencyFBBold.ttf");
+}
+
+/* NoirPro _HEAVY_ weight: 900 */
+@font-face {
+  font-family: NoirPro-Heavy;
+  src: url("./fonts/noirpro/NoirPro-Heavy.otf");
+}
+@font-face {
+  font-family: NoirPro-HeavyItalic;
+  src: url("./fonts/noirpro/NoirPro-HeavyItalic.otf");
+}
+
+/* NoirPro _BOLD_ weight: 700 */
+@font-face {
+  font-family: NoirPro-Bold;
+  src: url("./fonts/noirpro/NoirPro-Bold.otf");
+}
+@font-face {
+  font-family: NoirPro-BoldItalic;
+  src: url("./fonts/noirpro/NoirPro-BoldItalic.otf");
+}
+
+/* NoirPro _SEMIBOLD_ weight: 600 */
+@font-face {
+  font-family: NoirPro-SemiBold;
+  src: url("./fonts/noirpro/NoirPro-SemiBold.otf");
+}
+@font-face {
+  font-family: NoirPro-SemiBoldItalic;
+  src: url("./fonts/noirpro/NoirPro-SemiBoldItalic.otf");
+}
+
+/* NoirPro _MEDIUM_ weight: 500 */
+@font-face {
+  font-family: NoirPro-Medium;
+  src: url("./fonts/noirpro/NoirPro-Medium.otf");
+}
+@font-face {
+  font-family: NoirPro-MediumItalic;
+  src: url("./fonts/noirpro/NoirPro-MediumItalic.otf");
+}
+
+/* NoirPro _REGULAR_ weight: 400 */
+@font-face {
+  font-family: NoirPro-Regular;
+  src: url("./fonts/noirpro/NoirPro-Regular.otf");
+}
+@font-face {
+  font-family: NoirPro-Italic;
+  src: url("./fonts/noirpro/NoirPro-Italic.otf");
+}
+
+/* NoirPro _LIGHT_ weight: 300 */
+@font-face {
+  font-family: NoirPro-Light;
+  src: url("./fonts/noirpro/NoirPro-Light.otf");
+}
+@font-face {
+  font-family: NoirPro-LightItalic;
+  src: url("./fonts/noirpro/NoirPro-LightItalic.otf");
+}
+
+/* Roboto _BLACK_ weight: 900 */
+@font-face {
+  font-family: Roboto-Black;
+  src: url("./fonts/roboto/Roboto-Black.ttf");
+}
+@font-face {
+  font-family: Roboto-BlackItalic;
+  src: url("./fonts/roboto/Roboto-BlackItalic.ttf");
+}
+
+/* Roboto _BOLD_ weight: 700 */
+@font-face {
+  font-family: Roboto-Bold;
+  src: url("./fonts/roboto/Roboto-Bold.ttf");
+}
+@font-face {
+  font-family: Roboto-BoldItalic;
+  src: url("./fonts/roboto/Roboto-BoldItalic.ttf");
+}
+
+/* Roboto _MEDIUM_ weight: 500 */
+@font-face {
+  font-family: Roboto-Medium;
+  src: url("./fonts/roboto/Roboto-Medium.ttf");
+}
+@font-face {
+  font-family: Roboto-MediumItalic;
+  src: url("./fonts/roboto/Roboto-MediumItalic.ttf");
+}
+
+/* Roboto _REGULAR_ weight: 400 */
+@font-face {
+  font-family: Roboto-Regular;
+  src: url("./fonts/roboto/Roboto-Regular.ttf");
+}
+@font-face {
+  font-family: Roboto-Italic;
+  src: url("./fonts/roboto/Roboto-Italic.ttf");
+}
+
+/* Roboto _LIGHT_ weight: 300 */
+@font-face {
+  font-family: Roboto-Light;
+  src: url("./fonts/roboto/Roboto-Light.ttf");
+}
+@font-face {
+  font-family: Roboto-LightItalic;
+  src: url("./fonts/roboto/Roboto-LightItalic.ttf");
+}
+
+/* Roboto _THIN_ weight: 100 */
+@font-face {
+  font-family: Roboto-Thin;
+  src: url("./fonts/roboto/Roboto-Thin.ttf");
+}
+@font-face {
+  font-family: Roboto-ThinItalic;
+  src: url("./fonts/roboto/Roboto-ThinItalic.ttf");
+}
