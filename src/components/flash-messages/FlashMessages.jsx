@@ -28,7 +28,7 @@ function FlashMessages({ fms = [], setfms } = {}) {
         switch (fm.type) {
           case "success":
             return (
-              <StandardFm $variant="success">
+              <StandardFm key={i} $variant="success">
                 <Svg className="icon">
                   <IconSuccess />
                 </Svg>
@@ -37,7 +37,7 @@ function FlashMessages({ fms = [], setfms } = {}) {
             );
           case "info":
             return (
-              <StandardFm $variant="info">
+              <StandardFm key={i} $variant="info">
                 <Svg className="icon">
                   <IconInfo />
                 </Svg>
@@ -46,7 +46,7 @@ function FlashMessages({ fms = [], setfms } = {}) {
             );
           case "warn":
             return (
-              <StandardFm $variant="warn">
+              <StandardFm key={i} $variant="warn">
                 <Svg className="icon">
                   <IconWarning />
                 </Svg>
@@ -55,7 +55,7 @@ function FlashMessages({ fms = [], setfms } = {}) {
             );
           case "error":
             return (
-              <StandardFm $variant="error">
+              <StandardFm key={i} $variant="error">
                 <Svg className="icon">
                   <IconError />
                 </Svg>
@@ -115,7 +115,7 @@ const StandardFm = styled.div`
 
   .msg {
     font-size: var(--tx-md);
-    letter-spacing: 1px;
+    word-spacing: 2px;
     font-weight: 600;
     flex: 1;
     order: 1;
