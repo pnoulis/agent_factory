@@ -1,21 +1,23 @@
 import { DataTuple } from "../tuple/DataTuple.jsx";
 import { StandardDataTuple } from "../tuple/StandardDataTuple.jsx";
+import { StandardStateTuple } from "../tuple/StandardStateTuple.jsx";
 import { Card } from "../Card.jsx";
 import { useContextWristband } from "../../contexts/ContextWristband.jsx";
 import styled from "styled-components";
 import { WidgetWristband } from "../widgets/WidgetWristband.jsx";
+import { mergec } from "../../misc/misc.js";
 
 function WristbandInfoCard({ className }) {
   const ctx = useContextWristband();
   return (
-    <InfoCard className={className + " wristband-info-card"}>
+    <InfoCard className={mergec(className, "wristband-info-card")}>
       <StandardDataTuple className="wristband-id">
         <DataTuple src={ctx} name="id" label="rfid" />
       </StandardDataTuple>
-      <StandardDataTuple className="wristband-color">
-        <DataTuple src={ctx} name="color" />
-      </StandardDataTuple>
-      <WidgetWristband $disable className="wristband-widget" />
+      <StandardStateTuple className="wristband-state">
+        <DataTuple src={ctx} name="state" label="status" />
+      </StandardStateTuple>
+      <WidgetWristband $disable $wristbandColor={ctx.color} />
     </InfoCard>
   );
 }
@@ -32,12 +34,15 @@ const InfoCard = styled(Card)`
   .wristband-id {
     grid-row: 1 / 2;
   }
-  .wristband-color: {
+  .wristband-state {
     grid-row: 2 / 3;
   }
-  .wristband-widget.trigger {
+  .widget-wristband.trigger {
     grid-row: 1 / 3;
     justify-self: end;
+    max-width: 35px;
+    max-height: 35px;
+    padding: 4px;
   }
 `;
 
