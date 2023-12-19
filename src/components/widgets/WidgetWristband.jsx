@@ -25,7 +25,7 @@ border-color: var(--grey-light);
 `;
 
 function animate({ $pairing } = {}) {
-  if (!$pairing) return;
+  if (!$pairing) return "";
   return css`
     &.trigger {
       background-color: var(--success-base);
@@ -36,7 +36,7 @@ function animate({ $pairing } = {}) {
 }
 
 function paint({ $wristbandColor } = {}) {
-  if (!$wristbandColor) return;
+  if (!$wristbandColor) return "";
   return css`
     &.trigger {
       border-color: ${$wristbandColor};
