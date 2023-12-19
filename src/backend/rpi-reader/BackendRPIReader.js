@@ -1,7 +1,7 @@
 import { Backend } from "../Backend.js";
-import { DEVICES } from "../../constants.js";
+import { DEVICES, ROOMS } from "../../constants.js";
 import { ENV } from "../../config.js";
-import { rpiReaderTopics as topics } from "../../../in.backend-topics.js";
+import { rpiReaderTopics as topics } from "../../../backend-topics.js";
 
 class BackendRPIReader extends Backend {
   constructor({ deviceId, roomName, params, routes, strict } = {}) {
@@ -13,7 +13,7 @@ class BackendRPIReader extends Backend {
       params,
       strict: strict ?? true,
     });
-    this.deviceType = DEVICES[0];
+    this.deviceType = DEVICES[1];
     this.deviceId = deviceId || ENV.DEVICE_ID;
     this.roomName = roomName || ROOMS[0];
     this.registry.setParam("deviceId", this.deviceId);

@@ -2,7 +2,6 @@ import { Backend } from "../Backend.js";
 import { DEVICES, ROOMS } from "../../constants.js";
 import { ENV } from "../../config.js";
 import { registrationTopics as topics } from "../../../backend-topics.js";
-import { boot } from "./boot.js";
 import { listPackages } from "./listPackages.js";
 import { registerPlayer } from "./registerPlayer.js";
 import { loginPlayer } from "./loginPlayer.js";
@@ -30,7 +29,6 @@ class BackendRegistration extends Backend {
 }
 
 Object.assign(Backend.prototype, {
-  boot,
   listPackages,
   registerPlayer,
   loginPlayer,
