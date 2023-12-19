@@ -7,7 +7,7 @@ const rpiReaderTopics = [
   {
     alias: "scan",
     pub: basename("${deviceId}/rpi/wristbandScan"),
-    sub: null,
+    sub: basename("${deviceId}/rpi/wristbandScan"),
   },
 ];
 
