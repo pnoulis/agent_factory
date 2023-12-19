@@ -8,7 +8,8 @@ import {
 import { ENV } from "./config.js";
 import Pages from "./pages/index.js";
 import { Scratch } from "./scratch/Scratch.jsx";
-import { Afmachine } from "./afmachine/Afmachine.jsx";
+import { App } from "./App.jsx";
+import { links } from "./links.jsx";
 
 function Routes() {
   return <RouterProvider router={router} />;
@@ -16,11 +17,15 @@ function Routes() {
 
 const router = createBrowserRouter([
   {
-    element: <Afmachine />,
+    element: <App />,
     children: [
       {
-        path: "/",
+        path: links.home.path,
         element: <Pages.Home />,
+      },
+      {
+        path: links.merge.path,
+        element: <Pages.Merge />,
       },
     ],
   },
