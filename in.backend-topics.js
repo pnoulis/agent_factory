@@ -1,5 +1,10 @@
 const rpiReaderTopics = [
   {
+    alias: "boot",
+    pub: basename("booted"),
+    sub: basename("booted/${deviceId}"),
+  },
+  {
     alias: "scan",
     pub: basename("${deviceId}/rpi/wristbandScan"),
     sub: null,
