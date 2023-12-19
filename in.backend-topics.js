@@ -195,7 +195,7 @@ function toJson(topics) {
   return JSON.stringify(topics);
 }
 
-const scriptPath = process?.argv[1] ?? "";
+const scriptPath = globalThis.process?.argv[1] ?? "";
 if (/backend-topics\.js/.test(scriptPath)) {
   const _toJson = process.argv.includes("--to-json");
   const _toServer = process.argv.includes("--to-server");
