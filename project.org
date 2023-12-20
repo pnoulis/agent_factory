@@ -1,24 +1,26 @@
-* resources
-https://javascript.info/class-inheritance
-https://www.reddit.com/r/gamedev/comments/1hp3jk/oop_game_coding_should_i_create_a_class_to_every/
-http://piemaster.net/2011/07/entity-component-primer/
-https://www.gamedeveloper.com/programming/game-engines-101-the-entity-component-model
-https://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog-development-part-1/
-
-
-  (add-to-list 'auto-mode-alist '("[Mm]akefile\\..*\\'" . makefile-gmake-mode))
-  (setq projectile-switch-project-action 'projectile-dired)
-
-  (auto-completion :variables
-                      auto-completion-enable-help-tooltip 'manual
-                      auto-completion-enable-sort-by-usage t
-                      :disabled-for
-                      org
-                      git
-                      )
-
-                      
-     (ibuffer :variables ibuffer-group-buffers-by 'projects)
-
 * Communication between objects
-Mediator
+The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
+control center of the application. All actions that touch multiple modules of
+the system are managed and directed towards those systems by the control center.
+
+A command is an action that has to be carried out at some point in the future.
+Each command may be comprised of multiple subtasks that need to be performed,
+where order is important just like in the middleware pattern. Eeach subtask adds
+or performs some kind of processing to the context passed along. When all
+subtasks are finished the command is considered settled, (to borrow a promise
+term) and interested parties are notified.
+
+All entities that initiate commands are *clients* to the afmachine. It is rather
+common for a client, to also be a target of the command; albeit at a later stage
+of the command's lifecycle.
+
+The modules that are supposed to process the command are the *targets* of the
+command.
+
+The management, monitoring and guidance of a command from its inception to its
+end is handled by the afmachine. Specifically, clients do not initiate commands,
+rather, they ask afmachine to do that for them.
+
+Commands are composed of a queue of tasks that need to be executed. Each task is
+intended to be consumed by a target.
+
