@@ -79,109 +79,194 @@ describe("schemas", () => {
     const validateRes = registrationTopics.boot.schema.res;
     expect(true).toBe(true);
   });
-  it.todo("Should validate scan wristband", () => {
-    const validateReq = registrationTopics.boot.schema.req;
-    const validateRes = registrationTopics.boot.schema.res;
-    expect(true).toBe(true);
+  it.only("Should validate scan wristband", () => {
+    const validateRes = registrationTopics.scanWristband.schema.res;
+    // Exact number of expected properties and right format
+    expect(
+      validateRes({
+        timestamp: 12345,
+        result: "OK",
+        wristbandNumber: 10,
+        wristbandColor: 1,
+      }),
+    ).toBe(true);
+    // with missing propes
+    expect(
+      validateRes({
+        timestamp: 12345,
+        result: "OK",
+        wristbandNumber: 10,
+      }),
+    ).toBe(false);
+    // with extra props
+    expect(
+      validateRes({
+        timestamp: 12345,
+        result: "OK",
+        wristbandNumber: 10,
+        wristbandColor: 1,
+        extra: 123,
+      }),
+    ).toBe(false);
   });
   it.todo("Should validate pair wristband", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate unpair wristband", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate merge team", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate merge group team", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate is wristband valid", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate get wristband info", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate add package to team", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate remove package from team", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate activate team package", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate register cashier", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate login cashier", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate remove cashier", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate start session", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate stop session", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate update device", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate update device scoreboard view", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate search player", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate list players", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate list players wristband", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate list packages", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it("Should validate list teams", () => {
@@ -273,26 +358,41 @@ describe("schemas", () => {
   it.todo("Should validate list cashiers", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate list devices", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate list scoreboard devices", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate list scoreboard device views", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
   it.todo("Should validate list scoreboard", () => {
     const validateReq = registrationTopics.boot.schema.req;
     const validateRes = registrationTopics.boot.schema.res;
+    // Exact number of expected properties and right format
+    // With missing props
+    // With extra props
     expect(true).toBe(true);
   });
 });

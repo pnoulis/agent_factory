@@ -21,23 +21,23 @@ const registrationTopics = {
     schema: {
       req: ajv.compile(
         deepmerge(schemas.request, {
+          additionalProperties: false,
           required: ["timestamp", "deviceId", "deviceType", "roomName"],
           properties: {
             deviceId: schemas.device.properties.deviceId,
             deviceType: schemas.device.properties.deviceType,
             roomName: schemas.device.properties.roomType,
           },
-          additionalProperties: false,
         }),
       ),
       res: ajv.compile(
         deepmerge(schemas.response, {
+          additionalProperties: false,
           required: ["timestamp", "result", "deviceType", "roomName"],
           properties: {
             deviceType: schemas.device.properties.deviceType,
             roomName: schemas.device.properties.roomType,
           },
-          additionalProperties: false,
         }),
       ),
     },
@@ -56,6 +56,24 @@ const registrationTopics = {
     sub: prefix("player/login/response"),
   },
   scanWristband: {
+    schema: {
+      req: null,
+      res: ajv.compile(
+        deepmerge(schemas.response, {
+          additionalProperties: false,
+          required: [
+            "timestamp",
+            "result",
+            "wristbandNumber",
+            "wristbandColor",
+          ],
+          properties: {
+            wristbandNumber: schemas.wristband.properties.wristbandNumber,
+            wristbandColor: schemas.wristband.properties.wristbandColor,
+          },
+        }),
+      ),
+    },
     alias: "wristband/scan",
     pub: null,
     sub: prefix("player/wristbandScan"),
