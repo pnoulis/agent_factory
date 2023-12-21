@@ -1,5 +1,7 @@
 /// <reference types="vite" />
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
+import { configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 
@@ -30,5 +32,14 @@ export default defineConfig({
     watch: {
       ignored: ["**/.env", "!**/src/**"],
     },
+  },
+  test: {
+    // ...
+    include: [...configDefaults.include, "*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    dir: "./tests",
+    watch: false,
+    globals: true,
+    environment: "node",
+    testTimeout: 10000, // 5 seconds
   },
 });
