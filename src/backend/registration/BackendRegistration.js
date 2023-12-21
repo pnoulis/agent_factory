@@ -21,18 +21,20 @@ class BackendRegistration extends Backend {
       params,
       strict: strict ?? true,
     });
-    this.deviceType = DEVICES[0];
+    this.deviceType = DEVICES.registrationScreen;
     this.deviceId = deviceId || ENV.DEVICE_ID;
-    this.roomName = roomName || ROOMS[0];
+    this.roomName = roomName || ROOMS.administration1;
     this.registry.setParam("deviceId", this.deviceId);
   }
 }
 
-Backend.prototype.listPackages = listPackages;
-Backend.prototype.registerPlayer = registerPlayer;
-Backend.prototype.loginPlayer = loginPlayer;
-Backend.prototype.scanWristband = scanWristband;
-Backend.prototype.onWristbandScan = onWristbandScan;
-Backend.prototype.onceWristbandScan = onceWristbandScan;
+Object.assign(BackendRegistration.prototype, {
+  listPackages: listPackages,
+  registerPlayer: registerPlayer,
+  loginPlayer: loginPlayer,
+  scanWristband: scanWristband,
+  onWristbandScan: onWristbandScan,
+  onceWristbandScan: onceWristbandScan,
+});
 
 export { BackendRegistration };

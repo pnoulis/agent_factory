@@ -10,14 +10,17 @@ class Wristband extends Eventful {
     wristband ??= {};
     this.id = wristband.id ?? wristband.wristbandNumber ?? null;
     this.colorCode = wristband.colorCode ?? wristband.wristbandColor ?? null;
-    this.color =
-      this.colorCode != null ? WRISTBAND_COLORS[this.colorCode] : null;
+    this.color = WRISTBAND_COLORS[this.colorCode] || null;
   }
   pair() {
     debug(`pair: ${Wristband.name}`);
   }
   unpair() {
     debug(`unpair: ${Wristband.name}`);
+  }
+
+  toggle() {
+    this.afmachine.wristbandScan();
   }
 
   random(sources, options) {

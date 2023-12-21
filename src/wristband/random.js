@@ -15,7 +15,10 @@ function random(sources, options = {}) {
   }
 
   target.id ??= randomInteger(1, MAX_WRISTBAND_ID);
-  target.colorCode ??= randomInteger(1, WRISTBAND_COLORS.length - 1);
+  target.colorCode ??= randomInteger(
+    WRISTBAND_COLORS.min,
+    WRISTBAND_COLORS.max,
+  );
   target.color = WRISTBAND_COLORS[target.colorCode];
   return target;
 }

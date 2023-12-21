@@ -14,9 +14,9 @@ class BackendRPIReader extends Backend {
       params,
       strict: strict ?? true,
     });
-    this.deviceType = DEVICES[1];
+    this.deviceType = DEVICES.rpiReader;
     this.deviceId = deviceId || ENV.DEVICE_ID;
-    this.roomName = roomName || ROOMS[0];
+    this.roomName = roomName || ROOMS.administration1;
     this.registry.setParam("deviceId", this.deviceId);
   }
 }

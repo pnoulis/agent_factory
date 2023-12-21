@@ -1,15 +1,28 @@
-const WRISTBAND_COLORS = [
-  null, // 1 based
-  "red",
-  "purple",
-  "green",
-  "yellow",
-  "blue",
-  "orange",
-];
+const WRISTBAND_COLORS = {
+  min: 1,
+  max: 6,
+  red: 1,
+  purple: 2,
+  green: 3,
+  yellow: 4,
+  blue: 5,
+  orange: 6,
+  1: "red",
+  2: "purple",
+  3: "green",
+  4: "yellow",
+  5: "blue",
+  6: "orange",
+};
 
-const DEVICES = ["REGISTRATION_SCREEN", "RPI_READER"];
-const ROOMS = ["ADMINISTRATION1"];
+const DEVICES = {
+  registrationScreen: "REGISTRATION_SCREEN",
+  rpiReader: "RPI_READEAR",
+};
+const ROOMS = {
+  administration1: "ADMINISTRATION1",
+};
+
 const MAX_WRISTBAND_ID = 300;
 const FM_TIMEOUT = 5000;
 
