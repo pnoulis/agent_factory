@@ -1,7 +1,7 @@
 import { Backend } from "../Backend.js";
 import { DEVICES, ROOMS } from "../../constants.js";
 import { ENV } from "../../config.js";
-import { registrationTopics as topics } from "../../../backend-topics.js";
+import { registrationTopics as staticRoutes } from "../../../backend-topics.js";
 import { listPackages } from "./listPackages.js";
 import { registerPlayer } from "./registerPlayer.js";
 import { loginPlayer } from "./loginPlayer.js";
@@ -15,7 +15,7 @@ class BackendRegistration extends Backend {
   constructor({ deviceId, roomName, params, routes, strict } = {}) {
     super({
       routes: [].concat(
-        Array.isArray(topics) ? topics : [],
+        Object.values(staticRoutes),
         Array.isArray(routes) ? routes : [],
       ),
       params,
@@ -28,13 +28,11 @@ class BackendRegistration extends Backend {
   }
 }
 
-Object.assign(Backend.prototype, {
-  listPackages,
-  registerPlayer,
-  loginPlayer,
-  scanWristband,
-  onWristbandScan,
-  onceWristbandScan,
-});
+Backend.prototype.listPackages = listPackages;
+Backend.prototype.registerPlayer = registerPlayer;
+Backend.prototype.loginPlayer = loginPlayer;
+Backend.prototype.scanWristband = scanWristband;
+Backend.prototype.onWristbandScan = onWristbandScan;
+Backend.prototype.onceWristbandScan = onceWristbandScan;
 
 export { BackendRegistration };
