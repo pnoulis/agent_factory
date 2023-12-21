@@ -52,6 +52,8 @@ esbuild=$(realpath $(srcdir_top)/node_modules/.bin/esbuild)
 pretty_output=$(realpath $(srcdir_top)/node_modules/.bin/pretty)
 # vite
 vite=$(realpath $(srcdir_top)/node_modules/.bin/vite)
+# vitest
+vitest=$(realpath $(srcdir_top)/node_modules/.bin/vitest)
 
 ##################################################
 # Misc
@@ -64,7 +66,7 @@ in_clickpie_server=$(srcdir_abs)/clickpie-server.js
 out_clickpie_server=$(buildir_abs)/clickpie-server.js
 out_client_log=$(srcdir_top_abs)/client.log
 out_backend_log=$(srcdir_top_abs)/backend.log
-
+out_test_log=$(srcdir_top_abs)/test.log
 
 ##################################################
 # Default target
@@ -85,12 +87,12 @@ buildclean: | $(buildir_abs)
 start: stop dotenv
 	$(loadenv)
 	cd backend && docker-compose up -d
-	docker logs --follow backend-agentfactory-app-1 &> $(srcdir_top_abs)/backend.log &
+	docker logs --follow backend-agentfactory-app-1 &> $(out_backend_log) &
 	cd $(srcdir_top_abs)
 ifdef daemon
-	$(vite) serve --force &> $(srcdir_top_abs)/client.log &
+	$(vite) serve --force &> $(out_client_log) &
 else
-	$(vite) serve --force &> >(tee $(srcdir_top_abs)/client.log)
+	$(vite) serve --force &> >(tee $(out_client_log))
 endif
 
 ##################################################
@@ -102,9 +104,17 @@ stop:
 	pkill --echo --full 'docker logs -f*'
 
 ##################################################
+# Test
+##################################################
+test: file?=
+test: dotenv
+	$(loadenv)
+	MODE=test $(vitest) $(file) | tee $(out_test_log)
+
+##################################################
 # run
 ##################################################
-run: file=tmp/scratch.js
+run: file?=tmp/scratch.js
 run: dotenv $(file)
 	@if [[ "$${file:-}" == "" ]]; then
 	echo "Usage: 'make run file [args]'"
@@ -137,6 +147,7 @@ dotenv:
 clean:
 	-rm -f $(out_client_log)
 	-rm -f $(out_backend_log)
+	-rm -f $(out_test_log)
 	-rm -f *.tar.gz
 	-rm -f $(dotenvfile)
 	find $(srcdir_top) -name '*~' -exec rm {} \;
@@ -186,6 +197,7 @@ help:
 .PHONY: build # build application
 .PHONY: start # start application
 .PHONY: stop # stop application
+.PHONY: test # test application
 # Software distribution
 .PHONY: deploy # deploy the application to the consumer, such as a server
 # Cleaning
