@@ -18,9 +18,6 @@ const device = {
     roomType: {
       type: "string",
     },
-    roomName: {
-      type: "string",
-    },
   },
 };
 
