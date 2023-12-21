@@ -1,5 +1,6 @@
 const pkg = {
   type: "object",
+  required: ["name", "cost", "type", "amount"],
   properties: {
     name: {
       type: "string",

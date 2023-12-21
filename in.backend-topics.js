@@ -1,3 +1,8 @@
+import * as schemas from "./backend-api/schemas/index.js";
+import deepmerge from "deepmerge";
+import Ajv from "ajv";
+const ajv = new Ajv();
+
 const rpiReaderTopics = {
   boot: {
     alias: "boot",
@@ -13,6 +18,29 @@ const rpiReaderTopics = {
 
 const registrationTopics = {
   boot: {
+    schema: {
+      req: ajv.compile(
+        deepmerge(schemas.request, {
+          required: ["timestamp", "deviceId", "deviceType", "roomName"],
+          properties: {
+            deviceId: schemas.device.properties.deviceId,
+            deviceType: schemas.device.properties.deviceType,
+            roomName: schemas.device.properties.roomType,
+          },
+          additionalProperties: false,
+        }),
+      ),
+      res: ajv.compile(
+        deepmerge(schemas.response, {
+          required: ["timestamp", "result", "deviceType", "roomName"],
+          properties: {
+            deviceType: schemas.device.properties.deviceType,
+            roomName: schemas.device.properties.roomType,
+          },
+          additionalProperties: false,
+        }),
+      ),
+    },
     alias: "boot",
     pub: basename("booted"),
     sub: basename("booted/${deviceId}"),
@@ -126,6 +154,21 @@ const registrationTopics = {
     sub: prefix("player/available/search/response"),
   },
   listPkgs: {
+    schema: {
+      req: null,
+      res: ajv.compile(
+        deepmerge(schemas.response, {
+          required: ["timestamp", "result", "packages"],
+          additionalProperties: false,
+          properties: {
+            packages: {
+              type: "array",
+              items: schemas.pkg,
+            },
+          },
+        }),
+      ),
+    },
     alias: "list/pkgs",
     pub: prefix("packages/all"),
     sub: prefix("packages/all/response"),
