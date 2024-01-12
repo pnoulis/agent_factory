@@ -24,3 +24,14 @@ rather, they ask afmachine to do that for them.
 Commands are composed of a queue of tasks that need to be executed. Each task is
 intended to be consumed by a target.
 
+* User stories
+** Administrator toggles wristband pairing mode
+In order for the administrator to be able to toggle a wristbands pairing mode
+the following components are required:
+
+UI component that handles a user click
+A Player instance
+
+The player hook is a wrapper to the Player class. The hook exposes the player's
+interface to
+
