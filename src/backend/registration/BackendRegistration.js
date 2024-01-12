@@ -29,12 +29,12 @@ class BackendRegistration extends Backend {
 }
 
 Object.assign(BackendRegistration.prototype, {
-  listPackages: listPackages,
-  registerPlayer: registerPlayer,
-  loginPlayer: loginPlayer,
-  scanWristband: scanWristband,
-  onWristbandScan: onWristbandScan,
-  onceWristbandScan: onceWristbandScan,
+  listPackages,
+  registerPlayer,
+  loginPlayer,
+  scanWristband,
+  onWristbandScan,
+  onceWristbandScan,
 });
 
 export { BackendRegistration };
