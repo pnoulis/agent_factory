@@ -42,17 +42,22 @@ A standard interaction between a client and afm might go as follows:
 
 - A client initiates an event through the use of a React component such as by
   clicking on a button.
-- The React component invokes an API method.
+  
+- The React component invokes an API method either indirectly through the Entities
+  or directly through afm.
+  
 - Afm creates a new Command object.
   
   Each method of Afm represents some kind of Task such as logging in the
   administrator or pairing a Wristband. These tasks are defined at application
   initialization time. A Command represents an instance of running the Task.
+
+  Some tasks return promises other tasks accept callbacks. If the Task is
+  is designed to be called through an Entity usually expected to be called through an Entity it
   
 - Afm enqueues the new Command.
   
-  If the queue is empty the Command is immediately invoked. Otherwise it shall
-  wait for its turn.
+  If the queue is empty the Command is immediately invoked. Otherwise it waits for its turn.
   
 - Afm returns a Promise that will be fulfilled with the fulfillment value of the
   Command.

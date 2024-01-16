@@ -1,4 +1,3 @@
-import { registrationTopics } from "../../../backend-topics.js";
 import { isObject, isFunction } from "js_utils/misc";
 
 function validateBackendResponse(ctx, next) {

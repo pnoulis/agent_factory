@@ -9,8 +9,8 @@ const listPkgs = {
 };
 
 listPkgs.middleware = compose([
-  // attachBackendRegistrationRouteInfo,
-  // validateBackendRequest,
+  attachBackendRegistrationRouteInfo,
+  validateBackendRequest,
   async (ctx, next) => {
     ctx.command.res.data = await ctx.afm.backend.listPackages();
     return next();
