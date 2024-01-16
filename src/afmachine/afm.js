@@ -1,5 +1,8 @@
 import { Eventful } from "../Eventful.js";
-import createListPkgsTask from "./routes/listPkgs.js";
+import { createTask } from "./createTask.js";
+import { createCommand } from "./createCommand.js";
+import { runCommands } from "./runCommands.js";
+import { listPkgs } from "./tasks/listPkgs.js";
 import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
 
 class Afm extends Eventful {
@@ -8,103 +11,31 @@ class Afm extends Eventful {
       "connected",
       "disconnected",
       "error",
-      "newCommand",
+      "command",
       "commandStarted",
       "commandFinished",
     ]);
     this.commandQueue = [];
-    this.state = "idle";
+    this.tasks = {};
     this.backend = new BackendRegistration();
+    createTask(this, listPkgs);
   }
 }
 
-createListPkgsTask(Afm);
-
-Afm.prototype.createCommand = async function (task) {
-  return new Promise((resolve, reject) => {
-    const command = {
-      ...task,
-      afm: this,
-      req: {},
-      res: {},
-      error: null,
-      resolve,
-      reject,
-    };
-    this.commandQueue.push(command);
-    command.listeners.emit("queued", command);
-    this.emit("newCommand", command);
-    if (this.state !== "idle") return;
-    async function run(afm, command) {
-      if (!command) {
-        afm.state === "idle";
-        return Promise.resolve();
-      }
-      try {
-        command.listeners.emit("pending", command);
-        command.listeners.emit("stateChange", "queued", "pending", command);
-        afm.emit("commandStarted", command);
-        await Promise.resolve(command.middleware(command));
-        command.resolve(command);
-        command.listeners.emit("fulfilled", command);
-        command.listeners.emit("stateChange", "pending", "fulfilled", command);
-      } catch (err) {
-        command.error = err;
-        reject(command);
-        command.listeners.emit("rejected");
-        command.listeners.emit("stateChange", "pending", "rejected", command);
-        afm.emit("error", command);
-      } finally {
-        command.listeners.emit("settled", command);
-        command.listeners.emit(
-          "stateChange",
-          command.error ? "rejected" : "fulfilled",
-          'settled',
-        );
-        afm.emit("commandFinished", command);
-        run(afm, afm.commandQueue.shift());
-      }
-    }
-    setTimeout(() => run(this, this.commandQueue.shift()), 0);
-    // Promise.resolve(run(this, this.commandQueue.shift()));
-  });
+Afm.prototype.runTask = async function (task, args, cb) {
+  return new Promise((resolve, reject) =>
+    setImmediate(() => {
+      const command = createCommand(afm, task, args, resolve, reject, cb);
+      this.commandQueue.push(command);
+      this.emit("command", command);
+      task.emit("command", command);
+      if (this.commandQueue.length > 1) return;
+      runCommands(afm, afm.commandQueue.at(0));
+    }),
+  );
 };
 
-// Afm.prototype.listPkgs = createTask('listPkgs')
+const afm = new Afm();
+afm.backend.boot();
 
-// function Afm() {
-//   this.commands = {
-//     boot: {},
-//     registerPlayer: {},
-//     loginPlayer: {},
-//     scanWristband: {},
-//     pairWristband: {},
-//     unpairWristband: {},
-//     mergeTeam: {},
-//     mergeGroupTeam: {},
-//     isValidWristband: {},
-//     getWristbandInfo: {},
-//     addTeamPkg: {},
-//     removeTeamPkg: {},
-//     activateTeamPkg: {},
-//     registerCashier: {},
-//     loginCashier: {},
-//     removeCashier: {},
-//     startSession: {},
-//     stopSession: {},
-//     updateDevice: {},
-//     updateDeviceScoreboardView: {},
-//     listPlayers: {},
-//     listPlayersWristbanded: {},
-//     listPkgs: {},
-//     listTeams: {},
-//     listCashiers: {},
-//     listDevices: {},
-//     listDevicesScoreboard: {},
-//     listDevicesScoreboardViews: {},
-//     listScoreboard: {},
-//     searchPlayers: {},
-//   };
-// }
-
-export { Afm };
+export { afm };
