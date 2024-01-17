@@ -1,6 +1,7 @@
 import { Eventful } from "../Eventful.js";
+import { runTask } from "./runTask.js";
 
-function createTask(afm, { taskname, middleware, cb } = {}) {
+function createTask(task) {
   const events = new Eventful([
     "command",
     "pending",
@@ -10,11 +11,8 @@ function createTask(afm, { taskname, middleware, cb } = {}) {
     "stateChange",
   ]);
 
-  const task = (...args) => afm.runTask(task, args, cb);
   Object.setPrototypeOf(task, events);
-  task.taskname = taskname;
-  task.middleware = middleware;
-  afm.tasks[taskname] = task;
+
 }
 
 export { createTask };

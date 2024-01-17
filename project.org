@@ -47,14 +47,15 @@ A standard interaction between a client and afm might go as follows:
   or directly through afm.
   
 - Afm creates a new Command object.
-  
+
+
   Each method of Afm represents some kind of Task such as logging in the
   administrator or pairing a Wristband. These tasks are defined at application
   initialization time. A Command represents an instance of running the Task.
 
   Some tasks return promises other tasks accept callbacks. If the Task is
   is designed to be called through an Entity usually expected to be called through an Entity it
-  
+
 - Afm enqueues the new Command.
   
   If the queue is empty the Command is immediately invoked. Otherwise it waits for its turn.
@@ -66,6 +67,75 @@ A standard interaction between a client and afm might go as follows:
 
   onNewCommand
   commandStart
+
+* New afmachine
+
+
+player._pairWristband(...args) {
+}
+
+player.pairWristband(...args) {
+...
+}
+
+afm.player.pairWristband(player, ...args, cb);
+
+function afm.player.pairWristband() {
+const cmd = createCommand();
+cmd.notify();
+cmd.enqueue();
+cmd.run();
+}
+
+function afm.listPkgs() {
+const cmd = createCommand();
+cmd.notify('start');
+cmd.abort();
+cmd.enqueue();
+cmd.run();
+}
+
+afm.createCommand();
+afm.notify();
+// may abort or continue command
+
+
+
+Tasks return a Command Promise and accept a CB.
+
+* Application initialization TIME
+
+The afm SINGLETON is instantiated.
+All afm API calls are created through the createTask() function.
+
+Each Task inherits from the Eventful class.
+
+This interface allows clients to attach event listeners at all stages of a
+Commands lifecycle.
+
+To invoke a Task means to create a new Command for that Task.
+
+A task is guaranteed to initialize a Command asynchronously.
+
+task.on('command')
+
+Each task returns a Command object.
+
+const cmd = task();
+
+
+afm.runCommand(cmd, cb);
+
+* Command Targets
+Command Targets should not need to know if a command was aborted or not.
+Command targets are notified through CALLBACKS not Promises.
+
+A callback interface is used to prevent dangling promises.
+In case a command is aborted or an error occurs in the application level the
+callback shall never be called.
+
+* Tasks
+** List packages
 
 * User stories
 ** Administrator toggles wristband pairing mode
