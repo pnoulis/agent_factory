@@ -1,39 +1,23 @@
-import { compose } from "../compose.js";
 import { Eventful } from "../../Eventful.js";
 import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendRegistrationRouteInfo.js";
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-
-Object.setPrototypeOf(
-  task,
-  new Eventful([
-    "command",
-    "pending",
-    "fulfilled",
-    "rejected",
-    "settled",
-    "stateChange",
-  ]),
-);
+import { isFunction } from "js_utils/misc";
 
 function task(cb) {
-  return this.runCommand(task, null, cb);
+  const afm = this;
+  return afm.run({ task, afm, res: {} }, cb);
 }
 task.taskname = "listPkgs";
-task.middleware = [async (ctx, next) => {}];
+task.middleware = [
+  async (ctx, next) => {
+    ctx.res.raw = await ctx.afm.backend.listPackages();
+    return next();
+  },
+];
 task.onSuccess = function (cmd) {};
 task.onFailure = function (cmd) {};
-task.createContext = function (afm, args, cb) {
-  return {
-    afm,
-    taskname: task.taskname,
-    args,
-    cb,
-    req: {},
-    res: {},
-  };
-};
 
 // const listPkgs = {};
 // listPkgs.taskname = "listPkgs";

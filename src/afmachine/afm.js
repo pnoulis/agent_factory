@@ -1,7 +1,10 @@
 import { Eventful } from "../Eventful.js";
+import { compose } from "./compose.js";
+import { enqueue } from "./enqueue.js";
 import { listPkgs } from "./tasks/listPkgs.js";
 import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
 import { createTask } from "./createTask.js";
+import { isFunction } from "js_utils/misc";
 
 class Afm extends Eventful {
   constructor() {
@@ -19,46 +22,35 @@ class Afm extends Eventful {
   }
 }
 
-Afm.prototype[listPkgs.taskname] = listPkgs;
-Afm.prototype.runCommand = async function (task, args, cb) {
-  const precmd = task.events;
-  task.events.command = precmd.filter((handler) => handler.persist);
-  const cmd = task.events.middleware;
-  const ctx = task.createContext(afm, args, cb);
+Afm.prototype.listPkgs = createTask(listPkgs);
+
+Afm.prototype.run = async function (command, cb) {
+  const precmd = command.task.events.command;
+  command.task.events.command = precmd.filter((handler) => handler.persist);
+
+  const cmd = compose(
+    precmd.concat(async (ctx, next) => {
+      await enqueue(ctx.afm.commandQueue, () =>
+        compose(ctx.task.middleware)(command),
+      );
+      return next();
+    }),
+  );
+
   try {
-    await compose(
-      []
-        .concat(
-          precmd.map((handler) => handler.listener),
-          cmd,
-        )
-        .filter((middleware) => !!middleware),
-    )(ctx);
-    task.onSuccess(ctx);
+    await cmd(command);
+    cb(command.res.raw.timestamp);
+    command.task.emit("fulfilled", command.res.raw.timestamp);
   } catch (err) {
-    task.onFailure(ctx);
+    console.log("error");
+    cb(command.res.raw.timestamp);
+    command.task.emit("rejected", command.res.raw.timestamp);
   } finally {
+    command.task.emit("settled", command.res.raw.timestamp);
+    return command.res.raw.timestamp;
   }
-  // setImmediate(async () => {
-  //   const precmd = task.events.command;
-  //   task.events.command = precmd.filter((handler) => handler.persist);
-  //   const cmd = task.createCommand();
-  // });
 };
 
 const afm = new Afm();
-
-// Afm.prototype.runTask = async function (task, args, cb) {
-//   return new Promise((resolve, reject) =>
-//     setImmediate(() => {
-//       const command = createCommand(afm, task, args, resolve, reject, cb);
-//       this.commandQueue.push(command);
-//       this.emit("command", command);
-//       task.emit("command", command);
-//       if (this.commandQueue.length > 1) return;
-//       runCommands(afm, afm.commandQueue.at(0));
-//     }),
-//   );
-// };
 
 export { afm };
