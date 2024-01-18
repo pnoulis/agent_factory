@@ -192,18 +192,17 @@ help:
 	@cat ./Makefile | grep -i --color=auto 'phony' | cut -d ' ' -f2- | tail --lines=+3
 
 # Software development
-.PHONY: run # read dotenvfile and run any file
-.PHONY: scratch # read dotenvfile and run the scratch file
-.PHONY: build # build application
-.PHONY: start # start application
-.PHONY: stop # stop application
-.PHONY: test # test application
+.PHONY: run # Read dotenvfile and run $target or tmp/scratch.js
+.PHONY: build # Build application
+.PHONY: start # Start application
+.PHONY: stop # Stop application
+.PHONY: test # Test application
 # Software distribution
-.PHONY: deploy # deploy the application to the consumer, such as a server
+.PHONY: deploy # Deploy the application to the consumer, such as a server
 # Cleaning
-.PHONY: clean # Remove files created by make targets
-.PHONY: distclean # Remove files created by configure
+.PHONY: clean # Remove files created by ./make
+.PHONY: distclean # Remove files created by ./configure
 # Misc
-.PHONY: help
-.PHONY: dotenv # write environment into .env
-.PHONY: all # default target
+.PHONY: help # Display a short description about each Makefile target's function
+.PHONY: dotenv # Write environment into .env
+.PHONY: all # Default target

@@ -5,6 +5,7 @@ import { listPkgs } from "./tasks/listPkgs.js";
 import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
 import { createTask } from "./createTask.js";
 import { isFunction } from "js_utils/misc";
+import { createUnexpectedErr } from "../errors.js";
 
 class Afm extends Eventful {
   constructor() {
@@ -24,30 +25,63 @@ class Afm extends Eventful {
 
 Afm.prototype.listPkgs = createTask(listPkgs);
 
-Afm.prototype.run = async function (command, cb) {
-  const precmd = command.task.events.command;
-  command.task.events.command = precmd.filter((handler) => handler.persist);
 
-  const cmd = compose(
-    precmd.concat(async (ctx, next) => {
-      await enqueue(ctx.afm.commandQueue, () =>
-        compose(ctx.task.middleware)(command),
-      );
-      return next();
-    }),
-  );
+Afm.prototype.createCommand = function (task, cb, ctx) {
+  const cmd = Object.create(task);
+  cmd.ctx = Object.assign({ req: {}, res: {}, error: null }, ctx);
+  cmd.targetcb = cb;
 
+  cmd.value = function () {
+    if (!Object.hasOwn(cmd, "__value")) {
+      cmd.__value = new Promise(function (resolve, reject) {
+        cmd.__resolve = resolve;
+        cmd.__reject = reject;
+      });
+    }
+    return Promise.resolve(cmd.__value);
+  };
+
+  // pre command middleware
+  cmd.precmd = task.events.precmd;
+  task.events.precmd = cmd.precmd.filter((handler) => handler.persist);
+
+  // command middleware
+  // at task.middleware or cmd.middleware
+
+  // post command middleware
+  cmd.postcmd = task.events.postcmd;
+  task.events.postcmd = cmd.postcmd.filter((handler) => handler.persist);
+
+  return cmd;
+};
+
+Afm.prototype.run = async function (task, cb) {
   try {
-    await cmd(command);
-    cb(command.res.raw.timestamp);
-    command.task.emit("fulfilled", command.res.raw.timestamp);
+    const precmd = task.task.events.precmd;
+    task.task.events.precmd = precmd.filter((handler) => handler.persist);
+    const postcmd = task.task.events.postcmd;
+    task.task.events.postcmd = postcmd.filter((handler) => handler.persist);
+    const cmd = async function (ctx, next) {
+      await enqueue(ctx.afm.commandQueue, () => compose(task.middleware)(ctx));
+      await Promise.resolve(cb(null, ctx));
+      return next();
+    };
+
+    try {
+      await compose([].concat(precmd, cmd, postcmd))(task);
+      task.task.onSuccess(task);
+      task.task.emit("fulfilled", task);
+    } catch (err) {
+      await task.task.onFailure(err, task, cb);
+      task.task.emit("rejected", task);
+    }
   } catch (err) {
-    console.log("error");
-    cb(command.res.raw.timestamp);
-    command.task.emit("rejected", command.res.raw.timestamp);
+    task.error = createUnexpectedErr(err, task.error);
+    task.task.emit("rejected", task);
+    this.emit("error", task);
   } finally {
-    command.task.emit("settled", command.res.raw.timestamp);
-    return command.res.raw.timestamp;
+    task.task.emit("settled", task);
+    return task;
   }
 };
 
