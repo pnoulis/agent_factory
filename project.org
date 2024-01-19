@@ -68,63 +68,108 @@ A standard interaction between a client and afm might go as follows:
   onNewCommand
   commandStart
 
-* New afmachine
+* Afmachine new
 
+The *afmachine* or *afm* for short is the control center of the application. It
+is a singleton object. All browser windows and tabs share the same instance.
 
-player._pairWristband(...args) {
-}
+It's API is consumed by invoking any of the public methods of the *afm*
+instance.
 
-player.pairWristband(...args) {
-...
-}
+All API calls are stored under the directory:
 
-afm.player.pairWristband(player, ...args, cb);
+/src/afmachine/tasks/*
 
-function afm.player.pairWristband() {
-const cmd = createCommand();
-cmd.notify();
-cmd.enqueue();
-cmd.run();
-}
+Each of the statically defined API calls is a *Task*.
 
-function afm.listPkgs() {
-const cmd = createCommand();
-cmd.notify('start');
-cmd.abort();
-cmd.enqueue();
-cmd.run();
-}
+The primary function of *Afmachine* is to allow clients (such as a React
+component or the UI in general) to build middleware chains around each Task.
+This design model follows loosely the *command* design pattern. see
+(https://en.wikipedia.org/wiki/Command_pattern)
 
-afm.createCommand();
-afm.notify();
-// may abort or continue command
+Each time an API call is made *afm* creates a *Command* for the invoked *Task*.
+A *Command* represents one instance of a *Task* to run.
 
+For example: If a client was to invoke an API call multiple times:
 
+afm.listPkgs()
+afm.listPkgs()
+afm.listPkgs()
 
-Tasks return a Command Promise and accept a CB.
+There would be 3 *Commands* created for the listPkgs *Task*.
 
-* Application initialization TIME
+Each *Command* carries with it a lot of information but fundamentally it
+contains a sequence of functions (the middleware chain).
 
-The afm SINGLETON is instantiated.
-All afm API calls are created through the createTask() function.
+When a command is created it is placed into a queue by afm. The afm is
+responsible for invoking each the commands in the queue in sequence (meaning in
+order, waiting for the completion of one to carry on with the next).
 
-Each Task inherits from the Eventful class.
+For example: If a client was to invoke the API calls:
 
-This interface allows clients to attach event listeners at all stages of a
-Commands lifecycle.
+afm.loginCashier();
+afm.listPkgs();
+afm.logoutCashier();
 
-To invoke a Task means to create a new Command for that Task.
+There would be 3 *Commands* to run in the queue by *afm*.
+It would proceed by running them in these order:
 
-A task is guaranteed to initialize a Command asynchronously.
+1. loginCashier()
+2. listPkgs()
+3. logoutCashier()
 
-task.on('command')
+While each Command does run in order; an Error will not block the execution of
+the next Command. Each Command is independent of the result of the previous one
+unless the previous Command threw an unexpected Error in which case afm breaks
+the chain of Commands or one of the hooks operating at the Command level
+breaks the chain (more on that later).
 
-Each task returns a Command object.
+Clients to afm can register functions that become part of a Command at either
+the Task level or the Command level called hooks. Each hook must implement the
+same signature.
 
-const cmd = task();
+function hook (context, next) {};
 
+Command level hooks are provided with the afm instance as context.
+Registering a Command level hook is done through the afm.on() method.
 
-afm.runCommand(cmd, cb);
+For exmaple:
+
+// Register a hook to run before each command in the queue.
+afm.on('precmd', (afm, next) => {});
+
+// Register a hook to run after each command in the queue.
+afm.on('postcmd', (afm, next) => {});
+
+A Command level hook may interrupt the command sequence by not calling next();
+
+Task level hooks are provided with the Command as context. (The Command also has
+an afm property that is a reference to the afm instance). Registering a Task
+level hook is done through the afm[$task].on() method.
+
+For example:
+
+// Register a hook to run before each Command for the listPkgs Task.
+afm.listPkgs.on('precmd', (command, next) => {});
+
+// Register a hook to run after each Command for the listPkgs Task.
+afm.listPkgs.on('postcmd', (command, next) => {});
+
+A Task level hook may interrupt the task sequence by not calling next(); The
+task sequence is composed of:
+
+The precmd Task level hooks + Task + postcmd Task level hooks
+
+** Difference between events and hooks
+A hook is a middleware function that becomes part of each Command. It is invoked
+in the order it appears within the Command or Task sequence. As such it has no
+control over its execution. It may never run because some previous hook
+aborted the sequence.
+
+Events on the other hand are not part any sequence. As such their handlers will
+be invoked regardless of the sequnce itself.
+** Invoking tasks (creating commands)
+** Error handling
 
 * Command Targets
 Command Targets should not need to know if a command was aborted or not.

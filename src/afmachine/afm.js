@@ -13,6 +13,8 @@ class Afm extends Eventful {
       "connected",
       "disconnected",
       "error",
+      "precmd",
+      "postcmd",
       "command",
       "commandStarted",
       "commandFinished",
@@ -24,7 +26,6 @@ class Afm extends Eventful {
 }
 
 Afm.prototype.listPkgs = createTask(listPkgs);
-
 
 Afm.prototype.createCommand = function (task, cb, ctx) {
   const cmd = Object.create(task);
@@ -41,14 +42,26 @@ Afm.prototype.createCommand = function (task, cb, ctx) {
     return Promise.resolve(cmd.__value);
   };
 
-  // pre command middleware
+  // This function operates under the assumption that it will be invoked by afm
+  // asynchronously.
+  cmd.run = function () {
+    // pre task middleware
+    const precmd = task.events.precmd;
+    task.events.precmd = cmd.precmd.filter((handler) => handler.persist);
+
+    // task middleware
+
+    // post task middleware
+  };
+
+  // pre task middleware
   cmd.precmd = task.events.precmd;
   task.events.precmd = cmd.precmd.filter((handler) => handler.persist);
 
-  // command middleware
+  // task middleware
   // at task.middleware or cmd.middleware
 
-  // post command middleware
+  // post task middleware
   cmd.postcmd = task.events.postcmd;
   task.events.postcmd = cmd.postcmd.filter((handler) => handler.persist);
 
