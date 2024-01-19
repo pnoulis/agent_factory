@@ -24,7 +24,6 @@ class Player extends Eventful {
     return _player;
   }
   register() {}
-  login() {}
   random(sources, options) {
     return Player.random(sources, options);
   }

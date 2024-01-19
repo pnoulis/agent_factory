@@ -68,6 +68,40 @@ A standard interaction between a client and afm might go as follows:
   onNewCommand
   commandStart
 
+* Small core afm
+
+creates commands
+combines precmd postcmd pretask postask at the time of a Commands creation.
+queues the command.
+runs the command queue.
+
+
+
+precommand
+
+
+try {
+
+try {
+task()
+targetCb(task);
+} catch (err) {
+targetCb(task)
+}
+
+task.onSuccess();
+
+} catch (err) {
+
+task.onFailure();
+
+}
+
+postask
+}
+
+precommand
+
 * Afmachine new
 
 The *afmachine* or *afm* for short is the control center of the application. It
@@ -88,7 +122,7 @@ This design model follows loosely the *command* design pattern. see
 (https://en.wikipedia.org/wiki/Command_pattern)
 
 Each time an API call is made *afm* creates a *Command* for the invoked *Task*.
-A *Command* represents one instance of a *Task* to run.
+A *Command* represents one instance of a running *Task*.
 
 For example: If a client was to invoke an API call multiple times:
 
@@ -160,6 +194,7 @@ task sequence is composed of:
 
 The precmd Task level hooks + Task + postcmd Task level hooks
 
+** Command
 ** Difference between events and hooks
 A hook is a middleware function that becomes part of each Command. It is invoked
 in the order it appears within the Command or Task sequence. As such it has no
