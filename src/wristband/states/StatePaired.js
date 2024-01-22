@@ -1,6 +1,6 @@
 class Paired {
   static name = "paired";
-  static order = 2;
+  static order = 3;
 
   constructor(wristband) {
     this.wristband = wristband;
@@ -15,14 +15,21 @@ class Paired {
   }
 
   pair(wristband) {
-    throw new Error("Wristband is already paired");
+    throw new Error(`Trying to pair a wristband in paired state`);
   }
   unpair() {
-    throw new Error("Impossible state");
+    throw new Error("Trying to unpair a wristband in paired state");
+  }
+  unsubscribe(unsub) {
+    unsub();
+    this.wristband.unsubscribe = null;
   }
   toggle() {
-    this.setState("unpairing");
-    return this.wristband.unscan();
+    if (this.wristband.unsubscribe) {
+      this.unsubscribe();
+    }
+    this.wristband.setState("unpairing");
+    this.wristband.unpair();
   }
 }
 

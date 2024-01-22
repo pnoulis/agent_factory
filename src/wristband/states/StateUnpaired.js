@@ -15,14 +15,18 @@ class Unpaired {
   }
 
   pair(wristband) {
-    throw new Error("Wristband is not in pairing mode");
+    throw new Error("Trying to pair a wristband in unpaired state");
   }
   unpair() {
-    throw new Error("Wristband is already unpaired");
+    throw new Error("Trying to unpair a wristband in unpaired state");
+  }
+  unsubscribe(unsub) {
+    unsub();
+    this.wristband.unsubscribe = null;
   }
   toggle() {
-    this.setState("pairing");
-    return this.wristband.scan();
+    this.wristband.setState("pairing");
+    this.wristband.pair();
   }
 }
 

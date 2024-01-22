@@ -16,14 +16,19 @@ class Pairing {
   pair(wristband) {
     this.wristband.normalize(wristband);
     this.wristband.setState("paired");
-    return this;
   }
   unpair() {
-    return this.wristband.unscan();
+    throw new Error("Trying to unpair a wristband in pairing state");
+  }
+  unsubscribe(unsub) {
+    this.unsubscribe = unsub;
   }
   toggle() {
-    this.setState("unpairing");
-    return this.wristband.unscan();
+    if (this.wristband.unsubscribe) {
+      this.wristband.unsubscribe();
+    }
+    this.wristband.setState("unpairing");
+    this.wristband.unpair();
   }
 }
 

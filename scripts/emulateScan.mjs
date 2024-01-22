@@ -14,18 +14,28 @@ import { randomInteger } from "js_utils/misc";
 import { BackendRPIReader } from "../src/backend/rpi-reader/BackendRPIReader.js";
 import { WRISTBAND_COLORS, MAX_WRISTBAND_ID } from "../src/constants.js";
 
-const b = new BackendRPIReader({
-  deviceId: "tmp",
-});
+const b = new BackendRPIReader();
 
 let [id, color] = process.argv.slice(2);
 id = parseInt(id) ? id : randomInteger(1, MAX_WRISTBAND_ID);
-color = parseInt(color)
-  ? color
-  : WRISTBAND_COLORS.findIndex((c) => c === color);
-
-if (color < 1) {
-  color = randomInteger(1, WRISTBAND_COLORS.length - 1);
+color = WRISTBAND_COLORS[color];
+if (typeof color !== 'number') {
+  color = WRISTBAND_COLORS[color];
+}
+if (color == null) {
+  color = randomInteger(1, WRISTBAND_COLORS.max);
 }
 
-b.scan({ id, color });
+let err;
+try {
+  await b.read({ id, color });
+  console.log(`id: ${id}`);
+  console.log(`colorCode: ${color}`)
+  console.log(`color: ${WRISTBAND_COLORS[color]}`)
+} catch (err) {
+  console.log(err);
+  err = err;
+} finally {
+  await b.stop();
+  process.exit(err ? 1 : 0);
+}

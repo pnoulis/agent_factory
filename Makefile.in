@@ -126,7 +126,7 @@ run: dotenv $(file)
 	sh)
 	$(SHELL) $(file) $(args)
 	;;
-	js)
+	js | mjs)
 	$(node) $(file) $(args)
 	;;
 	*)

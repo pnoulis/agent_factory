@@ -15,8 +15,12 @@ class Unregistered {
   }
 }
 
-Unregistered.prototype.register = async function (afm) {
-  const p = backend.registerPlayer(this);
+Unregistered.prototype.pairWristband = function (cb) {
+  this.wristband.toggle(cb);
+};
+
+Unregistered.prototype.unpairWristband = function (cb) {
+  this.wristband.toggle(cb);
 };
 
 export { Unregistered };

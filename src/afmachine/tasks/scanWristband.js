@@ -17,20 +17,17 @@ function task(unsubcb, opts) {
 task.taskname = "scanWristband";
 task.middleware = [
   attachBackendRegistrationRouteInfo,
-  (ctx, next) => {
-    ctx.req = () => {};
-    return next();
-  },
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.scanWristband(ctx.req);
+    ctx.raw = await ctx.afm.backend.scanWristband(ctx.args.unsubcb);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   // backend - frontend translation
   async (ctx, next) => {
-    ctx.res = Wristband.normalize(ctx.raw.wristband);
+    ctx.res.wristband = Wristband.normalize(ctx.raw.wristband);
+    ctx.res.unsubed = ctx.raw.unsubed;
     return next();
   },
 ];

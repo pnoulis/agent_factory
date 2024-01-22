@@ -1,5 +1,4 @@
 class Registered {
-
   static name = "registered";
   static order = 1;
 
@@ -15,5 +14,12 @@ class Registered {
     return Registered.order;
   }
 }
+
+Registered.prototype.pairWristband = function () {
+  this.wristband.toggle(cb);
+};
+Registered.prototype.unpairWristband = function () {
+  this.wristband.toggle(cb);
+};
 
 export { Registered };

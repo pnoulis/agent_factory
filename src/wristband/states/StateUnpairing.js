@@ -1,6 +1,6 @@
 class Unpairing {
   static name = "unpairing";
-  static order = 4;
+  static order = 2;
 
   constructor(wristband) {
     this.wristband = wristband;
@@ -13,14 +13,21 @@ class Unpairing {
   get order() {
     return Unpairing.order;
   }
-  pair(wristband) {}
+  pair(wristband) {
+    throw new Error(`Trying to pair a wristband in unpairing state`);
+  }
   unpair() {
     this.wristband.normalize();
     this.wristband.setState("unpaired");
-    return this;
+  }
+  unsubscribe(unsub) {
+    unsub();
+    this.wristband.unsubscribe = null;
   }
   toggle() {
-    this.setState("pairing");
-    return this.wristband.scan();
+    this.wristband.setState("pairing");
+    this.wristband.pair();
   }
 }
+
+export { Unpairing };

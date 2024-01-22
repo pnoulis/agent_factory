@@ -19,6 +19,7 @@
 const ERR_CODES = {
   EUNEXPECTED: 0,
   EINVALID: 1,
+  ESTATE: 2,
 };
 
 function createError(level, msg, code, label, cause) {
@@ -49,4 +50,8 @@ function createValidationErr(validationErrors, opts) {
   );
 }
 
-export { createUnexpectedErr, createValidationErr };
+function createStateErr(msg, ...args) {
+  return createError("warn", msg || "State error", ERR_CODES.ESTATE);
+}
+
+export { createUnexpectedErr, createValidationErr, createStateErr };

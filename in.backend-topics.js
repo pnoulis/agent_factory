@@ -100,12 +100,13 @@ const registrationTopics = {
     schema: {
       req: null,
       res: ajv.compile({
-        additionalProperties: false,
-        required: ["unsubed", "wristband"],
+        additionalProperties: true,
+        required: ["unsubed"],
         properties: {
           unsubed: { type: "boolean" },
           wristband: {
             type: "object",
+            nullable: true,
             required: [
               "timestamp",
               "result",

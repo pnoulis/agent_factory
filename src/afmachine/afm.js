@@ -6,7 +6,6 @@ import { registerPlayer } from "./tasks/registerPlayer.js";
 import { scanWristband } from "./tasks/scanWristband.js";
 import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
 import { createTask } from "./createTask.js";
-import { isFunction } from "js_utils/misc";
 
 class Afm extends Eventful {
   constructor() {
@@ -90,9 +89,6 @@ Afm.prototype.run = async function (cmd, { queue = true } = {}) {
   }
 };
 
-process.on("unhandledRejection", (err, promise) => {
-  console.log("unhandled rejection");
-});
 const afm = new Afm();
 
 export { afm };
