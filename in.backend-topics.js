@@ -1,7 +1,10 @@
 import * as schemas from "./backend-api/schemas/index.js";
 import deepmerge from "deepmerge";
 import Ajv from "ajv";
-const ajv = new Ajv();
+const ajv = new Ajv({
+  allErrors: true,
+  coerceTypes: true,
+});
 
 const rpiReaderTopics = {
   boot: {
@@ -46,6 +49,44 @@ const registrationTopics = {
     sub: basename("booted/${deviceId}"),
   },
   registerPlayer: {
+    schema: {
+      req: ajv.compile(
+        deepmerge(schemas.request, {
+          additionalProperties: true,
+          required: [
+            "timestamp",
+            "name",
+            "surname",
+            "username",
+            "email",
+            "password",
+          ],
+          properties: schemas.player.properties,
+        }),
+      ),
+      res: ajv.compile(
+        deepmerge(schemas.response, {
+          additionalProperties: false,
+          required: ["timestamp", "result", "player"],
+          properties: {
+            player: {
+              type: "object",
+              required: [
+                "name",
+                "surname",
+                "username",
+                "email",
+                "wristbandColor",
+              ],
+              properties: {
+                ...schemas.player.properties,
+                ...schemas.wristband.properties,
+              },
+            },
+          },
+        }),
+      ),
+    },
     alias: "player/register",
     pub: prefix("player/registration"),
     sub: prefix("player/registration/response"),
@@ -58,21 +99,26 @@ const registrationTopics = {
   scanWristband: {
     schema: {
       req: null,
-      res: ajv.compile(
-        deepmerge(schemas.response, {
-          additionalProperties: false,
-          required: [
-            "timestamp",
-            "result",
-            "wristbandNumber",
-            "wristbandColor",
-          ],
-          properties: {
-            wristbandNumber: schemas.wristband.properties.wristbandNumber,
-            wristbandColor: schemas.wristband.properties.wristbandColor,
+      res: ajv.compile({
+        additionalProperties: false,
+        required: ["unsubed", "wristband"],
+        properties: {
+          unsubed: { type: "boolean" },
+          wristband: {
+            type: "object",
+            required: [
+              "timestamp",
+              "result",
+              "wristbandNumber",
+              "wristbandColor",
+            ],
+            properties: {
+              ...schemas.response.properties,
+              ...schemas.wristband.properties,
+            },
           },
-        }),
-      ),
+        },
+      }),
     },
     alias: "wristband/scan",
     pub: null,

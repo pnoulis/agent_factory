@@ -2,12 +2,12 @@ import { Eventful } from "../Eventful.js";
 
 function createTask(task) {
   const events = new Eventful([
-    "precmd",
-    "postcmd",
+    "pretask",
+    "postask",
+    "queued",
     "pending",
     "fulfilled",
     "rejected",
-    "settled",
     "stateChange",
   ]);
 

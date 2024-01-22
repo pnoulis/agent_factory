@@ -1,15 +1,18 @@
 /*
   Errors levels:
 
+  fatal (loglevel = fatal):
+  Indicates an error that should cause the application to shutdown.
+
   error (loglevel = error):
-  Indicates an error that is not part of the application's normal flow nor is it expected.
+  Indicates an unexpected error.
 
   warn (loglevel = warn):
-  Indicates an error that is not part of the application's normal flow but is expected.
+  Indicates an expected error.
 
   info (loglevel = informational):
   Indicates an error that is part of the application's normal flow. Such errors
-  are thrown by design and are intended to be consumed by the Entities.
+  are thrown by design and are intended to be consumed by clients.
 
  */
 
@@ -36,24 +39,14 @@ function createUnexpectedErr(cause) {
   );
 }
 
-function createAPIReqErr(validationErrors) {
+function createValidationErr(validationErrors, opts) {
   return createError(
-    "warn",
-    "Invalid API request",
+    opts.level || "warn",
+    opts.msg || "Validation error",
     ERR_CODES.EINVALID,
     "EINVALID",
     validationErrors,
   );
 }
 
-function createAPIResErr(validationErrors) {
-  return createError(
-    "error",
-    "Invalid API Response",
-    ERR_CODES.EINVALID,
-    "EINVALID",
-    validationErrors,
-  );
-}
-
-export { createUnexpectedErr, createAPIReqErr, createAPIResErr };
+export { createUnexpectedErr, createValidationErr };

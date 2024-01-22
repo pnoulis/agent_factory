@@ -1,3 +1,5 @@
+import { isFunction } from "js_utils/misc";
+
 class Eventful {
   constructor(events = []) {
     this.events = {
@@ -12,20 +14,41 @@ Eventful.prototype.addEvent = function (event) {
   this.events[event] ??= [];
   return this.events[event];
 };
-Eventful.prototype.on = function (event, listener) {
-  this.addEvent(event).push({
-    listener,
+
+Eventful.prototype.on = function (event, options, listener) {
+  if (isFunction(options)) {
+    listener = options;
+    options = {};
+  }
+  const opts = {
     persist: true,
-  });
-  return this;
-};
-Eventful.prototype.once = function (event, listener) {
-  this.addEvent(event).push({
+    reverse: false,
     listener,
-    persist: false,
-  });
+    ...options,
+  };
+  const listeners = this.addEvent(event);
+
+  if (opts.reverse) {
+    this.events[event] = [opts, ...listeners];
+  } else {
+    listeners.push(opts);
+  }
   return this;
 };
+Eventful.prototype.onReverse = function (event, listener) {
+  return this.on(event, { persist: true, reverse: true }, listener);
+};
+
+Eventful.prototype.once = function (event, options, listener) {
+  return isFunction(options)
+    ? this.on(event, { persist: false, reverse: false }, options)
+    : this.on(event, { persist: false, reverse: false, ...options }, listener);
+};
+
+Eventful.prototype.onceReverse = function (event, listener) {
+  return this.on(event, { persist: false, reverse: true }, listener);
+};
+
 Eventful.prototype.emit = function (event, ...args) {
   if (event === "error" && this.events.error.length < 1) throw args[0];
   const nextevents = [];

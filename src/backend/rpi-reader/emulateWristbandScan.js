@@ -1,6 +1,6 @@
 function emulateWristbandScan({ id, color }) {
   return this.publish(
-    "scan",
+    "read",
     {
       timestamp: Date.now(),
       wristbandNumber: id,

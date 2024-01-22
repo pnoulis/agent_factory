@@ -2,10 +2,16 @@ import { compose } from "./compose.js";
 
 const afm = {
   createCommand(task, cb) {
-    const afm = this;
-    const cmd = Object.create(task);
-    cmd.value = function () {};
-    cmd.target = function () {};
+    const cmd = new Promise((resolve, reject) => {
+      cmd.resolve = resolve;
+      cmd.reject = reject;
+    });
+
+    cmd.task = task;
+    cmd.afm = this;
+    cmd.req = null;
+    cmd.res = {};
+    cmd.err = null;
 
     setImmediate(() => {
       const precmd = [...afm.events.precmd];
@@ -14,23 +20,22 @@ const afm = {
       const postask = [...task.events.postask];
       const postcmd = [...afm.events.postcmd];
 
-      async function comm(ctx) {
-        await compose([pretask, thetask, postask])({
-          cmd,
-          ctx,
-        })
+      cmd.run = function (ct) {
+        return compose([precmd, pretask, thetask])(cmd)
           .then(
-            (ctx) => {
-              return Promise.resolve(task.targetcb(ctx.target()));
-            },
+            () => Promise.resolve(cmd.resolve(cmd.toClient(cmd))),
             (err) => {
-              return Promise.reject(task.onFailure(err, ctx, task.targetcb));
+              cmd.reject(err);
+              throw err;
             },
           )
-          .then(() => {
-            return Promise.resolve(task.onSuccess(ctx));
-          });
-      }
+          .then(
+            () => cmd.onSuccess(cmd),
+            (err) => cmd.onFailure(err, cmd),
+          )
+          .finally(() => compose([postask, postcmd](cmd)));
+      };
+      cb(cmd);
     });
     return cmd;
   },

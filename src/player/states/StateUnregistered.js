@@ -1,6 +1,5 @@
 class Unregistered {
-
-  static name = 'unregistered';
+  static name = "unregistered";
   static order = 0;
 
   constructor(player) {
@@ -15,5 +14,9 @@ class Unregistered {
     return Unregistered.order;
   }
 }
+
+Unregistered.prototype.register = async function (afm) {
+  const p = backend.registerPlayer(this);
+};
 
 export { Unregistered };

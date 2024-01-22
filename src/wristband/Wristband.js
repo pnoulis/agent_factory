@@ -1,30 +1,26 @@
 import { Eventful } from "../Eventful.js";
-import { WRISTBAND_COLORS } from "../constants.js";
+import { createStateful } from "../stateful.js";
 import { random } from "./random.js";
+import { Unpaired } from "./states/StateUnpaired.js";
+import { Pairing } from "./states/StatePairing.js";
+import { Paired } from "./states/StatePaired.js";
+import { normalize } from "./normalize.js";
+import { delay } from "js_utils/misc";
 
-class Wristband extends Eventful {
+class Wristband extends createStateful(Eventful, [Unpaired, Pairing, Paired]) {
   static random = random;
+  static normalize = normalize;
 
-  constructor(wristband) {
-    super(["change"]);
-    wristband ??= {};
-    this.id = wristband.id ?? wristband.wristbandNumber ?? null;
-    this.colorCode = wristband.colorCode ?? wristband.wristbandColor ?? null;
-    this.color = WRISTBAND_COLORS[this.colorCode] || null;
-  }
-  pair() {
-    debug(`pair: ${Wristband.name}`);
-  }
-  unpair() {
-    debug(`unpair: ${Wristband.name}`);
+  constructor(wristband = {}) {
+    super(["stateChange"]);
+    this.setState("unpaired");
+    this.normalize(wristband);
+    this.toggles = [];
   }
 
-  toggle() {
-    this.afmachine.wristbandScan();
-  }
-
-  random(sources, options) {
-    return Wristband.random(sources, options);
+  normalize(sources = [], options) {
+    const wristband = Wristband.normalize(sources[0]);
+    Object.assign(this, wristband);
   }
   fill(sources = [], options) {
     return Object.assign(this, Wristband.random([this, ...sources], options));
@@ -37,5 +33,19 @@ class Wristband extends Eventful {
     };
   }
 }
+
+Wristband.prototype.unscan = async function () {
+  await delay(0);
+  this.state.unpair();
+};
+
+Wristband.prototype.scan = async function (afm) {
+  const wristband = await afm.scanWristband();
+  this.state.pair(wristband);
+};
+
+Wristband.prototype.toggle = function (cb) {
+  return this.state.toggle();
+};
 
 export { Wristband };

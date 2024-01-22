@@ -15,14 +15,14 @@ class BackendRPIReader extends Backend {
       strict: strict ?? true,
     });
     this.deviceType = DEVICES.rpiReader;
-    this.deviceId = deviceId || ENV.DEVICE_ID;
+    this.deviceId = "ADMINISTRATION1Reader";
     this.roomName = roomName || ROOMS.administration1;
     this.registry.setParam("deviceId", this.deviceId);
   }
 }
 
 Object.assign(BackendRPIReader.prototype, {
-  scan: emulateWristbandScan,
+  read: emulateWristbandScan,
 });
 
 export { BackendRPIReader };

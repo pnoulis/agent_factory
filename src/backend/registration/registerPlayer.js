@@ -1,5 +1,5 @@
 function registerPlayer({
-  timestamp = "",
+  timestamp = Date.now(),
   username = "",
   surname = "",
   name = "",

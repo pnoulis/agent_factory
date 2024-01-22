@@ -1,5 +1,6 @@
 const stateful = {
   getState(state) {
+    if (!state) return this.state;
     for (const key of Object.keys(this.states)) {
       if (
         this.states[key].name === state ||
@@ -24,6 +25,9 @@ const stateful = {
   },
   forStates(fn) {
     Object.values(this.states).forEach(fn);
+  },
+  compareStates(fn) {
+    return fn(this.states, this.getState());
   },
 };
 
@@ -55,7 +59,11 @@ function createStateful(Baseclass, Stateclasses) {
   while (true) {
     i = Object.getPrototypeOf(i);
     if (!i.prototype) {
-      Object.assign(Stateful.prototype, stateful);
+      if (Baseclass.name === "Eventful") {
+        Object.assign(Stateful.prototype, stateful, stateventful);
+      } else {
+        Object.assign(Stateful.prototype, stateful);
+      }
       break;
     } else if ("states" in i.prototype) {
       break;

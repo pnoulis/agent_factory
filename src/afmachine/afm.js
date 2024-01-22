@@ -2,10 +2,11 @@ import { Eventful } from "../Eventful.js";
 import { compose } from "./compose.js";
 import { enqueue } from "./enqueue.js";
 import { listPkgs } from "./tasks/listPkgs.js";
+import { registerPlayer } from "./tasks/registerPlayer.js";
+import { scanWristband } from "./tasks/scanWristband.js";
 import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
 import { createTask } from "./createTask.js";
 import { isFunction } from "js_utils/misc";
-import { createUnexpectedErr } from "../errors.js";
 
 class Afm extends Eventful {
   constructor() {
@@ -15,10 +16,9 @@ class Afm extends Eventful {
       "error",
       "precmd",
       "postcmd",
-      "command",
-      "commandStarted",
-      "commandFinished",
-      "commandAborted",
+      "cmd",
+      "cmdstart",
+      "cmdend",
     ]);
     this.commandQueue = [];
     this.backend = new BackendRegistration();
@@ -26,78 +26,73 @@ class Afm extends Eventful {
 }
 
 Afm.prototype.listPkgs = createTask(listPkgs);
+Afm.prototype.registerPlayer = createTask(registerPlayer);
+Afm.prototype.scanWristband = createTask(scanWristband);
 
-Afm.prototype.createCommand = function (task, cb, ctx) {
-  const cmd = Object.create(task);
-  cmd.ctx = Object.assign({ req: {}, res: {}, error: null }, ctx);
-  cmd.targetcb = cb;
+Afm.prototype.createCommand = function (task, cb, args) {
+  return new Promise((resolve, reject) => {
+    task.afm = this;
+    const cmd = Object.create(task);
+    Object.assign(cmd, {
+      state: null,
+      args: args ?? null,
+      req: {},
+      res: {},
+      raw: null,
+      errs: [],
+    });
+    setImmediate(() => {
+      const middleware = compose(
+        [
+          ...afm.events.precmd,
+          ...task.events.pretask,
+          async (ctx, next) => {
+            try {
+              await compose(task.middleware)(ctx);
+              await Promise.resolve(resolve(ctx.toClient(ctx)));
+              return next();
+            } catch (err) {
+              reject(err);
+              throw err;
+            }
+          },
+          ...task.events.postask,
+          ...afm.events.postcmd,
+        ].map((fn) => (fn.listener ? fn.listener : fn)),
+      );
 
-  cmd.value = function () {
-    if (!Object.hasOwn(cmd, "__value")) {
-      cmd.__value = new Promise(function (resolve, reject) {
-        cmd.__resolve = resolve;
-        cmd.__reject = reject;
-      });
-    }
-    return Promise.resolve(cmd.__value);
-  };
+      cmd.run = async function () {
+        try {
+          afm.emit("cmdstart", cmd);
+          await middleware(cmd);
+          cmd.onSuccess(cmd);
+        } catch (err) {
+          cmd.onFailure(err, cmd);
+          afm.emit("error", cmd);
+        } finally {
+          afm.emit("cmdend", cmd);
+        }
+      };
+      cb(cmd);
+    });
 
-  // This function operates under the assumption that it will be invoked by afm
-  // asynchronously.
-  cmd.run = function () {
-    // pre task middleware
-    const precmd = task.events.precmd;
-    task.events.precmd = cmd.precmd.filter((handler) => handler.persist);
-
-    // task middleware
-
-    // post task middleware
-  };
-
-  // pre task middleware
-  cmd.precmd = task.events.precmd;
-  task.events.precmd = cmd.precmd.filter((handler) => handler.persist);
-
-  // task middleware
-  // at task.middleware or cmd.middleware
-
-  // post task middleware
-  cmd.postcmd = task.events.postcmd;
-  task.events.postcmd = cmd.postcmd.filter((handler) => handler.persist);
-
-  return cmd;
+    return cmd;
+  });
 };
 
-Afm.prototype.run = async function (task, cb) {
-  try {
-    const precmd = task.task.events.precmd;
-    task.task.events.precmd = precmd.filter((handler) => handler.persist);
-    const postcmd = task.task.events.postcmd;
-    task.task.events.postcmd = postcmd.filter((handler) => handler.persist);
-    const cmd = async function (ctx, next) {
-      await enqueue(ctx.afm.commandQueue, () => compose(task.middleware)(ctx));
-      await Promise.resolve(cb(null, ctx));
-      return next();
-    };
-
-    try {
-      await compose([].concat(precmd, cmd, postcmd))(task);
-      task.task.onSuccess(task);
-      task.task.emit("fulfilled", task);
-    } catch (err) {
-      await task.task.onFailure(err, task, cb);
-      task.task.emit("rejected", task);
-    }
-  } catch (err) {
-    task.error = createUnexpectedErr(err, task.error);
-    task.task.emit("rejected", task);
-    this.emit("error", task);
-  } finally {
-    task.task.emit("settled", task);
-    return task;
+Afm.prototype.run = async function (cmd, { queue = true } = {}) {
+  cmd.onQueued(cmd);
+  this.emit("cmd", cmd);
+  if (!queue) {
+    cmd.run();
+  } else {
+    enqueue(this.commandQueue, cmd.run);
   }
 };
 
+process.on("unhandledRejection", (err, promise) => {
+  console.log("unhandled rejection");
+});
 const afm = new Afm();
 
 export { afm };

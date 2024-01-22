@@ -228,3 +228,14 @@ A Player instance
 The player hook is a wrapper to the Player class. The hook exposes the player's
 interface to
 
+
+* AFM Command pattern
+
+target: entities
+command: afm.task();
+invoker: afm
+client: UI, React Component
+
+
+entities register through afm.
+

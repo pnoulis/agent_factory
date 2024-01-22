@@ -1,8 +1,10 @@
 import { Eventful } from "../Eventful.js";
 import { random } from "./random.js";
+import { normalize } from "./normalize.js";
 
 class Player extends Eventful {
   static random = random;
+  static normalize = normalize;
 
   constructor(player) {
     super(["change"]);
@@ -13,20 +15,8 @@ class Player extends Eventful {
     this.email = player.email || "";
     this.password = player.password || "";
   }
-  static normalize(player) {
-    const _player = {
-      username: player.username || "",
-      name: player.name || "",
-      surname: player.surname || "",
-      email: player.email || "",
-      password: player.password || "",
-    };
-    return _player;
-  }
-  register() {}
-  random(sources, options) {
-    return Player.random(sources, options);
-  }
+
+  normalize(sources, options) {}
   fill(sources = [], options) {
     return Object.assign(this, Player.random([this, ...sources], options));
   }

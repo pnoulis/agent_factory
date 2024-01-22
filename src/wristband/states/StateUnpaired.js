@@ -13,6 +13,17 @@ class Unpaired {
   get order() {
     return Unpaired.order;
   }
+
+  pair(wristband) {
+    throw new Error("Wristband is not in pairing mode");
+  }
+  unpair() {
+    throw new Error("Wristband is already unpaired");
+  }
+  toggle() {
+    this.setState("pairing");
+    return this.wristband.scan();
+  }
 }
 
 export { Unpaired };
