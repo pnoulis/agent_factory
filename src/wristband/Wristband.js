@@ -23,8 +23,8 @@ class Wristband extends createStateful(Eventful, [
     this.constructor.prototype.afm = afm;
     this.normalize(wristband);
     this.unsubscribe = null;
-    this.togglers = [];
-    this.togglers.i = 0;
+    this.listeners = [];
+    this.togglers = 0;
   }
 
   normalize(sources = [], options) {
@@ -59,15 +59,13 @@ Wristband.prototype.scan = async function () {
 };
 
 Wristband.prototype.notify = function (err) {
-  if (this.togglers.i > 0) return;
-  for (let i = 0; i < this.togglers.length; i++) {
-    this.togglers[i] && this.togglers[i](err, this);
+  this.togglers = this.togglers - 1;
+  if (this.togglers > 0) return;
+  for (let i = 0; i < this.listeners.length; i++) {
+    this.listeners[i] && this.listeners[i](err, this);
   }
-  if (err) {
-    this.emit("error", err, this);
-  }
-  this.togglers = [];
-  this.togglers.i = 0;
+  this.listeners = [];
+  this.togglers = 0;
 };
 
 Wristband.prototype.pair = async function () {
@@ -75,9 +73,9 @@ Wristband.prototype.pair = async function () {
   try {
     await this.scan();
   } catch (err) {
+    this.emit("error", err, this);
     error = err;
   } finally {
-    this.togglers.i = this.togglers.i - 1;
     this.notify(error);
   }
 };
@@ -87,16 +85,16 @@ Wristband.prototype.unpair = async function () {
   try {
     await this.unscan();
   } catch (err) {
+    this.emit("error", err, this);
     error = err;
   } finally {
-    this.togglers.i = this.togglers.i - 1;
     this.notify(error);
   }
 };
 
 Wristband.prototype.toggle = function (cb) {
-  this.togglers.push(cb);
-  this.togglers.i = this.togglers.i + 1;
+  this.listeners.push(cb);
+  this.togglers = this.togglers + 1;
   setImmediate(() => this.state.toggle());
 };
 
