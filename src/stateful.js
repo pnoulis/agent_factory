@@ -1,13 +1,21 @@
+import { unique } from "js_utils/misc";
+
+/*
+  TODO: maybe check for the existence of the
+  State.name and State.order getters. If not they should
+  be defined dynamically or throw an Error.
+ */
+
 const stateful = {
   getState(state) {
     if (!state) return this.state;
-    for (const key of Object.keys(this.states)) {
+    for (const state of Object.keys(this.states)) {
       if (
-        this.states[key].name === state ||
-        this.states[key].order === state ||
-        this.states[key] === state
+        this.states[state].name === state ||
+        this.states[state].order === state ||
+        this.states[state] === state
       ) {
-        return this.states[key];
+        return this.states[state];
       }
     }
     return null;
@@ -15,7 +23,7 @@ const stateful = {
   setState(state) {
     const nstate = this.getState(state);
     if (!nstate) {
-      throw new Error(`Non-existent state:${state}`);
+      throw new Error(`Missing state: ${state}`);
     }
     this.state = nstate;
     return this;
@@ -25,6 +33,7 @@ const stateful = {
   },
   forStates(fn) {
     Object.values(this.states).forEach(fn);
+    return this;
   },
   compareStates(fn) {
     return fn(this.states, this.getState());
@@ -35,45 +44,60 @@ const stateventful = {
   setState(state) {
     const nstate = this.getState(state);
     if (!nstate) {
-      // throws if no there are no listeners
-      this.emit("error", new Error(`Non-existent state:${state}`));
+      this.emit("error", new Error(`Missincg state: ${state}`));
     }
     const ostate = this.state;
-    this.state = nstate;
-    this.emit("stateChange", nstate?.name, ostate?.name, this);
+    if (nstate !== ostate) {
+      this.state = nstate;
+      this.emit("stateChange", nstate?.name, ostate?.name, this);
+    }
     return this;
   },
 };
 
-function createStateful(Baseclass, Stateclasses) {
-  class Stateful extends Baseclass {
-    constructor(...args) {
-      super(...args);
-      this.states = {};
-      for (const State of Object.values(this.constructor.prototype.states)) {
-        this.states[State.name] = new State(this);
-      }
+function createStateful(Base, States) {
+  function Stateful() {
+    this.state = null;
+    this.states = {};
+    for (const State of this.States) {
+      this.states[State.name] = new State(this);
     }
   }
-  let i = Baseclass;
-  while (true) {
-    i = Object.getPrototypeOf(i);
-    if (!i.prototype) {
-      if (Baseclass.name === "Eventful") {
-        Object.assign(Stateful.prototype, stateful, stateventful);
-      } else {
-        Object.assign(Stateful.prototype, stateful);
-      }
-      break;
-    } else if ("states" in i.prototype) {
-      break;
+  if (typeof Base === "function") {
+    Object.setPrototypeOf(Stateful.prototype, Base.prototype);
+  } else {
+    States = Base;
+  }
+
+  let proto = Object.getPrototypeOf(Stateful.prototype);
+  let protoEventful = false;
+  const protoStates = [];
+
+  while (proto) {
+    // If it walks like a duck and it quacks like a duck, then it
+    // must be a duck.
+    // https://en.wikipedia.org/wiki/Duck_typing
+
+    // Uncomment to inherit Base class States.
+    // The problem with inheriting Base class States is that the logical order
+    // of the States statically defined through the getter State.order may get
+    // broken. (almost certainly).
+    // if (Object.hasOwn(proto, "States")) {
+    //   protoStates.push(...proto.States);
+    // }
+
+    if (Object.hasOwn(proto, "emit")) {
+      protoEventful = true;
     }
+    proto = Object.getPrototypeOf(proto);
   }
-  Stateful.prototype.states = Object.assign({}, i.prototype?.states);
-  for (i = 0; i < Stateclasses.length; i++) {
-    Stateful.prototype.states[Stateclasses[i].name] = Stateclasses[i];
-  }
+
+  Object.assign(Stateful.prototype, stateful, protoEventful && stateventful);
+  Stateful.prototype.States = unique(
+    [].concat(States, protoStates).filter((State) => !!State),
+  );
+
   return Stateful;
 }
 
-export { stateful, stateventful, createStateful };
+export { createStateful };
