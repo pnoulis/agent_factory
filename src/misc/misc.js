@@ -10,4 +10,14 @@ function mergec(...classes) {
   return _class.trim();
 }
 
-export { mergec };
+function inspectProtoChain(obj) {
+  let proto = obj.prototype ?? Object.getPrototypeOf(obj);
+  const chain = [];
+  while (proto) {
+    chain.push(proto.constructor.name);
+    proto = Object.getPrototypeOf(proto);
+  }
+  return chain;
+}
+
+export { mergec, inspectProtoChain };
