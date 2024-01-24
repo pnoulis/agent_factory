@@ -1,5 +1,5 @@
 import { Eventful } from "../Eventful.js";
-import { createStateful } from "../stateful.js";
+import { createStateful } from "../Stateful.js";
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
 import { Unregistered } from "./states/StateUnregistered.js";
@@ -46,6 +46,10 @@ class Player extends createStateful(Eventful, [
     if (err) {
       this.emit("error", err, this);
     }
+  }
+
+  register() {
+    return this.afm.register(this);
   }
 
   toggleWristband(cb) {

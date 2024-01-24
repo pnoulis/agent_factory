@@ -17,7 +17,21 @@ function inspectProtoChain(obj) {
     chain.push(proto.constructor.name);
     proto = Object.getPrototypeOf(proto);
   }
+  console.log(chain);
   return chain;
 }
 
-export { mergec, inspectProtoChain };
+function inspectProps(obj) {
+  if (obj == null) return;
+  for (const prop in obj) {
+    console.log(prop);
+  }
+}
+
+function extendProto(target, source) {
+  for (const fn of Object.keys(source)) {
+    target.prototype[fn] = source[fn];
+  }
+}
+
+export { mergec, inspectProtoChain, extendProto, inspectProps };

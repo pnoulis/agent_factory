@@ -74,17 +74,19 @@ function isEventful(obj) {
   return true;
 }
 
-function createEventful(Base) {
-  Base ??= Object.prototype.constructor;
+function createEventful(Base, events) {
+  if (typeof Base !== "function") {
+    events = Base;
+    Base = Object.prototype.constructor;
+  }
+  events ??= [];
 
   class Eventful extends Base {
-    constructor(events, ...args) {
+    constructor(...args) {
       super(...args);
-      this.events = {
-        error: [],
-      };
+      this.events = { error: [] };
       for (const e of events) {
-        this.events[e] = [];
+        this.addEvent(e);
       }
     }
   }
@@ -95,7 +97,8 @@ function createEventful(Base) {
     }
   }
 
+  if (this) return new Eventful();
   return Eventful;
 }
 
-export { createEventful, isEventful };
+export { createEventful, eventful, isEventful };

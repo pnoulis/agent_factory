@@ -1,68 +1,68 @@
+import { delay } from "js_utils/misc";
+import { Task } from "../Task.js";
 import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendRegistrationRouteInfo.js";
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
+import { PlayerTarget } from "../../player/thin/PlayerTarget.js";
 
-function task(player, opts) {
+const registerPlayer = new Task("registerPlayer", Command);
+
+function Command(player, opts) {
   const afm = this;
-  return afm.createCommand(
-    task,
-    (cmd) => {
-      afm.run(cmd, opts);
+  const p = new PlayerTarget(player, player?.wristband);
+  afm.players.set(p.username, p);
+  const promise = Command.createCommand(
+    afm,
+    {
+      args: { player: p.tobject() },
+      opts,
     },
-    { player },
+    (cmd) => {
+      afm.runCommand(cmd);
+    },
   );
+  return promise;
 }
-task.taskname = "registerPlayer";
-task.middleware = [
+
+Command.middleware = [
+  async (ctx, next) => {
+    try {
+      const player = ctx.afm.players.get(ctx.args.player.username);
+      if (!player) {
+        throw new Error(`Missing ${ctx.args.player.username} from cache`);
+      }
+      player.register();
+      await next();
+      player.registered(player);
+      ctx.res = player.tobject();
+    } catch (err) {
+      throw err;
+    }
+  },
   attachBackendRegistrationRouteInfo,
   (ctx, next) => {
-    ctx.req = {
-      timestamp: Date.now(),
-      ...ctx.args.player,
-    };
+    ctx.req = { timestamp: ctx.t_start, ...ctx.args.player };
     return next();
   },
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerPlayer(ctx.args.player);
+    ctx.raw = await ctx.afm.backend.registerPlayer(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
 ];
-task.toClient = function (cmd) {
-  return cmd.raw;
+
+Command.onFailure = function () {
+  const cmd = this;
+  cmd.msg = "Failed to register new player";
+  cmd.reject(cmd);
 };
-task.onQueued = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "queued";
-  cmd.emit("queued", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-};
-task.onPending = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "pending";
-  cmd.emit("pending", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-};
-task.onSuccess = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "fulfilled";
-  cmd.msg = "Successfully registered player";
-  cmd.emit("fulfilled", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-  return cmd;
-};
-task.onFailure = function (err, cmd) {
-  const ostate = cmd.state;
-  cmd.state = "rejected";
-  cmd.msg = "Failed to register player";
-  cmd.res = err;
-  cmd.errs.push(err);
-  cmd.emit("rejected", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-  return cmd;
+Command.onSuccess = function () {
+  const cmd = this;
+  cmd.msg = "Successfully registered new player";
+  cmd.resolve(cmd.res);
 };
 
-export { task as registerPlayer };
+export { Command as registerPlayer };

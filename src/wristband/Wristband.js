@@ -1,5 +1,5 @@
 import { Eventful } from "../Eventful.js";
-import { createStateful } from "../stateful.js";
+import { createStateful } from "../Stateful.js";
 import { random } from "./random.js";
 import { Unpaired } from "./states/StateUnpaired.js";
 import { Pairing } from "./states/StatePairing.js";
@@ -18,13 +18,14 @@ class Wristband extends createStateful(Eventful, [
   static normalize = normalize;
 
   constructor(afm, wristband = {}) {
-    super(["stateChange"]);
-    this.setState("unpaired");
-    this.constructor.prototype.afm = afm;
-    this.normalize(wristband);
-    this.unsubscribe = null;
-    this.listeners = [];
-    this.togglers = 0;
+    super();
+    // super(["stateChange"]);
+    // this.setState("unpaired");
+    // this.constructor.prototype.afm = afm;
+    // this.normalize(wristband);
+    // this.unsubscribe = null;
+    // this.listeners = [];
+    // this.togglers = 0;
   }
 
   normalize(sources = [], options) {

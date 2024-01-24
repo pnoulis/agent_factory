@@ -33,4 +33,11 @@ InTeam.prototype.unpairWristband = function (cb) {
   );
 };
 
+InTeam.prototype.register = function () {
+  throw new Error("Trying to register a player in inTeam state");
+};
+InTeam.prototype.registered = function (player) {
+  throw new Error("Trying to register a player in inTeam state");
+};
+
 export { InTeam };

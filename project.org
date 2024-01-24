@@ -239,3 +239,37 @@ client: UI, React Component
 
 entities register through afm.
 
+
+
+* <2024-01-24 Wed>
+** Entities as the Command initializers
+The Commander entities initiate commands.
+
+Afm caches the Player that initiated a Command for a Task.
+Afm creates a Command out of the Task.
+
+
+The task middleware sequence contains:
+
+Player.task
+...middleware
+Player.taskCompleted
+
+
+*** The caches
+A Map is used to contain each of the command initiating entities such as:
+
+- player
+- team
+- wristband
+
+
+Map.get('entityId')
+Map.set('entityId', entity);
+
+*** The middleware
+
+if an error occurs anywhere in the middleware chain other than then postcmd 
+
+
+** Implement register player for fucks sake

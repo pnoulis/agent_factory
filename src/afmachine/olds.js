@@ -68,3 +68,67 @@ function enqueue(queue, cmd) {
     }
   });
 }
+
+Afm.prototype.createCommand = function (task, cb, args) {
+  return new Promise((resolve, reject) => {
+    task.afm = this;
+    const cmd = Object.create(task);
+    Object.assign(cmd, {
+      state: null,
+      args: args ?? null,
+      req: {},
+      res: {},
+      raw: null,
+      errs: [],
+    });
+    debug("Create command events");
+    debug(task.events);
+    return;
+    setImmediate(() => {
+      const middleware = compose(
+        [
+          ...afm.events.precmd,
+          ...task.events.pretask,
+          async (ctx, next) => {
+            try {
+              await compose(task.middleware)(ctx);
+              await Promise.resolve(resolve(ctx.toClient(ctx)));
+              return next();
+            } catch (err) {
+              reject(err);
+              throw err;
+            }
+          },
+          ...task.events.postask,
+          ...afm.events.postcmd,
+        ].map((fn) => (fn.listener ? fn.listener : fn)),
+      );
+
+      cmd.run = async function () {
+        try {
+          afm.emit("cmdstart", cmd);
+          await middleware(cmd);
+          cmd.onSuccess(cmd);
+        } catch (err) {
+          cmd.onFailure(err, cmd);
+          afm.emit("error", cmd);
+        } finally {
+          afm.emit("cmdend", cmd);
+        }
+      };
+      cb(cmd);
+    });
+
+    return cmd;
+  });
+};
+
+Afm.prototype.run = async function (cmd, { queue = true } = {}) {
+  cmd.onQueued(cmd);
+  this.emit("cmd", cmd);
+  if (!queue) {
+    cmd.run();
+  } else {
+    enqueue(this.commandQueue, cmd.run);
+  }
+};

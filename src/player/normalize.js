@@ -1,3 +1,5 @@
+import { isObject } from "js_utils/misc";
+
 function normalize(player) {
   player ??= {};
   const _player = {
@@ -7,6 +9,7 @@ function normalize(player) {
     email: player.email || "",
     password: player.password || "",
   };
+  _player.state = player.state?.name ?? player.state ?? "";
   return _player;
 }
 

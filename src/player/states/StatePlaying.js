@@ -33,4 +33,11 @@ Playing.prototype.unpairWristband = function (cb) {
   );
 };
 
+Playing.prototype.register = function () {
+  throw new Error("Trying to register a player in Playing state");
+};
+Playing.prototype.registered = function (player) {
+  throw new Error("Trying to register a player in Playing state");
+};
+
 export { Playing };

@@ -1,91 +1,87 @@
-import { Eventful } from "../Eventful.js";
+import "../debug.js";
+import { createEventful } from "../Eventful.js";
 import { compose } from "./compose.js";
 import { enqueue } from "./enqueue.js";
-import { listPkgs } from "./tasks/listPkgs.js";
+// import { listPkgs } from "./tasks/listPkgs.js";
 import { registerPlayer } from "./tasks/registerPlayer.js";
-import { scanWristband } from "./tasks/scanWristband.js";
+// import { scanWristband } from "./tasks/scanWristband.js";
 import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
-import { createTask } from "./createTask.js";
 
-class Afm extends Eventful {
+class Afm extends createEventful([
+  "connected",
+  "disconnected",
+  "error",
+  "precmd",
+  "postcmd",
+  "cmdqueued",
+  "cmdstart",
+  "cmdend",
+]) {
   constructor() {
-    super([
-      "connected",
-      "disconnected",
-      "error",
-      "precmd",
-      "postcmd",
-      "cmd",
-      "cmdstart",
-      "cmdend",
-    ]);
+    super();
     this.commandQueue = [];
     this.backend = new BackendRegistration();
+    this.players = new Map();
+    this.wristbands = new Map();
+    this.teams = new Map();
+    this.commands = 0;
   }
 }
 
-Afm.prototype.listPkgs = createTask(listPkgs);
-Afm.prototype.registerPlayer = createTask(registerPlayer);
-Afm.prototype.scanWristband = createTask(scanWristband);
+Afm.prototype[registerPlayer.taskname] = registerPlayer;
+// Afm.prototype.listPkgs = createTask(listPkgs);
+// Afm.prototype.registerPlayer = createTask(registerPlayer);
+// Afm.prototype.scanWristband = createTask(scanWristband);
 
-Afm.prototype.createCommand = function (task, cb, args) {
-  return new Promise((resolve, reject) => {
-    task.afm = this;
-    const cmd = Object.create(task);
-    Object.assign(cmd, {
-      state: null,
-      args: args ?? null,
-      req: {},
-      res: {},
-      raw: null,
-      errs: [],
-    });
-    setImmediate(() => {
-      const middleware = compose(
-        [
-          ...afm.events.precmd,
-          ...task.events.pretask,
-          async (ctx, next) => {
-            try {
-              await compose(task.middleware)(ctx);
-              await Promise.resolve(resolve(ctx.toClient(ctx)));
-              return next();
-            } catch (err) {
-              reject(err);
-              throw err;
-            }
-          },
-          ...task.events.postask,
-          ...afm.events.postcmd,
-        ].map((fn) => (fn.listener ? fn.listener : fn)),
-      );
+Afm.prototype.enqueueCommand = async function (cmd) {
+  this.commandQueue.push(cmd);
+  cmd.queued();
+  this.emit("cmdqueued", cmd);
+  if (this.commandQueue.length > 1) return Promise.resolve();
 
-      cmd.run = async function () {
-        try {
-          afm.emit("cmdstart", cmd);
-          await middleware(cmd);
-          cmd.onSuccess(cmd);
-        } catch (err) {
-          cmd.onFailure(err, cmd);
-          afm.emit("error", cmd);
-        } finally {
-          afm.emit("cmdend", cmd);
-        }
-      };
-      cb(cmd);
-    });
-
-    return cmd;
-  });
+  async function runQueue(queue, fn) {
+    if (!queue[0]) return;
+    await fn(queue[0]);
+    queue.shift();
+    runQueue(queue, fn);
+  }
+  return runQueue(this.commandQueue, this.runCommand.bind(this));
 };
 
-Afm.prototype.run = async function (cmd, { queue = true } = {}) {
-  cmd.onQueued(cmd);
-  this.emit("cmd", cmd);
-  if (!queue) {
-    cmd.run();
+Afm.prototype.runCommand = async function (cmd) {
+  const { queue = true } = cmd.opts;
+
+  if (queue) {
+    if (cmd.state !== "queued") {
+      this.commands = this.commands + 1;
+      return this.enqueueCommand(cmd);
+    }
   } else {
-    enqueue(this.commandQueue, cmd.run);
+    this.commands = this.commands + 1;
+  }
+
+  try {
+    this.emit("cmdstart", cmd);
+
+    // This registered error handler ensures
+    // that an error will not result
+    // in an unhandled exception.
+    cmd.promise.catch(() => {});
+
+    await cmd.run();
+  } catch (err) {
+    cmd.errs.push(err);
+  } finally {
+    this.commands = this.commands - 1;
+    if (this.commands <= 0) {
+      this.players.clear();
+      this.wristbands.clear();
+      this.teams.clear();
+    }
+    this.emit("cmdend", cmd);
+    if (cmd.errs.length > 0) {
+      this.emit("error", cmd);
+    }
   }
 };
 

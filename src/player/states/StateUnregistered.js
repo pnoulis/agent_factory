@@ -23,4 +23,11 @@ Unregistered.prototype.unpairWristband = function (cb) {
   this.wristband.toggle(cb);
 };
 
+Unregistered.prototype.register = function () {
+  return this;
+};
+Unregistered.prototype.registered = function () {
+  return this.player.setState("registered");
+};
+
 export { Unregistered };

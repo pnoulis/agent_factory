@@ -3,13 +3,14 @@ import { isEventful } from "./Eventful.js";
 const stateful = {
   getState(state) {
     if (!state) return this.state;
-    for (const state of Object.keys(this.states)) {
+    if (Object.hasOwn("name", state)) state = state.name;
+    for (const s of Object.keys(this.states)) {
       if (
-        this.states[state].name === state ||
-        this.states[state].order === state ||
-        this.states[state] === state
+        this.states[s].name === state ||
+        this.states[s].order === state ||
+        this.states[s] === state
       ) {
-        return this.states[state];
+        return this.states[s];
       }
     }
     return null;
@@ -91,4 +92,4 @@ function createStateful(Base, States) {
   return Stateful;
 }
 
-export { createStateful, isStateful };
+export { createStateful, stateventful, stateful, isStateful };

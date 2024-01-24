@@ -1,7 +1,8 @@
-import { Eventful } from "../Eventful.js";
+import { createEventful } from "../Eventful.js";
+import { inspectProps, inspectProtoChain } from "../misc/misc.js";
 
 function createTask(task) {
-  const events = new Eventful([
+  const events = new createEventful([
     "pretask",
     "postask",
     "queued",
@@ -11,7 +12,12 @@ function createTask(task) {
     "stateChange",
   ]);
 
+  debug(events);
   Object.setPrototypeOf(task, events);
+  inspectProps(events);
+  inspectProtoChain(events);
+  debug("create task");
+  process.exit();
   return task;
 }
 
