@@ -15,17 +15,17 @@ class Registered {
   }
 }
 
-Registered.prototype.pairWristband = function () {
-  this.wristband.toggle(cb);
-};
-Registered.prototype.unpairWristband = function () {
-  this.wristband.toggle(cb);
-};
 Registered.prototype.register = function () {
-  throw new Error("Trying to register a player in registered state");
+  this.player.throwStateErr("register");
 };
 Registered.prototype.registered = function (player) {
-  throw new Error("Trying to register a player in registered state");
+  this.player.throwStateErr("registered", true, player);
+};
+Registered.prototype.pairWristband = function () {
+  return this;
+};
+Registered.prototype.unpairWristband = function () {
+  return this;
 };
 
 export { Registered };

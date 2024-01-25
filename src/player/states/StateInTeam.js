@@ -1,5 +1,5 @@
 class InTeam {
-  static name = "inteam";
+  static name = "inTeam";
   static order = 2;
 
   constructor(player) {
@@ -15,29 +15,17 @@ class InTeam {
   }
 }
 
-InTeam.prototype.pairWristband = function (cb) {
-  this.player.notify(
-    new Error(
-      `Trying to pair ${this.username} player's wristband in inTeam state`,
-    ),
-    cb,
-  );
-};
-
-InTeam.prototype.unpairWristband = function (cb) {
-  this.player.notify(
-    new Error(
-      `Trying to unpair ${this.username} player's wristband in inTeam state`,
-    ),
-    cb,
-  );
-};
-
 InTeam.prototype.register = function () {
-  throw new Error("Trying to register a player in inTeam state");
+  this.player.throwStateErr("register");
 };
 InTeam.prototype.registered = function (player) {
-  throw new Error("Trying to register a player in inTeam state");
+  this.player.throwStateErr("registered", true, player);
+};
+InTeam.prototype.pairWristband = function () {
+  this.player.throwStateErr("pair a wristband to");
+};
+InTeam.prototype.unpairWristband = function () {
+  this.player.throwStateErr("unpair a wristband from");
 };
 
 export { InTeam };

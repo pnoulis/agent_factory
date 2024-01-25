@@ -15,29 +15,17 @@ class Playing {
   }
 }
 
-Playing.prototype.pairWristband = function (cb) {
-  this.player.notify(
-    new Error(
-      `Trying to pair ${this.username} player's wristband in playing state`,
-      cb,
-    ),
-  );
-};
-
-Playing.prototype.unpairWristband = function (cb) {
-  this.player.notify(
-    new Error(
-      `Trying to unpair ${this.username} player's wristband in playing state`,
-      cb,
-    ),
-  );
-};
-
 Playing.prototype.register = function () {
-  throw new Error("Trying to register a player in Playing state");
+  this.player.throwStateErr("register");
 };
 Playing.prototype.registered = function (player) {
-  throw new Error("Trying to register a player in Playing state");
+  this.player.throwStateErr("registered", true, player);
+};
+Playing.prototype.pairWristband = function () {
+  this.player.throwStateErr("pair a wristband to");
+};
+Playing.prototype.unpairWristband = function () {
+  this.player.throwStateErr("unpair a wristband from");
 };
 
 export { Playing };

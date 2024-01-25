@@ -97,7 +97,7 @@ function createEventful(Base, events) {
     }
   }
 
-  if (this) return new Eventful();
+  // if (this) return new Eventful();
   return Eventful;
 }
 

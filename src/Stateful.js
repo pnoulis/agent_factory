@@ -1,18 +1,29 @@
 import { isEventful } from "./Eventful.js";
+import { isNumber, isObject } from "js_utils/misc";
 
 const stateful = {
   getState(state) {
-    if (!state) return this.state;
-    if (Object.hasOwn("name", state)) state = state.name;
+    // state should be either
+    // 1. Number
+    // 2. String
+    // 3. State Object such as { order: number, name: string }
+    // 4. null
+    const _s = isObject(state)
+      ? state.name
+      : state === 0
+        ? state
+        : state || this.state;
+
     for (const s of Object.keys(this.states)) {
       if (
-        this.states[s].name === state ||
-        this.states[s].order === state ||
-        this.states[s] === state
+        this.states[s].name === _s ||
+        this.states[s].order === _s ||
+        this.states[s] === _s
       ) {
         return this.states[s];
       }
     }
+
     return null;
   },
   setState(state) {

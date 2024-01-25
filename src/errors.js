@@ -1,16 +1,16 @@
 /*
-  Errors levels:
+  Errors severity:
 
-  fatal (loglevel = fatal):
+  fatal (log level = fatal):
   Indicates an error that should cause the application to shutdown.
 
-  error (loglevel = error):
+  error (log level = error):
   Indicates an unexpected error.
 
-  warn (loglevel = warn):
+  warn (log level = warn):
   Indicates an expected error.
 
-  info (loglevel = informational):
+  info (log level = informational):
   Indicates an error that is part of the application's normal flow. Such errors
   are thrown by design and are intended to be consumed by clients.
 
@@ -20,38 +20,73 @@ const ERR_CODES = {
   EUNEXPECTED: 0,
   EINVALID: 1,
   ESTATE: 2,
+  ECACHE: 3,
+  ESTATEPAST: 4,
 };
 
-function createError(level, msg, code, label, cause) {
+function createError(severity, msg, errCode, cause) {
+  const errLabel = Object.keys(ERR_CODES).find((label, i) => i === errCode);
+
+  if (errLabel === undefined) {
+    const err = new Error(`Missing ERR_CODE: '${errCode}'`, {
+      severity,
+      msg,
+      errCode,
+      cause,
+    });
+    err.code = ERR_CODES.EUNEXPECTED;
+    err.label = "UNEXPECTED";
+    err.severity = "fatal";
+    throw err;
+  }
+
   const err = new Error(msg, { cause });
-  err.code = code;
-  err.label = label;
-  err.level = level;
+  err.code = errCode;
+  err.label = errLabel;
+  err.severity = severity;
   return err;
 }
 
-function createUnexpectedErr(cause) {
+function createUnexpectedErr({ ...props } = {}) {
   return createError(
-    "error",
-    "Unexpected error",
-    ERR_CODES.EUNEXPECTED,
-    "UNEXPECTED",
-    cause,
+    props.severity || "error",
+    props.msg || "Unexpected error",
+    props.errCode ?? ERR_CODES.EUNEXPECTED,
+    { ...props },
   );
 }
 
-function createValidationErr(validationErrors, opts) {
+function createValidationErr({ validations, ...props } = {}) {
   return createError(
-    opts.level || "warn",
-    opts.msg || "Validation error",
-    ERR_CODES.EINVALID,
-    "EINVALID",
-    validationErrors,
+    props.severity || "warn",
+    props.msg || "Validation error",
+    props.errCode ?? ERR_CODES.EINVALID,
+    { validations, ...props },
   );
 }
 
-function createStateErr(msg, ...args) {
-  return createError("warn", msg || "State error", ERR_CODES.ESTATE);
+function createCacheErr({ cache, key, ...props } = {}) {
+  return createError(
+    props.severity || "error",
+    props.msg || `Missing key: '${key}' from cache: '${cache}'`,
+    props.errCode ?? ERR_CODES.ECACHE,
+    { cache, key, ...props },
+  );
 }
 
-export { createUnexpectedErr, createValidationErr, createStateErr };
+function createStateErr({ state, ...props } = {}) {
+  return createError(
+    props.severity || "warn",
+    props.msg || "State error",
+    props.errCode ?? ERR_CODES.ESTATE,
+    { state, ...props },
+  );
+}
+
+export {
+  createUnexpectedErr,
+  createValidationErr,
+  createStateErr,
+  createCacheErr,
+  ERR_CODES,
+};

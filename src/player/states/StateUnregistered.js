@@ -15,19 +15,17 @@ class Unregistered {
   }
 }
 
-Unregistered.prototype.pairWristband = function (cb) {
-  this.wristband.toggle(cb);
-};
-
-Unregistered.prototype.unpairWristband = function (cb) {
-  this.wristband.toggle(cb);
-};
-
 Unregistered.prototype.register = function () {
   return this;
 };
-Unregistered.prototype.registered = function () {
+Unregistered.prototype.registered = function (player) {
   return this.player.setState("registered");
+};
+Unregistered.prototype.pairWristband = function () {
+  return this;
+};
+Unregistered.prototype.unpairWristband = function () {
+  return this;
 };
 
 export { Unregistered };

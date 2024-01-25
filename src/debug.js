@@ -60,6 +60,7 @@ function logafm(afm) {
         cmd.t_start,
       ).toISOString()}`,
     );
+    console.dir(cmd.afm.players, { depth: 3 });
   });
 
   afm.on("cmdend", (cmd) => {
@@ -85,7 +86,7 @@ function logPlayer(player) {
   console.log(`surname: ${player?.surname}`);
   console.log(`email: ${player?.email}`);
   console.log(`password: ${player?.password}`);
-  console.log(`state: ${player?.getState().name}`);
+  console.log(`state: ${player?.getState()?.name}`);
   console.log(`states: ${player?.States.map((s) => s.name)}`);
   console.log("inheritance:");
   inspectProtoChain(player);
@@ -110,8 +111,15 @@ function logWristband(wristband) {
 
 function logent(entity) {
   if (!isObject(entity)) return false;
-  "username" in entity && logPlayer(entity);
-  "wristband" in entity && logWristband(entity.wristband);
+
+  if ("username" in entity) {
+    logPlayer(entity);
+  }
+  if ("wristband" in entity) {
+    logWristband(entity.wristband);
+  } else if ("colorCode" in entity) {
+    logWristband(entity);
+  }
   return true;
 }
 

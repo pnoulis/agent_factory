@@ -66,6 +66,7 @@ const registrationTopics = {
       ),
       res: ajv.compile(
         deepmerge(schemas.response, {
+          type: "object",
           additionalProperties: false,
           required: ["timestamp", "result", "player"],
           properties: {
@@ -100,6 +101,7 @@ const registrationTopics = {
     schema: {
       req: null,
       res: ajv.compile({
+        type: "object",
         additionalProperties: true,
         required: ["unsubed"],
         properties: {

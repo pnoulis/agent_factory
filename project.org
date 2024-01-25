@@ -1,3 +1,5 @@
+* tasks
+** TODO Player register() fn should need a password as input.
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
 control center of the application. All actions that touch multiple modules of
@@ -272,4 +274,12 @@ Map.set('entityId', entity);
 if an error occurs anywhere in the middleware chain other than then postcmd 
 
 
-** Implement register player for fucks sake
+** DONE Implement register player for fucks sake
+CLOSED: [2024-01-25 Thu 14:25]
+
+** TODO Implement player.pairWristband()
+** TODO Implement player.unpairWristband()
+** DONE Implement normalization algorithms
+CLOSED: [2024-01-25 Thu 17:27]
+
+** TODO Implement wristband toggle

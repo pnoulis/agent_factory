@@ -12,16 +12,23 @@ class PlayerCommander extends createEventful(Player) {
 
   async register() {
     try {
-      const registered = await this.afm.registerPlayer(this);
-      this.normalize(registered);
+      await this.afm.registerPlayer(this);
+      this.setState("registered");
     } catch (err) {
       this.emit("error", err);
     }
   }
 
-  async toggleWristband() {
+  async pairWristband() {
     try {
-      const toggled = await this.wristband.toggle(this);
+      await this.afm.pairWristband(this, this.wristband);
+    } catch (err) {
+      this.emit("error", err);
+    }
+  }
+  async unpairWristband() {
+    try {
+      await this.afm.unpairWristband(this, this.wristband);
     } catch (err) {
       this.emit("error", err);
     }

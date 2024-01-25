@@ -1,9 +1,19 @@
 import "../debug.js";
+import { createCacheErr } from "../errors.js";
 import { createEventful } from "../Eventful.js";
 import { compose } from "./compose.js";
 import { enqueue } from "./enqueue.js";
 // import { listPkgs } from "./tasks/listPkgs.js";
+
+// player tasks
 import { registerPlayer } from "./tasks/registerPlayer.js";
+import { pairWristband } from "./tasks/pairWristband.js";
+import { unpairWristband } from "./tasks/unpairWristband.js";
+
+// wristband tasks
+
+// list tasks
+
 // import { scanWristband } from "./tasks/scanWristband.js";
 import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
 
@@ -28,7 +38,11 @@ class Afm extends createEventful([
   }
 }
 
+// player tasks
 Afm.prototype[registerPlayer.taskname] = registerPlayer;
+Afm.prototype[pairWristband.taskname] = pairWristband;
+Afm.prototype[unpairWristband.taskname] = unpairWristband;
+
 // Afm.prototype.listPkgs = createTask(listPkgs);
 // Afm.prototype.registerPlayer = createTask(registerPlayer);
 // Afm.prototype.scanWristband = createTask(scanWristband);
@@ -47,7 +61,6 @@ Afm.prototype.enqueueCommand = async function (cmd) {
   }
   return runQueue(this.commandQueue, this.runCommand.bind(this));
 };
-
 Afm.prototype.runCommand = async function (cmd) {
   const { queue = true } = cmd.opts;
 
@@ -83,6 +96,22 @@ Afm.prototype.runCommand = async function (cmd) {
       this.emit("error", cmd);
     }
   }
+};
+Afm.prototype.getCache = function (cache, key, strict = true) {
+  if (!Object.hasOwn(this, cache)) {
+    throw createCacheErr({ cache, msg: `Unknown cache: ${cache}` });
+  }
+  const value = this[cache].get(key);
+  if (strict && value === undefined) {
+    throw createCacheErr({ cache, key });
+  }
+  return value;
+};
+Afm.prototype.setCache = function (cache, key, value) {
+  if (!Object.hasOwn(this, cache)) {
+    throw createCacheErr({ cache, msg: `Unknown cache: ${cache}` });
+  }
+  return this[cache].set(key, value);
 };
 
 const afm = new Afm();
