@@ -1,5 +1,5 @@
 import { ENV } from "./config.js";
-import { isObject } from "js_utils/misc";
+import { isObject, isArray } from "js_utils/misc";
 
 function trace(any) {
   if (ENV.LOGLEVEL !== "trace") return;
@@ -28,7 +28,7 @@ function logevents(eventful) {
     debug(`${entity.constructor.name} changed state: ${ostate} -> ${nstate}`);
   });
   eventful.on("error", (err) => {
-    console.log(err);
+    console.log(logcmd(err));
   });
 }
 
@@ -40,7 +40,6 @@ function logcmd(cmd) {
     state: cmd.state,
     req: cmd.req,
     res: cmd.res,
-    errs: cmd.errs,
     t_start: cmd.t_start,
     t_end: cmd.t_end,
     msg: cmd.msg,
@@ -50,30 +49,50 @@ function logcmd(cmd) {
 function logafm(afm) {
   if (ENV.LOGLEVEL === "silent") return;
 
-  afm.on("cmdqueued", (cmd) => {
-    console.log(`Command: ${cmd.taskname} queued`);
+  afm.on("cmdcreate", (cmd) => {
+    console.log(`CMD_CREATE: '${cmd.taskname}'`);
+    logcmd(cmd);
+    console.log(`CMD_CREATE: '${cmd.taskname}'`);
+    console.log("--------------------------------------------------");
+    console.log();
+    console.log();
+  });
+
+  afm.on("cmdqueue", (cmd) => {
+    console.log(`CMD_QUEUE: '${cmd.taskname}'`);
   });
 
   afm.on("cmdstart", (cmd) => {
-    console.log(
-      `Command: ${cmd.taskname} started at: ${new Date(
-        cmd.t_start,
-      ).toISOString()}`,
-    );
+    console.log(`CMD_START: '${cmd.taskname}'`);
+    logcmd(cmd);
     console.dir(cmd.afm.players, { depth: 3 });
+    console.log(`CMD_START: '${cmd.taskname}'`);
+    console.log("--------------------------------------------------");
+    console.log();
+    console.log();
   });
 
   afm.on("cmdend", (cmd) => {
-    console.log(
-      `Command: ${cmd.taskname} finished at: ${new Date(
-        cmd.t_end,
-      ).toISOString()}`,
-    );
+    console.log(`CMD_END: '${cmd.taskname}' ${cmd.state}`);
     logcmd(cmd);
+    console.log(`CMD_END: '${cmd.taskname}' ${cmd.state}`);
+    console.log("--------------------------------------------------");
+    console.log();
+    console.log();
   });
 
   afm.on("error", (cmd) => {
-    console.log(`Command: ${cmd.taskname} threw errors`);
+    console.log(`CMD_ERRORS: '${cmd.taskname}' ${cmd.state}`);
+    console.dir(cmd.errs, { depth: 10 });
+    console.log(`CMD_ERRORS: '${cmd.taskname}' ${cmd.state}`);
+    console.log("--------------------------------------------------");
+    console.log();
+    console.log();
+  });
+
+  afm.on("idle", (afm) => {
+    console.log("idle__:");
+    console.log(afm.history);
   });
 }
 
@@ -132,6 +151,10 @@ globalThis.logWristband = logWristband;
 globalThis.logent = logent;
 
 process.on("unhandledRejection", (err) => {
-  console.log("UNHANDLED: REJECTION");
-  console.log(err);
+  console.log("UNHANDLED_REJECTION:");
+  console.log(
+    isArray(err)
+      ? err.map((er) => er.msg ?? er.message)
+      : err.msg ?? err.message,
+  );
 });

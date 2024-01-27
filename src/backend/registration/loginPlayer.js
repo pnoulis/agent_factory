@@ -1,4 +1,4 @@
-function loginPlayer({ username, password } = {}) {
+function loginPlayer({ username = "", password = "" } = {}) {
   return this.publish("player/login", { username, password });
 }
 

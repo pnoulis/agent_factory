@@ -22,6 +22,10 @@ const ERR_CODES = {
   ESTATE: 2,
   ECACHE: 3,
   ESTATEPAST: 4,
+  EWRISTBAND_STATE: 5,
+  EWRISTBAND_STATE_CANCELS_OUT: 6,
+  EWRISTBAND_STATE_IMPOSSIBLE: 7,
+  EWRISTBAND_SCAN_LOCK: 8,
 };
 
 function createError(severity, msg, errCode, cause) {
@@ -56,12 +60,12 @@ function createUnexpectedErr({ ...props } = {}) {
   );
 }
 
-function createValidationErr({ validations, ...props } = {}) {
+function createValidationErr({ validationErrors, ...props } = {}) {
   return createError(
     props.severity || "warn",
     props.msg || "Validation error",
     props.errCode ?? ERR_CODES.EINVALID,
-    { validations, ...props },
+    { validationErrors, ...props },
   );
 }
 
@@ -84,6 +88,7 @@ function createStateErr({ state, ...props } = {}) {
 }
 
 export {
+  createError,
   createUnexpectedErr,
   createValidationErr,
   createStateErr,

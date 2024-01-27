@@ -5,22 +5,17 @@ import { validateBackendRequest } from "../middleware/validateBackendRequest.js"
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { PlayerTarget } from "../../player/thin/PlayerTarget.js";
-import { WristbandTarget } from "../../wristband/thin/WristbandTarget.js";
 
-new Task("unpairWristband", Command);
+new Task("registerPlayer", Command);
 
-function Command(player, wristband, opts) {
+function Command(player, opts) {
   const afm = this;
-  const wristbandTarget = new WristbandTarget(wristband);
-  const playerTarget = new PlayerTarget(player, wristbandTarget);
-  afm.setCache("players", playerTarget.username, playerTarget);
+  const target = new PlayerTarget(player, player?.wristband);
+  afm.setCache("players", target.username, target);
   const promise = Command.createCommand(
     afm,
     {
-      args: {
-        player: playerTarget.tobject(),
-        wristband: wristbandTarget.tobject(),
-      },
+      args: { player: player.tobject() },
       opts,
     },
     (cmd) => {
@@ -33,31 +28,37 @@ function Command(player, wristband, opts) {
 Command.middleware = [
   async (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
-    player.wristband.unpair();
-    player.unpairWristband();
+    player.register();
     return next();
   },
+  attachBackendRegistrationRouteInfo,
+  (ctx, next) => {
+    ctx.req = { timestamp: ctx.t_start, ...ctx.args.player };
+    return next();
+  },
+  validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await delay();
+    ctx.raw = await ctx.afm.backend.registerPlayer(ctx.req);
     return next();
   },
+  parseBackendResponse,
+  validateBackendResponse,
   (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
-    ctx.res.wristband = player.wristband.unpaired(ctx.args.wristband).tobject();
-    ctx.res.player = player.unpairedWristband().tobject();
+    ctx.res = player.registered().tobject();
     return next();
   },
 ];
 
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to unpair wristband from player";
+  cmd.msg = "Failed to register new player";
   cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully unpaired wristband from player";
+  cmd.msg = "Successfully registered new player";
   cmd.resolve(cmd.res);
 };
 
-export { Command as unpairWristband };
+export { Command as registerPlayer };

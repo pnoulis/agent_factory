@@ -28,9 +28,9 @@
 ### Built with
 
 ![java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
- ![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
- ![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
- ![vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 
 
 ## About
@@ -39,16 +39,8 @@
 ## Developing
 ## Contact
 
-- grigoris kolasis 
-  grigoris@iegroup.gr 
-  https://github.com/gregorykolasis
-  
-- pavlos kapoutsis
-  pavloskapoutsis@gmail.com 
-  https://github.com/IsThisRealLife
-
 - pavlos noulis
-  pnoulis@iegroup.gr 
+  pnoulis@iegroup.gr
   https://github.com/pnoulis
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>

@@ -1,9 +1,9 @@
 import "../debug.js";
+import { delay } from "js_utils/misc";
+import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
 import { createCacheErr } from "../errors.js";
 import { createEventful } from "../Eventful.js";
 import { compose } from "./compose.js";
-import { enqueue } from "./enqueue.js";
-// import { listPkgs } from "./tasks/listPkgs.js";
 
 // player tasks
 import { registerPlayer } from "./tasks/registerPlayer.js";
@@ -11,11 +11,11 @@ import { pairWristband } from "./tasks/pairWristband.js";
 import { unpairWristband } from "./tasks/unpairWristband.js";
 
 // wristband tasks
+import { scanWristband } from "./tasks/scanWristband.js";
+import { registerWristband } from "./tasks/registerWristband.js";
 
 // list tasks
-
-// import { scanWristband } from "./tasks/scanWristband.js";
-import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
+// import { listPkgs } from "./tasks/listPkgs.js";
 
 class Afm extends createEventful([
   "connected",
@@ -23,9 +23,11 @@ class Afm extends createEventful([
   "error",
   "precmd",
   "postcmd",
-  "cmdqueued",
+  "cmdcreate",
+  "cmdqueue",
   "cmdstart",
   "cmdend",
+  "idle",
 ]) {
   constructor() {
     super();
@@ -35,27 +37,18 @@ class Afm extends createEventful([
     this.wristbands = new Map();
     this.teams = new Map();
     this.commands = 0;
+    this.history = [];
   }
 }
-
-// player tasks
-Afm.prototype[registerPlayer.taskname] = registerPlayer;
-Afm.prototype[pairWristband.taskname] = pairWristband;
-Afm.prototype[unpairWristband.taskname] = unpairWristband;
-
-// Afm.prototype.listPkgs = createTask(listPkgs);
-// Afm.prototype.registerPlayer = createTask(registerPlayer);
-// Afm.prototype.scanWristband = createTask(scanWristband);
-
 Afm.prototype.enqueueCommand = async function (cmd) {
   this.commandQueue.push(cmd);
   cmd.queued();
-  this.emit("cmdqueued", cmd);
+  this.onCmdQueue(cmd);
   if (this.commandQueue.length > 1) return Promise.resolve();
 
   async function runQueue(queue, fn) {
     if (!queue[0]) return;
-    await fn(queue[0]);
+    await delay(0).then(() => fn(queue[0]));
     queue.shift();
     runQueue(queue, fn);
   }
@@ -74,7 +67,7 @@ Afm.prototype.runCommand = async function (cmd) {
   }
 
   try {
-    this.emit("cmdstart", cmd);
+    this.onCmdStart(cmd);
 
     // This registered error handler ensures
     // that an error will not result
@@ -86,15 +79,7 @@ Afm.prototype.runCommand = async function (cmd) {
     cmd.errs.push(err);
   } finally {
     this.commands = this.commands - 1;
-    if (this.commands <= 0) {
-      this.players.clear();
-      this.wristbands.clear();
-      this.teams.clear();
-    }
-    this.emit("cmdend", cmd);
-    if (cmd.errs.length > 0) {
-      this.emit("error", cmd);
-    }
+    this.onCmdEnd(cmd);
   }
 };
 Afm.prototype.getCache = function (cache, key, strict = true) {
@@ -113,6 +98,72 @@ Afm.prototype.setCache = function (cache, key, value) {
   }
   return this[cache].set(key, value);
 };
+Afm.prototype.onCmdCreate = function (cmd) {
+  this.history.push({
+    task: cmd.taskname,
+    stage: "create",
+    state: cmd.state,
+  });
+  this.emit("cmdcreate", cmd);
+};
+Afm.prototype.onCmdQueue = function (cmd) {
+  this.history.push({
+    task: cmd.taskname,
+    state: "queue",
+    state: cmd.state,
+    queue: this.commandQueue.length,
+    commands: this.commands,
+  });
+  this.emit("cmdqueue", cmd);
+};
+Afm.prototype.onCmdStart = function (cmd) {
+  this.history.push({
+    task: cmd.taskname,
+    stage: "start",
+    state: cmd.state,
+  });
+  this.emit("cmdstart", cmd);
+};
+Afm.prototype.onCmdEnd = function (cmd) {
+  this.history.push({
+    task: cmd.taskname,
+    stage: "end",
+    state: cmd.state,
+    errs: cmd.errs.map((err) => err.msg ?? err.message),
+    msg: cmd.msg,
+  });
+
+  this.emit("cmdend", cmd);
+  if (cmd.errs.length > 0) {
+    this.emit("error", cmd);
+  }
+
+  if (this.commands <= 0) {
+    this.players.clear();
+    this.wristbands.clear();
+    this.teams.clear();
+    this.emit("idle", this);
+  }
+};
+
+Object.assign(Afm.prototype, {
+  // player tasks
+  registerPlayer,
+  pairWristband,
+  unpairWristband,
+  // wristband tasks
+  scanWristband,
+  registerWristband,
+  // list tasks
+});
+// Afm.prototype[registerPlayer.taskname] = registerPlayer;
+// Afm.prototype[pairWristband.taskname] = pairWristband;
+// Afm.prototype[unpairWristband.taskname] = unpairWristband;
+
+// // wristband tasks
+// Afm.prototype[scanWristband.taskname] = scanWristband;
+
+// Afm.prototype.listPkgs = createTask(listPkgs);
 
 const afm = new Afm();
 

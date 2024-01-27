@@ -6,16 +6,16 @@ import { validateBackendResponse } from "../middleware/validateBackendResponse.j
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { PlayerTarget } from "../../player/thin/PlayerTarget.js";
 
-const registerPlayer = new Task("registerPlayer", Command);
+new Task("registerPlayer", Command);
 
 function Command(player, opts) {
   const afm = this;
-  const target = new PlayerTarget(player, player?.wristband);
-  afm.setCache("players", target.username, target);
+  const playerTarget = new PlayerTarget(player, player?.wristband);
+  afm.setCache("players", playerTarget.username, playerTarget);
   const promise = Command.createCommand(
     afm,
     {
-      args: { player: player.tobject() },
+      args: { player: playerTarget.tobject() },
       opts,
     },
     (cmd) => {

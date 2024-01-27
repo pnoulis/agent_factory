@@ -1,13 +1,14 @@
-import { delay } from "js_utils/misc";
 import { Task } from "../Task.js";
 import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendRegistrationRouteInfo.js";
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { PlayerTarget } from "../../player/thin/PlayerTarget.js";
+import { Wristband } from "../../wristband/thin/Wristband.js";
 import { WristbandTarget } from "../../wristband/thin/WristbandTarget.js";
+import { Player } from "../../player/thin/Player.js";
+import { PlayerTarget } from "../../player/thin/PlayerTarget.js";
 
-new Task("pairWristband", Command);
+new Task("registerWristband", Command);
 
 function Command(player, wristband, opts) {
   const afm = this;
@@ -31,50 +32,38 @@ function Command(player, wristband, opts) {
 }
 
 Command.middleware = [
-  async (ctx, next) => {
-    const player = ctx.afm.getCache("players", ctx.args.player.username);
-    player.wristband.pair();
-    player.pairWristband();
-    try {
-      await next();
-    } finally {
-      if (typeof ctx.unsub === "function") {
-        ctx.unsub();
-      }
-    }
-  },
-  async (ctx, next) => {
-    const player = ctx.afm.getCache("players", ctx.args.player.username);
-    const wristband = player.wristband;
-    ctx.raw = await ctx.afm.registerWristband(player, wristband, {
-      queue: false,
-    });
-    // ctx.raw = await ctx.afm.scanWristband(
-    //   (unsub) => {
-    //     ctx.unsub = unsub;
-    //   },
-    //   { queue: false },
-    // );
+  attachBackendRegistrationRouteInfo,
+  (ctx, next) => {
+    ctx.req = {
+      timestamp: ctx.t_start,
+      username: ctx.args.player.username,
+      wristbandNumber: ctx.args.wristband.id,
+    };
     return next();
   },
+  validateBackendRequest,
+  async (ctx, next) => {
+    ctx.raw = await ctx.afm.backend.registerWristband(ctx.req);
+    return next();
+  },
+  parseBackendResponse,
+  validateBackendResponse,
   (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
-    ctx.res.wristband = player.wristband.paired(ctx.raw.wristband).tobject();
-    ctx.res.player = player.pairedWristband().tobject();
-    ctx.unsub = null;
+    ctx.res = Wristband.normalize(ctx.args.wristband);
     return next();
   },
 ];
 
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to pair wristband to player";
+  cmd.msg = "Failed to register wristband to player";
   cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully paired wristband to player";
+  cmd.msg = "Successfully registered wristband to player";
   cmd.resolve(cmd.res);
 };
 
-export { Command as pairWristband };
+export { Command as registerWristband };

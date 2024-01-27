@@ -21,6 +21,7 @@ class PlayerCommander extends createEventful(Player) {
 
   async pairWristband() {
     try {
+      this.wristband.setState("pairing");
       await this.afm.pairWristband(this, this.wristband);
     } catch (err) {
       this.emit("error", err);
@@ -28,6 +29,7 @@ class PlayerCommander extends createEventful(Player) {
   }
   async unpairWristband() {
     try {
+      this.wristband.setState("unpairing");
       await this.afm.unpairWristband(this, this.wristband);
     } catch (err) {
       this.emit("error", err);

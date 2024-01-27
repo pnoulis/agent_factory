@@ -30,8 +30,9 @@ function validateBackendRequest(ctx, next) {
     return { key: propname, value: ctx.req[propname], msg };
   });
 
-  throw createValidationErr(validationErrors, {
-    level: "fatal",
+  throw createValidationErr({
+    validationErrors,
+    severity: "fatal",
     msg: "Invalid API request",
   });
 }

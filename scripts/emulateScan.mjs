@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*
-  ./emulateScan.mjs <number> <color>
+  make run file=scripts/emulateScan.mjs args='<number> <color>'
 
   Examples:
   ./emulateScan.mjs 2 green

@@ -2,14 +2,18 @@ import { Backend } from "../Backend.js";
 import { DEVICES, ROOMS } from "../../constants.js";
 import { ENV } from "../../config.js";
 import { registrationTopics as staticRoutes } from "../../../backend-topics.js";
-import { listPackages } from "./listPackages.js";
+
+// player topics
 import { registerPlayer } from "./registerPlayer.js";
 import { loginPlayer } from "./loginPlayer.js";
-import {
-  scanWristband,
-  onWristbandScan,
-  onceWristbandScan,
-} from "./scanWristband.js";
+
+// wristband topics
+import { scanWristband } from "./scanWristband.js";
+import { registerWristband } from "./registerWristband.js";
+import { deregisterWristband } from "./deregisterWristband.js";
+
+// list topics
+import { listPackages } from "./listPackages.js";
 
 class BackendRegistration extends Backend {
   constructor({ deviceId, roomName, params, routes, strict } = {}) {
@@ -29,12 +33,15 @@ class BackendRegistration extends Backend {
 }
 
 Object.assign(BackendRegistration.prototype, {
-  listPackages,
+  // player topics
   registerPlayer,
   loginPlayer,
+  // wristband topics
   scanWristband,
-  onWristbandScan,
-  onceWristbandScan,
+  registerWristband,
+  deregisterWristband,
+  // list topics
+  listPackages,
 });
 
 export { BackendRegistration };

@@ -43,6 +43,8 @@ class Task extends createEventful() {
     cmd.res ??= {};
     cmd.errs ??= [];
 
+    afm.onCmdCreate(cmd);
+
     const promise = new Promise((resolve, reject) => {
       cmd.resolve = resolve;
       cmd.reject = reject;
@@ -89,30 +91,28 @@ class Task extends createEventful() {
             throw err;
           });
           await thetask(cmd).catch((err) => {
-            cmd.errs.push(err);
             taskerr = err;
             throw err;
           });
           await postask(cmd).catch((err) => {
-            cmd.errs.push(err);
             postaskerr = err;
             throw err;
           });
         } catch (err) {
-          switch (err) {
-            case pretaskerr:
-            // fall through
-            case taskerr:
-              await postask(cmd).catch((err) => {
+          if (err instanceof Task) {
+            cmd.errs.push(...err.errs);
+          } else {
+            cmd.errs.push(err);
+          }
+
+          if (err === pretaskerr || err === taskerr) {
+            await postask(cmd).catch((err) => {
+              if (err instanceof Task) {
+                cmd.errs.push(...err.errs);
+              } else {
                 cmd.errs.push(err);
-                postaskerr = err;
-              });
-              break;
-            case postaskerr:
-              break;
-            default:
-              cmd.errs.push(err);
-              break;
+              }
+            });
           }
         } finally {
           ostate = cmd.state;

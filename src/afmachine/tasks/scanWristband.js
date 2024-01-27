@@ -1,21 +1,47 @@
-import { Wristband } from "../../wristband/Wristband.js";
+import { Task } from "../Task.js";
 import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendRegistrationRouteInfo.js";
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
+import { Wristband } from "../../wristband/thin/Wristband.js";
+import { WristbandTarget } from "../../wristband/thin/WristbandTarget.js";
+import { createError, ERR_CODES } from "../../errors.js";
 
-function task(unsubcb, opts) {
+new Task("scanWristband", Command);
+
+let SCAN_WRISTBAND_LOCK = false;
+
+function Command(unsubcb, opts) {
   const afm = this;
-  return afm.createCommand(
-    task,
+  const promise = Command.createCommand(
+    afm,
+    { args: { unsubcb, scanLock: !SCAN_WRISTBAND_LOCK }, opts },
     (cmd) => {
-      afm.run(cmd, opts);
+      afm.runCommand(cmd);
     },
-    { unsubcb },
   );
+  SCAN_WRISTBAND_LOCK = true;
+  return promise;
 }
-task.taskname = "scanWristband";
-task.middleware = [
+
+Command.middleware = [
+  async (ctx, next) => {
+    if (!ctx.args.scanLock) {
+      throw createError(
+        "warn",
+        "Wristband scan is busy",
+        ERR_CODES.EWRISTBAND_SCAN_LOCK,
+        { SCAN_WRISTBAND_LOCK },
+      );
+    }
+    try {
+      await next();
+    } finally {
+      if (ctx.args.scanLock) {
+        SCAN_WRISTBAND_LOCK = false;
+      }
+    }
+  },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
@@ -24,45 +50,22 @@ task.middleware = [
   },
   parseBackendResponse,
   validateBackendResponse,
-  // backend - frontend translation
   async (ctx, next) => {
     ctx.res.wristband = Wristband.normalize(ctx.raw.wristband);
     ctx.res.unsubed = ctx.raw.unsubed;
     return next();
   },
 ];
-task.toClient = function (cmd) {
-  return cmd.res;
-};
-task.onQueued = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "queued";
-  cmd.emit("queued", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-};
-task.onPending = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "pending";
-  cmd.emit("pending", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-};
-task.onSuccess = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "fulfilled";
-  cmd.msg = "Successfully scanned wristband";
-  cmd.emit("fulfilled", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-  return cmd;
-};
-task.onFailure = function (err, cmd) {
-  const ostate = cmd.state;
-  cmd.state = "rejected";
+
+Command.onFailure = function () {
+  const cmd = this;
   cmd.msg = "Failed to scan wristband";
-  cmd.res = err;
-  cmd.errs.push(err);
-  cmd.emit("rejected", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-  return cmd;
+  cmd.reject(cmd);
+};
+Command.onSuccess = function () {
+  const cmd = this;
+  cmd.msg = "Successfully scanned wristband";
+  cmd.resolve(cmd.res);
 };
 
-export { task as scanWristband };
+export { Command as scanWristband };

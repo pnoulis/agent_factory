@@ -3,7 +3,7 @@ import { registrationTopics } from "../../../backend-topics.js";
 function attachBackendRegistrationRouteInfo(ctx, next) {
   ctx.route = registrationTopics[ctx.taskname];
   if (ctx.route == null)
-    throw new Error(`Missing info for route: ${ctx.command.task.taskname}`);
+    throw new Error(`Missing info for route: ${ctx.taskname}`);
   return next();
 }
 

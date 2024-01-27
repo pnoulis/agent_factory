@@ -15,16 +15,20 @@ class Pairing {
   }
 
   pair() {
-    return this;
+    return this.wristband;
   }
-  paired() {
-    return this.wristband.setState("paired");
+  paired(wristband) {
+    return this.wristband.normalize(wristband, { state: "paired" });
   }
   unpair() {
-    return this.setState("unpairing");
+    this.wristband.throwStateErr(
+      this.wristband.errCodes.EWRISTBAND_STATE_CANCELS_OUT,
+    )("Wristband is pairing");
   }
-  unpaired() {
-    this.wristband.throwStateErr("unpaired", true);
+  unpaired(wristband) {
+    this.wristband.throwStateErr(
+      this.wristband.errCodes.EWRISTBAND_STATE_IMPOSSIBLE,
+    )("Unpaired wristband in pairing state", this.wristband, wristband);
   }
 }
 

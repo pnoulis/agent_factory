@@ -127,13 +127,35 @@ const registrationTopics = {
     pub: null,
     sub: prefix("player/wristbandScan"),
   },
-  pairWristband: {
-    alias: "wristband/pair",
+  registerWristband: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        required: ["timestamp", "username", "wristbandNumber"],
+        additionalProperties: false,
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          username: schemas.player.properties.username,
+          wristbandNumber: schemas.wristband.properties.wristbandNumber,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "message"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          message: schemas.commons.message,
+        },
+      }),
+    },
+    alias: "wristband/register",
     pub: prefix("player/registerWristband"),
     sub: prefix("player/registerWristband/response"),
   },
-  unpairWristband: {
-    alias: "wristband/unpair",
+  deregisterWristband: {
+    alias: "wristband/deregister",
     pub: prefix("player/unregisterWristband"),
     sub: prefix("player/unregisterWristband/response"),
   },

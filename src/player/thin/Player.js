@@ -21,12 +21,13 @@ class Player extends createStateful([
     this.normalize(player);
   }
   normalize(sources, options) {
-    Object.assign(this, Player.normalize(sources, options));
+    Object.assign(this, Player.normalize([this, sources], options));
 
     // Calling with apply because PlayerCommander shadows setState
     // with stateventful implementation before Player is initialized
     // with a this.events prop.
     stateful.setState.call(this, this.state);
+    return this;
   }
   fill(sources = [], options) {
     return Object.assign(this, Player.random([this, ...sources], options));
