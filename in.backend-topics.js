@@ -51,6 +51,14 @@ const registrationTopics = {
   registerPlayer: {
     schema: {
       req: ajv.compile(
+        /*
+          timestamp: 1342432443234,
+          username: 'Earendil_3b6jw77b5ed',
+          name: 'Earendil',
+          surname: 'flamboyant',
+          email: 'Earendil@gmail.com',
+          password: "onetwothree",
+         */
         deepmerge(schemas.request, {
           additionalProperties: true,
           required: [
@@ -65,6 +73,22 @@ const registrationTopics = {
         }),
       ),
       res: ajv.compile(
+        /*
+          timestamp: 1706386638703,
+          result: 'OK',
+          player: {
+            name: 'Tom',
+            surname: 'focused',
+            username: 'Tom_qsa7wtkahu4',
+            email: 'Tom@gmail.com',
+            wristbandColor: 0
+          }
+         */
+        /*
+          timestamp: 1706387350371,
+          result: 'NOK',
+          message: '...'
+         */
         deepmerge(schemas.response, {
           type: "object",
           additionalProperties: false,

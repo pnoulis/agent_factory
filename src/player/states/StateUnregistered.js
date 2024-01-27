@@ -16,16 +16,20 @@ class Unregistered {
 }
 
 Unregistered.prototype.register = function () {
-  return this;
+  return this.player;
 };
 Unregistered.prototype.registered = function (player) {
   return this.player.setState("registered");
 };
 Unregistered.prototype.pairWristband = function () {
-  return this;
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
+    "Trying to pair a player's wristband  in unregistered state",
+  );
 };
 Unregistered.prototype.unpairWristband = function () {
-  return this;
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
+    "Trying to unpair a player's wristband in unregistered state",
+  );
 };
 
 export { Unregistered };

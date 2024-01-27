@@ -6,9 +6,11 @@ import { WristbandCommander } from "../src/wristband/thin/WristbandCommander.js"
 import { WristbandTarget } from "../src/wristband/thin/WristbandTarget.js";
 
 logafm(afm);
-const w = new Wristband();
+const w = new WristbandCommander(afm);
 const pc = new PlayerCommander(afm, {}, w).fill();
-pc.pairWristband();
+pc.pairWristband().then(() => {
+  console.log(pc);
+});
 
 // pc.pairWristband();
 // pc.unpairWristband();

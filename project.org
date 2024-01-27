@@ -278,6 +278,7 @@ if an error occurs anywhere in the middleware chain other than then postcmd
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
+*** TODO Document the req/res payload
 ** DONE Implement register player for fucks sake
 CLOSED: [2024-01-25 Thu 14:25]
 
@@ -295,11 +296,30 @@ CLOSED: [2024-01-26 Fri 16:26]
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** TODO Implement Task and Command
+*** TODO Document the req/res payload
 ** TODO Implement wristband unregister
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
+*** TODO Document the req/res payload
 ** TODO Implement wristband verify
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
+
+*** TODO Document the req/res payload
+* <2024-01-27 Sat>
+
+Merge the Commander and Target.
+
+At the onset of a new command have the Commander register a middleware
+function at the pretask stage for calling its own state function.
+
+
+Tasks dependent on some client state should:
+
+1. Cache the entity
+2. Invoke the pre-task state[task] method as the first middleware. (with the
+   latest copy of the cached entity)
+3. Invoke the post-task state[task] method as the last middleware. (with the
+   latest copy of the cached entity.

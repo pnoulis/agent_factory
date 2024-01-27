@@ -5,6 +5,7 @@ import { Unregistered } from "../states/StateUnregistered.js";
 import { Registered } from "../states/StateRegistered.js";
 import { InTeam } from "../states/StateInTeam.js";
 import { Playing } from "../states/StatePlaying.js";
+import { ERR_CODES } from "../../errors.js";
 
 class Player extends createStateful([
   Unregistered,
@@ -36,5 +37,7 @@ class Player extends createStateful([
     return Player.normalize(this);
   }
 }
+
+Player.prototype.errCodes = ERR_CODES;
 
 export { Player };

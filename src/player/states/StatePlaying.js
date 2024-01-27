@@ -16,16 +16,25 @@ class Playing {
 }
 
 Playing.prototype.register = function () {
-  this.player.throwStateErr("register");
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
+    "Trying to register a player in playing state",
+  );
 };
 Playing.prototype.registered = function (player) {
-  this.player.throwStateErr("registered", true, player);
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE_IMPOSSIBLE)(
+    "Registered a player in playing state",
+    player,
+  );
 };
 Playing.prototype.pairWristband = function () {
-  this.player.throwStateErr("pair a wristband to");
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
+    "Trying to pair a player's wristband in playing state",
+  );
 };
 Playing.prototype.unpairWristband = function () {
-  this.player.throwStateErr("unpair a wristband from");
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
+    "Trying to unpair a player's wristband in playing state",
+  );
 };
 
 export { Playing };

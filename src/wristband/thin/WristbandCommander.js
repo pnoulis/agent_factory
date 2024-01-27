@@ -13,12 +13,23 @@ class WristbandCommander extends createEventful(Wristband) {
   pair() {}
   unpair() {}
   async scan() {
+    let _unsub;
     try {
-      const { unsubed, wristband } = await this.afm.scanWristband((unsubed) => {
-        console.log("UNSUBED CALLBACK");
-      });
+      this.setState("pairing");
+      const { wristband: scanned } = await this.afm.scanWristband(
+        (unsub) => {
+          _unsub = unsub;
+        },
+        { queue: false },
+      );
+      _unsub = null;
+      this.normalize(scanned, { state: "paired" });
     } catch (err) {
       this.emit("error", err);
+    } finally {
+      if (typeof _unsub === "function") {
+        _unsub();
+      }
     }
   }
 }

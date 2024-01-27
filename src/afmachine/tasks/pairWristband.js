@@ -33,37 +33,39 @@ function Command(player, wristband, opts) {
 Command.middleware = [
   async (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
-    player.wristband.pair();
+    // player.wristband.pair();
     player.pairWristband();
-    try {
-      await next();
-    } finally {
-      if (typeof ctx.unsub === "function") {
-        ctx.unsub();
-      }
-    }
-  },
-  async (ctx, next) => {
-    const player = ctx.afm.getCache("players", ctx.args.player.username);
-    const wristband = player.wristband;
-    ctx.raw = await ctx.afm.registerWristband(player, wristband, {
-      queue: false,
-    });
-    // ctx.raw = await ctx.afm.scanWristband(
-    //   (unsub) => {
-    //     ctx.unsub = unsub;
-    //   },
-    //   { queue: false },
-    // );
     return next();
+    // return Promise.resolve(player.pairWristband())
+    // try {
+    //   await next();
+    // } finally {
+    //   if (typeof ctx.unsub === "function") {
+    //     ctx.unsub();
+    //   }
+    // }
   },
-  (ctx, next) => {
-    const player = ctx.afm.getCache("players", ctx.args.player.username);
-    ctx.res.wristband = player.wristband.paired(ctx.raw.wristband).tobject();
-    ctx.res.player = player.pairedWristband().tobject();
-    ctx.unsub = null;
-    return next();
-  },
+  // async (ctx, next) => {
+  //   const player = ctx.afm.getCache("players", ctx.args.player.username);
+  //   const wristband = player.wristband;
+  //   ctx.raw = await ctx.afm.registerWristband(player, wristband, {
+  //     queue: false,
+  //   });
+  //   // ctx.raw = await ctx.afm.scanWristband(
+  //   //   (unsub) => {
+  //   //     ctx.unsub = unsub;
+  //   //   },
+  //   //   { queue: false },
+  //   // );
+  //   return next();
+  // },
+  // (ctx, next) => {
+  //   const player = ctx.afm.getCache("players", ctx.args.player.username);
+  //   ctx.res.wristband = player.wristband.paired(ctx.raw.wristband).tobject();
+  //   ctx.res.player = player.pairedWristband().tobject();
+  //   ctx.unsub = null;
+  //   return next();
+  // },
 ];
 
 Command.onFailure = function () {

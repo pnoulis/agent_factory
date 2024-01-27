@@ -4,18 +4,21 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { PlayerTarget } from "../../player/thin/PlayerTarget.js";
+import { PlayerCommander } from "../../player/thin/PlayerCommander.js";
 
 new Task("registerPlayer", Command);
 
-function Command(player, opts) {
+function Command(player, password, opts) {
   const afm = this;
-  const playerTarget = new PlayerTarget(player, player?.wristband);
+  const playerTarget = new PlayerCommander(null, player, player?.wristband);
   afm.setCache("players", playerTarget.username, playerTarget);
   const promise = Command.createCommand(
     afm,
     {
-      args: { player: playerTarget.tobject() },
+      args: {
+        player: "tobject" in player ? player.tobject() : player,
+        password,
+      },
       opts,
     },
     (cmd) => {
@@ -28,14 +31,18 @@ function Command(player, opts) {
 Command.middleware = [
   async (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
-    player.register();
+    player.getState().register();
+    ctx.req = {
+      timestamp: ctx.t_start,
+      name: ctx.args.player.name,
+      surname: ctx.args.player.surname,
+      username: ctx.args.player.username,
+      email: ctx.args.player.email,
+      password: ctx.args.password,
+    };
     return next();
   },
   attachBackendRegistrationRouteInfo,
-  (ctx, next) => {
-    ctx.req = { timestamp: ctx.t_start, ...ctx.args.player };
-    return next();
-  },
   validateBackendRequest,
   async (ctx, next) => {
     ctx.raw = await ctx.afm.backend.registerPlayer(ctx.req);
@@ -45,7 +52,7 @@ Command.middleware = [
   validateBackendResponse,
   (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
-    ctx.res = player.registered().tobject();
+    ctx.res = player.getState().registered(ctx.raw.player).tobject();
     return next();
   },
 ];

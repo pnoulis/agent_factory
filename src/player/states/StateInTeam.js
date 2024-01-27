@@ -16,16 +16,25 @@ class InTeam {
 }
 
 InTeam.prototype.register = function () {
-  this.player.throwStateErr("register");
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
+    "Trying to register a player in inTeam state",
+  );
 };
 InTeam.prototype.registered = function (player) {
-  this.player.throwStateErr("registered", true, player);
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE_IMPOSSIBLE)(
+    "Registered a player in inTeam state",
+    player,
+  );
 };
 InTeam.prototype.pairWristband = function () {
-  this.player.throwStateErr("pair a wristband to");
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
+    "Trying to pair a player's wristband in inTeam state",
+  );
 };
 InTeam.prototype.unpairWristband = function () {
-  this.player.throwStateErr("unpair a wristband from");
+  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
+    "Trying to unpair a player's wristband in inTeam state",
+  );
 };
 
 export { InTeam };
