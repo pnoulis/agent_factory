@@ -17,7 +17,7 @@ import { registerWristband } from "./tasks/registerWristband.js";
 import { deregisterWristband } from "./tasks/deregisterWristband.js";
 
 // list tasks
-// import { listPkgs } from "./tasks/listPkgs.js";
+import { listPkgs } from "./tasks/listPkgs.js";
 
 class Afm extends createEventful([
   "connected",
@@ -159,6 +159,7 @@ Object.assign(Afm.prototype, {
   registerWristband,
   deregisterWristband,
   // list tasks
+  listPkgs,
 });
 
 const afm = new Afm();

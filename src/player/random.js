@@ -1,36 +1,34 @@
-import { generateRandomName, isObject, isArray } from "js_utils/misc";
+import "../debug.js";
+import { generateRandomName } from "js_utils/misc";
 import { smallid, uuid } from "js_utils/uuid";
 
 function random(sources, options = {}) {
-  if (!isArray(sources)) {
-    sources = [sources];
-  }
-  const opts = {
+  //debug("random player");
+
+  const _options = {
     longtext: options.longtext ?? false,
   };
+  //debug(options);
 
-  let target = {};
-  for (let i = 0; i < sources.length; i++) {
-    target = {
-      ...target,
-      ...sources[i],
-    };
-  }
+  const _sources = [sources].flat(2).filter((src) => !!src);
+  //debug(_sources);
 
-  let surname, name, password;
-  if (opts.longtext) {
-    surname = name = password = uuid();
+  const target = Object.assign({}, ..._sources);
+
+  let surname, name, username;
+  if (_options.longtext) {
+    username = surname = name = uuid();
   } else {
-    [surname, name, password] = `${generateRandomName()}_${smallid()}`.split(
+    [surname, name, username] = `${generateRandomName()}_${smallid()}`.split(
       "_",
     );
   }
 
-  target.username ||= `${name}_${password}`;
+  target.username ||= username;
   target.name ||= name;
   target.surname ||= surname;
   target.email ||= `${name}@gmail.com`;
-  target.password ||= password;
+  //debug(target);
   return target;
 }
 export { random };

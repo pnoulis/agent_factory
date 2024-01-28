@@ -1,18 +1,10 @@
 import { WRISTBAND_COLORS, MAX_WRISTBAND_ID } from "../constants.js";
-import { randomInteger, isArray } from "js_utils/misc";
+import { randomInteger } from "js_utils/misc";
 
-function random(sources, options = {}) {
-  if (!isArray(sources)) {
-    sources = [sources];
-  }
+function random(sources) {
+  const _sources = [sources].flat(2).filter((src) => !!src);
 
-  let target = {};
-  for (let i = 0; i < sources.length; i++) {
-    target = {
-      ...target,
-      ...sources[i],
-    };
-  }
+  const target = Object.assign({}, ..._sources);
 
   target.id ??= randomInteger(1, MAX_WRISTBAND_ID);
   target.colorCode ??= randomInteger(

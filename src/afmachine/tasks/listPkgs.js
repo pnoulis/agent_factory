@@ -1,17 +1,19 @@
+import { Task } from "../Task.js";
 import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendRegistrationRouteInfo.js";
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 
-function task(opts) {
-  const afm = this;
-  return afm.createCommand(task, (cmd) => {
-    afm.run(cmd, opts);
-  });
-}
+new Task("listPkgs", Command);
 
-task.taskname = "listPkgs";
-task.middleware = [
+function Command(opts) {
+  const afm = this;
+  const promise = Command.createCommand(afm, (cmd) => {
+    afm.runCommand(cmd);
+  });
+  return promise;
+}
+Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
@@ -22,40 +24,18 @@ task.middleware = [
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.packages = ctx.raw.packages;
+    return next();
   },
 ];
-task.toClient = function (cmd) {
-  return cmd.res;
+Command.onFailure = function () {
+  const cmd = this;
+  cmd.msg = "Failed to list packages";
+  cmd.reject(cmd.errs.at(-1));
 };
-task.onQueued = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "queued";
-  cmd.emit("queued", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-};
-task.onPending = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "pending";
-  cmd.emit("pending", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-};
-task.onSuccess = function (cmd) {
-  const ostate = cmd.state;
-  cmd.state = "fulfilled";
+Command.onSuccess = function () {
+  const cmd = this;
   cmd.msg = "Successfully listed packages";
-  cmd.emit("fulfilled", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-  return cmd;
-};
-task.onFailure = function (err, cmd) {
-  const ostate = cmd.state;
-  cmd.state = "rejected";
-  cmd.msg = "Failed to list pkgs";
-  cmd.res = err;
-  cmd.errs.push(err);
-  cmd.emit("rejected", cmd);
-  cmd.emit("stateChange", cmd.state, ostate, cmd);
-  return cmd;
+  cmd.resolve(cmd.res);
 };
 
-export { task as listPkgs };
+export { Command as listPkgs };

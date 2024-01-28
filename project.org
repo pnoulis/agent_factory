@@ -7,6 +7,11 @@ CLOSED: [2024-01-28 Sun 15:52]
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
 *** TODO Document the req/res payload
+** Entity template
+**** TODO normalization
+**** TODO random
+**** TODO tobject
+**** TODO fill
 ** DONE Implement writsband scan
 CLOSED: [2024-01-28 Sun 15:52]
 *** DONE Object schema for req/res backend topic payload
@@ -42,11 +47,18 @@ CLOSED: [2024-01-28 Sun 16:09]
 CLOSED: [2024-01-28 Sun 17:09]
 *** DONE Implement Task and Command
 CLOSED: [2024-01-28 Sun 17:09]
-
 *** DONE Document the req/res payload
 CLOSED: [2024-01-28 Sun 17:09]
-
-
+*** TODO Team entity
+**** TODO normalization
+**** TODO random
+**** TODO tobject
+**** TODO fill
+*** TODO Team Roster
+**** TODO normalization
+**** TODO random
+**** TODO tobject
+**** TODO fill
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
 control center of the application. All actions that touch multiple modules of
@@ -394,4 +406,70 @@ entity or entities.
       name: "...",
     },
   }
+#+end_src
+
+
+* Packages
+** Available packages
+*** mission
+#+begin_src js
+  { name: 'Per Mission 15', amount: 15, type: 'mission', cost: 150 }
+#+end_src
+*** time
+#+begin_src js
+  { name: 'Per Time 30', amount: 30, type: 'time', cost: 50 }
+#+end_src
+** Active package
+*** mission
+#+begin_src json
+  "packages" : [{
+    "id" : 1,
+    "name" : "Per Mission 10",
+    "cost" : null,
+    "started" : 1706472302416,
+    "ended" : null,
+    "missions" : 10,
+    "missionsPlayed" : 0,
+    "active" : true
+  }]
+#+end_src
+*** time
+#+begin_src json
+  "packages" : [{
+    "id" : 3,
+    "name" : "Per Time 30",
+    "cost" : null,
+    "started" : 1706473426225,
+    "ended" : null,
+    "duration" : 1800.000000000,
+    "paused" : false,
+    "active" : true
+  }]
+    #+end_src
+** Inactive package
+*** mission
+#+begin_src json
+  "packages" : [{
+    "id" : 2,
+    "name" : "Per Mission 5",
+    "cost" : null,
+    "started" : null,
+    "ended" : null,
+    "missions" : 5,
+    "missionsPlayed" : 0,
+    "active" : false
+  }]
+#+end_src
+*** time
+#+begin_src json
+  "packages" : [{
+    "id" : 3,
+    "name" : "Per Time 30",
+    "cost" : null,
+    "started" : null,
+    "ended" : null,
+    "duration" : 1800.000000000,
+    "paused" : false,
+    "active" : false
+  }]
 #+end_src

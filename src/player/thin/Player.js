@@ -30,8 +30,8 @@ class Player extends createStateful([
     stateful.setState.call(this, this.state);
     return this;
   }
-  fill(sources = [], options) {
-    return Object.assign(this, Player.random([this, ...sources], options));
+  fill(sources, options) {
+    return this.normalize(Player.random([this, sources], options), options);
   }
   tobject() {
     return Player.normalize(this);

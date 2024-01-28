@@ -2,8 +2,6 @@ import { WRISTBAND_COLORS } from "../constants.js";
 
 function normalize(sources, options = {}) {
   // debug("normalize wristband");
-  const _sources = [sources].flat().filter((src) => !!src);
-  // debug(_sources);
 
   const _options = {
     targetState: options.state || "",
@@ -18,6 +16,9 @@ function normalize(sources, options = {}) {
     defaultState: options.defaultState ?? "unpaired",
   };
   // debug(_options);
+
+  const _sources = [sources].flat(2).filter((src) => !!src);
+  // debug(_sources);
 
   const target = { id: null, color: "", colorCode: null, state: "" };
   let active = false;

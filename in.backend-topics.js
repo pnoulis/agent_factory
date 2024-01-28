@@ -306,6 +306,46 @@ const registrationTopics = {
     sub: prefix("team/package/delete/response"),
   },
   activateTeamPkg: {
+    schema: {
+      res: {
+        /*
+{
+  "timestamp" : 1706472302452,
+  "result" : "OK",
+  "team" : {
+    "name" : "friendly_Eomer_c3d",
+    "totalPoints" : 0,
+    "teamState" : null,
+    "created" : null,
+    "lastRegisterAttempt" : null,
+    "currentRoster" : {
+      "version" : 1,
+      "players" : [ {
+        "username" : "3q0vtxg1o7s@1706472198867",
+        "wristbandNumber" : 202,
+        "wristbandColor" : null
+      }, {
+        "username" : "0a5sh6llqf3v@1706472198867",
+        "wristbandNumber" : 203,
+        "wristbandColor" : null
+      } ]
+    },
+    "roomType" : null,
+    "packages" : [ {
+      "id" : 1,
+      "name" : "Per Mission 10",
+      "cost" : null,
+      "started" : 1706472302416,
+      "ended" : null,
+      "missions" : 10,
+      "missionsPlayed" : 0,
+      "active" : true
+    } ]
+  }
+}
+         */
+      },
+    },
     alias: "team/pkg/activate",
     pub: prefix("team/activate"),
     subd: prefix("team/activate/response"),

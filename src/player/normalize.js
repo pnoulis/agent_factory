@@ -1,7 +1,7 @@
+import { isObject } from "js_utils/misc";
+
 function normalize(sources, options = {}) {
   // debug("normalize player");
-  const _sources = [sources].flat().filter((src) => !!src);
-  // debug(_sources);
 
   // See documentation at wristband/normalize.js
   const _options = {
@@ -11,6 +11,9 @@ function normalize(sources, options = {}) {
     depth: options.depth || 0,
   };
   // debug(_options);
+
+  const _sources = [sources].flat(2).filter((src) => !!src);
+  // debug(_sources);
 
   const target = {
     username: "",
@@ -27,10 +30,9 @@ function normalize(sources, options = {}) {
       target.name = _sources[i].name || null;
       target.surname = _sources[i].surname || null;
       target.email = _sources[i].email || null;
-      target.state =
-        typeof _sources[i].state === "object"
-          ? _sources[i].state?.name
-          : _sources[i].state;
+      target.state = isObject(_sources[i].state)
+        ? _sources[i].state.name
+        : _sources[i].state;
       wristbandMerged = _sources[i].wristbandMerged ?? false;
     }
   } else {
@@ -40,8 +42,8 @@ function normalize(sources, options = {}) {
       target.surname = _sources[i].surname || target.surname;
       target.email = _sources[i].email || target.email;
       target.state =
-        (typeof _sources[i].state === "object"
-          ? _sources[i].state?.name
+        (isObject(_sources[i].state)
+          ? _sources[i].state.name
           : _sources[i].state) || target.state;
       wristbandMerged = _sources[i].wristbandMerged ?? wristbandMerged;
     }
