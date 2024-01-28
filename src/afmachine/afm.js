@@ -12,7 +12,9 @@ import { unpairWristband } from "./tasks/unpairWristband.js";
 
 // wristband tasks
 import { scanWristband } from "./tasks/scanWristband.js";
+import { getWristbandInfo } from "./tasks/getWristbandInfo.js";
 import { registerWristband } from "./tasks/registerWristband.js";
+import { deregisterWristband } from "./tasks/deregisterWristband.js";
 
 // list tasks
 // import { listPkgs } from "./tasks/listPkgs.js";
@@ -153,17 +155,11 @@ Object.assign(Afm.prototype, {
   unpairWristband,
   // wristband tasks
   scanWristband,
+  getWristbandInfo,
   registerWristband,
+  deregisterWristband,
   // list tasks
 });
-// Afm.prototype[registerPlayer.taskname] = registerPlayer;
-// Afm.prototype[pairWristband.taskname] = pairWristband;
-// Afm.prototype[unpairWristband.taskname] = unpairWristband;
-
-// // wristband tasks
-// Afm.prototype[scanWristband.taskname] = scanWristband;
-
-// Afm.prototype.listPkgs = createTask(listPkgs);
 
 const afm = new Afm();
 

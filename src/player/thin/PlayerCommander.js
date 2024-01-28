@@ -42,33 +42,49 @@ class PlayerCommander extends createEventful(Player) {
 
   async register(password) {
     try {
-      await this.afm.registerPlayer(this, password);
-      this.setState("registered");
+      const player = await this.afm.registerPlayer(this, password);
+      this.state.registered(player);
     } catch (err) {
       this.emit("error", err);
+    } finally {
+      return this;
     }
   }
 
-  // async pairWristband() {
-  //   try {
-  //     this.afm.pairWristband.onReverse("postask", async (ctx, next) => {
-  //       await this.wristband.scan();
-  //       return next();
-  //     });
-  //     await this.afm.pairWristband(this, this.wristband);
-  //     // await this.wristband.scan();
-  //   } catch (err) {
-  //     this.emit("error", err);
-  //   }
-  // }
-  // async unpairWristband() {
-  //   try {
-  //     this.wristband.setState("unpairing");
-  //     await this.afm.unpairWristband(this, this.wristband);
-  //   } catch (err) {
-  //     this.emit("error", err);
-  //   }
-  // }
+  async pairWristband() {
+    try {
+      this.wristband.setState("pairing");
+      const { wristband } = await this.afm.pairWristband(this, this.wristband);
+      this.wristband.state.paired(wristband);
+    } catch (err) {
+      if (/EWRISTBAND/.test(err.label)) {
+        this.wristband.emit("error", err);
+      } else {
+        this.emit("error", err);
+      }
+    } finally {
+      return this;
+    }
+  }
+
+  async unpairWristband() {
+    try {
+      this.wristband.setState("unpairing");
+      const { wristband } = await this.afm.unpairWristband(
+        this,
+        this.wristband,
+      );
+      this.wristband.state.unpaired(wristband);
+    } catch (err) {
+      if (/EWRISTBAND/.test(err.label)) {
+        this.wristband.emit("error", err);
+      } else {
+        this.emit("error", err);
+      }
+    } finally {
+      return this;
+    }
+  }
 }
 
 extendProto(PlayerCommander, stateventful);

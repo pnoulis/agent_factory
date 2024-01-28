@@ -1,6 +1,52 @@
 * tasks
-** TODO Player register() fn should need a password as input.
+** DONE Player register() fn should need a password as input.
+CLOSED: [2024-01-28 Sun 15:52]
 ** TODO Task should invoke onSuccess(),onFailure() before postask middleware
+** Task template
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+** DONE Implement writsband scan
+CLOSED: [2024-01-28 Sun 15:52]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-28 Sun 15:52]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-28 Sun 15:52]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-28 Sun 15:52]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-28 Sun 15:52]
+** DONE Implement wristband register
+CLOSED: [2024-01-28 Sun 17:15]
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+CLOSED: [2024-01-28 Sun 15:50]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-28 Sun 15:50]
+** TODO Implement wristband deregister
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-28 Sun 17:15]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-28 Sun 17:27]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-28 Sun 17:27]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-28 Sun 17:33]
+** DONE Implement getWristbandInfo
+CLOSED: [2024-01-28 Sun 17:27]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-28 Sun 16:09]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-28 Sun 17:09]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-28 Sun 17:09]
+
+*** DONE Document the req/res payload
+CLOSED: [2024-01-28 Sun 17:09]
+
+
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
 control center of the application. All actions that touch multiple modules of
@@ -295,8 +341,10 @@ CLOSED: [2024-01-26 Fri 16:26]
 ** TODO Implement wristband register
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+*** DONE Implement Task and Command
+CLOSED: [2024-01-28 Sun 15:50]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-28 Sun 15:50]
 ** TODO Implement wristband unregister
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
@@ -308,6 +356,7 @@ CLOSED: [2024-01-26 Fri 16:26]
 *** TODO Implement Task and Command
 
 *** TODO Document the req/res payload
+
 * <2024-01-27 Sat>
 
 Merge the Commander and Target.
@@ -323,3 +372,26 @@ Tasks dependent on some client state should:
    latest copy of the cached entity)
 3. Invoke the post-task state[task] method as the last middleware. (with the
    latest copy of the cached entity.
+
+* Conventions
+
+** Commands wrap their return value within an object
+
+Commands never return an entity object, they return an object that contains the
+entity or entities.
+
+#+begin_src js
+  // Instead of:
+  const response = {
+    username: "...",
+    name: "...",
+  }
+
+  // This:
+  const response = {
+    player: {
+      username: "...",
+      name: "...",
+    },
+  }
+#+end_src

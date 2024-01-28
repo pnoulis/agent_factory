@@ -20,7 +20,7 @@ class Paired {
   paired(wristband) {
     this.wristband.throwStateErr(
       this.wristband.errCodes.EWRISTBAND_STATE_IMPOSSIBLE,
-    )("Paired wristband in paired state", this.wristband, wristband);
+    )("Paired wristband in paired state", wristband);
   }
   unpair() {
     return this.wristband.setState("unpairing");
@@ -28,7 +28,7 @@ class Paired {
   unpaired(wristband) {
     this.wristband.throwStateErr(
       this.wristband.errCodes.EWRISTBAND_STATE_IMPOSSIBLE,
-    )("Unpaired wristband in paired state", this.wristband, wristband);
+    )("Unpaired wristband in paired state", wristband);
   }
 }
 

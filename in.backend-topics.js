@@ -125,6 +125,12 @@ const registrationTopics = {
     schema: {
       req: null,
       res: ajv.compile({
+        /*
+          timestamp: 1706445720753,
+          result: 'OK',
+          wristbandNumber: 169,
+          wristbandColor: 2
+         */
         type: "object",
         additionalProperties: true,
         required: ["unsubed"],
@@ -154,6 +160,11 @@ const registrationTopics = {
   registerWristband: {
     schema: {
       req: ajv.compile({
+        /*
+          timestamp: 1706449278756,
+          username: 'Fingolfin_1iq9nl30j8fg',
+          wristbandNumber: 169
+         */
         type: "object",
         required: ["timestamp", "username", "wristbandNumber"],
         additionalProperties: false,
@@ -164,6 +175,11 @@ const registrationTopics = {
         },
       }),
       res: ajv.compile({
+        /*
+          timestamp: 1706449278833,
+          result: 'OK',
+          message: '...'
+         */
         type: "object",
         additionalProperties: false,
         required: ["timestamp", "result", "message"],
@@ -179,6 +195,38 @@ const registrationTopics = {
     sub: prefix("player/registerWristband/response"),
   },
   deregisterWristband: {
+    schema: {
+      req: ajv.compile({
+        /*
+          timestamp: 1706455867765,
+          username: 'Merry_2mpmnxcgv1s',
+          wristbandNumber: 202
+         */
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "username", "wristbandNumber"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          username: schemas.player.properties.username,
+          wristbandNumber: schemas.wristband.properties.wristbandNumber,
+        },
+      }),
+      res: ajv.compile({
+        /*
+          timestamp: 1706455867824,
+          result: 'OK',
+          message: 'successfully unregisterWristbandToPlayer'
+         */
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "message"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          message: schemas.commons.message,
+        },
+      }),
+    },
     alias: "wristband/deregister",
     pub: prefix("player/unregisterWristband"),
     sub: prefix("player/unregisterWristband/response"),
@@ -199,6 +247,50 @@ const registrationTopics = {
     sub: prefix("player/isValid/response"),
   },
   getWristbandInfo: {
+    schema: {
+      req: ajv.compile({
+        /*
+          timestamp: 1706452787659,
+          wristbandNumber: 169
+         */
+        type: "object",
+        required: ["timestamp", "wristbandNumber"],
+        additionalProperties: false,
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          wristbandNumber: schemas.wristband.properties.wristbandNumber,
+        },
+      }),
+      res: ajv.compile({
+        /*
+          timestamp: 1706454527907,
+          result: 'OK',
+          wristband: { wristbandNumber: 169, wristbandColor: 2, active: false }
+         */
+        /*
+          timestamp: 1706452787745,
+          result: 'NOK',
+          message: 'wristband with number: 169 is already registered'
+         */
+        type: "object",
+        required: ["timestamp", "result", "wristband"],
+        additionalProperties: false,
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          wristband: {
+            type: "object",
+            required: ["wristbandNumber", "wristbandColor", "active"],
+            additionalProperties: false,
+            properties: {
+              wristbandNumber: schemas.wristband.properties.wristbandNumber,
+              wristbandColor: schemas.wristband.properties.wristbandColor,
+              active: schemas.wristband.properties.active,
+            },
+          },
+        },
+      }),
+    },
     alias: "wristband/info",
     pub: prefix("wristband/info"),
     sub: prefix("wristband/info/response"),

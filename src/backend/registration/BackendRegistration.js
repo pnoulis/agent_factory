@@ -9,6 +9,7 @@ import { loginPlayer } from "./loginPlayer.js";
 
 // wristband topics
 import { scanWristband } from "./scanWristband.js";
+import { getWristbandInfo } from "./getWristbandInfo.js";
 import { registerWristband } from "./registerWristband.js";
 import { deregisterWristband } from "./deregisterWristband.js";
 
@@ -38,6 +39,7 @@ Object.assign(BackendRegistration.prototype, {
   loginPlayer,
   // wristband topics
   scanWristband,
+  getWristbandInfo,
   registerWristband,
   deregisterWristband,
   // list topics

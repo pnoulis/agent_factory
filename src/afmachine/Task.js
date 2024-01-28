@@ -30,13 +30,13 @@ class Task extends createEventful() {
     Object.assign(
       cmd,
       {
-        raw: null,
         state: "",
         t_start: null,
         t_end: null,
       },
       props,
     );
+    cmd.raw ??= {};
     cmd.opts ??= {};
     cmd.args ??= {};
     cmd.req ??= {};

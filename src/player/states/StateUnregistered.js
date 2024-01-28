@@ -19,7 +19,7 @@ Unregistered.prototype.register = function () {
   return this.player;
 };
 Unregistered.prototype.registered = function (player) {
-  return this.player.setState("registered");
+  return this.player.normalize(player, { state: "registered" });
 };
 Unregistered.prototype.pairWristband = function () {
   this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(

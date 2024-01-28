@@ -5,15 +5,14 @@ import { validateBackendResponse } from "../middleware/validateBackendResponse.j
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { Wristband } from "../../wristband/thin/Wristband.js";
 
-new Task("registerWristband", Command);
+new Task("getWristbandInfo", Command);
 
-function Command(player, wristband, opts) {
+function Command(wristband, opts) {
   const afm = this;
   const promise = Command.createCommand(
     afm,
     {
       args: {
-        player: "tobject" in player ? player.tobject() : player,
         wristband: "tobject" in wristband ? wristband.tobject() : wristband,
       },
       opts,
@@ -26,36 +25,36 @@ function Command(player, wristband, opts) {
 }
 
 Command.middleware = [
-  (ctx, next) => {
+  attachBackendRegistrationRouteInfo,
+  async (ctx, next) => {
     ctx.req = {
       timestamp: ctx.t_start,
-      username: ctx.args.player.username,
       wristbandNumber: ctx.args.wristband.id,
     };
     return next();
   },
-  attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerWristband(ctx.req);
-    ctx.res.wristband = Wristband.normalize(ctx.args.wristband, {
-      state: "paired",
-    });
+    ctx.raw = await ctx.afm.backend.getWristbandInfo(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
+  async (ctx, next) => {
+    ctx.res.wristband = Wristband.normalize(ctx.raw.wristband);
+    return next();
+  },
 ];
 
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to register wristband to player";
+  cmd.msg = "Failed to retrieve wristband information";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully registered wristband to player";
+  cmd.msg = "Successfully retrieved wristband information";
   cmd.resolve(cmd.res);
 };
 
-export { Command as registerWristband };
+export { Command as getWristbandInfo };

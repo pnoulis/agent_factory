@@ -31,7 +31,7 @@ function Command(player, password, opts) {
 Command.middleware = [
   async (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
-    player.getState().register();
+    player.state.register();
     ctx.req = {
       timestamp: ctx.t_start,
       name: ctx.args.player.name,
@@ -60,7 +60,7 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.msg = "Failed to register new player";
-  cmd.reject(cmd);
+  cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;

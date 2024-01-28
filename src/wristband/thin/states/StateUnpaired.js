@@ -14,7 +14,7 @@ class Unpaired {
     return Unpaired.order;
   }
 
-  pair() {
+  pair(player) {
     return this.wristband.setState("pairing");
   }
   paired(wristband) {
@@ -31,7 +31,7 @@ class Unpaired {
   unpaired(wristband) {
     this.wristband.throwStateErr(
       this.wristband.errCodes.EWRISTBAND_STATE_IMPOSSIBLE,
-    )("Unpaired wristband in unpaired state", this.wristband, wristband);
+    )("Unpaired wristband in unpaired state", wristband);
   }
 }
 

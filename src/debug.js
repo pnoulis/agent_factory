@@ -60,12 +60,14 @@ function logafm(afm) {
 
   afm.on("cmdqueue", (cmd) => {
     console.log(`CMD_QUEUE: '${cmd.taskname}'`);
+    console.log("--------------------------------------------------");
+    console.log();
+    console.log();
   });
 
   afm.on("cmdstart", (cmd) => {
     console.log(`CMD_START: '${cmd.taskname}'`);
     logcmd(cmd);
-    console.dir(cmd.afm.players, { depth: 3 });
     console.log(`CMD_START: '${cmd.taskname}'`);
     console.log("--------------------------------------------------");
     console.log();
@@ -152,6 +154,7 @@ globalThis.logent = logent;
 
 process.on("unhandledRejection", (err) => {
   console.log("UNHANDLED_REJECTION:");
+  console.log(err);
   console.log(
     isArray(err)
       ? err.map((er) => er.msg ?? er.message)
