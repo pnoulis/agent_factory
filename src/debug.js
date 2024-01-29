@@ -6,8 +6,16 @@ function trace(any) {
   console.dir(any, { depth: null });
 }
 
-function debug(any) {
-  console.dir(any, { depth: null });
+function debug(...args) {
+  const options = {
+    depth: args.at(-1)?.depth ?? null,
+  };
+
+  args.slice(0, -1).forEach((arg) => {
+    console.dir(arg, options);
+  });
+  console.log();
+  console.log();
 }
 
 function inspectProtoChain(obj) {

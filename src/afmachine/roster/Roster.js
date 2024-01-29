@@ -5,21 +5,20 @@ import { Player } from "../../player/thin/Player.js";
 class Roster {
   static random = random;
   static normalize = normalize;
-  constructor(players, createPlayer) {
+
+  constructor(players) {
     this.normalize(players);
   }
 
-  get size() {
-    return this.roster.size;
+  get length() {
+    return this.roster.length;
   }
-  normalize(sources, options) {
-    this.roster = new Map();
-    // Roster.normalize(sources, options).forEach((player) => {
-    //   this.roster.set(player.username, player);
-    // });
-  }
+
+  normalize(sources, options) {}
+  random(sources, options) {}
   fill() {}
   tobject() {}
+
   add() {}
   remove() {}
   has() {}
