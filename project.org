@@ -507,3 +507,22 @@ Given a set of Wristbands:
 The output would be:
 
 { wristbandInFrontendForm... }
+
+* Transfer of entities under afmachine/ directory
+* Make normalization function uniform
+** DONE Player.normalize();
+** DONE Wristband.normalize();
+** DONE Package.normalize()
+CLOSED: [2024-01-29 Mon 15:14]
+* Make random functions uniform
+** DONE Player.random()
+** DONE Wristband.random();
+** DONE Package.random()
+CLOSED: [2024-01-29 Mon 15:14]
+* Make fiill funtions uniform
+** DONE Player.fill()
+CLOSED: [2024-01-29 Mon 15:14]
+** DONE Wrisband.fill();
+CLOSED: [2024-01-29 Mon 15:13]
+** DONE Package.fill()
+CLOSED: [2024-01-29 Mon 15:16]

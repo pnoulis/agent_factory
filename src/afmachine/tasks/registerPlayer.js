@@ -4,7 +4,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { PlayerCommander } from "../../player/thin/PlayerCommander.js";
+import { PlayerCommander } from "../player/PlayerCommander.js";
 
 new Task("registerPlayer", Command);
 

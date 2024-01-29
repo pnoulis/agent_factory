@@ -1,14 +1,15 @@
 import { Wristband } from "./Wristband.js";
 import { createEventful } from "../../Eventful.js";
 import { stateventful } from "../../Stateful.js";
-import { extendProto } from "../../misc/misc.js";
 import { createStateErr } from "../../errors.js";
+import { extendProto } from "../../misc/misc.js";
 
+extendProto(WristbandCommander, stateventful);
 class WristbandCommander extends createEventful(Wristband) {
   constructor(afm, wristband, type) {
     super(wristband);
-    this.afm = afm;
     this.addEvent("stateChange");
+    this.afm = afm;
   }
 
   throwStateErr(errCode) {
@@ -59,7 +60,5 @@ class WristbandCommander extends createEventful(Wristband) {
     }
   }
 }
-
-extendProto(WristbandCommander, stateventful);
 
 export { WristbandCommander };

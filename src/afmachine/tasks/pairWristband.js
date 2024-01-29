@@ -4,8 +4,8 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { PlayerCommander } from "../../player/thin/PlayerCommander.js";
-import { WristbandCommander } from "../../wristband/thin/WristbandCommander.js";
+import { PlayerCommander } from "../player/PlayerCommander.js";
+import { WristbandCommander } from "../wristband/WristbandCommander.js";
 import { createStateErr, ERR_CODES } from "../../errors.js";
 
 new Task("pairWristband", Command);

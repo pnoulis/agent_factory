@@ -2,8 +2,9 @@ import { Player } from "./Player.js";
 import { createEventful } from "../../Eventful.js";
 import { stateventful } from "../../Stateful.js";
 import { createStateErr } from "../../errors.js";
-import { extendProto } from "../../misc/misc.js";
+import { extendProto } from "../../misc/Misc.js";
 
+extendProto(PlayerCommander, stateventful);
 class PlayerCommander extends createEventful(Player) {
   constructor(afm, player, wristband) {
     super(player, wristband);
@@ -86,7 +87,5 @@ class PlayerCommander extends createEventful(Player) {
     }
   }
 }
-
-extendProto(PlayerCommander, stateventful);
 
 export { PlayerCommander };

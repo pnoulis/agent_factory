@@ -3,8 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { Wristband } from "../../wristband/thin/Wristband.js";
-import { WristbandTarget } from "../../wristband/thin/WristbandTarget.js";
+import { Wristband } from "../wristband/Wristband.js";
 import { createError, ERR_CODES } from "../../errors.js";
 
 new Task("scanWristband", Command);

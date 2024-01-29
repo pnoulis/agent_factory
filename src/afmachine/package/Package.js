@@ -1,6 +1,6 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
-import { createStateful } from "../../Stateful.js";
+import { createStateful, stateful } from "../../Stateful.js";
 import { Unregistered } from "./StateUnregistered.js";
 import { Registered } from "./StateRegistered.js";
 import { Playing } from "./StatePlaying.js";
@@ -24,7 +24,7 @@ class Package extends createStateful([
 
   normalize(sources, options) {
     Object.assign(this, Package.normalize([this, sources], options));
-    return this.setState(this.state);
+    return stateful.setState.call(this, this.state);
   }
   fill(sources, options) {
     return this.normalize(Package.random([this, sources], options), options);

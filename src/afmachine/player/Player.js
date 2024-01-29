@@ -1,10 +1,10 @@
-import { random } from "../random.js";
-import { normalize } from "../normalize.js";
+import { random } from "./random.js";
+import { normalize } from "./normalize.js";
 import { createStateful, stateful } from "../../Stateful.js";
-import { Unregistered } from "../states/StateUnregistered.js";
-import { Registered } from "../states/StateRegistered.js";
-import { InTeam } from "../states/StateInTeam.js";
-import { Playing } from "../states/StatePlaying.js";
+import { Unregistered } from "./StateUnregistered.js";
+import { Registered } from "./StateRegistered.js";
+import { InTeam } from "./StateInTeam.js";
+import { Playing } from "./StatePlaying.js";
 import { ERR_CODES } from "../../errors.js";
 
 class Player extends createStateful([

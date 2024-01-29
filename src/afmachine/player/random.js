@@ -1,4 +1,3 @@
-import "../debug.js";
 import { generateRandomName } from "js_utils/misc";
 import { smallid, uuid } from "js_utils/uuid";
 
@@ -10,7 +9,10 @@ function random(sources, options = {}) {
   };
   //debug(options);
 
-  const _sources = [sources].flat(2).filter((src) => !!src);
+  const _sources = [sources]
+    .flat(2)
+    .filter((src) => !!src)
+    .map((src) => ("tobject" in src ? src.tobject() : src));
   //debug(_sources);
 
   const target = Object.assign({}, ..._sources);
@@ -23,11 +25,11 @@ function random(sources, options = {}) {
       "_",
     );
   }
-
   target.username ||= username;
   target.name ||= name;
   target.surname ||= surname;
   target.email ||= `${name}@gmail.com`;
+
   //debug(target);
   return target;
 }
