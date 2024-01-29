@@ -1,5 +1,5 @@
 import { unique, isArray, isObject } from "js_utils/misc";
-import { Player } from "../../player/thin/Player.js";
+import { random as randomPlayer } from "../player/random.js";
 
 function random(sources, options = {}) {
   // debug("random roster");
@@ -11,20 +11,21 @@ function random(sources, options = {}) {
   // debug(_options);
 
   const _sources = unique(
-    [sources].flat(2).reduce((cdr, src) => {
-      if (src == null) return cdr;
-      src = Object.hasOwn(src, "roster") ? src.roster : src;
-      if (src instanceof Map) {
-        cdr.push(...Array.from(src.values()));
-      } else if (isArray(src)) {
-        cdr.push(...src);
+    (function findPlayer(accum, src) {
+      if (isArray(src)) {
+        for (let i = 0; i < src.length; i++) {
+          findPlayer(accum, src[i]);
+        }
       } else if (isObject(src)) {
-        cdr.push(src);
+        if (Object.hasOwn(src, "roster")) {
+          findPlayer(accum, src.roster);
+        } else {
+          accum.push(src);
+        }
       }
-      return cdr;
-    }, []),
+      return accum;
+    })([], sources),
   );
-
   // debug(_sources);
 
   if (_options.size < _sources.length) {
@@ -33,7 +34,7 @@ function random(sources, options = {}) {
 
   const target = [];
   for (let i = 0; i < _options.size; i++) {
-    target.push(Player.random(_sources[i], options));
+    target.push(randomPlayer(_sources[i], options));
   }
 
   // debug(target);

@@ -1,4 +1,4 @@
-import { WRISTBAND_COLORS, MAX_WRISTBAND_ID } from "../constants.js";
+import { WRISTBAND_COLORS, MAX_WRISTBAND_ID } from "../../constants.js";
 import { randomInteger } from "js_utils/misc";
 
 function random(sources) {

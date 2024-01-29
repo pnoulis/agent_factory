@@ -16,24 +16,49 @@ class Player extends createStateful([
   static random = random;
   static normalize = normalize;
 
-  constructor(player, wristband) {
+  constructor(player, wristband, { normalize = true, ...options } = {}) {
     super();
-    this.wristband = wristband;
-    this.normalize(player);
+    this.wristband = wristband ?? {};
+    if (normalize) {
+      return this.normalize(player, options);
+    }
+    player ||= {};
+    this.username = player.username || "";
+    this.name = player.name || "";
+    this.surname = player.surname || "";
+    this.email = player.email || "";
+    this.state = player.state || "";
   }
-  normalize(sources, options) {
-    Object.assign(this, Player.normalize([this, sources], options));
+  normalize(sources, options = {}) {
+    const normalized = Player.normalize([this, sources], options);
+
+    // wristband
+    if (options.depth) {
+      Object.assign(this.wristband, normalized.wristband);
+      stateful.setState.call(this.wristband, this.wristband.state);
+    }
+    delete normalized.wristband;
+
+    // player
+    Object.assign(this, normalized);
 
     // Calling with apply because PlayerCommander shadows setState
     // with stateventful implementation before Player is initialized
     // with a this.events prop.
     return stateful.setState.call(this, this.state);
   }
-  fill(sources, options) {
-    return this.normalize(Player.random([this, sources], options), options);
+  fill(sources, options = {}) {
+    const filled = Player.random([this, sources], options);
+    // wristband
+    if (options.depth) {
+      Object.assign(this.wristband, filled.wristband);
+    }
+    delete filled.wristband;
+    // player
+    return Object.assign(this, filled);
   }
-  tobject() {
-    return Player.normalize(this);
+  tobject(options) {
+    return Player.normalize(this, options);
   }
 }
 

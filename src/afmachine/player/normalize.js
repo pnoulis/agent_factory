@@ -1,4 +1,5 @@
 import { isObject } from "js_utils/misc";
+import { normalize as normalizeWristband } from "../wristband/normalize.js";
 
 function normalize(sources, options = {}) {
   // debug("normalize player");
@@ -9,6 +10,7 @@ function normalize(sources, options = {}) {
     nullSupersede: options.nullSupersede ?? false,
     defaultState: options.defaultState ?? "unregistered",
     depth: options.depth || 0,
+    wristband: options.wristband,
   };
   // debug(_options);
 
@@ -34,6 +36,7 @@ function normalize(sources, options = {}) {
         ? _sources[i].state.name
         : _sources[i].state;
       wristbandMerged = _sources[i].wristbandMerged ?? false;
+      target.wristband = _sources[i].wristband ?? {};
     }
   } else {
     for (let i = 0; i < _sources.length; i++) {
@@ -46,6 +49,7 @@ function normalize(sources, options = {}) {
           ? _sources[i].state.name
           : _sources[i].state) || target.state;
       wristbandMerged = _sources[i].wristbandMerged ?? wristbandMerged;
+      target.wristband = _sources[i].wristband ?? target.wristband;
     }
   }
 
@@ -56,6 +60,10 @@ function normalize(sources, options = {}) {
   }
 
   target.state ||= _options.defaultState;
+
+  if (_options.depth) {
+    target.wristband = normalizeWristband(target.wristband, options.wristband);
+  }
 
   // debug(target);
   return target;

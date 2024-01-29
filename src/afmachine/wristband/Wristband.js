@@ -11,16 +11,23 @@ class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
   static random = random;
   static normalize = normalize;
 
-  constructor(wristband) {
+  constructor(wristband, { normalize = true } = {}) {
     super();
-    this.normalize(wristband);
+    if (normalize) {
+      return this.normalize(wristband);
+    }
+    wristband ||= {};
+    this.id = wristband.id ?? null;
+    this.color = wristband.color || "";
+    this.colorCode = wristband.colorCode ?? null;
+    this.state = wristband.state || "";
   }
   normalize(sources, options) {
     Object.assign(this, Wristband.normalize([this, sources], options));
     return stateful.setState.call(this, this.state);
   }
   fill(sources, options) {
-    return this.normalize(Wristband.random([this, sources], options), options);
+    return Object.assign(Wristband.random([this, sources], options));
   }
   tobject() {
     return Wristband.normalize(this);

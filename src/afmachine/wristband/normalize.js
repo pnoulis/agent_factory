@@ -1,4 +1,4 @@
-import { WRISTBAND_COLORS } from "../constants.js";
+import { WRISTBAND_COLORS } from "../../constants.js";
 
 function normalize(sources, options = {}) {
   // debug("normalize wristband");
