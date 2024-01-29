@@ -421,30 +421,30 @@ entity or entities.
 #+end_src
 ** Active package
 *** mission
-#+begin_src json
-  "packages" : [{
-    "id" : 1,
-    "name" : "Per Mission 10",
-    "cost" : null,
-    "started" : 1706472302416,
-    "ended" : null,
-    "missions" : 10,
-    "missionsPlayed" : 0,
-    "active" : true
-  }]
+#+begin_src js
+  {
+    id : 1,
+    name : "Per Mission 10",
+    cost : null,
+    started : 1706472302416,
+    ended : null,
+    missions : 10,
+    missionsPlayed : 0,
+    active : true
+  }
 #+end_src
 *** time
-#+begin_src json
-  "packages" : [{
-    "id" : 3,
-    "name" : "Per Time 30",
-    "cost" : null,
-    "started" : 1706473426225,
-    "ended" : null,
-    "duration" : 1800.000000000,
-    "paused" : false,
-    "active" : true
-  }]
+#+begin_src js
+  {
+    id : 3,
+    name : "Per Time 30",
+    cost : null,
+    started : 1706473426225,
+    ended : null,
+    duration : 1800.000000000,
+    paused : false,
+    active : true
+  }
     #+end_src
 ** Inactive package
 *** mission
@@ -473,3 +473,37 @@ entity or entities.
     "active" : false
   }]
 #+end_src
+
+* Normalization functions
+Normalization function are used to translate and merge entity objects.
+
+They translate objects in backend form to frontend form.
+
+For example:
+
+A backend wrisband has the following properties:
+
+wristbandNumber
+wristbandColor
+
+A frontend wristband has the following properties:
+
+id
+color
+colorCode
+
+The wristband normalization function is capable of taking a backend wristband
+and translating it into a frontend wristband.
+
+A second task normalization functions fulfill, is the merging of entity objects
+in any form into a single object in frontend form.
+
+For example:
+
+Given a set of Wristbands:
+
+[ { wristband1...}, { wristband2...} ]
+
+The output would be:
+
+{ wristbandInFrontendForm... }

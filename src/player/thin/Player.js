@@ -27,8 +27,7 @@ class Player extends createStateful([
     // Calling with apply because PlayerCommander shadows setState
     // with stateventful implementation before Player is initialized
     // with a this.events prop.
-    stateful.setState.call(this, this.state);
-    return this;
+    return stateful.setState.call(this, this.state);
   }
   fill(sources, options) {
     return this.normalize(Player.random([this, sources], options), options);

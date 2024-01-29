@@ -34,4 +34,27 @@ function extendProto(target, source) {
   }
 }
 
-export { mergec, inspectProtoChain, extendProto, inspectProps };
+/*
+  Seconds to Milliseconds
+  1 second - 1000 milliseconds
+ */
+function t_stomls(seconds, reverse = false) {
+  return reverse ? seconds / 1000 : seconds * 1000;
+}
+
+/*
+  Seconds to Minutes
+  60 seconds - 1 minute
+ */
+function t_stomin(seconds, reverse = false) {
+  return reverse ? seconds * 60 : seconds / 60;
+}
+
+export {
+  mergec,
+  inspectProtoChain,
+  extendProto,
+  inspectProps,
+  t_stomls,
+  t_stomin,
+};

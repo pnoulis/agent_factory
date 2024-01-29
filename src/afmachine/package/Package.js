@@ -19,11 +19,19 @@ class Package extends createStateful([
 
   constructor(afm, pkg) {
     super();
+    this.normalize(pkg);
   }
 
-  normalize(sources, options) {}
-  random(sources, options) {}
-  fill(sources, options) {}
+  normalize(sources, options) {
+    Object.assign(this, Package.normalize([this, sources], options));
+    return this.setState(this.state);
+  }
+  fill(sources, options) {
+    return this.normalize(Package.random([this, sources], options), options);
+  }
+  tobject() {
+    return Package.normalize(this);
+  }
 }
 
 export { Package };
