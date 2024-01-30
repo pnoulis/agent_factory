@@ -1,5 +1,5 @@
 function listPackages() {
-  return this.publish("list/pkgs");
+  return this.publish("list/packages");
 }
 
 export { listPackages };

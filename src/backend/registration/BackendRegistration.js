@@ -15,6 +15,8 @@ import { deregisterWristband } from "./deregisterWristband.js";
 
 // list topics
 import { listPackages } from "./listPackages.js";
+import { listPlayers } from "./listPlayers.js";
+import { listPlayersWithWristband } from "./listPlayersWithWristband.js";
 
 class BackendRegistration extends Backend {
   constructor({ deviceId, roomName, params, routes, strict } = {}) {
@@ -44,6 +46,8 @@ Object.assign(BackendRegistration.prototype, {
   deregisterWristband,
   // list topics
   listPackages,
+  listPlayers,
+  listPlayersWithWristband,
 });
 
 export { BackendRegistration };

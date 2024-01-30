@@ -3,8 +3,9 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
+import { normalize as normalizePackage } from "../package/normalize.js";
 
-new Task("listPkgs", Command);
+new Task("listPackages", Command);
 
 function Command(opts) {
   const afm = this;
@@ -23,7 +24,9 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.packages = ctx.raw.packages;
+    ctx.res.packages = ctx.raw.packages.map((pkg) =>
+      normalizePackage(pkg, { state: "registered" }),
+    );
     return next();
   },
 ];
@@ -38,4 +41,4 @@ Command.onSuccess = function () {
   cmd.resolve(cmd.res);
 };
 
-export { Command as listPkgs };
+export { Command as listPackages };

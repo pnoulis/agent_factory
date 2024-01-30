@@ -10,7 +10,7 @@ function normalize(sources, options = {}) {
     nullSupersede: options.nullSupersede ?? false,
     defaultState: options.defaultState ?? "unregistered",
     depth: options.depth ?? 0,
-    wristband: options.wristband,
+    wristband: options.wristband ?? {},
   };
   trace(_options, "player options");
 

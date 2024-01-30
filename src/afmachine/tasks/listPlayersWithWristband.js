@@ -5,7 +5,7 @@ import { validateBackendResponse } from "../middleware/validateBackendResponse.j
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { normalize as normalizePlayer } from "../player/normalize.js";
 
-new Task("listPlayers", Command);
+new Task("listPlayersWithWristband", Command);
 
 function Command(opts) {
   const afm = this;
@@ -24,27 +24,27 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.listPlayers();
+    ctx.raw = await ctx.afm.backend.listPlayersWithWristband();
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.players = ctx.raw.players.map((player) =>
-      normalizePlayer(player, { depth: 1, defaultState: "registered" }),
+      normalizePlayer(player, { depth: 1, state: "registered" }),
     );
     return next();
   },
 ];
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to list players";
+  cmd.msg = "Failed to list players with wristbands";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully listed players";
+  cmd.msg = "Successfully listed players with wristbands";
   cmd.resolve(cmd.res);
 };
 
-export { Command as listPlayers };
+export { Command as listPlayersWithWristband };

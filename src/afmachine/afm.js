@@ -6,18 +6,20 @@ import { createEventful } from "../Eventful.js";
 import { compose } from "./compose.js";
 
 // player tasks
-import { registerPlayer } from "./tasks/registerPlayer.js";
-import { pairWristband } from "./tasks/pairWristband.js";
-import { unpairWristband } from "./tasks/unpairWristband.js";
+// import { registerPlayer } from "./tasks/registerPlayer.js";
+// import { pairWristband } from "./tasks/pairWristband.js";
+// import { unpairWristband } from "./tasks/unpairWristband.js";
 
 // wristband tasks
-import { scanWristband } from "./tasks/scanWristband.js";
-import { getWristbandInfo } from "./tasks/getWristbandInfo.js";
-import { registerWristband } from "./tasks/registerWristband.js";
-import { deregisterWristband } from "./tasks/deregisterWristband.js";
+// import { scanWristband } from "./tasks/scanWristband.js";
+// import { getWristbandInfo } from "./tasks/getWristbandInfo.js";
+// import { registerWristband } from "./tasks/registerWristband.js";
+// import { deregisterWristband } from "./tasks/deregisterWristband.js";
 
 // list tasks
-import { listPkgs } from "./tasks/listPkgs.js";
+import { listPackages } from "./tasks/listPackages.js";
+import { listPlayers } from "./tasks/listPlayers.js";
+import { listPlayersWithWristband } from "./tasks/listPlayersWithWristband.js";
 
 class Afm extends createEventful([
   "connected",
@@ -150,16 +152,18 @@ Afm.prototype.onCmdEnd = function (cmd) {
 
 Object.assign(Afm.prototype, {
   // player tasks
-  registerPlayer,
-  pairWristband,
-  unpairWristband,
+  // registerPlayer,
+  // pairWristband,
+  // unpairWristband,
   // wristband tasks
-  scanWristband,
-  getWristbandInfo,
-  registerWristband,
-  deregisterWristband,
+  // scanWristband,
+  // getWristbandInfo,
+  // registerWristband,
+  // deregisterWristband,
   // list tasks
-  listPkgs,
+  listPackages,
+  listPlayers,
+  listPlayersWithWristband,
 });
 
 const afm = new Afm();

@@ -352,19 +352,153 @@ const registrationTopics = {
   // LIST
   //////////////////////////////////////////////////
   listPlayers: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        required: ["timestamp"],
+        additionalProperties: false,
+        properties: {
+          timestamp: schemas.commons.timestamp,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        required: ["timestamp", "result", "players"],
+        additionalProperties: false,
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          players: {
+            type: "array",
+            items: {
+              type: "object",
+              required: [
+                "username",
+                "name",
+                "surname",
+                "email",
+                "wristbandMerged",
+                "wristband",
+              ],
+              additionalProperties: false,
+              properties: {
+                username: schemas.player.properties.username,
+                name: schemas.player.properties.name,
+                surname: schemas.player.properties.surname,
+                email: schemas.player.properties.email,
+                wristbandMerged: schemas.player.properties.wristbandMerged,
+                wristband: {
+                  type: "object",
+                  nullable: true,
+                  required: ["wristbandNumber", "wristbandColor", "active"],
+                  additionalProperties: false,
+                  properties: {
+                    wristbandNumber:
+                      schemas.wristband.properties.wristbandNumber,
+                    wristbandColor: schemas.wristband.properties.wristbandColor,
+                    active: schemas.wristband.properties.active,
+                  },
+                },
+              },
+            },
+          },
+        },
+      }),
+    },
     alias: "list/players",
-    pub: prefix("player/all/search"),
+    pub: prefix("/player/all/search"),
     sub: prefix("player/all/search/response"),
   },
-  listPlayersWristbanded: {
-    alias: "search/players/wristbanded",
+  listPlayersWithWristband: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        required: ["timestamp"],
+        additionalProperties: false,
+        properties: {
+          timestamp: schemas.commons.timestamp,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        required: ["timestamp", "result", "players"],
+        additionalProperties: false,
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          players: {
+            type: "array",
+            items: {
+              type: "object",
+              required: [
+                "username",
+                "name",
+                "surname",
+                "email",
+                "wristbandMerged",
+                "wristband",
+              ],
+              additionalProperties: false,
+              properties: {
+                username: schemas.player.properties.username,
+                name: schemas.player.properties.name,
+                surname: schemas.player.properties.surname,
+                email: schemas.player.properties.email,
+                wristbandMerged: schemas.player.properties.wristbandMerged,
+                wristband: {
+                  type: "object",
+                  required: ["wristbandNumber", "wristbandColor", "active"],
+                  additionalProperties: false,
+                  properties: {
+                    wristbandNumber:
+                      schemas.wristband.properties.wristbandNumber,
+                    wristbandColor: schemas.wristband.properties.wristbandColor,
+                    active: schemas.wristband.properties.active,
+                  },
+                },
+              },
+            },
+          },
+        },
+      }),
+    },
+    alias: "list/playersWithWristband",
     pub: prefix("player/available/search"),
     sub: prefix("player/available/search/response"),
   },
-  listPkgs: {
+  listPackages: {
     schema: {
       req: null,
       res: ajv.compile(
+        /*
+    timestamp: 1706640606387,
+    result: 'OK',
+    packages: [
+      { name: 'Per Mission 5', amount: 5, type: 'mission', cost: 50 },
+      {
+        name: 'Per Mission 10',
+        amount: 10,
+        type: 'mission',
+        cost: 100
+      },
+      {
+        name: 'Per Mission 15',
+        amount: 15,
+        type: 'mission',
+        cost: 150
+      },
+      {
+        name: 'Per Mission 20',
+        amount: 20,
+        type: 'mission',
+        cost: 200
+      },
+      { name: 'Per Time 30', amount: 30, type: 'time', cost: 50 },
+      { name: 'Per Time 60', amount: 60, type: 'time', cost: 100 },
+      { name: 'Per Time 90', amount: 90, type: 'time', cost: 150 },
+      { name: 'Per Time 120', amount: 120, type: 'time', cost: 200 }
+    ]
+         */
         deepmerge(schemas.response, {
           required: ["timestamp", "result", "packages"],
           additionalProperties: false,
@@ -377,7 +511,7 @@ const registrationTopics = {
         }),
       ),
     },
-    alias: "list/pkgs",
+    alias: "list/packages",
     pub: prefix("packages/all"),
     sub: prefix("packages/all/response"),
   },

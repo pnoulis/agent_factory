@@ -1,4 +1,4 @@
-* tasks
+* Task Board
 ** DONE Player register() fn should need a password as input.
 CLOSED: [2024-01-28 Sun 15:52]
 ** TODO Task should invoke onSuccess(),onFailure() before postask middleware
@@ -60,7 +60,359 @@ CLOSED: [2024-01-28 Sun 17:09]
 **** TODO tobject
 **** TODO fill
 
-** Implement listTeams task
+** DONE Implement list Registered Players
+CLOSED: [2024-01-30 Tue 23:04]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-30 Tue 22:02]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-30 Tue 21:41]
+*** DONE Implement task and Command
+CLOSED: [2024-01-30 Tue 23:04]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-30 Tue 21:41]
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706642934817,
+    result: 'OK',
+    players: [
+      {
+        username: 'Merry_2mpmnxcgv1s',
+        name: 'Merry',
+        surname: 'compassionate',
+        email: 'Merry@gmail.com',
+        wristbandMerged: false,
+        wristband: null
+      },
+      {
+        username: 'Wormtongue_klagnkjxqla',
+        name: 'Wormtongue',
+        surname: 'jovial',
+        email: 'Wormtongue@gmail.com',
+        wristbandMerged: false,
+        wristband: { wristbandNumber: 230, wristbandColor: 3, active: true }
+      },
+      {
+        username: '6t3o5ds227u',
+        name: null,
+        surname: null,
+        email: null,
+        wristbandMerged: false,
+        wristband: null
+      },
+      {
+        username: 'Elrond_6ofeexn83ma',
+        name: 'Elrond',
+        surname: 'vigilant',
+        email: 'Elrond@gmail.com',
+        wristbandMerged: true,
+        wristband: { wristbandNumber: 231, wristbandColor: 4, active: true }
+      },
+      {
+        username: 'ppthree',
+        name: 'yolothree',
+        surname: 'ggthree',
+        email: 'ggthree@gmail.com',
+        wristbandMerged: false,
+        wristband: null
+      },
+    ]
+  }
+#+end_src
+**** After Player.normalize()
+#+begin_src js
+
+  // Player.normalize(backend_res, { depth: 1, defaultState: 'registered' })
+  const normalized = [
+    {
+      username: 'Merry_2mpmnxcgv1s',
+      name: 'Merry',
+      surname: 'compassionate',
+      email: 'Merry@gmail.com',
+      state: 'registered',
+      wristband: { id: null, color: '', colorCode: null, state: 'unpaired' }
+    },
+    {
+      username: 'Wormtongue_klagnkjxqla',
+      name: 'Wormtongue',
+      surname: 'jovial',
+      email: 'Wormtongue@gmail.com',
+      state: 'registered',
+      wristband: { id: 230, color: 'green', colorCode: 3, state: 'paired' }
+    },
+    {
+      username: '6t3o5ds227u',
+      name: '',
+      surname: '',
+      email: '',
+      state: 'registered',
+      wristband: { id: null, color: '', colorCode: null, state: 'unpaired' }
+    },
+    {
+      username: 'Elrond_6ofeexn83ma',
+      name: 'Elrond',
+      surname: 'vigilant',
+      email: 'Elrond@gmail.com',
+      state: 'inTeam',
+      wristband: { id: 231, color: 'yellow', colorCode: 4, state: 'paired' }
+    },
+    {
+      username: 'ppthree',
+      name: 'yolothree',
+      surname: 'ggthree',
+      email: 'ggthree@gmail.com',
+      state: 'registered',
+      wristband: { id: null, color: '', colorCode: null, state: 'unpaired' }
+    }
+  ]
+#+end_src
+*** DONE Verify Player.normalize() and Wristband.normalize()
+CLOSED: [2024-01-30 Tue 21:41]
+** DONE Implement list Registered Players with a Wristband
+CLOSED: [2024-01-30 Tue 23:39]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-30 Tue 23:38]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-30 Tue 23:24]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-30 Tue 23:38]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-30 Tue 23:28]
+**** Backend response
+#+begin_src js
+  const response = {
+    timestamp: 1706649848057,
+    result: 'OK',
+    players: [
+      {
+        username: 'Gilgalad_wsai1ooow3',
+        name: 'Gilgalad',
+        surname: 'sweet',
+        email: 'Gilgalad@gmail.com',
+        wristbandMerged: false,
+        wristband: { wristbandNumber: 232, wristbandColor: 4, active: true }
+      },
+      {
+        username: 'Gandalf_deil7sv8j4c',
+        name: 'Gandalf',
+        surname: 'busy',
+        email: 'Gandalf@gmail.com',
+        wristbandMerged: false,
+        wristband: { wristbandNumber: 233, wristbandColor: 4, active: true }
+      },
+      {
+        username: 'Galadriel_12k3dw52kkhi',
+        name: 'Galadriel',
+        surname: 'jovial',
+        email: 'Galadriel@gmail.com',
+        wristbandMerged: false,
+        wristband: { wristbandNumber: 235, wristbandColor: 5, active: true }
+      }
+    ]
+  }
+#+end_src
+**** After Player.normalize()
+#+begin_src js
+  // Player.normalize(response.players, { depth: 1, state: "registered" })
+  const normalize = [
+    {
+      username: 'Gilgalad_wsai1ooow3',
+      name: 'Gilgalad',
+      surname: 'sweet',
+      email: 'Gilgalad@gmail.com',
+      state: 'registered',
+      wristband: { id: 232, color: 'yellow', colorCode: 4, state: 'paired' }
+    },
+    {
+      username: 'Gandalf_deil7sv8j4c',
+      name: 'Gandalf',
+      surname: 'busy',
+      email: 'Gandalf@gmail.com',
+      state: 'registered',
+      wristband: { id: 233, color: 'yellow', colorCode: 4, state: 'paired' }
+    },
+    {
+      username: 'Galadriel_12k3dw52kkhi',
+      name: 'Galadriel',
+      surname: 'jovial',
+      email: 'Galadriel@gmail.com',
+      state: 'registered',
+      wristband: { id: 235, color: 'blue', colorCode: 5, state: 'paired' }
+    }
+  ]
+  #+end_src
+*** DONE Verify Player.normalize() and Wristband.normalize()
+CLOSED: [2024-01-30 Tue 23:39]
+** DONE Implement list Packages
+CLOSED: [2024-01-30 Tue 23:54]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-30 Tue 21:13]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-30 Tue 21:12]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-30 Tue 21:12]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-30 Tue 20:53]
+**** Backend response
+#+begin_src js
+  const response = {
+    timestamp: 1706640606387,
+    result: 'OK',
+    packages: [
+      { name: 'Per Mission 5', amount: 5, type: 'mission', cost: 50 },
+      {
+        name: 'Per Mission 10',
+        amount: 10,
+        type: 'mission',
+        cost: 100
+      },
+      {
+        name: 'Per Mission 15',
+        amount: 15,
+        type: 'mission',
+        cost: 150
+      },
+      {
+        name: 'Per Mission 20',
+        amount: 20,
+        type: 'mission',
+        cost: 200
+      },
+      { name: 'Per Time 30', amount: 30, type: 'time', cost: 50 },
+      { name: 'Per Time 60', amount: 60, type: 'time', cost: 100 },
+      { name: 'Per Time 90', amount: 90, type: 'time', cost: 150 },
+      { name: 'Per Time 120', amount: 120, type: 'time', cost: 200 }
+    ]
+  }
+#+end_src
+**** After Package.normalization()
+#+begin_src js
+  // Packege.normalize(packages, { state: "registered" });
+  const normalized = [
+    {
+      id: null,
+      name: 'Per Mission 5',
+      type: 'mission',
+      amount: 5,
+      cost: 50,
+      t_start: null,
+      t_end: null,
+      remainder: null,
+      state: 'registered'
+    },
+    {
+      id: null,
+      name: 'Per Mission 10',
+      type: 'mission',
+      amount: 10,
+      cost: 100,
+      t_start: null,
+      t_end: null,
+      remainder: null,
+      state: 'registered'
+    },
+    {
+      id: null,
+      name: 'Per Mission 15',
+      type: 'mission',
+      amount: 15,
+      cost: 150,
+      t_start: null,
+      t_end: null,
+      remainder: null,
+      state: 'registered'
+    },
+    {
+      id: null,
+      name: 'Per Mission 20',
+      type: 'mission',
+      amount: 20,
+      cost: 200,
+      t_start: null,
+      t_end: null,
+      remainder: null,
+      state: 'registered'
+    },
+    {
+      id: null,
+      name: 'Per Time 30',
+      type: 'time',
+      amount: 30,
+      cost: 50,
+      t_start: null,
+      t_end: null,
+      remainder: null,
+      state: 'registered'
+    },
+    {
+      id: null,
+      name: 'Per Time 60',
+      type: 'time',
+      amount: 60,
+      cost: 100,
+      t_start: null,
+      t_end: null,
+      remainder: null,
+      state: 'registered'
+    },
+    {
+      id: null,
+      name: 'Per Time 90',
+      type: 'time',
+      amount: 90,
+      cost: 150,
+      t_start: null,
+      t_end: null,
+      remainder: null,
+      state: 'registered'
+    },
+    {
+      id: null,
+      name: 'Per Time 120',
+      type: 'time',
+      amount: 120,
+      cost: 200,
+      t_start: null,
+      t_end: null,
+      remainder: null,
+      state: 'registered'
+    }
+  ]
+#+end_src
+
+*** DONE Verify Package.normalize()
+CLOSED: [2024-01-30 Tue 20:58]
+** TODO Implement list Cashiers
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+*** TODO Verify Cashier.normalize()
+** TODO Implement list Devices
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+*** TODO Verify Device.normalize()
+** TODO Implement list Scoreboard Devices
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+*** TODO Verify Device.normalize()
+** TODO Implement list Scoreboard Device Views
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+*** TODO Verify Device.normalize()
+** TODO ImpLement list Scoreboard
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+*** TODO Verify Team.normalize()
+** TODO Implement list Teams
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
@@ -104,6 +456,8 @@ CLOSED: [2024-01-30 Tue 10:28]
     ],
   }
 #+end_src
+
+*** TODO Verify Team.normalize()
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
 control center of the application. All actions that touch multiple modules of
@@ -453,7 +807,6 @@ entity or entities.
   }
 #+end_src
 
-
 * Packages
 ** Available packages
 *** mission
@@ -518,6 +871,9 @@ entity or entities.
     "active" : false
   }]
 #+end_src
+
+
+
 
 * Normalization functions
 Normalization function are used to translate and merge entity objects.
@@ -683,6 +1039,7 @@ at depth = 0 -> do not fill() wristband
 at depth = 1 -> fill() wristband
 
 *** Roster
+size
 sources
 depth
 
@@ -690,6 +1047,7 @@ at depth = 0 -> do not fill() wristband
 at depth = 1 -> fill() wristband
 
 *** Team
+size
 sources
 depth
 
@@ -697,23 +1055,3 @@ at depth = 0 -> do not fill() wristband, or players or packages
 at depth = 1 -> fill() players and packages
 at depth = 2 -> fill() players and packages and wristbands
 
-* Transfer of entities under afmachine/ directory
-* Make normalization function uniform
-** DONE Player.normalize();
-** DONE Wristband.normalize();
-** DONE Package.normalize()
-CLOSED: [2024-01-29 Mon 15:14]
-* Make random functions uniform
-** DONE Player.random()
-** DONE Wristband.random();
-** DONE Package.random()
-CLOSED: [2024-01-29 Mon 15:14]
-* Make fiill funtions uniform
-** DONE Player.fill()
-CLOSED: [2024-01-29 Mon 15:14]
-** DONE Wrisband.fill();
-CLOSED: [2024-01-29 Mon 15:13]
-** DONE Package.fill()
-CLOSED: [2024-01-29 Mon 15:16]
-
-* Roster
