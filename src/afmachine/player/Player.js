@@ -16,31 +16,33 @@ class Player extends createStateful([
   static random = random;
   static normalize = normalize;
 
-  constructor(player, wristband, { normalize = true, ...options } = {}) {
+  constructor(player, wristband) {
     super();
-    this.wristband = wristband ?? {};
-    if (normalize) {
-      return this.normalize(player, options);
-    }
-    player ||= {};
+    player ??= {};
     this.username = player.username || "";
     this.name = player.name || "";
     this.surname = player.surname || "";
     this.email = player.email || "";
     this.state = player.state || "";
+    this.wristband = wristband ?? {};
   }
-  normalize(sources, options = {}) {
-    const normalized = Player.normalize([this, sources], options);
+  normalize(sources, { depth = 1, wristband, ...playerOpts } = {}) {
+    const { wristband: wristbandSrc, ...player } = playerOpts.normalized
+      ? sources
+      : Player.normalize([this, sources], {
+          depth,
+          wristband,
+          ...playerOpts,
+        });
 
-    // wristband
-    if (options.depth) {
-      Object.assign(this.wristband, normalized.wristband);
-      stateful.setState.call(this.wristband, this.wristband.state);
-    }
-    delete normalized.wristband;
+    // Wristband
+    this.wristband.normalize(
+      wristbandSrc,
+      depth > 0 ? { ...wristband, normalized: true } : wristband,
+    );
 
-    // player
-    Object.assign(this, normalized);
+    // Player
+    Object.assign(this, player);
 
     // Calling with apply because PlayerCommander shadows setState
     // with stateventful implementation before Player is initialized
@@ -48,17 +50,16 @@ class Player extends createStateful([
     return stateful.setState.call(this, this.state);
   }
   fill(sources, options = {}) {
-    const filled = Player.random([this, sources], options);
-    // wristband
-    if (options.depth) {
-      Object.assign(this.wristband, filled.wristband);
-    }
-    delete filled.wristband;
-    // player
-    return Object.assign(this, filled);
+    return this.normalize(Player.random([this, sources], options));
   }
-  tobject(options) {
-    return Player.normalize(this, options);
+  tobject(depth = 0) {
+    const player = Player.normalize(this, { depth: 0 });
+    if (depth > 0) {
+      player.wristband = this.wristband.tobject();
+    } else {
+      player.wristband = {};
+    }
+    return player;
   }
 }
 

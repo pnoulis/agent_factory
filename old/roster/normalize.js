@@ -2,10 +2,10 @@ import { isObject, isArray, unique } from "js_utils/misc";
 import { normalize as normalizePlayer } from "../player/normalize.js";
 
 function normalize(sources, options) {
-  trace("normalize roster");
+  // debug("normalize roster");
 
-  // trace("options", options);
-  // trace("sources", sources, { depth: 1 });
+  // debug("options", options);
+  // debug("sources", sources, { depth: 1 });
 
   // Reduce sources into unique players. If a Player
   // is repeated within the set there are 2 reasons.
@@ -25,8 +25,6 @@ function normalize(sources, options) {
       } else if (isObject(src)) {
         if (Object.hasOwn(src, "roster")) {
           findPlayer(accum, src.roster);
-        } else if (Object.hasOwn(src, "_players")) {
-          findPlayer(accum, src._players);
         } else {
           accum.push(src);
         }
@@ -35,25 +33,24 @@ function normalize(sources, options) {
     })([], sources),
   );
 
-  trace(_sources, "roster _sources");
-
-  const possiblyRepeatedPlayers = new Map();
+  const repeatedPlayers = new Map();
   const soloPlayers = [];
   for (let i = 0; i < _sources.length; i++) {
-    const player = possiblyRepeatedPlayers.get(_sources[i].username);
+    const player = repeatedPlayers.get(_sources[i].username);
     if (player) {
       player.push(_sources[i]);
     } else if (_sources[i].username !== "") {
-      possiblyRepeatedPlayers.set(_sources[i].username, [_sources[i]]);
+      repeatedPlayers.set(_sources[i].username, [_sources[i]]);
     } else {
       soloPlayers.push(_sources[i]);
     }
   }
-  _sources = [...soloPlayers, ...Array.from(possiblyRepeatedPlayers.values())];
-  // trace(_sources, "roster sources");
+  _sources = [...soloPlayers, ...Array.from(repeatedPlayers.values())];
+  // debug("__sources", _sources, { depth: 3 });
 
   const target = _sources.map((src) => normalizePlayer(src, options));
-  trace(target, "roster target");
+  // debug("target", target, {});
+
   return target;
 }
 

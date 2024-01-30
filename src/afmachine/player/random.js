@@ -3,19 +3,19 @@ import { smallid, uuid } from "js_utils/uuid";
 import { random as randomWristband } from "../wristband/random.js";
 
 function random(sources, options = {}) {
-  //debug("random player");
+  trace("random player");
 
   const _options = {
     longtext: options.longtext ?? false,
-    depth: options.depth || 0,
+    depth: options.depth ?? 0,
   };
-  //debug(options);
+  trace(options, "player random options");
 
   const _sources = [sources]
     .flat(2)
     .filter((src) => !!src)
-    .map((src) => ("tobject" in src ? src.tobject() : src));
-  //debug(_sources);
+    .map((src) => ("tobject" in src ? src.tobject(_options.depth) : src));
+  trace(_sources, "player random sources");
 
   const target = Object.assign({}, ..._sources);
 
@@ -36,7 +36,7 @@ function random(sources, options = {}) {
     target.wristband = randomWristband(target.wristband);
   }
 
-  //debug(target);
+  trace(target, "player random target");
   return target;
 }
 export { random };

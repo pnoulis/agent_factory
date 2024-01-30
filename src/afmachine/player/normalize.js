@@ -2,20 +2,20 @@ import { isObject } from "js_utils/misc";
 import { normalize as normalizeWristband } from "../wristband/normalize.js";
 
 function normalize(sources, options = {}) {
-  // debug("normalize player");
+  trace("normalize player");
 
   // See documentation at wristband/normalize.js
   const _options = {
     targetState: options.state || "",
     nullSupersede: options.nullSupersede ?? false,
     defaultState: options.defaultState ?? "unregistered",
-    depth: options.depth || 0,
+    depth: options.depth ?? 0,
     wristband: options.wristband,
   };
-  // debug(_options);
+  trace(_options, "player options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  // debug(_sources);
+  // trace(_sources);
 
   const target = {
     username: "",
@@ -61,11 +61,10 @@ function normalize(sources, options = {}) {
 
   target.state ||= _options.defaultState;
 
-  if (_options.depth) {
+  if (_options.depth > 0) {
     target.wristband = normalizeWristband(target.wristband, options.wristband);
   }
-
-  // debug(target);
+  trace(target, "player target");
   return target;
 }
 

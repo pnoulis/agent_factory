@@ -1,18 +1,18 @@
 import { ENV } from "./config.js";
 import { isObject, isArray } from "js_utils/misc";
 
-function trace(any) {
+function trace(...args) {
   if (ENV.LOGLEVEL !== "trace") return;
-  console.dir(any, { depth: null });
+  args.forEach((arg) => {
+    console.dir(arg, { depth: 5 });
+  });
+  console.log();
+  console.log();
 }
 
 function debug(...args) {
-  const options = {
-    depth: args.at(-1)?.depth ?? null,
-  };
-
-  args.slice(0, -1).forEach((arg) => {
-    console.dir(arg, options);
+  args.forEach((arg) => {
+    console.dir(arg, { depth: 5 });
   });
   console.log();
   console.log();

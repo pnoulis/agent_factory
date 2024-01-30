@@ -49,16 +49,61 @@ CLOSED: [2024-01-28 Sun 17:09]
 CLOSED: [2024-01-28 Sun 17:09]
 *** DONE Document the req/res payload
 CLOSED: [2024-01-28 Sun 17:09]
-*** TODO Team entity
+** TODO Team entity
 **** TODO normalization
 **** TODO random
 **** TODO tobject
 **** TODO fill
-*** TODO Team Roster
+** TODO Team Roster
 **** TODO normalization
 **** TODO random
 **** TODO tobject
 **** TODO fill
+
+** Implement listTeams task
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** DONE Document the req/res payload
+CLOSED: [2024-01-30 Tue 10:28]
+**** perm 1
+#+begin_src js
+  {
+    name: "boring_Merry_6lc",
+    totalPoints: 0,
+    teamState: "FINISHED",
+    created: 1706473314534,
+    lastRegisterAttempt: null,
+    currentRoster: {
+      version: 1,
+      players: [
+        {
+          username: "avaapw7h8jc",
+          wristbandNumber: null,
+          wristbandColor: null,
+        },
+        {
+          username: "wn6wrmsaj4",
+          wristbandNumber: null,
+          wristbandColor: null,
+        },
+      ],
+    },
+    roomType: null,
+    packages: [
+      {
+        id: 3,
+        name: "Per Time 30",
+        cost: null,
+        started: 1706473426225,
+        ended: 1706478843795,
+        duration: 1800,
+        paused: false,
+        active: false,
+      },
+    ],
+  }
+#+end_src
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
 control center of the application. All actions that touch multiple modules of
@@ -507,6 +552,150 @@ Given a set of Wristbands:
 The output would be:
 
 { wristbandInFrontendForm... }
+
+Each normalization function accepts some standard options.
+
+** Normalization options
+*** Wristband
+normalized
+state
+nullSupersede
+defaultState
+*** Player
+normalized
+depth
+state
+nullSupersede
+defaultState
+wristband options
+
+at depth = 0 -> normalizes player
+at depth = 1 -> normalizes player + wrisband
+*** Package
+normalized
+state
+nullSupersede
+defaultState
+*** Roster
+normalized
+depth
+state
+nullSupersede
+defaultState
+wristband options
+{ wristband, ...playerOptions};
+
+at depth = 0 -> normalizes players
+at depth = 1 -> normalizes players + wristbands
+*** Team
+normalized
+depth
+state
+nullSupersede
+defaultState
+player options
+wristband options
+
+at depth = 0 -> normalizes team
+at depth = 1 -> normalizes teams + players
+at depth = 2 -> normalizes teams + players + wristbands
+*** GroupParty
+normalized
+depth
+state
+nullSupersede
+defaultState
+player options
+wristband options
+
+at depth = 0 -> normalizes teams
+at depth = 1 -> normalizes teams + players
+at depth = 2 -> normalizes teams + players + wrisbands
+
+* ToObject Functions
+The tobject() functions take an entity and return the entity as an object
+striped down from all unecessary properties.
+
+
+For example, given a Wristband instance:
+
+
+WristbandInstance = {
+
+afm: ...
+states: {
+   Unregistered: ...
+   Registered: ...
+}
+state: "",
+...
+}
+
+Would produce:
+
+WristbandInstance.tobject()
+
+{
+   id: 0,
+   color: "",
+   colorCode: 0,
+   state: "",
+}
+
+** tobject options
+*** Wrisband
+none
+*** Package
+none
+*** Player
+depth
+
+at depth = 0 -> do not tobject() wrisband
+at depth = 1 -> tobject() wristband
+
+*** Roster
+depth
+
+at depth = 0 -> do not tobject() wristband
+at depth = 1 -> tobject() wrisband
+
+*** Team
+depth
+
+at depth = 0 -> do not tobject() players or wristbands or packages
+at depth = 1 -> tobject() packages and players
+at depth = 2 -> tobject() packages and players and wristbands
+
+* Fill functions
+
+the .fill() functions are used to quickly produce random entities.
+
+** fill options
+*** wristband
+sources
+*** Package
+sources
+*** player
+sources
+depth
+
+at depth = 0 -> do not fill() wristband
+at depth = 1 -> fill() wristband
+
+*** Roster
+sources
+depth
+
+at depth = 0 -> do not fill() wristband
+at depth = 1 -> fill() wristband
+
+*** Team
+sources
+depth
+
+at depth = 0 -> do not fill() wristband, or players or packages
+at depth = 1 -> fill() players and packages
+at depth = 2 -> fill() players and packages and wristbands
 
 * Transfer of entities under afmachine/ directory
 * Make normalization function uniform

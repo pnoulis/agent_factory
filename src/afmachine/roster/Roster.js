@@ -5,54 +5,50 @@ class Roster {
   static random = random;
   static normalize = normalize;
 
-  constructor(players, { Wristband, Player } = {}) {
-    this.roster = [];
+  constructor(players, Player, Wristband) {
     this.Wristband = Wristband;
     this.Player = Player;
-    this.normalize(players);
+    this.players = players;
   }
 
   get length() {
-    return this.roster.length;
+    return this._players.length;
   }
 
-  normalize(sources, options = {}) {
-    Roster.normalize([...this.roster, sources], {
-      depth: 1,
-      ...options,
-    }).forEach((player, i) => {
-      this.roster[i] = new this.Player(
-        null,
-        new this.Wristband(null, { normalize: false }),
-        { normalize: false },
+  get players() {
+    return this._players;
+  }
+
+  set players(players) {
+    players ??= [];
+    this._players = [];
+    for (let i = 0; i < players.length; i++) {
+      this._players.push(
+        new this.Player(players[i], new this.Wristband(players[i].wristband)),
       );
-      Object.assign(this.roster[i].wristband, player.wristband);
-      this.roster[i].wristband.setState(player.wristband.state);
-      delete player.wristband;
-      Object.assign(this.roster[i], player);
-    });
+    }
     return this;
   }
+
+  normalize(sources, { depth = 1, wristband, ...rosterOpts } = {}) {
+    const players = rosterOpts.normalized
+      ? sources
+      : Roster.normalize([this, sources], { depth, wristband, ...rosterOpts });
+    this.players = players;
+    return this;
+  }
+
   fill(sources, options = {}) {
-    Roster.random([...this.roster, sources], {
-      depth: 1,
-      ...options,
-    }).forEach((player, i) => {
-      if (this.roster[i] == null) {
-        this.roster[i] = new this.Player(
-          player,
-          new this.Wristband(player.wristband),
-        );
-      } else {
-        Object.assign(this.roster[i].wrisband, player.wristband);
-        delete player.wristband;
-        Object.assign(this.roster[i], player);
-      }
-    });
-    return this;
+    return this.normalize(
+      Roster.random([this.players, sources], {
+        ...options,
+        Player: this.Player,
+        Wristband: this.Wristband,
+      }),
+    );
   }
-  tobject(options = {}) {
-    return Roster.normalize(this.roster, options);
+  tobject(depth = 0) {
+    return this.players.map((player) => player.tobject(depth));
   }
 
   add() {}

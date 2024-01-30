@@ -307,44 +307,7 @@ const registrationTopics = {
   },
   activateTeamPkg: {
     schema: {
-      res: {
-        /*
-{
-  "timestamp" : 1706472302452,
-  "result" : "OK",
-  "team" : {
-    "name" : "friendly_Eomer_c3d",
-    "totalPoints" : 0,
-    "teamState" : null,
-    "created" : null,
-    "lastRegisterAttempt" : null,
-    "currentRoster" : {
-      "version" : 1,
-      "players" : [ {
-        "username" : "3q0vtxg1o7s@1706472198867",
-        "wristbandNumber" : 202,
-        "wristbandColor" : null
-      }, {
-        "username" : "0a5sh6llqf3v@1706472198867",
-        "wristbandNumber" : 203,
-        "wristbandColor" : null
-      } ]
-    },
-    "roomType" : null,
-    "packages" : [ {
-      "id" : 1,
-      "name" : "Per Mission 10",
-      "cost" : null,
-      "started" : 1706472302416,
-      "ended" : null,
-      "missions" : 10,
-      "missionsPlayed" : 0,
-      "active" : true
-    } ]
-  }
-}
-         */
-      },
+      res: {},
     },
     alias: "team/pkg/activate",
     pub: prefix("team/activate"),
@@ -419,6 +382,47 @@ const registrationTopics = {
     sub: prefix("packages/all/response"),
   },
   listTeams: {
+    scheam: {
+      res: {
+        /*
+{
+  "name": "boring_Merry_6lc",
+  "totalPoints": 0,
+  "teamState": "FINISHED",
+  "created": 1706473314534,
+  "lastRegisterAttempt": null,
+  "currentRoster": {
+    "version": 1,
+    "players": [
+      {
+        "username": "avaapw7h8jc",
+        "wristbandNumber": null,
+        "wristbandColor": null
+      },
+      {
+        "username": "wn6wrmsaj4",
+        "wristbandNumber": null,
+        "wristbandColor": null
+      }
+    ]
+  },
+  "roomType": null,
+  "packages": [
+    {
+      "id": 3,
+      "name": "Per Time 30",
+      "cost": null,
+      "started": 1706473426225,
+      "ended": 1706478843795,
+      "duration": 1800,
+      "paused": false,
+      "active": false
+    }
+  ]
+}
+         */
+      },
+    },
     alias: "list/teams",
     pub: prefix("teams/all"),
     sub: prefix("teams/all/response"),

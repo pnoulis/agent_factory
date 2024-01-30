@@ -3,13 +3,13 @@ import { PACKAGE_TYPES, PACKAGES } from "../../constants.js";
 import { t_stomls, t_stomin } from "../../misc/misc.js";
 
 function random(sources) {
-  // debug("random package");
+  trace("random package");
 
   const _sources = [sources]
     .flat(2)
     .filter((src) => !!src)
     .map((src) => ("tobject" in src ? src.tobject() : src));
-  // debug(_sources);
+  trace(_sources, "package random _souces");
 
   const target = Object.assign({}, ..._sources);
 
@@ -45,7 +45,7 @@ function random(sources) {
     target.active = true;
   }
 
-  debug(target);
+  trace(target, "package random target");
   return target;
 }
 

@@ -1,7 +1,8 @@
 import { WRISTBAND_COLORS } from "../../constants.js";
+import { isObject } from "js_utils/misc";
 
 function normalize(sources, options = {}) {
-  // debug("normalize wristband");
+  trace("normalize wristband");
 
   const _options = {
     targetState: options.state || "",
@@ -15,10 +16,10 @@ function normalize(sources, options = {}) {
     // state (unpaired) will not shadow it.
     defaultState: options.defaultState ?? "unpaired",
   };
-  // debug(_options);
+  trace(_options, "wristband options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  // debug(_sources);
+  trace(_sources);
 
   const target = { id: null, color: "", colorCode: null, state: "" };
   let active = false;
@@ -28,10 +29,9 @@ function normalize(sources, options = {}) {
       target.id = _sources[i].id ?? _sources[i].wristbandNumber ?? null;
       target.colorCode =
         _sources[i].colorCode ?? _sources[i].wristbandColor ?? null;
-      target.state =
-        typeof _sources[i].state === "object"
-          ? _sources[i].state?.name
-          : _sources[i].state;
+      target.state = isObject(sources[i].state)
+        ? _sources[i].state?.name
+        : _sources[i].state;
       active = _sources[i].active ?? false;
     }
   } else {
@@ -40,7 +40,7 @@ function normalize(sources, options = {}) {
       target.colorCode =
         _sources[i].colorCode ?? _sources[i].wristbandColor ?? target.colorCode;
       target.state =
-        (typeof _sources[i].state === "object"
+        (isObject(_sources[i].state)
           ? _sources[i].state?.name
           : _sources[i].state) || target.state;
       active = _sources[i].active ?? active;
@@ -57,7 +57,7 @@ function normalize(sources, options = {}) {
 
   target.state ||= _options.defaultState;
 
-  // debug(target);
+  trace(target, "wristband target");
   return target;
 }
 

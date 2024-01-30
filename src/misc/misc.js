@@ -37,17 +37,52 @@ function extendProto(target, source) {
 /*
   Seconds to Milliseconds
   1 second - 1000 milliseconds
+
+  if reverse:
+
+  Milliseconds to Seconds
+  1 Millisecond - 1/1000 Seconds
  */
-function t_stomls(seconds, reverse = false) {
+function t_stomls(seconds = 1, reverse = false) {
   return reverse ? seconds / 1000 : seconds * 1000;
 }
 
 /*
   Seconds to Minutes
   60 seconds - 1 minute
+
+  if reverse:
+
+  Minutes to Seconds
+  1 minute - 60 seconds
  */
-function t_stomin(seconds, reverse = false) {
+function t_stomin(seconds = 1, reverse = false) {
   return reverse ? seconds * 60 : seconds / 60;
+}
+
+/*
+  Days to Milliseconds
+  1 Day - 864 000 00 Milliseconds
+
+  if reverse:
+
+  Milliseconds to Days
+ */
+function t_daytomls(days = 1, reverse = false) {
+  return reverse ? days / 86400000 : days * 86400000;
+}
+
+/*
+  Timestamp to Localized date+time string
+
+  if reverse
+
+  Date+Time string to timestamp
+ */
+function t_timetolocal(timestamp = Date.now(), reverse = false) {
+  return reverse
+    ? new Date(timestamp).valueOf()
+    : new Date(timestamp).toLocaleString();
 }
 
 export {
@@ -57,4 +92,6 @@ export {
   inspectProps,
   t_stomls,
   t_stomin,
+  t_daytomls,
+  t_timetolocal,
 };

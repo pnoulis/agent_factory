@@ -2,7 +2,7 @@ import { isObject } from "js_utils/misc";
 import { t_stomls, t_stomin } from "../../misc/misc.js";
 
 function normalize(sources, options = {}) {
-  // debug("normalize package");
+  trace("normalize package");
 
   // See documentation at wristband/normalize.js
   const _options = {
@@ -10,10 +10,10 @@ function normalize(sources, options = {}) {
     nullSupersede: options.nullSupersede ?? false,
     defaultState: options.defaultState ?? "unregistered",
   };
-  // debug(_options);
+  trace(_options, "package options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  // debug(_sources);
+  // trace(_sources);
 
   const target = {
     id: null,
@@ -121,7 +121,7 @@ function normalize(sources, options = {}) {
 
   target.state ||= _options.defaultState;
 
-  // debug(target);
+  trace(target, "package target");
   return target;
 }
 
