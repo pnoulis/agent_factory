@@ -1,6 +1,6 @@
 * Task Board
 ** DONE Player register() fn should need a password as input.
-CLOSED: [2024-01-28 Sun 15:52]
+
 ** TODO Task should invoke onSuccess(),onFailure() before postask middleware
 ** Task template
 *** TODO Object schema for req/res backend topic payload
@@ -12,43 +12,44 @@ CLOSED: [2024-01-28 Sun 15:52]
 **** TODO random
 **** TODO tobject
 **** TODO fill
+
 ** DONE Implement writsband scan
-CLOSED: [2024-01-28 Sun 15:52]
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-28 Sun 15:52]
+
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-28 Sun 15:52]
+
 *** DONE Implement Task and Command
-CLOSED: [2024-01-28 Sun 15:52]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-28 Sun 15:52]
+
+
 ** DONE Implement wristband register
-CLOSED: [2024-01-28 Sun 17:15]
+
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
-CLOSED: [2024-01-28 Sun 15:50]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-28 Sun 15:50]
+
 ** TODO Implement wristband deregister
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-28 Sun 17:15]
+
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-28 Sun 17:27]
+
 *** DONE Implement Task and Command
-CLOSED: [2024-01-28 Sun 17:27]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-28 Sun 17:33]
+
 ** DONE Implement getWristbandInfo
-CLOSED: [2024-01-28 Sun 17:27]
+
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-28 Sun 16:09]
+
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-28 Sun 17:09]
+
 *** DONE Implement Task and Command
-CLOSED: [2024-01-28 Sun 17:09]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-28 Sun 17:09]
+
 ** TODO Team entity
 **** TODO normalization
 **** TODO random
@@ -61,15 +62,16 @@ CLOSED: [2024-01-28 Sun 17:09]
 **** TODO fill
 
 ** DONE Implement list Registered Players
-CLOSED: [2024-01-30 Tue 23:04]
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-30 Tue 22:02]
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-30 Tue 21:41]
 *** DONE Implement task and Command
-CLOSED: [2024-01-30 Tue 23:04]
 *** DONE Document the req/res payload
-CLOSED: [2024-01-30 Tue 21:41]
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706642934817,
+  }
+#+end_src
 **** Backend response
 #+begin_src js
   {
@@ -166,19 +168,23 @@ CLOSED: [2024-01-30 Tue 21:41]
     }
   ]
 #+end_src
-*** DONE Verify Player.normalize() and Wristband.normalize()
-CLOSED: [2024-01-30 Tue 21:41]
+
+
 ** DONE Implement list Registered Players with a Wristband
-CLOSED: [2024-01-30 Tue 23:39]
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-30 Tue 23:38]
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-30 Tue 23:24]
 *** DONE Implement Task and Command
-CLOSED: [2024-01-30 Tue 23:38]
 *** DONE Document the req/res payload
-CLOSED: [2024-01-30 Tue 23:28]
+**** Backend request
+
+#+begin_src js
+  {
+    timestamp: 1706649848057,
+  }
+#+end_src
+
 **** Backend response
+
 #+begin_src js
   const response = {
     timestamp: 1706649848057,
@@ -241,18 +247,18 @@ CLOSED: [2024-01-30 Tue 23:28]
     }
   ]
   #+end_src
-*** DONE Verify Player.normalize() and Wristband.normalize()
-CLOSED: [2024-01-30 Tue 23:39]
+
+
 ** DONE Implement list Packages
-CLOSED: [2024-01-30 Tue 23:54]
+
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-30 Tue 21:13]
+
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-30 Tue 21:12]
+
 *** DONE Implement Task and Command
-CLOSED: [2024-01-30 Tue 21:12]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-30 Tue 20:53]
+
 **** Backend response
 #+begin_src js
   const response = {
@@ -380,18 +386,11 @@ CLOSED: [2024-01-30 Tue 20:53]
   ]
 #+end_src
 
-*** DONE Verify Package.normalize()
-CLOSED: [2024-01-30 Tue 20:58]
 ** DONE Implement list Cashiers
-CLOSED: [2024-01-31 Wed 15:43]
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-31 Wed 15:37]
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-31 Wed 15:33]
 *** DONE Implement Task and Command
-CLOSED: [2024-01-31 Wed 15:43]
 *** DONE Document the req/res payload
-CLOSED: [2024-01-31 Wed 15:33]
 **** Backend request
 #+begin_src js
   {
@@ -412,15 +411,15 @@ CLOSED: [2024-01-31 Wed 15:33]
 **** No Normalization required
 
 ** DONE Implement list Devices
-CLOSED: [2024-01-31 Wed 16:19]
+
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-31 Wed 16:17]
+
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-31 Wed 16:17]
+
 *** DONE Implement Task and Command
-CLOSED: [2024-01-31 Wed 16:17]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-31 Wed 16:17]
+
 **** Backend request
 #+begin_src js
   {
@@ -470,15 +469,15 @@ CLOSED: [2024-01-31 Wed 16:17]
 #+end_src
 **** No Normalization
 ** DONE Implement list Scoreboard Devices
-CLOSED: [2024-01-31 Wed 16:39]
+
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-31 Wed 16:39]
+
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-31 Wed 16:39]
+
 *** DONE Implement Task and Command
-CLOSED: [2024-01-31 Wed 16:39]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-31 Wed 16:39]
+
 **** Backend request
 #+begin_src js
   {
@@ -508,15 +507,15 @@ CLOSED: [2024-01-31 Wed 16:39]
 #+end_src
 **** No Normalization
 ** DONE Implement list Scoreboard Device Views
-CLOSED: [2024-01-31 Wed 16:50]
+
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-31 Wed 16:50]
+
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-31 Wed 16:50]
+
 *** DONE Implement Task and Command
-CLOSED: [2024-01-31 Wed 16:50]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-31 Wed 16:50]
+
 **** Backend request
 #+begin_src js
   {
@@ -541,24 +540,277 @@ CLOSED: [2024-01-31 Wed 16:50]
   }
 #+end_src
 **** No Normalization
-** TODO ImpLement list Scoreboard
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-*** TODO Verify Team.normalize()
-** DONE Implement list Teams
-CLOSED: [2024-01-31 Wed 15:09]
+** DONE ImpLement list Scoreboard
+
 *** DONE Object schema for req/res backend topic payload
-CLOSED: [2024-01-31 Wed 15:09]
+
 *** DONE Implement backend api topic call
-CLOSED: [2024-01-31 Wed 08:57]
+
 *** DONE Implement Task and Command
-CLOSED: [2024-01-31 Wed 15:09]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-30 Tue 10:28]
+
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706716622912,
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706716622912,
+    result: 'OK',
+    roomElementAssociations: {
+      JOKER: 'AIR',
+      BUBBLEBOBBLE: 'WATER',
+      SUCKERPUNCH: 'FIRE',
+      GRANDPIANO: 'AIR',
+      JUSTDOIT: 'FIRE',
+      REFLECTIONS: 'AIR',
+      SPECTRUMDICE: 'AIR',
+      HIGHLIGHTBARS: 'AIR',
+      LASERDANCE: 'WATER',
+      FUNINTHEBARN: 'FIRE',
+      SPACEJAM: 'WATER',
+      ALLEYOOPS: 'WATER',
+      GOAL: 'WATER',
+      LETTERFLOOR: 'AIR'
+    }
+    live: [],
+    teamAllTime: [],
+    teamMonthly: [],
+    teamWeekly: [],
+    teamDaily: [],
+
+    perRoom: {
+      JUSTDOIT: [
+        {
+          teamName: 'team6',
+          totalPoints: 298,
+          numberOfPlayers: 2,
+          created: 1702243702887
+        },
+        {
+          teamName: 'team7',
+          totalPoints: 292,
+          numberOfPlayers: 2,
+          created: 1702243703070
+        },
+      ],
+      SUCKERPUNCH: [
+        {
+          teamName: 'team13',
+          totalPoints: 297,
+          numberOfPlayers: 2,
+          created: 1702243704124
+        },
+        {
+          teamName: 'team15',
+          totalPoints: 291,
+          numberOfPlayers: 2,
+          created: 1702243704405
+        },
+      ],
+      LASERDANCE: [
+        {
+          teamName: 'team5',
+          totalPoints: 293,
+          numberOfPlayers: 2,
+          created: 1702243702676
+        },
+        {
+          teamName: 'team19',
+          totalPoints: 281,
+          numberOfPlayers: 2,
+          created: 1702243705036
+        },
+      ],
+      SPECTRUMDICE: [
+        {
+          teamName: 'team18',
+          totalPoints: 288,
+          numberOfPlayers: 2,
+          created: 1702243704904
+        },
+        {
+          teamName: 'team17',
+          totalPoints: 274,
+          numberOfPlayers: 2,
+          created: 1702243704734
+        },
+      ],
+      FUNINTHEBARN: [
+        {
+          teamName: 'team2',
+          totalPoints: 284,
+          numberOfPlayers: 2,
+          created: 1702243702245
+        },
+        {
+          teamName: 'team11',
+          totalPoints: 196,
+          numberOfPlayers: 2,
+          created: 1702243703820
+        },
+      ],
+      SPACEJAM: [
+        {
+          teamName: 'team7',
+          totalPoints: 290,
+          numberOfPlayers: 2,
+          created: 1702243703043
+        },
+        {
+          teamName: 'team14',
+          totalPoints: 254,
+          numberOfPlayers: 2,
+          created: 1702243704303
+        },
+      ],
+      LETTERFLOOR: [
+        {
+          teamName: 'team10',
+          totalPoints: 265,
+          numberOfPlayers: 2,
+          created: 1702243703549
+        },
+        {
+          teamName: 'team16',
+          totalPoints: 245,
+          numberOfPlayers: 2,
+          created: 1702243704627
+        },
+      ],
+      ALLEYOOPS: [
+        {
+          teamName: 'team16',
+          totalPoints: 297,
+          numberOfPlayers: 2,
+          created: 1702243704522
+        },
+        {
+          teamName: 'team2',
+          totalPoints: 280,
+          numberOfPlayers: 2,
+          created: 1702243702117
+        },
+      ],
+      GRANDPIANO: [
+        {
+          teamName: 'team4',
+          totalPoints: 291,
+          numberOfPlayers: 2,
+          created: 1702243702512
+        },
+        {
+          teamName: 'team14',
+          totalPoints: 287,
+          numberOfPlayers: 2,
+          created: 1702243704215
+        },
+      ],
+      BUBBLEBOBBLE: [
+        {
+          teamName: 'team2',
+          totalPoints: 285,
+          numberOfPlayers: 2,
+          created: 1702243702213
+        },
+        {
+          teamName: 'team9',
+          totalPoints: 262,
+          numberOfPlayers: 2,
+          created: 1702243703406
+        },
+      ],
+      JOKER: [
+        {
+          teamName: 'team6',
+          totalPoints: 283,
+          numberOfPlayers: 2,
+          created: 1702243702860
+        },
+        {
+          teamName: 'team2',
+          totalPoints: 257,
+          numberOfPlayers: 2,
+          created: 1702243702147
+        },
+      ],
+      HIGHLIGHTBARS: [
+        {
+          teamName: 'team10',
+          totalPoints: 298,
+          numberOfPlayers: 2,
+          created: 1702243703579
+        },
+        {
+          teamName: 'team0',
+          totalPoints: 289,
+          numberOfPlayers: 2,
+          created: 1702243701796
+        },
+      ]
+    },
+    perElement: {
+      FIRE: [
+        {
+          teamName: 'team6',
+          totalPoints: 298,
+          numberOfPlayers: 2,
+          created: 1702243702887
+        },
+        {
+          teamName: 'team13',
+          totalPoints: 297,
+          numberOfPlayers: 2,
+          created: 1702243704124
+        },
+      ],
+      AIR: [
+        {
+          teamName: 'team10',
+          totalPoints: 298,
+          numberOfPlayers: 2,
+          created: 1702243703579
+        },
+        {
+          teamName: 'team4',
+          totalPoints: 291,
+          numberOfPlayers: 2,
+          created: 1702243702512
+        },
+      ],
+      WATER: [
+        {
+          teamName: 'team16',
+          totalPoints: 297,
+          numberOfPlayers: 2,
+          created: 1702243704522
+        },
+        {
+          teamName: 'team5',
+          totalPoints: 293,
+          numberOfPlayers: 2,
+          created: 1702243702676
+        },
+      ]
+    },
+  }
+#+end_src
+** DONE Implement list Teams
+
+*** DONE Object schema for req/res backend topic payload
+
+*** DONE Implement backend api topic call
+
+*** DONE Implement Task and Command
+
+*** DONE Document the req/res payload
+
 **** DONE A team with all Possible Permutations of players and packages
-CLOSED: [2024-01-31 Wed 10:26]
+
 ***** Backend response
 #+begin_src js
   {
@@ -770,7 +1022,7 @@ CLOSED: [2024-01-31 Wed 10:26]
   }
 #+end_src
 **** DONE RUNNING PACKAGE Team
-CLOSED: [2024-01-31 Wed 13:04]
+
 ***** Backend response
 #+begin_src js
   {
@@ -847,7 +1099,7 @@ CLOSED: [2024-01-31 Wed 13:04]
   }
 #+end_src
 **** DONE FINISHED Team
-CLOSED: [2024-01-31 Wed 10:36]
+
 ***** Backend response
 #+begin_src js
     {
@@ -928,7 +1180,7 @@ CLOSED: [2024-01-31 Wed 10:36]
   }
 #+end_src
 **** DONE PENDING PACKAGE Team
-CLOSED: [2024-01-31 Wed 10:26]
+
 ***** Backend response
 #+begin_src js
   {
@@ -982,7 +1234,7 @@ CLOSED: [2024-01-31 Wed 10:26]
   }
 #+end_src
 **** DONE LOADED PACKAGE Team
-CLOSED: [2024-01-31 Wed 10:27]
+
 ***** Backend response
 #+begin_src js
     {
@@ -1058,8 +1310,7 @@ CLOSED: [2024-01-31 Wed 10:27]
     state: 'registered'
   }
 #+end_src
-*** DONE Verify Team.normalize()
-CLOSED: [2024-01-31 Wed 15:09]
+
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
 control center of the application. All actions that touch multiple modules of
@@ -1339,25 +1590,25 @@ if an error occurs anywhere in the middleware chain other than then postcmd
 *** TODO Implement Task and Command
 *** TODO Document the req/res payload
 ** DONE Implement register player for fucks sake
-CLOSED: [2024-01-25 Thu 14:25]
+
 
 ** DONE Implement player.pairWristband()
-CLOSED: [2024-01-26 Fri 16:26]
+
 ** DONE Implement player.unpairWristband()
-CLOSED: [2024-01-26 Fri 16:26]
+
 ** DONE Implement normalization algorithms
-CLOSED: [2024-01-25 Thu 17:27]
+
 
 ** DONE Implement wristband toggle
-CLOSED: [2024-01-26 Fri 16:26]
+
 
 ** TODO Implement wristband register
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
-CLOSED: [2024-01-28 Sun 15:50]
+
 *** DONE Document the req/res payload
-CLOSED: [2024-01-28 Sun 15:50]
+
 ** TODO Implement wristband unregister
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call

@@ -25,6 +25,7 @@ import { listCashiers } from "./tasks/listCashiers.js";
 import { listDevices } from "./tasks/listDevices.js";
 import { listScoreboardDevices } from "./tasks/listScoreboardDevices.js";
 import { listScoreboardViews } from "./tasks/listScoreboardViews.js";
+import { listScoreboard } from "./tasks/listScoreboard.js";
 
 class Afm extends createEventful([
   "connected",
@@ -174,6 +175,7 @@ Object.assign(Afm.prototype, {
   listDevices,
   listScoreboardDevices,
   listScoreboardViews,
+  listScoreboard,
 });
 
 const afm = new Afm();

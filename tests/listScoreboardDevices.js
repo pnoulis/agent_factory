@@ -56,7 +56,7 @@ describe(task, () => {
       throw err;
     }
   });
-  it.only("Should have an Afmachine Task", async () => {
+  it("Should have an Afmachine Task", async () => {
     await expect(afm[task]()).resolves.toBeTruthy();
   });
 });
