@@ -13,7 +13,10 @@ import { getWristbandInfo } from "./getWristbandInfo.js";
 import { registerWristband } from "./registerWristband.js";
 import { deregisterWristband } from "./deregisterWristband.js";
 
-// list topics
+// Device topics
+import { updateDevice } from "./updateDevice.js";
+
+// List topics
 import { listPackages } from "./listPackages.js";
 import { listPlayers } from "./listPlayers.js";
 import { listPlayersWithWristband } from "./listPlayersWithWristband.js";
@@ -50,7 +53,11 @@ Object.assign(BackendRegistration.prototype, {
   getWristbandInfo,
   registerWristband,
   deregisterWristband,
-  // list topics
+
+  // Device topics
+  updateDevice,
+
+  // List topics
   listPackages,
   listPlayers,
   listPlayersWithWristband,

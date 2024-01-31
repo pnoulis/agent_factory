@@ -251,10 +251,6 @@ const registrationTopics = {
   getWristbandInfo: {
     schema: {
       req: ajv.compile({
-        /*
-          timestamp: 1706452787659,
-          wristbandNumber: 169
-         */
         type: "object",
         required: ["timestamp", "wristbandNumber"],
         additionalProperties: false,
@@ -264,16 +260,6 @@ const registrationTopics = {
         },
       }),
       res: ajv.compile({
-        /*
-          timestamp: 1706454527907,
-          result: 'OK',
-          wristband: { wristbandNumber: 169, wristbandColor: 2, active: false }
-         */
-        /*
-          timestamp: 1706452787745,
-          result: 'NOK',
-          message: 'wristband with number: 169 is already registered'
-         */
         type: "object",
         required: ["timestamp", "result", "wristband"],
         additionalProperties: false,
@@ -341,7 +327,29 @@ const registrationTopics = {
     sub: basename("endSession/response"),
   },
   updateDevice: {
-    alias: "device/update",
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "devicesAction", "deviceId"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          devicesAction: schemas.device.devicesActions,
+          deviceId: schemas.device.deviceId,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "message"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          message: schemas.commons.message,
+        },
+      }),
+    },
+    alias: "devices/update",
     pub: prefix("devices/action"),
     sub: prefix("devices/action/response"),
   },
@@ -350,6 +358,7 @@ const registrationTopics = {
     pub: basename("devices/scoreboard/updateStatus"),
     sub: basename("devices/scoreboard/updateStatus/response"),
   },
+
   //////////////////////////////////////////////////
   // LIST
   //////////////////////////////////////////////////

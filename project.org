@@ -7,6 +7,9 @@
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
 *** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
 ** Entity template
 **** TODO normalization
 **** TODO random
@@ -21,7 +24,6 @@
 *** DONE Implement Task and Command
 
 *** DONE Document the req/res payload
-
 
 ** DONE Implement wristband register
 
@@ -50,16 +52,6 @@
 
 *** DONE Document the req/res payload
 
-** TODO Team entity
-**** TODO normalization
-**** TODO random
-**** TODO tobject
-**** TODO fill
-** TODO Team Roster
-**** TODO normalization
-**** TODO random
-**** TODO tobject
-**** TODO fill
 
 ** DONE Implement list Registered Players
 *** DONE Object schema for req/res backend topic payload
@@ -169,7 +161,6 @@
   ]
 #+end_src
 
-
 ** DONE Implement list Registered Players with a Wristband
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
@@ -247,7 +238,6 @@
     }
   ]
   #+end_src
-
 
 ** DONE Implement list Packages
 
@@ -1310,6 +1300,184 @@
     state: 'registered'
   }
 #+end_src
+
+
+
+** TODO Implement Session start
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+** TODO Implement Session stop
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+
+
+** DONE Implement Device boot
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Backend request
+#+begin_src js
+  // Boot the device identified by deviceId
+  {
+    timestamp: 1706724066778,
+    devicesAction: "WAKE_UP",
+    deviceId: "someDevice"
+  }
+
+  // Boot all devices
+  {
+    timestamp: 1706724066778,
+    devicesAction: "WAKEUP_ALL",
+    deviceId: "",
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706724066778,
+    result: 'OK',
+    message: 'action executed'
+  }
+#+end_src
+
+** DONE Implement Device shutdown
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Backend request
+#+begin_src js
+  // Shutdown the device identified by deviceId
+  {
+    timestamp: 1706724066778,
+    devicesAction: "SHUTDOWN",
+    deviceId: "someDevice"
+  }
+
+  // Shutdown all devices
+  {
+    timestamp: 1706724066778,
+    devicesAction: "SHUTDOWN_ALL",
+    deviceId: "",
+  }
+#+end_src
+
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706726298103,
+    result: 'OK',
+    message: 'action executed'
+  }
+#+end_src
+** DONE Implement Device restart
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Backend request
+#+begin_src js
+  // Shutdown the device identified by deviceId
+  {
+    timestamp: 1706724066778,
+    devicesAction: "RESTART",
+    deviceId: "someDevice"
+  }
+
+  // Shutdown all devices
+  {
+    timestamp: 1706724066778,
+    devicesAction: "RESTART_ALL",
+    deviceId: "",
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  { timestamp: 1706726929389,
+    result: 'OK',
+    message: 'action executed'
+  }
+#+end_src
+
+
+
+** TODO Implement Cashier registration
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+** TODO Implement Cashier login
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+** TODO Implement Cashier logout
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+
+
+** Task template
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+** Task template
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+** Task template
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+** Task template
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
+** Task template
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
 
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the

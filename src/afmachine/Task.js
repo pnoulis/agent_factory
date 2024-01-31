@@ -3,9 +3,10 @@ import { compose } from "./compose.js";
 import { isFunction } from "js_utils/misc";
 
 class Task extends createEventful() {
-  constructor(taskname, Command) {
+  constructor(taskname, Command, routeAlias) {
     super();
     this.taskname = taskname;
+    this.routeAlias = routeAlias;
     this.Command = Command;
     Object.setPrototypeOf(Command, this);
 

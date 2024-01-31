@@ -17,6 +17,17 @@ const device = {
   macAddress: { type: "null" },
   ipAddress: { type: "null" },
   status: { type: "string" },
+  devicesActions: {
+    type: "string",
+    enum: [
+      "WAKE_UP",
+      "WAKEUP_ALL",
+      "RESTART",
+      "RESTART_ALL",
+      "SHUTDOWN",
+      "SHUTDOWN_ALL",
+    ],
+  },
 };
 
 export { device };
