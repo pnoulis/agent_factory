@@ -1420,6 +1420,14 @@
 **** Backend request
 **** Backend response
 **** After normalization
+** TODO Implement Cashier de-registration
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Backend request
+**** Backend response
+**** After normalization
 ** TODO Implement Cashier login
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
@@ -1438,14 +1446,6 @@
 **** After normalization
 
 
-** Task template
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-**** Backend request
-**** Backend response
-**** After normalization
 ** Task template
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call

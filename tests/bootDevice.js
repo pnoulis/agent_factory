@@ -7,6 +7,7 @@ import { afm } from "../src/afmachine/afm.js";
 
 const b = new BackendRegistration();
 const task = "bootDevice";
+const routeAlias = "updateDevice";
 const modelResponse = {
   timestamp: 1706724066778,
   result: "OK",
@@ -15,7 +16,7 @@ const modelResponse = {
 
 describe(task, () => {
   it("Should have a Backend API call that resolves", async () => {
-    await expect(b[task]()).resolves.toBeTruthy();
+    await expect(b[routeAlias]()).resolves.toBeTruthy();
   });
   it("Should validate Backend API request schema", () => {
     const validate = registrationTopics["updateDevice"].schema.req;
@@ -47,7 +48,7 @@ describe(task, () => {
   it("Should validate Backend API response schema", async () => {
     const validate = registrationTopics["updateDevice"].schema.res;
     try {
-      const response = await b[task]();
+      const response = await b[routeAlias]();
       validate(response);
       expect(validate.errors).toBeNull();
       validate({});
