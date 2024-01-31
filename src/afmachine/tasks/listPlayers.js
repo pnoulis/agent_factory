@@ -38,12 +38,12 @@ Command.middleware = [
 ];
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to list players";
+  cmd.msg = "Failed to retrieve players";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully listed players";
+  cmd.msg = "Successfully retrieved players";
   cmd.resolve(cmd.res);
 };
 

@@ -4,6 +4,8 @@ import { normalize as normalizeWristband } from "../wristband/normalize.js";
 function normalize(sources, options = {}) {
   trace("normalize player");
 
+  trace(sources, "player sources");
+
   // See documentation at wristband/normalize.js
   const _options = {
     targetState: options.state || "",
@@ -12,10 +14,10 @@ function normalize(sources, options = {}) {
     depth: options.depth ?? 0,
     wristband: options.wristband ?? {},
   };
-  trace(_options, "player options");
+  trace(_options, "player _options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  // trace(_sources);
+  trace(_sources, "player _sources");
 
   const target = {
     username: "",
@@ -38,12 +40,13 @@ function normalize(sources, options = {}) {
         : _sources[i].state;
       wristbandMerged = _sources[i].wristbandMerged ?? false;
       target.wristband =
-        _sources[i].wristband ?? Object.hasOwn(_sources[i], "wristbandNumber")
+        _sources[i].wristband ??
+        (Object.hasOwn(_sources[i], "wristbandNumber")
           ? {
               wristbandNumber: _sources[i].wristbandNumber,
               wristbandColor: _sources[i].wristbandColor,
             }
-          : {};
+          : {});
     }
   } else {
     for (let i = 0; i < _sources.length; i++) {
@@ -57,12 +60,13 @@ function normalize(sources, options = {}) {
           : _sources[i].state) || target.state;
       wristbandMerged = _sources[i].wristbandMerged ?? wristbandMerged;
       target.wristband =
-        _sources[i].wristband ?? Object.hasOwn(_sources[i], "wristbandNumber")
+        _sources[i].wristband ??
+        (Object.hasOwn(_sources[i], "wristbandNumber")
           ? {
               wristbandNumber: _sources[i].wristbandNumber,
               wristbandColor: _sources[i].wristbandColor,
             }
-          : target.wristband;
+          : target.wristband);
     }
   }
 

@@ -6,8 +6,7 @@ const pkg = {
       type: "string",
     },
     cost: {
-      type: "number",
-      nullable: true,
+      type: ["number", "null"],
     },
     type: {
       type: "string",

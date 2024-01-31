@@ -382,14 +382,35 @@ CLOSED: [2024-01-30 Tue 20:53]
 
 *** DONE Verify Package.normalize()
 CLOSED: [2024-01-30 Tue 20:58]
-** TODO Implement list Cashiers
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+** DONE Implement list Cashiers
+CLOSED: [2024-01-31 Wed 15:43]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-31 Wed 15:37]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-31 Wed 15:33]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-31 Wed 15:43]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-31 Wed 15:33]
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706707779283,
+  }
+#+end_src
 **** Backend response
-**** After normalization
-*** TODO Verify Cashier.normalize()
+#+begin_src js
+  {
+    timestamp: 1706707779283,
+    result: 'OK',
+    cashiers: [
+      { id: 1, username: 'pavlos', email: 'pavlosTester123@gmail.com' },
+      { id: 3, username: 'tt', email: 'tt@gmail.com' }
+    ]
+  }
+#+end_src
+**** No Normalization required
+
 ** TODO Implement list Devices
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
@@ -414,11 +435,14 @@ CLOSED: [2024-01-30 Tue 20:58]
 *** TODO Implement Task and Command
 *** TODO Document the req/res payload
 *** TODO Verify Team.normalize()
-** TODO Implement list Teams
-*** TODO Object schema for req/res backend topic payload
+** DONE Implement list Teams
+CLOSED: [2024-01-31 Wed 15:09]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-31 Wed 15:09]
 *** DONE Implement backend api topic call
 CLOSED: [2024-01-31 Wed 08:57]
-*** TODO Implement Task and Command
+*** DONE Implement Task and Command
+CLOSED: [2024-01-31 Wed 15:09]
 *** DONE Document the req/res payload
 CLOSED: [2024-01-30 Tue 10:28]
 **** DONE A team with all Possible Permutations of players and packages
@@ -581,7 +605,7 @@ CLOSED: [2024-01-31 Wed 10:26]
         cost: 0,
         t_start: 1706685129723,
         t_end: null,
-        remainder: 1673540,
+        remainder: 0,
         state: 'playing'
       },
       {
@@ -633,7 +657,9 @@ CLOSED: [2024-01-31 Wed 10:26]
     state: 'registered'
   }
 #+end_src
-**** Two with a RUNNING PACKAGE
+**** DONE RUNNING PACKAGE Team
+CLOSED: [2024-01-31 Wed 13:04]
+***** Backend response
 #+begin_src js
   {
     name: 'inspiring_Goldberry',
@@ -665,33 +691,50 @@ CLOSED: [2024-01-31 Wed 10:26]
         active: true
       }
     ]
-  },
-  {
-    name: 'team19',
-    totalPoints: 0,
-    teamState: 'PACKAGE_RUNNING',
-    created: 1702243704982,
-    lastRegisterAttempt: null,
-    currentRoster: {
-      version: null,
-      players: [
-        {
-          username: 'PP191',
-          wristbandNumber: null,
-          wristbandColor: null
-        },
-        {
-          username: 'PP190',
-          wristbandNumber: null,
-          wristbandColor: null
-        }
-      ]
-    },
-    roomType: null,
-    packages: []
-  },
+  }
 #+end_src
-**** DONE One that has a FINISHED PACKAGE
+***** After Team.normalize()
+#+begin_src js
+  // Team.normalize(response, { depth: 2 })
+  {
+    name: 'inspiring_Goldberry',
+    t_created: 1706684656827,
+    points: 0,
+    packages: [
+      {
+        id: 5,
+        name: 'Per Time 90',
+        type: 'time',
+        amount: 90,
+        cost: 0,
+        t_start: 1706685129723,
+        t_end: null,
+        remainder: 0,
+        state: 'playing'
+      }
+    ],
+    roster: [
+      {
+        username: 'Sauron_0h96h9q4xixv',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'playing',
+        wristband: { id: 241, color: 'purple', colorCode: 2, state: 'paired' }
+      },
+      {
+        username: 'ppone',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'playing',
+        wristband: { id: 240, color: 'red', colorCode: 1, state: 'paired' }
+      }
+    ],
+    state: 'playing'
+  }
+#+end_src
+**** DONE FINISHED Team
 CLOSED: [2024-01-31 Wed 10:36]
 ***** Backend response
 #+begin_src js
@@ -772,7 +815,7 @@ CLOSED: [2024-01-31 Wed 10:36]
     state: 'registered'
   }
 #+end_src
-**** DONE One that has a PENDING PACKAGE
+**** DONE PENDING PACKAGE Team
 CLOSED: [2024-01-31 Wed 10:26]
 ***** Backend response
 #+begin_src js
@@ -826,7 +869,7 @@ CLOSED: [2024-01-31 Wed 10:26]
     state: 'registered'
   }
 #+end_src
-**** DONE One that has a LOADED PACKAGE
+**** DONE LOADED PACKAGE Team
 CLOSED: [2024-01-31 Wed 10:27]
 ***** Backend response
 #+begin_src js
@@ -903,17 +946,8 @@ CLOSED: [2024-01-31 Wed 10:27]
     state: 'registered'
   }
 #+end_src
-*** Backend response
-#+begin_src js
-  const response = {
-    timestamp: 1706685352965,
-    result: "OK",
-    teams: [
-      
-    ],
-  }
-#+end_src
-*** TODO Verify Team.normalize()
+*** DONE Verify Team.normalize()
+CLOSED: [2024-01-31 Wed 15:09]
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
 control center of the application. All actions that touch multiple modules of

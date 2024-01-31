@@ -107,7 +107,6 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    const response = await afm[task]();
-    expectTypeOf(response.players).toBeArray();
+    await expect(afm[task]()).resolves.toBeTruthy();
   });
 });

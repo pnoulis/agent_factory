@@ -18,6 +18,7 @@ import { listPackages } from "./listPackages.js";
 import { listPlayers } from "./listPlayers.js";
 import { listPlayersWithWristband } from "./listPlayersWithWristband.js";
 import { listTeams } from "./listTeams.js";
+import { listCashiers } from "./listCashiers.js";
 
 class BackendRegistration extends Backend {
   constructor({ deviceId, roomName, params, routes, strict } = {}) {
@@ -50,6 +51,7 @@ Object.assign(BackendRegistration.prototype, {
   listPlayers,
   listPlayersWithWristband,
   listTeams,
+  listCashiers,
 });
 
 export { BackendRegistration };

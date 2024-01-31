@@ -3,7 +3,7 @@ import { delay } from "js_utils/misc";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
 import { ENV } from "../src/config.js";
 import { BackendRegistration } from "../src/backend/registration/BackendRegistration.js";
-import { Player } from "../src/afmachine/player/Player.js";
+import { normalize as normalizePlayer } from "../src/afmachine/player/normalize.js";
 import { registrationTopics } from "../backend-topics.js";
 import { afm } from "../src/afmachine/afm.js";
 
@@ -60,9 +60,9 @@ describe(task, () => {
   it("Should have a Backend API call that resolves", async () => {
     await expect(b[task]()).resolves.toBeTruthy();
   });
-  it("Should normalize the response", async () => {
+  it("Should normalize the response", () => {
     const normalized = modelResponse.players.map((pl) =>
-      Player.normalize(pl, { defaultState: "registered", depth: 1 }),
+      normalizePlayer(pl, { defaultState: "registered", depth: 1 }),
     );
 
     expect(normalized).toEqual(
@@ -150,7 +150,6 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    const response = await afm[task]();
-    expectTypeOf(response.players).toBeArray();
+    await expect(afm[task]()).resolves.toBeTruthy();
   });
 });

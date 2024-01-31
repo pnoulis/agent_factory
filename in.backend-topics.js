@@ -470,35 +470,6 @@ const registrationTopics = {
     schema: {
       req: null,
       res: ajv.compile(
-        /*
-    timestamp: 1706640606387,
-    result: 'OK',
-    packages: [
-      { name: 'Per Mission 5', amount: 5, type: 'mission', cost: 50 },
-      {
-        name: 'Per Mission 10',
-        amount: 10,
-        type: 'mission',
-        cost: 100
-      },
-      {
-        name: 'Per Mission 15',
-        amount: 15,
-        type: 'mission',
-        cost: 150
-      },
-      {
-        name: 'Per Mission 20',
-        amount: 20,
-        type: 'mission',
-        cost: 200
-      },
-      { name: 'Per Time 30', amount: 30, type: 'time', cost: 50 },
-      { name: 'Per Time 60', amount: 60, type: 'time', cost: 100 },
-      { name: 'Per Time 90', amount: 90, type: 'time', cost: 150 },
-      { name: 'Per Time 120', amount: 120, type: 'time', cost: 200 }
-    ]
-         */
         deepmerge(schemas.response, {
           required: ["timestamp", "result", "packages"],
           additionalProperties: false,
@@ -516,52 +487,162 @@ const registrationTopics = {
     sub: prefix("packages/all/response"),
   },
   listTeams: {
-    scheam: {
-      res: {
-        /*
-{
-  "name": "boring_Merry_6lc",
-  "totalPoints": 0,
-  "teamState": "FINISHED",
-  "created": 1706473314534,
-  "lastRegisterAttempt": null,
-  "currentRoster": {
-    "version": 1,
-    "players": [
-      {
-        "username": "avaapw7h8jc",
-        "wristbandNumber": null,
-        "wristbandColor": null
-      },
-      {
-        "username": "wn6wrmsaj4",
-        "wristbandNumber": null,
-        "wristbandColor": null
-      }
-    ]
-  },
-  "roomType": null,
-  "packages": [
-    {
-      "id": 3,
-      "name": "Per Time 30",
-      "cost": null,
-      "started": 1706473426225,
-      "ended": 1706478843795,
-      "duration": 1800,
-      "paused": false,
-      "active": false
-    }
-  ]
-}
-         */
-      },
+    schema: {
+      req: null,
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "teams"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          teams: {
+            type: "array",
+            items: {
+              type: "object",
+              additionalProperties: false,
+              required: [
+                "name",
+                "totalPoints",
+                "teamState",
+                "created",
+                "lastRegisterAttempt",
+                "currentRoster",
+                "roomType",
+                "packages",
+              ],
+              properties: {
+                name: schemas.team.name,
+                totalPoints: schemas.team.totalPoints,
+                teamState: schemas.team.teamState,
+                created: schemas.team.created,
+                lastRegisterAttempt: schemas.team.lastRegisterAttempt,
+                roomType: schemas.team.roomType,
+                currentRoster: {
+                  type: "object",
+                  additionalProperties: false,
+                  required: ["version", "players"],
+                  properties: {
+                    version: schemas.team.version,
+                    players: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        additionalProperties: false,
+                        required: [
+                          "username",
+                          "wristbandNumber",
+                          "wristbandColor",
+                        ],
+                        properties: {
+                          username: schemas.player.properties.username,
+                          wristbandNumber:
+                            schemas.wristband.properties.wristbandNumber,
+                          wristbandColor:
+                            schemas.wristband.properties.wristbandColor,
+                        },
+                      },
+                    },
+                  },
+                },
+                packages: {
+                  type: "array",
+                  items: {
+                    anyOf: [
+                      {
+                        type: "object",
+                        additionalProperties: false,
+                        required: [
+                          "id",
+                          "name",
+                          "cost",
+                          "started",
+                          "ended",
+                          "missions",
+                          "missionsPlayed",
+                          "active",
+                        ],
+                        properties: {
+                          id: schemas.commons.id,
+                          name: schemas.pkg.properties.name,
+                          cost: schemas.pkg.properties.cost,
+                          started: schemas.commons.started,
+                          ended: schemas.commons.ended,
+                          missions: schemas.missionPkg.missions,
+                          missionsPlayed: schemas.missionPkg.missionsPlayed,
+                          active: schemas.commons.active,
+                        },
+                      },
+                      {
+                        type: "object",
+                        additionalProperties: false,
+                        required: [
+                          "id",
+                          "name",
+                          "cost",
+                          "started",
+                          "ended",
+                          "duration",
+                          "paused",
+                          "active",
+                        ],
+                        properties: {
+                          id: schemas.commons.id,
+                          name: schemas.pkg.properties.name,
+                          cost: schemas.pkg.properties.cost,
+                          started: schemas.commons.started,
+                          ended: schemas.commons.ended,
+                          duration: schemas.timePkg.duration,
+                          paused: schemas.timePkg.paused,
+                          active: schemas.commons.active,
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        },
+      }),
     },
     alias: "list/teams",
     pub: prefix("teams/all"),
     sub: prefix("teams/all/response"),
   },
   listCashiers: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "cashiers"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          cashiers: {
+            type: "array",
+            items: {
+              type: "object",
+              additionalProperties: false,
+              required: ["id", "username", "email"],
+              properties: {
+                id: schemas.commons.id,
+                username: schemas.player.properties.username,
+                email: schemas.player.properties.email,
+              },
+            },
+          },
+        },
+      }),
+    },
     alias: "list/cashiers",
     pub: prefix("users/cashiers"),
     sub: prefix("users/cashiers/response"),

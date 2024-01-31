@@ -38,12 +38,12 @@ Command.middleware = [
 ];
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to list players with wristbands";
+  cmd.msg = "Failed to retrieve players with a paired wristbands";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully listed players with wristbands";
+  cmd.msg = "Successfully retrieved players with a paired wristband";
   cmd.resolve(cmd.res);
 };
 

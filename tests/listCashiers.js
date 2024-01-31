@@ -6,14 +6,20 @@ import { registrationTopics } from "../backend-topics.js";
 import { afm } from "../src/afmachine/afm.js";
 
 const b = new BackendRegistration();
-const task = "listPlayers";
-const modelResponse = {};
+const task = "listCashiers";
+const modelResponse = {
+  timestamp: 1706707779283,
+  result: "OK",
+  cashiers: [
+    { id: 1, username: "pavlos", email: "pavlosTester123@gmail.com" },
+    { id: 3, username: "tt", email: "tt@gmail.com" },
+  ],
+};
 
 describe(task, () => {
   it("Should have a Backend API call that resolves", async () => {
     await expect(b[task]()).resolves.toBeTruthy();
   });
-  it("Should normalize the response", () => {});
   it("Should validate Backend API request schema", () => {
     const validate = registrationTopics[task].schema.req;
     validate({ timestamp: Date.now() });
@@ -21,7 +27,7 @@ describe(task, () => {
     validate({});
     expect(validate.errors).not.toBeNull();
   });
-  it("Should validate the Model Response", () => {
+  it("Should validate the Model response", () => {
     const validate = registrationTopics[task].schema.res;
     validate(modelResponse);
     expect(validate.errors).toBeNull();

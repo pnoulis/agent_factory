@@ -16,10 +16,10 @@ function normalize(sources, options = {}) {
     // state (unpaired) will not shadow it.
     defaultState: options.defaultState ?? "unpaired",
   };
-  trace(_options, "wristband options");
+  trace(_options, "wristband _options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  trace(_sources);
+  trace(_sources, "wristband _sources");
 
   const target = { id: null, color: "", colorCode: null, state: "" };
   let active = false;

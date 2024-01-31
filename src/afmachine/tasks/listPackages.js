@@ -32,12 +32,12 @@ Command.middleware = [
 ];
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to list packages";
+  cmd.msg = "Failed to retrieve packages";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully listed packages";
+  cmd.msg = "Successfully retrieved packages";
   cmd.resolve(cmd.res);
 };
 
