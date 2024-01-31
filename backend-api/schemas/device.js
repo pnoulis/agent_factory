@@ -16,6 +16,7 @@ const device = {
   },
   macAddress: { type: "null" },
   ipAddress: { type: "null" },
+  status: { type: "string" },
 };
 
 export { device };

@@ -23,6 +23,8 @@ import { listPlayersWithWristband } from "./tasks/listPlayersWithWristband.js";
 import { listTeams } from "./tasks/listTeams.js";
 import { listCashiers } from "./tasks/listCashiers.js";
 import { listDevices } from "./tasks/listDevices.js";
+import { listScoreboardDevices } from "./tasks/listScoreboardDevices.js";
+import { listScoreboardViews } from "./tasks/listScoreboardViews.js";
 
 class Afm extends createEventful([
   "connected",
@@ -170,6 +172,8 @@ Object.assign(Afm.prototype, {
   listTeams,
   listCashiers,
   listDevices,
+  listScoreboardDevices,
+  listScoreboardViews,
 });
 
 const afm = new Afm();

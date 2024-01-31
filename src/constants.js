@@ -27,6 +27,16 @@ const ROOMS = {
   administration1: "ADMINISTRATION1",
 };
 
+const SCOREBOARD_VIEWS = [
+  "ROTATING",
+  "ALL_TIME",
+  "MONTHLY",
+  "WEEKLY",
+  "DAILY",
+  "ELEMENTS",
+  "ROOMS",
+];
+
 const MAX_WRISTBAND_ID = 999;
 const FM_TIMEOUT = 5000;
 

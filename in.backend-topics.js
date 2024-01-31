@@ -696,18 +696,86 @@ const registrationTopics = {
     pub: basename("devices"),
     sub: basename("devices/response"),
   },
-  listDevicesScoreboard: {
-    alias: "list/devices/scoreboard",
+  listScoreboardDevices: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "scoreboardDevices"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          scoreboardDevices: {
+            type: "array",
+            items: {
+              type: "object",
+              additionalProperties: false,
+              required: ["deviceType", "roomType", "deviceId", "status"],
+              properties: {
+                deviceType: schemas.device.deviceType,
+                roomType: schemas.device.roomType,
+                deviceId: schemas.device.deviceId,
+                status: schemas.device.status,
+              },
+            },
+          },
+        },
+      }),
+    },
+    alias: "list/scoreboard/devices",
     pub: basename("devices/scoreboard"),
     sub: basename("devices/scoreboard/response"),
   },
-  listDevicesScoreboardViews: {
-    alias: "/scoreboard/devices/views",
+  listScoreboardViews: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "scoreboardStatuses"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          scoreboardStatuses: {
+            type: "array",
+            items: {
+              type: "string",
+            },
+          },
+        },
+      }),
+    },
+    alias: "/list/scoreboard/views",
     pub: basename("devices/scoreboard/updateStatus/options"),
     sub: basename("devices/scoreboard/updateStatus/options/response"),
   },
   listScoreboard: {
-    alias: "/scoreboard",
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+        },
+      }),
+    },
+    alias: "/list/scoreboard",
     pub: basename("scoreboard"),
     sub: basename("scoreboard/response"),
   },

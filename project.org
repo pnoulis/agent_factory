@@ -469,18 +469,78 @@ CLOSED: [2024-01-31 Wed 16:17]
 }
 #+end_src
 **** No Normalization
-** TODO Implement list Scoreboard Devices
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-*** TODO Verify Device.normalize()
-** TODO Implement list Scoreboard Device Views
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-*** TODO Verify Device.normalize()
+** DONE Implement list Scoreboard Devices
+CLOSED: [2024-01-31 Wed 16:39]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-31 Wed 16:39]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-31 Wed 16:39]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-31 Wed 16:39]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-31 Wed 16:39]
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706711522546,
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706711522546,
+    result: 'OK',
+    scoreboardDevices: [
+      {
+        deviceId: 'scor1',
+        deviceType: 'SCOREBOARD_SCREEN',
+        roomType: 'SCOREBOARD1',
+        status: 'ROTATING'
+      },
+      {
+        deviceId: 'scor2',
+        deviceType: 'SCOREBOARD_SCREEN',
+        roomType: 'SCOREBOARD2',
+        status: 'MONTHLY'
+      }
+    ]
+  }
+#+end_src
+**** No Normalization
+** DONE Implement list Scoreboard Device Views
+CLOSED: [2024-01-31 Wed 16:50]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-31 Wed 16:50]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-31 Wed 16:50]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-31 Wed 16:50]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-31 Wed 16:50]
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706712075044,
+  }
+#+end_src
+
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706712075044,
+    result: 'OK',
+    scoreboardStatuses: [
+      'ROTATING',
+      'ALL_TIME',
+      'MONTHLY',
+      'WEEKLY',
+      'DAILY',
+      'ELEMENTS',
+      'ROOMS'
+    ]
+  }
+#+end_src
+**** No Normalization
 ** TODO ImpLement list Scoreboard
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
