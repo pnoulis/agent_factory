@@ -26,7 +26,6 @@ function normalize(sources, options = {}) {
     roster: [],
     state: "",
   };
-
   let roster;
 
   if (_options.nullSupersede) {
@@ -36,8 +35,7 @@ function normalize(sources, options = {}) {
       target.points = _sources[i].points ?? _sources[i].totalPoints ?? 0;
       target.packages = _sources[i].packages || [];
       if (Object.hasOwn(_sources[i], "currentRoster")) {
-        roster = _sources[i].currentRoster;
-        target.roster = _sources[i].currentRoster || target.roster;
+        roster = _sources[i].currentRoster.players;
       } else if (Object.hasOwn(_sources[i], "roster")) {
         roster = isArray(_sources[i].roster)
           ? _sources[i].roster
@@ -58,8 +56,7 @@ function normalize(sources, options = {}) {
       target.packages = _sources[i].packages || target.packages;
 
       if (Object.hasOwn(_sources[i], "currentRoster")) {
-        roster = _sources[i].currentRoster;
-        target.roster = _sources[i].currentRoster || target.roster;
+        roster = _sources[i].currentRoster.players;
       } else if (Object.hasOwn(_sources[i], "roster")) {
         roster = isArray(_sources[i].roster)
           ? _sources[i].roster
@@ -81,8 +78,9 @@ function normalize(sources, options = {}) {
   } else if (target.state === "PACKAGE_RUNNING") {
     target.state = "playing";
   } else if (
-    target.state === "PACKAGE_PENDING" ||
-    target.state === "FINISHED"
+    target.state === "PENDING_PACKAGES" ||
+    target.state === "FINISHED" ||
+    target.state === "LOADED_PACKAGES"
   ) {
     target.state = "registered";
   }
@@ -91,8 +89,8 @@ function normalize(sources, options = {}) {
   if (_options.depth > 0) {
     target.roster = normalizeRoster(target.roster, {
       state: target.state === "playing" ? "playing" : "inTeam",
-      depth: 1,
-      wristband: { state: "paired" },
+      depth: _options.depth - 1,
+      wristband: { defaultState: "paired" },
       ..._options.roster,
     });
     target.packages = target.packages.map((pkg) =>

@@ -23,6 +23,7 @@ function normalize(sources, options = {}) {
     surname: "",
     email: "",
     state: "",
+    wristband: {},
   };
   let wristbandMerged = false;
 
@@ -36,7 +37,13 @@ function normalize(sources, options = {}) {
         ? _sources[i].state.name
         : _sources[i].state;
       wristbandMerged = _sources[i].wristbandMerged ?? false;
-      target.wristband = _sources[i].wristband ?? {};
+      target.wristband =
+        _sources[i].wristband ?? Object.hasOwn(_sources[i], "wristbandNumber")
+          ? {
+              wristbandNumber: _sources[i].wristbandNumber,
+              wristbandColor: _sources[i].wristbandColor,
+            }
+          : {};
     }
   } else {
     for (let i = 0; i < _sources.length; i++) {
@@ -49,7 +56,13 @@ function normalize(sources, options = {}) {
           ? _sources[i].state.name
           : _sources[i].state) || target.state;
       wristbandMerged = _sources[i].wristbandMerged ?? wristbandMerged;
-      target.wristband = _sources[i].wristband ?? target.wristband;
+      target.wristband =
+        _sources[i].wristband ?? Object.hasOwn(_sources[i], "wristbandNumber")
+          ? {
+              wristbandNumber: _sources[i].wristbandNumber,
+              wristbandColor: _sources[i].wristbandColor,
+            }
+          : target.wristband;
     }
   }
 

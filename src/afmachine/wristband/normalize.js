@@ -51,6 +51,8 @@ function normalize(sources, options = {}) {
 
   if (_options.targetState) {
     target.state = _options.targetState;
+  } else if (target.id == null) {
+    target.state = "unpaired";
   } else if (active) {
     target.state = "paired";
   }

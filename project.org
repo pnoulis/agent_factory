@@ -387,6 +387,8 @@ CLOSED: [2024-01-30 Tue 20:58]
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
 *** TODO Document the req/res payload
+**** Backend response
+**** After normalization
 *** TODO Verify Cashier.normalize()
 ** TODO Implement list Devices
 *** TODO Object schema for req/res backend topic payload
@@ -414,49 +416,503 @@ CLOSED: [2024-01-30 Tue 20:58]
 *** TODO Verify Team.normalize()
 ** TODO Implement list Teams
 *** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-31 Wed 08:57]
 *** TODO Implement Task and Command
 *** DONE Document the req/res payload
 CLOSED: [2024-01-30 Tue 10:28]
-**** perm 1
+**** DONE A team with all Possible Permutations of players and packages
+CLOSED: [2024-01-31 Wed 10:26]
+***** Backend response
 #+begin_src js
   {
-    name: "boring_Merry_6lc",
+    name: 'friendly_Eomer_c3d',
     totalPoints: 0,
-    teamState: "FINISHED",
-    created: 1706473314534,
+    teamState: 'FINISHED',
+    created: 1706472198904,
     lastRegisterAttempt: null,
     currentRoster: {
       version: 1,
       players: [
         {
-          username: "avaapw7h8jc",
+          username: 'test1',
           wristbandNumber: null,
+          wristbandColor: null
+        },
+        {
+          username: 'test2',
+          wristbandNumber: 1,
+          wristbandColor: 2,
+        },
+        {
+          username: "test3",
+          wristbandNumber: 1,
           wristbandColor: null,
         },
         {
-          username: "wn6wrmsaj4",
+          username: "test4",
           wristbandNumber: null,
-          wristbandColor: null,
+          wristbandColor: 2,
         },
-      ],
+      ]
     },
     roomType: null,
     packages: [
-      {
+      { // missions registered
+        id: 1,
+        name: 'Per Mission 5',
+        cost: null,
+        started: null,
+        ended: null,
+        missions: 5,
+        missionsPlayed: 0,
+        active: false
+      },
+      { // missions being played
+        id: 2,
+        name: 'Per Mission 10',
+        cost: null,
+        started: 1706686189153,
+        ended: null,
+        missions: 10,
+        missionsPlayed: 5,
+        active: true
+      },
+      { // missions completed
         id: 3,
-        name: "Per Time 30",
+        name: 'Per Mission 20',
+        cost: null,
+        started: 1706686189153,
+        ended: 1706686199999,
+        missions: 20,
+        missionsPlayed: 20,
+        active: false,
+      },
+      { // time registered
+        id: 8,
+        name: 'Per Time 30',
+        cost: null,
+        started: null,
+        ended: null,
+        duration: 1800,
+        paused: false,
+        active: false
+      },
+      { // time being played
+        id: 5,
+        name: 'Per Time 60',
+        cost: null,
+        started: 1706685129723,
+        ended: null,
+        duration: 5400,
+        paused: false,
+        active: true
+      },
+      { // time finished
+        id: 3,
+        name: 'Per Time 90',
         cost: null,
         started: 1706473426225,
         ended: 1706478843795,
         duration: 1800,
         paused: false,
-        active: false,
+        active: false
       },
+    ]
+  }
+#+end_src
+***** After Team.normalize()
+#+begin_src js
+  // Team.normalize(response, { depth: 2 });
+  {
+    name: 'friendly_Eomer_c3d',
+    t_created: 1706472198904,
+    points: 0,
+    packages: [
+      {
+        id: 1,
+        name: 'Per Mission 5',
+        type: 'mission',
+        amount: 5,
+        cost: 0,
+        t_start: null,
+        t_end: null,
+        remainder: 5,
+        state: 'registered'
+      },
+      {
+        id: 2,
+        name: 'Per Mission 10',
+        type: 'mission',
+        amount: 10,
+        cost: 0,
+        t_start: 1706686189153,
+        t_end: null,
+        remainder: 5,
+        state: 'playing'
+      },
+      {
+        id: 3,
+        name: 'Per Mission 20',
+        type: 'mission',
+        amount: 20,
+        cost: 0,
+        t_start: 1706686189153,
+        t_end: 1706686199999,
+        remainder: 0,
+        state: 'completed'
+      },
+      {
+        id: 8,
+        name: 'Per Time 30',
+        type: 'time',
+        amount: 30,
+        cost: 0,
+        t_start: null,
+        t_end: null,
+        remainder: 0,
+        state: 'registered'
+      },
+      {
+        id: 5,
+        name: 'Per Time 60',
+        type: 'time',
+        amount: 90,
+        cost: 0,
+        t_start: 1706685129723,
+        t_end: null,
+        remainder: 1673540,
+        state: 'playing'
+      },
+      {
+        id: 3,
+        name: 'Per Time 90',
+        type: 'time',
+        amount: 30,
+        cost: 0,
+        t_start: 1706473426225,
+        t_end: 1706478843795,
+        remainder: 0,
+        state: 'completed'
+      }
+    ],
+    roster: [
+      {
+        username: 'test1',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: null, color: '', colorCode: null, state: 'unpaired' }
+      },
+      {
+        username: 'test2',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: 1, color: 'purple', colorCode: 2, state: 'paired' }
+      },
+      {
+        username: 'test3',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: 1, color: '', colorCode: null, state: 'paired' }
+      },
+      {
+        username: 'test4',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: null, color: 'purple', colorCode: 2, state: 'unpaired' }
+      }
+    ],
+    state: 'registered'
+  }
+#+end_src
+**** Two with a RUNNING PACKAGE
+#+begin_src js
+  {
+    name: 'inspiring_Goldberry',
+    totalPoints: 0,
+    teamState: 'PACKAGE_RUNNING',
+    created: 1706684656827,
+    lastRegisterAttempt: null,
+    currentRoster: {
+      version: 1,
+      players: [
+        {
+          username: 'Sauron_0h96h9q4xixv',
+          wristbandNumber: 241,
+          wristbandColor: 2
+        },
+        { username: 'ppone', wristbandNumber: 240, wristbandColor: 1 }
+      ]
+    },
+    roomType: null,
+    packages: [
+      {
+        id: 5,
+        name: 'Per Time 90',
+        cost: null,
+        started: 1706685129723,
+        ended: null,
+        duration: 5400,
+        paused: false,
+        active: true
+      }
+    ]
+  },
+  {
+    name: 'team19',
+    totalPoints: 0,
+    teamState: 'PACKAGE_RUNNING',
+    created: 1702243704982,
+    lastRegisterAttempt: null,
+    currentRoster: {
+      version: null,
+      players: [
+        {
+          username: 'PP191',
+          wristbandNumber: null,
+          wristbandColor: null
+        },
+        {
+          username: 'PP190',
+          wristbandNumber: null,
+          wristbandColor: null
+        }
+      ]
+    },
+    roomType: null,
+    packages: []
+  },
+#+end_src
+**** DONE One that has a FINISHED PACKAGE
+CLOSED: [2024-01-31 Wed 10:36]
+***** Backend response
+#+begin_src js
+    {
+    name: 'friendly_Eomer_c3d',
+    totalPoints: 0,
+    teamState: 'FINISHED',
+    created: 1706472198904,
+    lastRegisterAttempt: null,
+    currentRoster: {
+      version: 1,
+      players: [
+        {
+          username: '0a5sh6llqf3v',
+          wristbandNumber: null,
+          wristbandColor: null
+        },
+        {
+          username: '3q0vtxg1o7s',
+          wristbandNumber: null,
+          wristbandColor: null
+        }
+      ]
+    },
+    roomType: null,
+    packages: [
+      {
+        id: 1,
+        name: 'Per Mission 10',
+        cost: null,
+        started: 1706472302416,
+        ended: 1706475903814,
+        missions: 10,
+        missionsPlayed: 0,
+        active: false
+      }
+    ]
+  }
+#+end_src
+***** After Team.normalize()
+#+begin_src js
+  // Team.normalize(response, { depth: 2 });
+  {
+    name: 'friendly_Eomer_c3d',
+    t_created: 1706472198904,
+    points: 0,
+    packages: [
+      {
+        id: 1,
+        name: 'Per Mission 10',
+        type: 'mission',
+        amount: 10,
+        cost: 0,
+        t_start: 1706472302416,
+        t_end: 1706475903814,
+        remainder: 10,
+        state: 'completed'
+      }
+    ],
+    roster: [
+      {
+        username: '0a5sh6llqf3v',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: null, color: '', colorCode: null, state: 'unpaired' }
+      },
+      {
+        username: '3q0vtxg1o7s',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: null, color: '', colorCode: null, state: 'unpaired' }
+      }
+    ],
+    state: 'registered'
+  }
+#+end_src
+**** DONE One that has a PENDING PACKAGE
+CLOSED: [2024-01-31 Wed 10:26]
+***** Backend response
+#+begin_src js
+  {
+  name: 'inspiring_Goldberry',
+  totalPoints: 0,
+  teamState: 'PENDING_PACKAGES',
+  created: 1706684656827,
+  lastRegisterAttempt: null,
+  currentRoster: {
+    version: 1,
+    players: [
+      { username: 'ppone', wristbandNumber: 240, wristbandColor: 1 },
+      {
+        username: 'Sauron_0h96h9q4xixv',
+        wristbandNumber: 241,
+        wristbandColor: 2
+      }
+    ]
+  },
+  roomType: null,
+  packages: []
+}
+#+end_src
+***** After Team.normalize()
+#+begin_src js
+  // Team.normalize(response, { depth: 2 });
+  {
+    name: 'inspiring_Goldberry',
+    t_created: 1706684656827,
+    points: 0,
+    packages: [],
+    roster: [
+      {
+        username: 'ppone',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: 240, color: 'red', colorCode: 1, state: 'paired' }
+      },
+      {
+        username: 'Sauron_0h96h9q4xixv',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: 241, color: 'purple', colorCode: 2, state: 'paired' }
+      }
+    ],
+    state: 'registered'
+  }
+#+end_src
+**** DONE One that has a LOADED PACKAGE
+CLOSED: [2024-01-31 Wed 10:27]
+***** Backend response
+#+begin_src js
+    {
+    name: 'inspiring_Goldberry',
+    totalPoints: 0,
+    teamState: 'LOADED_PACKAGES',
+    created: 1706684656827,
+    lastRegisterAttempt: null,
+    currentRoster: {
+      version: 1,
+      players: [
+        {
+          username: 'Sauron_0h96h9q4xixv',
+          wristbandNumber: 241,
+          wristbandColor: 2
+        },
+        { username: 'ppone', wristbandNumber: 240, wristbandColor: 1 }
+      ]
+    },
+    roomType: null,
+    packages: [
+      {
+        id: 4,
+        name: 'Per Mission 20',
+        cost: null,
+        started: null,
+        ended: null,
+        missions: 20,
+        missionsPlayed: 0,
+        active: false
+      },
+    ]
+  }
+#+end_src
+***** After Team.normalize()
+#+begin_src js
+  // Team.normalize(response, { depth: 2 });
+  {
+    name: 'inspiring_Goldberry',
+    t_created: 1706684656827,
+    points: 0,
+    packages: [
+      {
+        id: 4,
+        name: 'Per Mission 20',
+        type: 'mission',
+        amount: 20,
+        cost: 0,
+        t_start: null,
+        t_end: null,
+        remainder: 20,
+        state: 'registered'
+      }
+    ],
+    roster: [
+      {
+        username: 'Sauron_0h96h9q4xixv',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: 241, color: 'purple', colorCode: 2, state: 'paired' }
+      },
+      {
+        username: 'ppone',
+        name: '',
+        surname: '',
+        email: '',
+        state: 'inTeam',
+        wristband: { id: 240, color: 'red', colorCode: 1, state: 'paired' }
+      }
+    ],
+    state: 'registered'
+  }
+#+end_src
+*** Backend response
+#+begin_src js
+  const response = {
+    timestamp: 1706685352965,
+    result: "OK",
+    teams: [
+      
     ],
   }
 #+end_src
-
 *** TODO Verify Team.normalize()
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the

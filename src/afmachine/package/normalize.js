@@ -111,10 +111,10 @@ function normalize(sources, options = {}) {
     target.state = _options.targetState;
   } else if (paused) {
     target.state = "paused";
-  } else if (active || target.remainder > 0) {
-    target.state = "playing";
-  } else if (target.remainder === 0 && target.t_end !== null) {
+  } else if (target.t_end > 0) {
     target.state = "completed";
+  } else if (active || target.t_start > 0) {
+    target.state = "playing";
   } else if (target.id) {
     target.state = "registered";
   }

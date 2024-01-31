@@ -3,6 +3,7 @@ import { normalize as normalizePlayer } from "../player/normalize.js";
 
 function normalize(sources, options) {
   trace("normalize roster");
+  trace(sources, "roster sources");
 
   // trace("options", options);
   // trace("sources", sources, { depth: 1 });
@@ -50,7 +51,7 @@ function normalize(sources, options) {
     }
   }
   _sources = [...soloPlayers, ...Array.from(possiblyRepeatedPlayers.values())];
-  // trace(_sources, "roster sources");
+  trace(_sources, "roster sources");
 
   const target = _sources.map((src) => normalizePlayer(src, options));
   trace(target, "roster target");
