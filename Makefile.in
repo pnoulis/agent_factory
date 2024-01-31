@@ -54,6 +54,8 @@ pretty_output=$(realpath $(srcdir_top)/node_modules/.bin/pretty)
 vite=$(realpath $(srcdir_top)/node_modules/.bin/vite)
 # vitest
 vitest=$(realpath $(srcdir_top)/node_modules/.bin/vitest)
+## run files in sequence
+vitestflags=--no-file-parallelism
 
 ##################################################
 # Misc
@@ -109,7 +111,7 @@ stop:
 test: file?=
 test: dotenv
 	$(loadenv)
-	MODE=test $(vitest) $(file) | tee $(out_test_log)
+	MODE=test $(vitest) run $(file) $(vitestflags) | tee $(out_test_log)
 
 ##################################################
 # run

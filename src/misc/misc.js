@@ -1,4 +1,6 @@
 import { isString } from "js_utils/misc";
+import { random as randomPlayer } from "../afmachine/player/random.js";
+import { smallid, uuid } from "js_utils/uuid";
 
 function mergec(...classes) {
   let _class = "";
@@ -85,6 +87,16 @@ function t_timetolocal(timestamp = Date.now(), reverse = false) {
     : new Date(timestamp).toLocaleString();
 }
 
+function randomCashier() {
+  const player = randomPlayer(null, { depth: 0 });
+  return {
+    username: player.username,
+    email: player.email,
+    password: smallid(),
+    role: ["ROLE_CASHIER"],
+  };
+}
+
 export {
   mergec,
   inspectProtoChain,
@@ -94,4 +106,5 @@ export {
   t_stomin,
   t_daytomls,
   t_timetolocal,
+  randomCashier,
 };

@@ -3,15 +3,19 @@ import { DEVICES, ROOMS } from "../../constants.js";
 import { ENV } from "../../config.js";
 import { registrationTopics as staticRoutes } from "../../../backend-topics.js";
 
-// player topics
+// Player topics
 import { registerPlayer } from "./registerPlayer.js";
 import { loginPlayer } from "./loginPlayer.js";
 
-// wristband topics
+// Wristband topics
 import { scanWristband } from "./scanWristband.js";
 import { getWristbandInfo } from "./getWristbandInfo.js";
 import { registerWristband } from "./registerWristband.js";
 import { deregisterWristband } from "./deregisterWristband.js";
+
+// Cashier topics
+import { registerCashier } from "./registerCashier.js";
+import { deregisterCashier } from "./deregisterCashier.js";
 
 // Device topics
 import { updateDevice } from "./updateDevice.js";
@@ -53,6 +57,10 @@ Object.assign(BackendRegistration.prototype, {
   getWristbandInfo,
   registerWristband,
   deregisterWristband,
+
+  // Cashier topics
+  registerCashier,
+  deregisterCashier,
 
   // Device topics
   updateDevice,

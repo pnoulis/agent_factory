@@ -302,6 +302,28 @@ const registrationTopics = {
     subd: prefix("team/activate/response"),
   },
   registerCashier: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["username", "email", "password", "role"],
+        properties: {
+          username: schemas.player.properties.username,
+          email: schemas.player.properties.email,
+          password: schemas.player.properties.password,
+          role: schemas.cashier.role,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+        },
+      }),
+    },
     alias: "cashier/register",
     pub: basename("signup"),
     sub: basename("signup/response"),
@@ -311,8 +333,42 @@ const registrationTopics = {
     pub: basename("signin"),
     sub: basename("signin/response"),
   },
-  removeCashier: {
-    alias: "cashier/delete",
+  deregisterCashier: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "username", "userId"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          username: schemas.player.properties.username,
+          userId: schemas.commons.id,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "cashiers"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          cashiers: {
+            type: "array",
+            items: {
+              type: "object",
+              additionalProperties: false,
+              required: ["id", "username", "email"],
+              properties: {
+                id: schemas.commons.id,
+                username: schemas.player.properties.username,
+                email: schemas.player.properties.email,
+              },
+            },
+          },
+        },
+      }),
+    },
+    alias: "cashier/deregister",
     pub: prefix("users/cashiers/delete"),
     sub: prefix("users/cashiers/delete/response"),
   },

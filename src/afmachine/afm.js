@@ -16,6 +16,9 @@ import { compose } from "./compose.js";
 // import { registerWristband } from "./tasks/registerWristband.js";
 // import { deregisterWristband } from "./tasks/deregisterWristband.js";
 
+// Cashier tasks
+import { registerCashier } from "./tasks/registerCashier.js";
+
 // Device tasks
 import { bootDevice } from "./tasks/bootDevice.js";
 import { shutdownDevice } from "./tasks/shutdownDevice.js";
@@ -171,6 +174,9 @@ Object.assign(Afm.prototype, {
   // getWristbandInfo,
   // registerWristband,
   // deregisterWristband,
+
+  // Cashier tasks
+  registerCashier,
 
   // Device tasks
   bootDevice,
