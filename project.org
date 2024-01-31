@@ -411,12 +411,64 @@ CLOSED: [2024-01-31 Wed 15:33]
 #+end_src
 **** No Normalization required
 
-** TODO Implement list Devices
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-*** TODO Verify Device.normalize()
+** DONE Implement list Devices
+CLOSED: [2024-01-31 Wed 16:19]
+*** DONE Object schema for req/res backend topic payload
+CLOSED: [2024-01-31 Wed 16:17]
+*** DONE Implement backend api topic call
+CLOSED: [2024-01-31 Wed 16:17]
+*** DONE Implement Task and Command
+CLOSED: [2024-01-31 Wed 16:17]
+*** DONE Document the req/res payload
+CLOSED: [2024-01-31 Wed 16:17]
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706709130813,
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+  timestamp: 1706709130813,
+  result: 'OK',
+  devices: [
+    {
+      deviceType: 'SCOREBOARD_SCREEN',
+      roomType: 'SCOREBOARD1',
+      deviceId: 'scor1',
+      macAddress: null,
+      ipAddress: null,
+      bootedTimestamp: 1702243701606
+    },
+    {
+      deviceType: 'SCOREBOARD_SCREEN',
+      roomType: 'SCOREBOARD2',
+      deviceId: 'scor2',
+      macAddress: null,
+      ipAddress: null,
+      bootedTimestamp: 1702243701625
+    },
+    {
+      deviceType: 'REGISTRATION_SCREEN',
+      roomType: 'ADMINISTRATION1',
+      deviceId: '001',
+      macAddress: null,
+      ipAddress: null,
+      bootedTimestamp: 1706707719741
+    },
+    {
+      deviceType: 'RPI_READER',
+      roomType: 'ADMINISTRATION1',
+      deviceId: 'ADMINISTRATION1Reader',
+      macAddress: null,
+      ipAddress: null,
+      bootedTimestamp: 1705889333198
+    }
+  ]
+}
+#+end_src
+**** No Normalization
 ** TODO Implement list Scoreboard Devices
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call

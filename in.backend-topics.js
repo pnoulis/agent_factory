@@ -4,6 +4,7 @@ import Ajv from "ajv";
 const ajv = new Ajv({
   allErrors: true,
   coerceTypes: true,
+  allowUnionTypes: true,
 });
 
 const rpiReaderTopics = {
@@ -27,9 +28,10 @@ const registrationTopics = {
           additionalProperties: false,
           required: ["timestamp", "deviceId", "deviceType", "roomName"],
           properties: {
-            deviceId: schemas.device.properties.deviceId,
-            deviceType: schemas.device.properties.deviceType,
-            roomName: schemas.device.properties.roomType,
+            timestamp: schemas.commons.timestamp,
+            deviceId: schemas.device.deviceId,
+            deviceType: schemas.device.deviceType,
+            roomName: schemas.device.roomType,
           },
         }),
       ),
@@ -38,8 +40,8 @@ const registrationTopics = {
           additionalProperties: false,
           required: ["timestamp", "result", "deviceType", "roomName"],
           properties: {
-            deviceType: schemas.device.properties.deviceType,
-            roomName: schemas.device.properties.roomType,
+            deviceType: schemas.device.deviceType,
+            roomName: schemas.device.roomType,
           },
         }),
       ),
@@ -648,6 +650,48 @@ const registrationTopics = {
     sub: prefix("users/cashiers/response"),
   },
   listDevices: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "devices"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          devices: {
+            type: "array",
+            items: {
+              type: "object",
+              additionalProperties: false,
+              required: [
+                "deviceType",
+                "roomType",
+                "deviceId",
+                "macAddress",
+                "ipAddress",
+                "bootedTimestamp",
+              ],
+              properties: {
+                deviceType: schemas.device.deviceType,
+                roomType: schemas.device.roomType,
+                deviceId: schemas.device.deviceId,
+                macAddress: schemas.device.macAddress,
+                ipAddress: schemas.device.ipAddress,
+                bootedTimestamp: schemas.commons.timestamp,
+              },
+            },
+          },
+        },
+      }),
+    },
     alias: "list/devices",
     pub: basename("devices"),
     sub: basename("devices/response"),

@@ -1,11 +1,7 @@
 const device = {
-  type: "object",
-  properties: {
-    deviceId: {
-      type: "string",
-    },
-    deviceType: {
-      type: "string",
+  deviceId: { type: ["string", "integer"] },
+  deviceType: { type: "string" },
+  /*
       enum: [
         "REGISTRATION_SCREEN",
         "SCOREBOARD_SCREEN",
@@ -14,11 +10,12 @@ const device = {
         "INSIDE_ROOM_SCREEN",
         "RPI_GAMEPLAY",
       ],
-    },
-    roomType: {
-      type: "string",
-    },
+   */
+  roomType: {
+    type: "string",
   },
+  macAddress: { type: "null" },
+  ipAddress: { type: "null" },
 };
 
 export { device };

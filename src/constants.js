@@ -18,6 +18,10 @@ const WRISTBAND_COLORS = {
 const DEVICES = {
   registrationScreen: "REGISTRATION_SCREEN",
   rpiReader: "RPI_READER",
+  scoreboardScreen: "SCOREBOARD_SCREEN",
+  outsideRoomScreen: "OUTSIDE_ROOM_SCREEN",
+  insideRoomScreen: "INSIDE_ROOM_SCREEN",
+  rpiGameplay: "RPI_GAMEPLAY",
 };
 const ROOMS = {
   administration1: "ADMINISTRATION1",
