@@ -387,6 +387,7 @@
     timestamp: 1706707779283,
   }
 #+end_src
+
 **** Backend response
 #+begin_src js
   {
@@ -398,7 +399,6 @@
     ]
   }
 #+end_src
-**** No Normalization required
 
 ** DONE Implement list Devices
 
@@ -1302,24 +1302,50 @@
 #+end_src
 
 
-
-** TODO Implement Session start
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+** DONE Implement Session start
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
 **** Backend request
+#+begin_src js
+  {
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+  }
+#+end_src
 **** Backend response
-**** After normalization
-** TODO Implement Session stop
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-**** Backend request
-**** Backend response
-**** After normalization
+#+begin_src js
+  {
+    timestamp: 1706780850379,
+    result: 'OK',
+  }
+#+end_src
 
+**** Afm response
+#+begin_src js
+  // ctx.req = ctx.args.cashier
+  // resolve -> ctx.req
+#+end_src
+
+** DONE Implement Session stop
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Backend request
+#+begin_src js
+  {
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+    comment: "Nothing unexpected ever happens!"
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706780850379,
+    result: 'OK',
+  }
+#+end_src
 
 ** DONE Implement Device boot
 *** DONE Object schema for req/res backend topic payload
@@ -1411,7 +1437,6 @@
 #+end_src
 
 
-
 ** DONE Implement Cashier registration
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
@@ -1433,12 +1458,31 @@
     result: 'OK'
   }
 #+end_src
-
-** TODO Implement Cashier de-registration
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+**** Afm response
+#+begin_src js
+  // resolve -> cmd.res
+  res: {
+    cashier: {
+      username: '4b2k414jjnm',
+      email: 'Saruman@gmail.com',
+      password: '2u85h819i62',
+      role: 'CASHIER',
+      id: 28
+    }
+  }
+#+end_src
+** DONE Implement Cashier de-registration
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  {
+    username: "someCashier",
+    id: 3,
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -1473,22 +1517,51 @@
   }
 #+end_src
 
-** TODO Implement Cashier login
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+**** Afm response
+#+begin_src js
+  // ctx.res = ctx.args.cashier
+  // resolve -> ctx.res
+#+end_src
+** DONE Implement Cashier login
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
 **** Backend request
+#+begin_src js
+  {
+    username: "33rksrlppga",
+    password: "7c38dir1206",
+  }
+#+end_src
 **** Backend response
-**** After normalization
-** TODO Implement Cashier logout
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-**** Backend request
-**** Backend response
-**** After normalization
+#+begin_src js
+  {
+    timestamp: 1706777994830,
+    result: 'OK',
+    jwtResponse: {
+      jwt: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA',
+      id: 74,
+      username: '33rksrlppga',
+      email: '33rksrlppga@gmail.com',
+      roles: [ 'ROLE_CASHIER' ]
+    }
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  // ctx.res
+  res: {
+    cashier: {
+      username: '33rksrlppga',
+      password: '7c38dir1206',
+      email: '33rksrlppga@gmail.com',
+      id: 74,
+      role: 'CASHIER'
+    },
+    jwt: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3OTAxMywiZXhwIjoxNzA2ODE1MDEzfQ.KztDiUAgVIjSnY56gU7lrlKU4IRNRY_4N8GKloG5-X92veQwaDCGj4284yHX_XIn_ZjJFEWbPdvhh7C4xsnFCQ'
+  },
+#+end_src
 
 
 ** Task template
@@ -2121,3 +2194,6 @@ at depth = 0 -> do not fill() wristband, or players or packages
 at depth = 1 -> fill() players and packages
 at depth = 2 -> fill() players and packages and wristbands
 
+
+
+* Running tests

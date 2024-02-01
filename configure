@@ -42,32 +42,33 @@ export INCLUDEDIR=
 export LIBDIR=
 
 main() {
-    parse_args "$@"
-    set -- "${POSARGS[@]}"
-    echo "Configuring..."
+  parse_args "$@"
+  set -- "${POSARGS[@]}"
+  echo "Configuring..."
 
-    resolve_buildir
-    resolve_system
-    resolve_mode
-    resolve_node_env
-    resolve_options
-    resolve_dependencies
-    install_npm_packages
-    resolve_afadmin_client_url
-    resolve_afadmin_server_url
-    resolve_xdgdirs
-    print_chapter "Resolving installation dirs..."
-    exit_if_empty WITH_INSTALLDIRS_PRESET 'Missing --with-installdirs-preset'
-    define_installdirs_$WITH_INSTALLDIRS_PRESET
-    show_installdirs
-    define_derivedirs
-    create_envfile
-    create_macrosfile
-    create_vitefile
-    create_indexfile
-    create_backend_topicsfile
-    create_makefile
-    cleanup
+  resolve_buildir
+  resolve_system
+  resolve_mode
+  resolve_node_env
+  resolve_options
+  resolve_dependencies
+  install_npm_packages
+  resolve_afadmin_client_url
+  resolve_afadmin_server_url
+  resolve_afadmin_mysqldb_url
+  resolve_xdgdirs
+  print_chapter "Resolving installation dirs..."
+  exit_if_empty WITH_INSTALLDIRS_PRESET 'Missing --with-installdirs-preset'
+  define_installdirs_$WITH_INSTALLDIRS_PRESET
+  show_installdirs
+  define_derivedirs
+  create_envfile
+  create_macrosfile
+  create_vitefile
+  create_indexfile
+  create_backend_topicsfile
+  create_makefile
+  cleanup
 }
 
 resolve_buildir() {
@@ -166,124 +167,149 @@ resolve_mode() {
 }
 
 resolve_node_env() {
-    print_chapter "Resolving NODE_ENV..."
-    exit_if_empty NODE_ENV 'Missing NODE_ENV'
-    echo "NODE_ENV...|$NODE_ENV"
+  print_chapter "Resolving NODE_ENV..."
+  exit_if_empty NODE_ENV 'Missing NODE_ENV'
+  echo "NODE_ENV...|$NODE_ENV"
 }
 
 resolve_options() {
-    print_chapter "Resolving options..."
-    exit_if_empty DEVICE_ID
-    echo "DEVICE_ID...|$DEVICE_ID"
-    exit_if_empty LOGLEVEL
-    echo "LOGLEVEL...|$LOGLEVEL"
+  print_chapter "Resolving options..."
+  exit_if_empty DEVICE_ID
+  echo "DEVICE_ID...|$DEVICE_ID"
+  exit_if_empty LOGLEVEL
+  echo "LOGLEVEL...|$LOGLEVEL"
 }
 
 resolve_dependencies() {
-    print_chapter "Resolving dependencies..."
-    printf "Checking dependency...|node-v21.0.0...|"
-    declare -gx NODE="$(command -v node)"
-    [[ -z "$NODE" ]] && {
-        error MISSING
-    }
-    __node_version="$(node --version)"
-    [[ "$__node_version" != "v21.0.0" ]] && {
-        error MISSING
-    }
-    echo "$NODE"
+  print_chapter "Resolving dependencies..."
+  printf "Checking dependency...|node-v21.0.0...|"
+  declare -gx NODE="$(command -v node)"
+  [[ -z "$NODE" ]] && {
+    error MISSING
+  }
+  __node_version="$(node --version)"
+  [[ "$__node_version" != "v21.0.0" ]] && {
+    error MISSING
+  }
+  echo "$NODE"
 
-    printf "Checking dependency...|make...|"
-    if ! command -v make; then
-        error MISSING
-    fi
+  printf "Checking dependency...|make...|"
+  if ! command -v make; then
+    error MISSING
+  fi
 
-    printf "Checking dependency...|dotenv...|"
-    declare -gx DOTENV="$(command -v dotenv)"
-    [[ -z "$DOTENV" ]] && {
-        error MISSING
-    }
-    echo "$DOTENV"
+  printf "Checking dependency...|dotenv...|"
+  declare -gx DOTENV="$(command -v dotenv)"
+  [[ -z "$DOTENV" ]] && {
+    error MISSING
+  }
+  echo "$DOTENV"
 
-    printf "Checking dependency...|jq...|"
-    declare -gx JQ="$(command -v jq)"
-    [[ -z "$JQ" ]] && {
-        error MISSING
-    }
-    echo "$JQ"
+  printf "Checking dependency...|jq...|"
+  declare -gx JQ="$(command -v jq)"
+  [[ -z "$JQ" ]] && {
+    error MISSING
+  }
+  echo "$JQ"
 }
 
 install_npm_packages() {
-    print_chapter "Installing npm packages..."
-    if flag SKIP_NPM_INSTALL; then
-        echo SKIP
-    else
-        if ! npm install; then
-            error 'Failed to install packages'
-        fi
+  print_chapter "Installing npm packages..."
+  if flag SKIP_NPM_INSTALL; then
+    echo SKIP
+  else
+    if ! npm install; then
+      error 'Failed to install packages'
     fi
+  fi
 }
 
 resolve_afadmin_client_url() {
-    print_chapter "Resolving afadmin client url..."
-    exit_if_empty AFADMIN_CLIENT_URL_LOCAL
-    AFADMIN_CLIENT_URL_PUBLIC="${AFADMIN_CLIENT_URL_PUBLIC:-$AFADMIN_CLIENT_URL_LOCAL}"
+  print_chapter "Resolving afadmin client url..."
+  exit_if_empty AFADMIN_CLIENT_URL_LOCAL
+  AFADMIN_CLIENT_URL_PUBLIC="${AFADMIN_CLIENT_URL_PUBLIC:-$AFADMIN_CLIENT_URL_LOCAL}"
 
-    # public
-    read -r scheme hostname port basename < <(parseUrl "$AFADMIN_CLIENT_URL_PUBLIC")
-    if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
-        error 'afadmin client public url missing either scheme, hostname or port'
-    fi
-    declare -gx AFADMIN_CLIENT_URL_PUBLIC_SCHEME="$scheme"
-    echo "AFADMIN_CLIENT_URL_PUBLIC_SCHEME...|$AFADMIN_CLIENT_URL_PUBLIC_SCHEME"
-    declare -gx AFADMIN_CLIENT_URL_PUBLIC_PORT="$port"
-    echo "AFADMIN_CLIENT_URL_PUBLIC_PORT...|$AFADMIN_CLIENT_URL_PUBLIC_PORT"
-    declare -gx AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME="$hostname"
-    echo "AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME...|$AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME"
-    declare -gx AFADMIN_CLIENT_URL_PUBLIC_BASENAME="$basename"
-    echo "AFADMIN_CLIENT_URL_PUBLIC_BASENAME...|$AFADMIN_CLIENT_URL_PUBLIC_BASENAME"
-    declare -gx AFADMIN_CLIENT_URL_PUBLIC_ORIGIN="${scheme}"://"${hostname}":"${port}"
-    echo "AFADMIN_CLIENT_URL_PUBLIC_ORIGIN...|$AFADMIN_CLIENT_URL_PUBLIC_ORIGIN"
-    declare -gx AFADMIN_CLIENT_URL_PUBLIC="${scheme}"://"${hostname}":"${port}""${basename}"
-    echo "AFADMIN_CLIENT_URL_PUBLIC...|$AFADMIN_CLIENT_URL_PUBLIC"
+  # public
+  read -r scheme user pass hostname port basename < <(parseUrl "$AFADMIN_CLIENT_URL_PUBLIC")
+  if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+    error 'afadmin client public url missing either scheme, hostname or port'
+  fi
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_SCHEME="$scheme"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_SCHEME...|$AFADMIN_CLIENT_URL_PUBLIC_SCHEME"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_PORT="$port"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_PORT...|$AFADMIN_CLIENT_URL_PUBLIC_PORT"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME="$hostname"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME...|$AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_BASENAME="$basename"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_BASENAME...|$AFADMIN_CLIENT_URL_PUBLIC_BASENAME"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_ORIGIN="${scheme}"://"${hostname}":"${port}"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_ORIGIN...|$AFADMIN_CLIENT_URL_PUBLIC_ORIGIN"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC="${scheme}"://"${hostname}":"${port}/${basename}"
+  echo "AFADMIN_CLIENT_URL_PUBLIC...|$AFADMIN_CLIENT_URL_PUBLIC"
 
-    # local
-    read -r scheme hostname port < <(parseUrl "$AFADMIN_CLIENT_URL_LOCAL")
-    if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
-        error 'afadmin client local url missing either scheme, hostname or port'
-    fi
-    declare -gx AFADMIN_CLIENT_URL_LOCAL_SCHEME="$scheme"
-    echo "AFADMIN_CLIENT_URL_LOCAL_SCHEME...|$AFADMIN_CLIENT_URL_LOCAL_SCHEME"
-    declare -gx AFADMIN_CLIENT_URL_LOCAL_PORT="$port"
-    echo "AFADMIN_CLIENT_URL_LOCAL_PORT...|$AFADMIN_CLIENT_URL_LOCAL_PORT"
-    declare -gx AFADMIN_CLIENT_URL_LOCAL_HOSTNAME="$hostname"
-    echo "AFADMIN_CLIENT_URL_LOCAL_HOSTNAME...|$AFADMIN_CLIENT_URL_LOCAL_HOSTNAME"
-    declare -gx AFADMIN_CLIENT_URL_LOCAL="${scheme}"://"${hostname}":"${port}"
-    echo "AFADMIN_CLIENT_URL_LOCAL...|$AFADMIN_CLIENT_URL_LOCAL"
+  # local
+  read -r scheme user pass hostname port < <(parseUrl "$AFADMIN_CLIENT_URL_LOCAL")
+  if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+    error 'afadmin client local url missing either scheme, hostname or port'
+  fi
+  declare -gx AFADMIN_CLIENT_URL_LOCAL_SCHEME="$scheme"
+  echo "AFADMIN_CLIENT_URL_LOCAL_SCHEME...|$AFADMIN_CLIENT_URL_LOCAL_SCHEME"
+  declare -gx AFADMIN_CLIENT_URL_LOCAL_PORT="$port"
+  echo "AFADMIN_CLIENT_URL_LOCAL_PORT...|$AFADMIN_CLIENT_URL_LOCAL_PORT"
+  declare -gx AFADMIN_CLIENT_URL_LOCAL_HOSTNAME="$hostname"
+  echo "AFADMIN_CLIENT_URL_LOCAL_HOSTNAME...|$AFADMIN_CLIENT_URL_LOCAL_HOSTNAME"
+  declare -gx AFADMIN_CLIENT_URL_LOCAL="${scheme}"://"${hostname}":"${port}"
+  echo "AFADMIN_CLIENT_URL_LOCAL...|$AFADMIN_CLIENT_URL_LOCAL"
 }
 
 resolve_afadmin_server_url() {
-    print_chapter "Resolving afadmin server url..."
-    exit_if_empty AFADMIN_SERVER_URL
+  print_chapter "Resolving afadmin server url..."
+  exit_if_empty AFADMIN_SERVER_URL
 
-    # local
-    read -r scheme hostname port basename < <(parseUrl "$AFADMIN_SERVER_URL")
-    if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
-        error 'afadmin server url missing either scheme, hostname or port'
-    fi
-    declare -gx AFADMIN_SERVER_URL_SCHEME="$scheme"
-    echo "AFADMIN_SERVER_URL_SCHEME...|$AFADMIN_SERVER_URL_SCHEME"
-    declare -gx AFADMIN_SERVER_URL_PORT="$port"
-    echo "AFADMIN_SERVER_URL_PORT...|$AFADMIN_SERVER_URL_PORT"
-    declare -gx AFADMIN_SERVER_URL_HOSTNAME="$hostname"
-    echo "AFADMIN_SERVER_URL_HOSTNAME...|$AFADMIN_SERVER_URL_HOSTNAME"
-    declare -gx AFADMIN_SERVER_URL_BASENAME="$basename"
-    echo "AFADMIN_SERVER_URL_BASENAME...|$AFADMIN_SERVER_URL_BASENAME"
-    declare -gx AFADMIN_SERVER_URL_ORIGIN="${scheme}"://"${hostname}":"${port}"
-    echo "AFADMIN_SERVER_URL_ORIGIN...|$AFADMIN_SERVER_URL_ORIGIN"
-    declare -gx AFADMIN_SERVER_URL_ORIGIN_WS="ws://${hostname}:${port}"
-    echo 'AFADMIN_SERVER_URL_ORIGIN_WS...|$AFADMIN_SERVER_URL_ORIGIN_WS'
-    declare -gx AFADMIN_SERVER_URL="${scheme}"://"${hostname}":"${port}""${basename}"
-    echo "AFADMIN_SERVER_URL...|$AFADMIN_SERVER_URL"
+  # local
+  read -r scheme user pass hostname port basename < <(parseUrl "$AFADMIN_SERVER_URL")
+  if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+    error 'afadmin server url missing either scheme, hostname or port'
+  fi
+  declare -gx AFADMIN_SERVER_URL_SCHEME="$scheme"
+  echo "AFADMIN_SERVER_URL_SCHEME...|$AFADMIN_SERVER_URL_SCHEME"
+  declare -gx AFADMIN_SERVER_URL_PORT="$port"
+  echo "AFADMIN_SERVER_URL_PORT...|$AFADMIN_SERVER_URL_PORT"
+  declare -gx AFADMIN_SERVER_URL_HOSTNAME="$hostname"
+  echo "AFADMIN_SERVER_URL_HOSTNAME...|$AFADMIN_SERVER_URL_HOSTNAME"
+  declare -gx AFADMIN_SERVER_URL_BASENAME="$basename"
+  echo "AFADMIN_SERVER_URL_BASENAME...|$AFADMIN_SERVER_URL_BASENAME"
+  declare -gx AFADMIN_SERVER_URL_ORIGIN="${scheme}"://"${hostname}":"${port}"
+  echo "AFADMIN_SERVER_URL_ORIGIN...|$AFADMIN_SERVER_URL_ORIGIN"
+  declare -gx AFADMIN_SERVER_URL_ORIGIN_WS="ws://${hostname}:${port}"
+  echo "AFADMIN_SERVER_URL_ORIGIN_WS...|$AFADMIN_SERVER_URL_ORIGIN_WS"
+  declare -gx AFADMIN_SERVER_URL="${scheme}"://"${hostname}":"${port}/${basename}"
+  echo "AFADMIN_SERVER_URL...|$AFADMIN_SERVER_URL"
+}
+
+resolve_afadmin_mysqldb_url() {
+  print_chapter "Resolving afadmin mysqldb url..."
+  exit_if_empty AFADMIN_MYSQLDB_URL
+  read -r scheme user pass hostname port basename < <(parseUrl "$AFADMIN_MYSQLDB_URL")
+  if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+    error 'afadmin mysqldb url missing either scheme, hostname or port'
+  fi
+  declare -gx AFADMIN_MYSQLDB_URL_SCHEME="$scheme"
+  echo "AFADMIN_MYSQLDB_URL_SCHEME...|$AFADMIN_MYSQLDB_URL_SCHEME"
+  declare -gx AFADMIN_MYSQLDB_URL_USER="$user"
+  echo "AFADMIN_MYSQLDB_URL_USER...|$AFADMIN_MYSQLDB_URL_USER"
+  declare -gx AFADMIN_MYSQLDB_URL_PASS="$pass"
+  echo "AFADMIN_MYSQLDB_URL_PASS...|$AFADMIN_MYSQLDB_URL_PASS"
+  declare -gx AFADMIN_MYSQLDB_URL_PORT="$port"
+  echo "AFADMIN_MYSQLDB_URL_PORT...|$AFADMIN_MYSQLDB_URL_PORT"
+  declare -gx AFADMIN_MYSQLDB_URL_HOSTNAME="$hostname"
+  echo "AFADMIN_MYSQLDB_URL_HOSTNAME...|$AFADMIN_MYSQLDB_URL_HOSTNAME"
+  declare -gx AFADMIN_MYSQLDB_URL_BASENAME="$basename"
+  echo "AFADMIN_MYSQLDB_URL_BASENAME...|$AFADMIN_MYSQLDB_URL_BASENAME"
+  declare -gx AFADMIN_MYSQLDB_URL_ORIGIN="${scheme}"://"${user}:${pass}@${hostname}":"${port}"
+  echo "AFADMIN_MYSQLDB_URL_ORIGIN...|$AFADMIN_MYSQLDB_URL_ORIGIN"
+  declare -gx AFADMIN_MYSQLDB_URL="${scheme}"://"${user}:${pass}@${hostname}":"${port}/${basename}"
+  echo "AFADMIN_MYSQLDB_URL...|$AFADMIN_MYSQLDB_URL"
 }
 
 
@@ -547,281 +573,294 @@ define_derivedirs() {
 }
 
 create_envfile() {
-    print_chapter "Creating envfile..."
-    declare -gx OUT_CONFIG_ENVFILE=${CONFIGUREDIR}/config.env
-    OUT_CONFIG_ENVFILE_abs=${CONFIGUREDIR_ABS}/config.env
-    rm -f $OUT_CONFIG_ENVFILE
+  print_chapter "Creating envfile..."
+  declare -gx OUT_CONFIG_ENVFILE=${CONFIGUREDIR}/config.env
+  OUT_CONFIG_ENVFILE_abs=${CONFIGUREDIR_ABS}/config.env
+  rm -f $OUT_CONFIG_ENVFILE
 
-    printenv > $post_config_env
-    rm -f $OUT_CONFIG_ENVFILE
-    local unquoted_envars=$(mktemp)
-    diff --normal $pre_config_env $post_config_env | grep '^>' | cut -c3- | sort > $unquoted_envars
-    while IFS='=' read -r k v; do
-        # Quote values
-        if [[ "$v" =~ \' ]]; then
-            printf "%s=\"%s\"\n" "$k" "$v" >> $OUT_CONFIG_ENVFILE
-        else
-            printf "%s='%s'\n" "$k" "$v" >> $OUT_CONFIG_ENVFILE
-        fi
-    done < $unquoted_envars
+  printenv > $post_config_env
+  rm -f $OUT_CONFIG_ENVFILE
+  local unquoted_envars=$(mktemp)
+  diff --normal $pre_config_env $post_config_env | grep '^>' | cut -c3- | sort > $unquoted_envars
+  while IFS='=' read -r k v; do
+    # Quote values
+    if [[ "$v" =~ \' ]]; then
+      printf "%s=\"%s\"\n" "$k" "$v" >> $OUT_CONFIG_ENVFILE
+    else
+      printf "%s='%s'\n" "$k" "$v" >> $OUT_CONFIG_ENVFILE
+    fi
+  done < $unquoted_envars
 
-    rm -f $unquoted_envars
-    echo "OUT_CONFIG_ENVFILE...|$OUT_CONFIG_ENVFILE"
-    echo "OUT_CONFIG_ENVFILE_ABS...|$OUT_CONFIG_ENVFILE_abs"
+  rm -f $unquoted_envars
+  echo "OUT_CONFIG_ENVFILE...|$OUT_CONFIG_ENVFILE"
+  echo "OUT_CONFIG_ENVFILE_ABS...|$OUT_CONFIG_ENVFILE_abs"
 }
 
 create_macrosfile() {
-    print_chapter "Creating macrosfile..."
-    declare -gx OUT_CONFIG_MACROSFILE=${CONFIGUREDIR}/config.macros.m4
-    OUT_CONFIG_MACROSFILE_abs=${CONFIGUREDIR_ABS}/config.macros.m4
-    rm -f $OUT_CONFIG_MACROSFILE
+  print_chapter "Creating macrosfile..."
+  declare -gx OUT_CONFIG_MACROSFILE=${CONFIGUREDIR}/config.macros.m4
+  OUT_CONFIG_MACROSFILE_abs=${CONFIGUREDIR_ABS}/config.macros.m4
+  rm -f $OUT_CONFIG_MACROSFILE
 
-    local unquoted_envars=$(mktemp)
-    diff --normal $pre_config_env $post_config_env | grep '^>' | cut -c3- | sort > $unquoted_envars
-    rm -f $OUT_CONFIG_MACROSFILE
-    while IFS='=' read -r key value; do
-        cat <<EOF >> $OUT_CONFIG_MACROSFILE
+  local unquoted_envars=$(mktemp)
+  diff --normal $pre_config_env $post_config_env | grep '^>' | cut -c3- | sort > $unquoted_envars
+  rm -f $OUT_CONFIG_MACROSFILE
+  while IFS='=' read -r key value; do
+    cat <<EOF >> $OUT_CONFIG_MACROSFILE
 define(\`IN_$key', \`$value')dnl
 EOF
-    done < $unquoted_envars
-    echo "changequote(\`[[[', \`]]]')dnl" >> $OUT_CONFIG_MACROSFILE
+  done < $unquoted_envars
+  echo "changequote(\`[[[', \`]]]')dnl" >> $OUT_CONFIG_MACROSFILE
 
-    rm -f $unquoted_envars
-    echo "OUT_CONFIG_MACROSFILE...|$OUT_CONFIG_MACROSFILE"
-    echo "OUT_CONFIG_MACROSFILE_ABS...|$OUT_CONFIG_MACROSFILE_abs"
+  rm -f $unquoted_envars
+  echo "OUT_CONFIG_MACROSFILE...|$OUT_CONFIG_MACROSFILE"
+  echo "OUT_CONFIG_MACROSFILE_ABS...|$OUT_CONFIG_MACROSFILE_abs"
 }
 
 create_vitefile() {
-    print_chapter "Creating vitefile..."
-    declare -gx OUT_CONFIG_VITEFILE=${CONFIGUREDIR}/vite.config.js
-    OUT_CONFIG_VITEFILE_abs=${CONFIGUREDIR_ABS}/vite.config.js
-    in_vitefile=${SRCDIR}/in.vite.config.js
-    rm -f $OUT_CONFIG_VITEFILE
+  print_chapter "Creating vitefile..."
+  declare -gx OUT_CONFIG_VITEFILE=${CONFIGUREDIR}/vite.config.js
+  OUT_CONFIG_VITEFILE_abs=${CONFIGUREDIR_ABS}/vite.config.js
+  in_vitefile=${SRCDIR}/in.vite.config.js
+  rm -f $OUT_CONFIG_VITEFILE
 
-    m4 $OUT_CONFIG_MACROSFILE $in_vitefile > $OUT_CONFIG_VITEFILE
-    echo "OUT_CONFIG_VITEFILE...|$OUT_CONFIG_VITEFILE"
-    echo "OUT_CONFIG_VITEFILE_abs...|$OUT_CONFIG_VITEFILE_abs"
+  m4 $OUT_CONFIG_MACROSFILE $in_vitefile > $OUT_CONFIG_VITEFILE
+  echo "OUT_CONFIG_VITEFILE...|$OUT_CONFIG_VITEFILE"
+  echo "OUT_CONFIG_VITEFILE_abs...|$OUT_CONFIG_VITEFILE_abs"
 }
 
 create_indexfile() {
-    print_chapter "Creating index.html..."
-    declare -gx OUT_CONFIG_INDEXFILE=${CONFIGUREDIR}/index.html
-    OUT_CONFIG_INDEXFILE_abs=${CONFIGUREDIR_ABS}/index.html
-    in_INDEXFILE=${SRCDIR}/in.index.html
-    rm -f $OUT_CONFIG_INDEXFILE
+  print_chapter "Creating index.html..."
+  declare -gx OUT_CONFIG_INDEXFILE=${CONFIGUREDIR}/index.html
+  OUT_CONFIG_INDEXFILE_abs=${CONFIGUREDIR_ABS}/index.html
+  in_INDEXFILE=${SRCDIR}/in.index.html
+  rm -f $OUT_CONFIG_INDEXFILE
 
-    m4 $OUT_CONFIG_MACROSFILE $in_INDEXFILE > $OUT_CONFIG_INDEXFILE
-    echo "OUT_CONFIG_INDEXFILE...|$OUT_CONFIG_INDEXFILE"
-    echo "OUT_CONFIG_INDEXFILE_abs...|$OUT_CONFIG_INDEXFILE_abs"
+  m4 $OUT_CONFIG_MACROSFILE $in_INDEXFILE > $OUT_CONFIG_INDEXFILE
+  echo "OUT_CONFIG_INDEXFILE...|$OUT_CONFIG_INDEXFILE"
+  echo "OUT_CONFIG_INDEXFILE_abs...|$OUT_CONFIG_INDEXFILE_abs"
 }
 
 create_backend_topicsfile() {
-    print_chapter "Creating index.html..."
-    declare -gx OUT_CONFIG_BACKEND_TOPICSFILE=${CONFIGUREDIR}/backend-topics.js
-    OUT_CONFIG_BACKEND_TOPICSFILE_abs=${CONFIGUREDIR_ABS}/backend-topics.js
-    in_BACKEND_TOPICSFILE=${SRCDIR}/in.backend-topics.js
-    rm -f $OUT_CONFIG_BACKEND_TOPICSFILE
+  print_chapter "Creating index.html..."
+  declare -gx OUT_CONFIG_BACKEND_TOPICSFILE=${CONFIGUREDIR}/backend-topics.js
+  OUT_CONFIG_BACKEND_TOPICSFILE_abs=${CONFIGUREDIR_ABS}/backend-topics.js
+  in_BACKEND_TOPICSFILE=${SRCDIR}/in.backend-topics.js
+  rm -f $OUT_CONFIG_BACKEND_TOPICSFILE
 
-    m4 $OUT_CONFIG_MACROSFILE $in_BACKEND_TOPICSFILE > $OUT_CONFIG_BACKEND_TOPICSFILE
-    echo "OUT_CONFIG_BACKEND_TOPICSFILE...|$OUT_CONFIG_BACKEND_TOPICSFILE"
-    echo "OUT_CONFIG_BACKEND_TOPICSFILE_abs...|$OUT_CONFIG_BACKEND_TOPICSFILE_abs"
+  m4 $OUT_CONFIG_MACROSFILE $in_BACKEND_TOPICSFILE > $OUT_CONFIG_BACKEND_TOPICSFILE
+  echo "OUT_CONFIG_BACKEND_TOPICSFILE...|$OUT_CONFIG_BACKEND_TOPICSFILE"
+  echo "OUT_CONFIG_BACKEND_TOPICSFILE_abs...|$OUT_CONFIG_BACKEND_TOPICSFILE_abs"
 }
 
 create_makefile() {
-    print_chapter "Creating makefile..."
-    declare -gx OUT_CONFIG_MAKEFILE=${CONFIGUREDIR}/Makefile
-    OUT_CONFIG_MAKEFILE_abs=${CONFIGUREDIR_ABS}/Makefile
-    in_makefile=${SRCDIR}/Makefile.in
-    rm -f $OUT_CONFIG_MAKEFILE
+  print_chapter "Creating makefile..."
+  declare -gx OUT_CONFIG_MAKEFILE=${CONFIGUREDIR}/Makefile
+  OUT_CONFIG_MAKEFILE_abs=${CONFIGUREDIR_ABS}/Makefile
+  in_makefile=${SRCDIR}/Makefile.in
+  rm -f $OUT_CONFIG_MAKEFILE
 
-    m4 -DIN_CONFIG_MAKEFILE=$OUT_CONFIG_MAKEFILE \
-       -DIN_CONFIG_ENVFILE=$OUT_CONFIG_ENVFILE \
-       -DIN_CONFIG_MACROSFILE=$OUT_CONFIG_MACROSFILE \
-       -DIN_CONFIG_VITEFILE=$OUT_CONFIG_VITEFILE \
-       -DIN_CONFIG_INDEXFILE=$OUT_CONFIG_INDEXFILE \
-       -DIN_CONFIG_BACKEND_TOPICSFILE=$OUT_CONFIG_BACKEND_TOPICSFILE \
-       $OUT_CONFIG_MACROSFILE $in_makefile > $OUT_CONFIG_MAKEFILE
+  m4 -DIN_CONFIG_MAKEFILE=$OUT_CONFIG_MAKEFILE \
+     -DIN_CONFIG_ENVFILE=$OUT_CONFIG_ENVFILE \
+     -DIN_CONFIG_MACROSFILE=$OUT_CONFIG_MACROSFILE \
+     -DIN_CONFIG_VITEFILE=$OUT_CONFIG_VITEFILE \
+     -DIN_CONFIG_INDEXFILE=$OUT_CONFIG_INDEXFILE \
+     -DIN_CONFIG_BACKEND_TOPICSFILE=$OUT_CONFIG_BACKEND_TOPICSFILE \
+     $OUT_CONFIG_MACROSFILE $in_makefile > $OUT_CONFIG_MAKEFILE
 
-    echo "OUT_CONFIG_MAKEFILE...|$OUT_CONFIG_MAKEFILE"
-    echo "OUT_CONFIG_MAKEFILE_abs...|$OUT_CONFIG_MAKEFILE_abs"
+  echo "OUT_CONFIG_MAKEFILE...|$OUT_CONFIG_MAKEFILE"
+  echo "OUT_CONFIG_MAKEFILE_abs...|$OUT_CONFIG_MAKEFILE_abs"
 }
 
 cleanup() {
-    rm -f $pre_config_env
-    rm -f $post_config_env
+  rm -f $pre_config_env
+  rm -f $post_config_env
 }
 
 parseUrl() {
-    url=$1
-    scheme="$(echo "$url" | grep -Eo "^.*://" -)"
-    scheme="${scheme%%:*}"
-    hostname="$(echo "$url" | grep -Eo "(://[a-zA-Z0-9._-]+(:[0-9]+|/|$)|@[a-zA-Z0-9._-]+(:|/|$))")"
-    hostname="${hostname##*/}"
-    hostname="${hostname#*@}"
-    hostname="${hostname%:*}"
-    port="$(echo "$url" | grep -Eo ":[0-9]+")"
-    port="${port#*:}"
-    path="$(echo "$url" | grep -Eo "/[^.:]*$")"
-    echo "$scheme" "$hostname" "$port" "$path"
+  url=$1
+  scheme="$(echo "$url" | grep -Eo "^.*://" -)"
+  scheme="${scheme%%:*}"
+  # extract the user (if any)
+  url="${url#*//}"
+  userpass="$(echo $url | grep @ | cut -d@ -f1)"
+  pass="$(echo $userpass | grep : | cut -d: -f2)"
+  if [ -n "$pass" ]; then
+    user="$(echo $userpass | grep : | cut -d: -f1)"
+  else
+    user=$userpass
+  fi
+  hostname="$(echo "$url" | grep -Eo "((://)?[a-zA-Z0-9._-]+(:[0-9]+|/|$)|@[a-zA-Z0-9._-]+(:|/|$))")"
+  hostname="${hostname##/*}"
+  hostname="${hostname#*@}"
+  hostname="${hostname%:*}"
+  port="$(echo "$url" | grep -Eo ":[0-9]+")"
+  port="${port#*:}"
+  path="$(echo "$url" | grep -Eo "/[^.:]*$")"
+  path="${path#*/}"
+  echo "$scheme" "${user:-''}" "${pass:-''}" "$hostname" "$port" "$path"
 }
 
 expand() {
-    echo ${!1}
+  echo ${!1}
 }
 
 exit_if_empty() {
-    isempty $1 && error "${2:-Missing $1}"
+  isempty $1 && error "${2:-Missing $1}"
 }
 
 isempty() {
-    local v="${!1:-}"
-    if [ "$v" == "" ]; then
-        return 0
-    else
-        return 1
-    fi
+  local v="${!1:-}"
+  if [ "$v" == "" ]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 flag() {
-    [ ! -v "${1}" ] && error "Undefined flag: $1"
-    f="${!1:-}"
-    if [ "$f" == "" ]; then
-        error "Empty flag: $f"
-    elif [ "$f" == true ]; then
-        return 0
-    else
-        return 1
-    fi
+  [ ! -v "${1}" ] && error "Undefined flag: $1"
+  f="${!1:-}"
+  if [ "$f" == "" ]; then
+    error "Empty flag: $f"
+  elif [ "$f" == true ]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 strip_quotes() {
-    echo "${1//\"/}"
+  echo "${1//\"/}"
 }
 print_chapter() {
-    echo "##################################################"
-    echo "$@"
-    echo "##################################################"
+  echo "##################################################"
+  echo "$@"
+  echo "##################################################"
 }
 
 parse_args(){
-    declare -ga POSARGS=()
-    while (($# > 0)); do
-        case "${1:-}" in
-            -r* | -r=* | --run=* | --run*)
-                command=$(parse_param "$@") || shift $?
-                $command "${@:2}"
-                exit 0
-                ;;
-            --mode=* | --mode* | -m)
-                MODE="$(parse_param "$@")" || shift $?
-                ;;
-            --node-env=* | --node-env*)
-                NODE_ENV="$(parse_param "$@")" || shift $?
-                ;;
-            --with-installdirs-preset=* | --with-installdirs-preset*)
-                WITH_INSTALLDIRS_PRESET="$(parse_param "$@")" || shift $?
-                ;;
-            --prefix=* | --prefix*)
-                PREFIX="$(parse_param "$@")" || shift $?
-                ;;
-            --buildir-stem=* | --buildir-stem)
-                BUILDIR_STEM="$(parse_param "$@")" || shift $?
-                ;;
-            --skip-npm-install)
-                SKIP_NPM_INSTALL=true
-                ;;
-            --afadmin-client-url-public=* | --afadmin-client-url-public*)
-                AFADMIN_CLIENT_URL_PUBLIC="$(parse_param "$@")" || shift $?
-                ;;
-            --afadmin-client-url-local=* | --afadmin-client-url-local*)
-                AFADMIN_CLIENT_URL_LOCAL="$(parse_param "$@")" || shift $?
-                ;;
-            --afadmin-server-url=* | --afadmin-server-url*)
-                AFADMIN_SERVER_URL="$(parse_param "$@")" || shift $?
-                ;;
-            --device-id=* | --device-id*)
-                DEVICE_ID="$(parse_param "$@")" || shift $?
-                ;;
-            --with-deploy-target=* | --with-deploy-target*)
-                WITH_DEPLOY_TARGET="$(parse_param "$@")" || shift $?
-                ;;
-            --with-gcloud-target=* | --with-gcloud-target*)
-                WITH_GCLOUD_TARGET="$(parse_param "$@")" || shift $?
-                ;;
-            --loglevel=* | --loglevel*)
-                LOGLEVEL="$(parse_param "$@")" || shift $?
-                ;;
-            -d | --debug)
-                DEBUG=0
-                ;;
-            -h | --help)
-                usage
-                exit 0
-                ;;
-            -[a-zA-Z][a-zA-Z]*)
-                local i="${1:-}"
-                shift
-                local rest="$@"
-                set --
-                for i in $(echo "$i" | grep -o '[a-zA-Z]'); do
-                    set -- "$@" "-$i"
-                done
-                set -- $@ $rest
-                continue
-                ;;
-            --)
-                shift
-                POSARGS+=("$@")
-                ;;
-            -[a-zA-Z]* | --[a-zA-Z]*)
-                error "Unrecognized argument ${1:-}"
-                ;;
-            *)
-                POSARGS+=("${1:-}")
-                ;;
-        esac
+  declare -ga POSARGS=()
+  while (($# > 0)); do
+    case "${1:-}" in
+      -r* | -r=* | --run=* | --run*)
+        command=$(parse_param "$@") || shift $?
+        $command "${@:2}"
+        exit 0
+        ;;
+      --mode=* | --mode* | -m)
+        MODE="$(parse_param "$@")" || shift $?
+        ;;
+      --node-env=* | --node-env*)
+        NODE_ENV="$(parse_param "$@")" || shift $?
+        ;;
+      --with-installdirs-preset=* | --with-installdirs-preset*)
+        WITH_INSTALLDIRS_PRESET="$(parse_param "$@")" || shift $?
+        ;;
+      --prefix=* | --prefix*)
+        PREFIX="$(parse_param "$@")" || shift $?
+        ;;
+      --buildir-stem=* | --buildir-stem)
+        BUILDIR_STEM="$(parse_param "$@")" || shift $?
+        ;;
+      --skip-npm-install)
+        SKIP_NPM_INSTALL=true
+        ;;
+      --afadmin-client-url-public=* | --afadmin-client-url-public*)
+        AFADMIN_CLIENT_URL_PUBLIC="$(parse_param "$@")" || shift $?
+        ;;
+      --afadmin-client-url-local=* | --afadmin-client-url-local*)
+        AFADMIN_CLIENT_URL_LOCAL="$(parse_param "$@")" || shift $?
+        ;;
+      --afadmin-server-url=* | --afadmin-server-url*)
+        AFADMIN_SERVER_URL="$(parse_param "$@")" || shift $?
+        ;;
+      --afadmin-mysqldb-url=* | --afadmin-mysqldb-url*)
+        AFADMIN_MYSQLDB_URL="$(parse_param "$@")" || shift $?
+        ;;
+      --device-id=* | --device-id*)
+        DEVICE_ID="$(parse_param "$@")" || shift $?
+        ;;
+      --with-deploy-target=* | --with-deploy-target*)
+        WITH_DEPLOY_TARGET="$(parse_param "$@")" || shift $?
+        ;;
+      --with-gcloud-target=* | --with-gcloud-target*)
+        WITH_GCLOUD_TARGET="$(parse_param "$@")" || shift $?
+        ;;
+      --loglevel=* | --loglevel*)
+        LOGLEVEL="$(parse_param "$@")" || shift $?
+        ;;
+      -d | --debug)
+        DEBUG=0
+        ;;
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      -[a-zA-Z][a-zA-Z]*)
+        local i="${1:-}"
         shift
-    done
+        local rest="$@"
+        set --
+        for i in $(echo "$i" | grep -o '[a-zA-Z]'); do
+          set -- "$@" "-$i"
+        done
+        set -- $@ $rest
+        continue
+        ;;
+      --)
+        shift
+        POSARGS+=("$@")
+        ;;
+      -[a-zA-Z]* | --[a-zA-Z]*)
+        error "Unrecognized argument ${1:-}"
+        ;;
+      *)
+        POSARGS+=("${1:-}")
+        ;;
+    esac
+    shift
+  done
 }
 
 
 parse_param() {
-    local param arg
-    local -i toshift=0
+  local param arg
+  local -i toshift=0
 
-    if (($# == 0)); then
-        return $toshift
-        # param = value
-    elif [[ "$1" =~ .*=.* ]]; then
-        param="${1%%=*}"
-        arg="${1#*=}"
-        # param value
-    elif [[ "${2-}" =~ ^[^-].+ ]]; then
-        param="$1"
-        arg="$2"
-        ((toshift++))
-    fi
-
-    if [[ -z "${arg-}" && ! "${OPTIONAL-}" ]]; then
-        fatal "${param:-$1} requires an argument"
-    fi
-
-    echo "${arg:-}"
+  if (($# == 0)); then
     return $toshift
+    # param = value
+  elif [[ "$1" =~ .*=.* ]]; then
+    param="${1%%=*}"
+    arg="${1#*=}"
+    # param value
+  elif [[ "${2-}" =~ ^[^-].+ ]]; then
+    param="$1"
+    arg="$2"
+    ((toshift++))
+  fi
+
+  if [[ -z "${arg-}" && ! "${OPTIONAL-}" ]]; then
+    fatal "${param:-$1} requires an argument"
+  fi
+
+  echo "${arg:-}"
+  return $toshift
 }
 
 quote() {
-    echo \'"$@"\'
+  echo \'"$@"\'
 }
 
 error() {
-    echo "$@"
-    exit 1
+  echo "$@"
+  exit 1
 }
 
 debug() {
-    [ ! $DEBUG ] && return
-    echo debug: "$@" >&2
+  [ ! $DEBUG ] && return
+  echo debug: "$@" >&2
 }
 
 main "$@"

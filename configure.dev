@@ -3,11 +3,12 @@
 mode=development
 node_env=development
 skip_npm_install=true
-installdirs_preset=gnu-prefix
+installdirs_preset=gnu_prefix
 buildir_stem=build
 loglevel=debug
 client_url='http://localhost:5173'
 server_url='mqtt://localhost:9001/themaze'
+mysqldb_url='mysql://root:root@localhost:3308/agent_factory'
 device_id='001'
 
 args="--mode=$mode \
@@ -17,6 +18,7 @@ args="--mode=$mode \
 --loglevel=$loglevel \
 --afadmin-client-url-local=$client_url \
 --afadmin-server-url=$server_url \
+--afadmin-mysqldb-url=$mysqldb_url \
 --device-id=$device_id"
 
 if [ "${1:-}" != '--dont-skip-npm-install' ]; then

@@ -1,30 +1,31 @@
 import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
+import { deleteActiveSessionRow } from "../src/mysqldb/deleteActiveSessionRow.js";
+import { DEFAULT_CASHIER } from "../src/constants.js";
 
 const b = globalThis.backend;
 const topics = globalThis.topics;
-const task = "listScoreboardViews";
+const defaultCashier = globalThis.defaultCashier;
+const afm = globalThis.afm;
+const task = "startSession";
+const modelRequest = {
+  jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+};
 const modelResponse = {
-  timestamp: 1706712075044,
+  timestamp: 1706780850379,
   result: "OK",
-  scoreboardStatuses: [
-    "ROTATING",
-    "ALL_TIME",
-    "MONTHLY",
-    "WEEKLY",
-    "DAILY",
-    "ELEMENTS",
-    "ROOMS",
-  ],
 };
 
 describe(task, () => {
   it("Should have a Backend API call that resolves", async () => {
-    await expect(b[task]()).resolves.toBeTruthy();
+    await deleteActiveSessionRow();
+    await expect(b[task](defaultCashier)).resolves.toMatchObject({
+      result: "OK",
+    });
   });
-  it("Should validate Backend API request schema", () => {
+  it("Should validate the Model request", () => {
     const validate = topics[task].schema.req;
-    validate({ timestamp: Date.now() });
+    validate(modelRequest);
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
@@ -39,7 +40,8 @@ describe(task, () => {
   it("Should validate Backend API response schema", async () => {
     const validate = topics[task].schema.res;
     try {
-      const response = await b[task]();
+      await deleteActiveSessionRow();
+      const response = await b[task](defaultCashier);
       validate(response);
       expect(validate.errors).toBeNull();
       validate({});
@@ -49,6 +51,7 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task]()).resolves.toBeTruthy();
+    await deleteActiveSessionRow();
+    await expect(afm[task](defaultCashier)).resolves.toBeTruthy();
   });
 });

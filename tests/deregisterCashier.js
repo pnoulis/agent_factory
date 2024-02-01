@@ -1,12 +1,9 @@
 import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
-import { ENV } from "../src/config.js";
-import { BackendRegistration } from "../src/backend/registration/BackendRegistration.js";
-import { registrationTopics } from "../backend-topics.js";
-import { afm } from "../src/afmachine/afm.js";
 import { randomCashier } from "../src/misc/misc.js";
 
-const b = new BackendRegistration();
+const b = globalThis.backend;
+const topics = globalThis.topics;
 const task = "deregisterCashier";
 const modelRequest = {
   timestamp: 1706732989145,
@@ -36,37 +33,48 @@ const modelResponse = {
   ],
 };
 
-let registeredPlayers = [randomCashier()];
+const registeredCashiers = [randomCashier(), randomCashier(), randomCashier()];
 beforeAll(async () => {
-  await registeredPlayers.forEach(async (p) => {
-    await b.registerCashier(p);
-  });
-  registeredPlayers = await b.listCashiers();
+  for (let i = 0; i < registeredCashiers.length; i++) {
+    const { cashier } = await afm.registerCashier(registeredCashiers[i]);
+    registeredCashiers[i] = cashier;
+  }
 });
 
 describe(task, () => {
   it("Should have a Backend API call that resolves", async () => {
-    await expect(b[task]()).resolves.toBeTruthy();
+    const cashier = registeredCashiers.pop();
+    await expect(
+      b[task]({
+        userId: cashier.id,
+        username: cashier.username,
+        timestamp: Date.now(),
+      }),
+    ).resolves.toBeTruthy();
   });
   it("Should validate the Model Request", () => {
-    const validate = registrationTopics[task].schema.req;
+    const validate = topics[task].schema.req;
     validate(modelRequest);
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
   });
   it("Should validate the Model Response", () => {
-    const validate = registrationTopics[task].schema.res;
+    const validate = topics[task].schema.res;
     validate(modelResponse);
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
   });
-  it.only("Should validate Backend API response schema", async () => {
-    const validate = registrationTopics[task].schema.res;
+  it("Should validate Backend API response schema", async () => {
+    const validate = topics[task].schema.res;
     try {
-      const response = await b[task](registeredPlayers.pop());
-      console.log(response);
+      const cashier = registeredCashiers.pop();
+      const response = await b[task]({
+        timestamp: Date.now(),
+        username: cashier.username,
+        userId: cashier.id,
+      });
       validate(response);
       expect(validate.errors).toBeNull();
       validate({});
@@ -76,6 +84,6 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task]()).resolves.toBeTruthy();
+    await expect(afm[task](registeredCashiers.pop())).resolves.toBeTruthy();
   });
 });

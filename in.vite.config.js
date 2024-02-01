@@ -13,6 +13,7 @@ const __STATIC_ENV__ = {
   AFADMIN_SERVER_URL_ORIGIN: "IN_AFADMIN_SERVER_URL_ORIGIN",
   AFADMIN_SERVER_URL_ORIGIN_WS: "IN_AFADMIN_SERVER_URL_ORIGIN_WS",
   AFADMIN_CLIENT_URL_PUBLIC_BASENAME: "IN_AFADMIN_CLIENT_URL_PUBLIC_BASENAME",
+  AFADMIN_MYSQLDB_URL: "IN_AFADMIN_MYSQLDB_URL",
 };
 
 // https:vitejs.dev/config
@@ -36,11 +37,20 @@ export default defineConfig({
   test: {
     // ...
     include: [...configDefaults.include, "*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    exclude: [...configDefaults.exclude, "setupFile.js", "taskTemplate.js"],
+    setupFiles: "tests/setupFile.js",
+    fileParallelism: false, // Run tests sequentially
     dir: "./tests",
     watch: false,
     globals: true,
     environment: "node",
-    testTimeout: 10000, // 5 seconds
+    testTimeout: 10000, // 10 seconds
     reporter: "verbose",
+    poolOptions: {
+      threads: {
+        singleThread: true,
+        isolate: false,
+      },
+    },
   },
 });

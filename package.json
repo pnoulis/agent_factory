@@ -23,6 +23,7 @@
     "js_utils": "github:pnoulis/js_utils",
     "mqtt": "5.3.3",
     "mqtt_proxy": "github:pnoulis/mqtt_proxy",
+    "mysql2": "3.9.1",
     "react_utils": "github:pnoulis/react_utils",
     "styled-components": "^6.1.1",
     "vite": "^5.0.7",

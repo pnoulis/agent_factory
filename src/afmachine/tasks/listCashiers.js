@@ -8,7 +8,7 @@ new Task("listCashiers", Command);
 
 function Command(opts) {
   const afm = this;
-  const promise = Command.createCommand(afm, (cmd) => {
+  const promise = Command.createCommand(afm, { opts }, (cmd) => {
     afm.runCommand(cmd);
   });
   return promise;

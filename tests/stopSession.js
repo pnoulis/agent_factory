@@ -1,30 +1,32 @@
 import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
+import { deleteActiveSessionRow } from "../src/mysqldb/deleteActiveSessionRow.js";
 
 const b = globalThis.backend;
 const topics = globalThis.topics;
-const task = "listScoreboardViews";
+const defaultCashier = globalThis.defaultCashier;
+const afm = globalThis.afm;
+const task = "stopSession";
+const modelRequest = {
+  jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXZsb3MiLCJpYXQiOjE3MDY3ODA3ODUsImV4cCI6MTcwNjgxNjc4NX0.fv9UME6AoVpUEofc7NyRqf1t1KM7MUs5XHNbuANclfwibh5bOvEepPNYObf38cZ5MzUu9QGrACtFBvBar0gDJQ",
+  comment: "Nothing unexpected ever happens!",
+};
 const modelResponse = {
-  timestamp: 1706712075044,
+  timestamp: 1706780850379,
   result: "OK",
-  scoreboardStatuses: [
-    "ROTATING",
-    "ALL_TIME",
-    "MONTHLY",
-    "WEEKLY",
-    "DAILY",
-    "ELEMENTS",
-    "ROOMS",
-  ],
 };
 
 describe(task, () => {
   it("Should have a Backend API call that resolves", async () => {
-    await expect(b[task]()).resolves.toBeTruthy();
+    await deleteActiveSessionRow();
+    await b.startSession(defaultCashier);
+    await expect(b[task](defaultCashier)).resolves.toMatchObject({
+      result: "OK",
+    });
   });
-  it("Should validate Backend API request schema", () => {
+  it("Should validate the Model request", () => {
     const validate = topics[task].schema.req;
-    validate({ timestamp: Date.now() });
+    validate(modelRequest);
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
@@ -39,7 +41,8 @@ describe(task, () => {
   it("Should validate Backend API response schema", async () => {
     const validate = topics[task].schema.res;
     try {
-      const response = await b[task]();
+      await b.startSession(defaultCashier);
+      const response = await b[task](defaultCashier);
       validate(response);
       expect(validate.errors).toBeNull();
       validate({});
@@ -49,6 +52,9 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task]()).resolves.toBeTruthy();
+    await b.startSession(defaultCashier);
+    await expect(afm[task](defaultCashier)).resolves.toMatchObject({
+      cashier: defaultCashier,
+    });
   });
 });

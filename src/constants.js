@@ -52,6 +52,14 @@ const PACKAGES = [
   { name: "Per Time 120", amount: 120, type: "time", cost: 200 },
 ];
 
+const DEFAULT_CASHIER = {
+  id: 1,
+  username: "DEFAULT_CASHIER",
+  email: "default_cashier@gmail.com",
+  password: "mindtr@p",
+  role: ["ROLE_CASHIER"],
+};
+
 export {
   WRISTBAND_COLORS,
   DEVICES,
@@ -60,4 +68,5 @@ export {
   FM_TIMEOUT,
   PACKAGE_TYPES,
   PACKAGES,
+  DEFAULT_CASHIER,
 };

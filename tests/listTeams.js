@@ -1,14 +1,11 @@
 import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
-import { ENV } from "../src/config.js";
-import { BackendRegistration } from "../src/backend/registration/BackendRegistration.js";
-import { registrationTopics } from "../backend-topics.js";
-import { afm } from "../src/afmachine/afm.js";
 import { normalize as normalizeTeam } from "../src/afmachine/team/normalize.js";
 import { normalize as normalizeRoster } from "../src/afmachine/roster/normalize.js";
 import { normalize as normalizePackage } from "../src/afmachine/package/normalize.js";
 
-const b = new BackendRegistration();
+const b = globalThis.backend;
+const topics = globalThis.topics;
 const task = "listTeams";
 const modelResponse = {
   timestamp: 1706685352965,
@@ -843,10 +840,10 @@ describe(task, () => {
     );
   });
   it("Should validate Backend API request schema", () => {
-    expect(registrationTopics[task].schema.req).toBeNull();
+    expect(topics[task].schema.req).toBeNull();
   });
   it("Should validate Backend API response schema", async () => {
-    const validate = registrationTopics[task].schema.res;
+    const validate = topics[task].schema.res;
     try {
       const response = await b[task]();
       validate(modelResponse);

@@ -8,6 +8,10 @@ const cashier = {
       enum: ["ROLE_CASHIER", "ROLE_MANAGER", "ROLE_ADMIN"],
     },
   },
+  jwt: {
+    type: "string",
+  },
+  comment: { type: ["string", "null"] },
 };
 
 export { cashier };

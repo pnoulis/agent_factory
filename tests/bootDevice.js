@@ -1,11 +1,7 @@
-import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
-import { ENV } from "../src/config.js";
-import { BackendRegistration } from "../src/backend/registration/BackendRegistration.js";
-import { registrationTopics } from "../backend-topics.js";
-import { afm } from "../src/afmachine/afm.js";
 
-const b = new BackendRegistration();
+const b = globalThis.backend;
+const topics = globalThis.topics;
 const task = "bootDevice";
 const routeAlias = "updateDevice";
 const modelResponse = {
@@ -19,7 +15,7 @@ describe(task, () => {
     await expect(b[routeAlias]()).resolves.toBeTruthy();
   });
   it("Should validate Backend API request schema", () => {
-    const validate = registrationTopics["updateDevice"].schema.req;
+    const validate = topics["updateDevice"].schema.req;
 
     validate({
       timestamp: Date.now(),
@@ -39,14 +35,14 @@ describe(task, () => {
     expect(validate.errors).not.toBeNull();
   });
   it("Should validate the Model Response", () => {
-    const validate = registrationTopics["updateDevice"].schema.res;
+    const validate = topics[routeAlias].schema.res;
     validate(modelResponse);
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
   });
   it("Should validate Backend API response schema", async () => {
-    const validate = registrationTopics["updateDevice"].schema.res;
+    const validate = topics[routeAlias].schema.res;
     try {
       const response = await b[routeAlias]();
       validate(response);

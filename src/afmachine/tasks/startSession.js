@@ -4,7 +4,7 @@ import { validateBackendRequest } from "../middleware/validateBackendRequest.js"
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 
-new Task("registerCashier", Command);
+new Task("startSession", Command);
 
 function Command(cashier, opts) {
   const afm = this;
@@ -23,42 +23,32 @@ function Command(cashier, opts) {
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
-      username: ctx.args.cashier.username,
-      email: ctx.args.cashier.email,
-      password: ctx.args.cashier.password,
-      role: [`ROLE_${ctx.args.cashier.role}`],
+      jwt: ctx.args.cashier.jwt,
     };
     return next();
   },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerCashier(ctx.req);
+    ctx.raw = await ctx.afm.backend.startSession(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    const { cashiers } = await ctx.afm.backend.listCashiers({
-      timestamp: ctx.t_start,
-    });
-    ctx.res.cashier = ctx.req;
-    ctx.res.cashier.id = cashiers.find(
-      (cashier) => cashier.username === ctx.req.username,
-    )?.id;
-    ctx.res.cashier.role = ctx.req.role.at(0).split("_").at(1);
+    ctx.res.cashier = ctx.args.cashier;
     return next();
   },
 ];
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to register Cashier";
+  cmd.msg = "Failed to start Session";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully registered Cashier";
+  cmd.msg = "Successfully started Session";
   cmd.resolve(cmd.res);
 };
 
-export { Command as registerCashier };
+export { Command as startSession };

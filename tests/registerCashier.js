@@ -1,12 +1,9 @@
 import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
-import { ENV } from "../src/config.js";
-import { BackendRegistration } from "../src/backend/registration/BackendRegistration.js";
-import { registrationTopics } from "../backend-topics.js";
-import { afm } from "../src/afmachine/afm.js";
 import { randomCashier } from "../src/misc/misc.js";
 
-const b = new BackendRegistration();
+const b = globalThis.backend;
+const topics = globalThis.topics;
 const task = "registerCashier";
 const modelRequest = {
   username: "testCashierYOLO",
@@ -24,21 +21,21 @@ describe(task, () => {
     await expect(b[task](randomCashier())).resolves.toBeTruthy();
   });
   it("Should validate the Model Request", () => {
-    const validate = registrationTopics[task].schema.req;
+    const validate = topics[task].schema.req;
     validate(modelRequest);
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
   });
   it("Should validate the Model Response", () => {
-    const validate = registrationTopics[task].schema.res;
+    const validate = topics[task].schema.res;
     validate(modelResponse);
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
   });
   it("Should validate Backend API response schema", async () => {
-    const validate = registrationTopics[task].schema.res;
+    const validate = topics[task].schema.res;
     try {
       const response = await b[task](randomCashier());
       validate(response);

@@ -4,14 +4,14 @@ import { validateBackendRequest } from "../middleware/validateBackendRequest.js"
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 
-new Task("registerCashier", Command);
+new Task("stopSession", Command);
 
-function Command(cashier, opts) {
+function Command(cashier, comment, opts) {
   const afm = this;
   const promise = Command.createCommand(
     afm,
     {
-      args: { cashier },
+      args: { cashier, comment: comment ?? "" },
       opts,
     },
     (cmd) => {
@@ -23,42 +23,33 @@ function Command(cashier, opts) {
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
-      username: ctx.args.cashier.username,
-      email: ctx.args.cashier.email,
-      password: ctx.args.cashier.password,
-      role: [`ROLE_${ctx.args.cashier.role}`],
+      jwt: ctx.args.cashier.jwt,
+      comment: ctx.args.comment,
     };
     return next();
   },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerCashier(ctx.req);
+    ctx.raw = await ctx.afm.backend.stopSession(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    const { cashiers } = await ctx.afm.backend.listCashiers({
-      timestamp: ctx.t_start,
-    });
-    ctx.res.cashier = ctx.req;
-    ctx.res.cashier.id = cashiers.find(
-      (cashier) => cashier.username === ctx.req.username,
-    )?.id;
-    ctx.res.cashier.role = ctx.req.role.at(0).split("_").at(1);
+    ctx.res.cashier = ctx.args.cashier;
     return next();
   },
 ];
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to register Cashier";
+  cmd.msg = "Failed to stop Session";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully registered Cashier";
+  cmd.msg = "Successfully stopped Session";
   cmd.resolve(cmd.res);
 };
 
-export { Command as registerCashier };
+export { Command as stopSession };

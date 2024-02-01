@@ -30,7 +30,7 @@ function random(sources, options = {}) {
   target.username ||= username;
   target.name ||= name;
   target.surname ||= surname;
-  target.email ||= `${name}@gmail.com`;
+  target.email ||= `${username}@gmail.com`;
 
   if (options.depth) {
     target.wristband = randomWristband(target.wristband);

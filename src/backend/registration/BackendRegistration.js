@@ -16,6 +16,11 @@ import { deregisterWristband } from "./deregisterWristband.js";
 // Cashier topics
 import { registerCashier } from "./registerCashier.js";
 import { deregisterCashier } from "./deregisterCashier.js";
+import { loginCashier } from "./loginCashier.js";
+
+// Session topics
+import { startSession } from "./startSession.js";
+import { stopSession } from "./stopSession.js";
 
 // Device topics
 import { updateDevice } from "./updateDevice.js";
@@ -61,6 +66,11 @@ Object.assign(BackendRegistration.prototype, {
   // Cashier topics
   registerCashier,
   deregisterCashier,
+  loginCashier,
+
+  // Session topics
+  startSession,
+  stopSession,
 
   // Device topics
   updateDevice,

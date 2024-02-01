@@ -18,6 +18,12 @@ import { compose } from "./compose.js";
 
 // Cashier tasks
 import { registerCashier } from "./tasks/registerCashier.js";
+import { deregisterCashier } from "./tasks/deregisterCashier.js";
+import { loginCashier } from "./tasks/loginCashier.js";
+
+// Session tasks
+import { startSession } from "./tasks/startSession.js";
+import { stopSession } from "./tasks/stopSession.js";
 
 // Device tasks
 import { bootDevice } from "./tasks/bootDevice.js";
@@ -166,17 +172,26 @@ Afm.prototype.onCmdEnd = function (cmd) {
 
 Object.assign(Afm.prototype, {
   // player tasks
+
   // registerPlayer,
   // pairWristband,
   // unpairWristband,
-  // wristband tasks
+
+  // Wristband tasks
+
   // scanWristband,
   // getWristbandInfo,
   // registerWristband,
   // deregisterWristband,
 
+  // Session tasks
+  startSession,
+  stopSession,
+
   // Cashier tasks
   registerCashier,
+  deregisterCashier,
+  loginCashier,
 
   // Device tasks
   bootDevice,

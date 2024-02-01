@@ -23,5 +23,6 @@ __getEnvar("AFADMIN_SERVER_URL_ORIGIN_WS", {
 __getEnvar("AFADMIN_CLIENT_URL_PUBLIC_BASENAME", {
   rename: "BASENAME",
 });
+__getEnvar("AFADMIN_MYSQLDB_URL", { required: true });
 
 export { ENV, __getEnvar };

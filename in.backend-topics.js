@@ -329,6 +329,38 @@ const registrationTopics = {
     sub: basename("signup/response"),
   },
   loginCashier: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["username", "password"],
+        properties: {
+          username: schemas.player.properties.username,
+          password: schemas.player.properties.password,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "jwtResponse"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          jwtResponse: {
+            type: "object",
+            additionalProperties: false,
+            required: ["jwt", "id", "username", "email", "roles"],
+            properties: {
+              jwt: schemas.cashier.jwt,
+              id: schemas.commons.id,
+              username: schemas.player.properties.username,
+              email: schemas.player.properties.email,
+              roles: schemas.cashier.role,
+            },
+          },
+        },
+      }),
+    },
     alias: "cashier/login",
     pub: basename("signin"),
     sub: basename("signin/response"),
@@ -373,11 +405,50 @@ const registrationTopics = {
     sub: prefix("users/cashiers/delete/response"),
   },
   startSession: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["jwt"],
+        properties: {
+          jwt: schemas.cashier.jwt,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+        },
+      }),
+    },
     alias: "session/start",
     pub: basename("startSession"),
     sub: basename("startSession/response"),
   },
   stopSession: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["jwt", "comment"],
+        properties: {
+          jwt: schemas.cashier.jwt,
+          comment: schemas.cashier.comment,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+        },
+      }),
+    },
     alias: "session/stop",
     pub: basename("endSession"),
     sub: basename("endSession/response"),
