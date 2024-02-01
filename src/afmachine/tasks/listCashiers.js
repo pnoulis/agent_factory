@@ -33,11 +33,13 @@ Command.middleware = [
 ];
 Command.onFailure = function () {
   const cmd = this;
+  cmd.res.ok = false;
   cmd.msg = "Failed to retrieve cashiers";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
+  cmd.res.ok = true;
   cmd.msg = "Successfully retrieved cashiers";
   cmd.resolve(cmd.res);
 };

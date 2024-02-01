@@ -9,7 +9,7 @@ new Task("listPackages", Command);
 
 function Command(opts) {
   const afm = this;
-  const promise = Command.createCommand(afm, (cmd) => {
+  const promise = Command.createCommand(afm, { opts }, (cmd) => {
     afm.runCommand(cmd);
   });
   return promise;
@@ -32,11 +32,13 @@ Command.middleware = [
 ];
 Command.onFailure = function () {
   const cmd = this;
+  cmd.res.ok = false;
   cmd.msg = "Failed to retrieve packages";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
+  cmd.res.ok = true;
   cmd.msg = "Successfully retrieved packages";
   cmd.resolve(cmd.res);
 };

@@ -1,10 +1,10 @@
-import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
 import { randomCashier } from "../src/misc/misc.js";
 
-const b = globalThis.backend;
-const topics = globalThis.topics;
 const task = "deregisterCashier";
+const b = globalThis.backend;
+const afm = globalThis.afm;
+const topics = globalThis.topics;
 const modelRequest = {
   timestamp: 1706732989145,
   username: "tt",
@@ -50,11 +50,17 @@ describe(task, () => {
         username: cashier.username,
         timestamp: Date.now(),
       }),
-    ).resolves.toBeTruthy();
+    ).resolves.toMatchObject({
+      result: "OK",
+    });
   });
   it("Should validate the Model Request", () => {
     const validate = topics[task].schema.req;
+    if (validate === null) return;
     validate(modelRequest);
+    if (validate.errors) {
+      console.log(validate.errors);
+    }
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
@@ -62,6 +68,9 @@ describe(task, () => {
   it("Should validate the Model Response", () => {
     const validate = topics[task].schema.res;
     validate(modelResponse);
+    if (validate.errors) {
+      console.log(validate.errors);
+    }
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
@@ -76,6 +85,9 @@ describe(task, () => {
         userId: cashier.id,
       });
       validate(response);
+      if (validate.errors) {
+        console.log(response.errors);
+      }
       expect(validate.errors).toBeNull();
       validate({});
       expect(validate.errors).not.toBeNull();
@@ -84,6 +96,8 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task](registeredCashiers.pop())).resolves.toBeTruthy();
+    await expect(afm[task](registeredCashiers.pop())).resolves.toMatchObject({
+      ok: true,
+    });
   });
 });

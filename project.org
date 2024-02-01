@@ -1,3 +1,5 @@
+#+TODO: TODO DOING | DONE
+
 * Task Board
 ** DONE Player register() fn should need a password as input.
 
@@ -58,6 +60,13 @@
 *** DONE Implement backend api topic call
 *** DONE Implement task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // arg #1, optional, options
+  {
+    queue: true | false,
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -115,9 +124,8 @@
 #+end_src
 **** After Player.normalize()
 #+begin_src js
-
   // Player.normalize(backend_res, { depth: 1, defaultState: 'registered' })
-  const normalized = [
+  [
     {
       username: 'Merry_2mpmnxcgv1s',
       name: 'Merry',
@@ -161,13 +169,27 @@
   ]
 #+end_src
 
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    players: [normalize(backend.response.players)],
+  }
+#+end_src
+
 ** DONE Implement list Registered Players with a Wristband
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
-
 #+begin_src js
   {
     timestamp: 1706649848057,
@@ -239,19 +261,35 @@
   ]
   #+end_src
 
-** DONE Implement list Packages
+**** Afm response
+#+begin_src js
+  {
+    ok: true
+    players: [normalize(backend.response.players)]
+  }
+#+end_src
 
+** DONE Implement list Packages
 *** DONE Object schema for req/res backend topic payload
 
 *** DONE Implement backend api topic call
 
 *** DONE Implement Task and Command
-
 *** DONE Document the req/res payload
-
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
+**** Backend request
+#+begin_src js
+  // null
+#+end_src
 **** Backend response
 #+begin_src js
-  const response = {
+  {
     timestamp: 1706640606387,
     result: 'OK',
     packages: [
@@ -284,7 +322,7 @@
 **** After Package.normalization()
 #+begin_src js
   // Packege.normalize(packages, { state: "registered" });
-  const normalized = [
+  [
     {
       id: null,
       name: 'Per Mission 5',
@@ -376,18 +414,33 @@
   ]
 #+end_src
 
-** DONE Implement list Cashiers
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    packages: [normalize(backend.response.packages)]
+  }
+#+end_src
+
+** TODO Implement list Cashiers
+*** TODO normalization
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
     timestamp: 1706707779283,
   }
 #+end_src
-
 **** Backend response
 #+begin_src js
   {
@@ -400,8 +453,16 @@
   }
 #+end_src
 
-** DONE Implement list Devices
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    cashiers: backend.response.cashiers
+  }
+#+end_src
 
+** TODO Implement list Devices
+*** TODO Normalize
 *** DONE Object schema for req/res backend topic payload
 
 *** DONE Implement backend api topic call
@@ -409,7 +470,13 @@
 *** DONE Implement Task and Command
 
 *** DONE Document the req/res payload
-
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -457,9 +524,16 @@
   ]
 }
 #+end_src
-**** No Normalization
-** DONE Implement list Scoreboard Devices
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    devices: backend.response.devices
+  }
+#+end_src
 
+** TODO Implement list Scoreboard Devices
+*** TODO Normalize
 *** DONE Object schema for req/res backend topic payload
 
 *** DONE Implement backend api topic call
@@ -467,7 +541,13 @@
 *** DONE Implement Task and Command
 
 *** DONE Document the req/res payload
-
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -495,9 +575,16 @@
     ]
   }
 #+end_src
-**** No Normalization
-** DONE Implement list Scoreboard Device Views
 
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    scoreboardDevices: [backend.request.scoreboardDevices]
+  }
+#+end_src
+
+** DONE Implement list Scoreboard Device Views
 *** DONE Object schema for req/res backend topic payload
 
 *** DONE Implement backend api topic call
@@ -505,7 +592,13 @@
 *** DONE Implement Task and Command
 
 *** DONE Document the req/res payload
-
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -529,17 +622,29 @@
     ]
   }
 #+end_src
-**** No Normalization
-** DONE ImpLement list Scoreboard
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    scoreboardViews: backend.response.scoreboardViews,
+  }
+#+end_src
 
+** TODO ImpLement list Scoreboard
+*** Normalize
 *** DONE Object schema for req/res backend topic payload
 
 *** DONE Implement backend api topic call
 
 *** DONE Implement Task and Command
-
 *** DONE Document the req/res payload
-
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -789,19 +894,29 @@
     },
   }
 #+end_src
+
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    roomElementAssociations: ctx.raw.roomElementAssociations,
+    live: ctx.raw.live,
+    teamAllTime: ctx.raw.teamAllTime,
+    teamMonthly: ctx.raw.teamMonthly,
+    teamWeekly: ctx.raw.teamWeekly,
+    teamDaily: ctx.raw.teamDaily,
+    perRoom: ctx.raw.perRoom,
+    perElement: ctx.raw.perElement,
+  }
+#+end_src
+
 ** DONE Implement list Teams
-
 *** DONE Object schema for req/res backend topic payload
-
 *** DONE Implement backend api topic call
-
 *** DONE Implement Task and Command
-
 *** DONE Document the req/res payload
-
-**** DONE A team with all Possible Permutations of players and packages
-
-***** Backend response
+**** DONE Normalize a team with all Possible Permutations of players and packages
+***** With will all possible Permutations
 #+begin_src js
   {
     name: 'friendly_Eomer_c3d',
@@ -1011,9 +1126,8 @@
     state: 'registered'
   }
 #+end_src
-**** DONE RUNNING PACKAGE Team
-
-***** Backend response
+**** DONE Normalize a RUNNING PACKAGE Team
+***** Running Package team
 #+begin_src js
   {
     name: 'inspiring_Goldberry',
@@ -1088,9 +1202,8 @@
     state: 'playing'
   }
 #+end_src
-**** DONE FINISHED Team
-
-***** Backend response
+**** DONE Normalize a FINISHED Team
+***** Finished team
 #+begin_src js
     {
     name: 'friendly_Eomer_c3d',
@@ -1169,9 +1282,8 @@
     state: 'registered'
   }
 #+end_src
-**** DONE PENDING PACKAGE Team
-
-***** Backend response
+**** DONE Normalize a PENDING PACKAGE Team
+***** Pending Package team
 #+begin_src js
   {
   name: 'inspiring_Goldberry',
@@ -1223,9 +1335,8 @@
     state: 'registered'
   }
 #+end_src
-**** DONE LOADED PACKAGE Team
-
-***** Backend response
+**** DONE Normalize a LOADED PACKAGE Team
+***** Loaded Package team
 #+begin_src js
     {
     name: 'inspiring_Goldberry',
@@ -1301,12 +1412,270 @@
   }
 #+end_src
 
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
+**** Backend request
+#+begin_src js
+  // null
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706685352965,
+    result: "OK",
+    teams: [
+      {
+        name: "friendly_Eomer_c3d",
+        totalPoints: 0,
+        teamState: "FINISHED",
+        created: 1706472198904,
+        lastRegisterAttempt: null,
+        currentRoster: {
+          version: 1,
+          players: [
+            {
+              username: "test1",
+              wristbandNumber: null,
+              wristbandColor: null,
+            },
+            {
+              username: "test2",
+              wristbandNumber: 1,
+              wristbandColor: 2,
+            },
+            {
+              username: "test3",
+              wristbandNumber: 1,
+              wristbandColor: null,
+            },
+            {
+              username: "test4",
+              wristbandNumber: null,
+              wristbandColor: 2,
+            },
+          ],
+        },
+        roomType: null,
+        packages: [
+          {
+            // missions registered
+            id: 1,
+            name: "Per Mission 5",
+            cost: null,
+            started: null,
+            ended: null,
+            missions: 5,
+            missionsPlayed: 0,
+            active: false,
+          },
+          {
+            // missions being played
+            id: 2,
+            name: "Per Mission 10",
+            cost: null,
+            started: 1706686189153,
+            ended: null,
+            missions: 10,
+            missionsPlayed: 5,
+            active: true,
+          },
+          {
+            // missions completed
+            id: 3,
+            name: "Per Mission 20",
+            cost: null,
+            started: 1706686189153,
+            ended: 1706686199999,
+            missions: 20,
+            missionsPlayed: 20,
+            active: false,
+          },
+          {
+            // time registered
+            id: 8,
+            name: "Per Time 30",
+            cost: null,
+            started: null,
+            ended: null,
+            duration: 1800,
+            paused: false,
+            active: false,
+          },
+          {
+            // time being played
+            id: 5,
+            name: "Per Time 60",
+            cost: null,
+            started: 1706685129723,
+            ended: null,
+            duration: 5400,
+            paused: false,
+            active: true,
+          },
+          {
+            // time finished
+            id: 3,
+            name: "Per Time 90",
+            cost: null,
+            started: 1706473426225,
+            ended: 1706478843795,
+            duration: 1800,
+            paused: false,
+            active: false,
+          },
+        ],
+      },
+      {
+        name: "inspiring_Goldberry",
+        totalPoints: 0,
+        teamState: "PACKAGE_RUNNING",
+        created: 1706684656827,
+        lastRegisterAttempt: null,
+        currentRoster: {
+          version: 1,
+          players: [
+            {
+              username: "Sauron_0h96h9q4xixv",
+              wristbandNumber: 241,
+              wristbandColor: 2,
+            },
+            { username: "ppone", wristbandNumber: 240, wristbandColor: 1 },
+          ],
+        },
+        roomType: null,
+        packages: [
+          {
+            id: 5,
+            name: "Per Time 90",
+            cost: null,
+            started: 1706685129723,
+            ended: null,
+            duration: 5400,
+            paused: false,
+            active: true,
+          },
+        ],
+      },
+      {
+        name: "inspiring_Goldberry",
+        totalPoints: 0,
+        teamState: "PENDING_PACKAGES",
+        created: 1706684656827,
+        lastRegisterAttempt: null,
+        currentRoster: {
+          version: 1,
+          players: [
+            { username: "ppone", wristbandNumber: 240, wristbandColor: 1 },
+            {
+              username: "Sauron_0h96h9q4xixv",
+              wristbandNumber: 241,
+              wristbandColor: 2,
+            },
+          ],
+        },
+        roomType: null,
+        packages: [],
+      },
+      {
+        name: "inspiring_Goldberry",
+        totalPoints: 0,
+        teamState: "LOADED_PACKAGES",
+        created: 1706684656827,
+        lastRegisterAttempt: null,
+        currentRoster: {
+          version: 1,
+          players: [
+            {
+              username: "Sauron_0h96h9q4xixv",
+              wristbandNumber: 241,
+              wristbandColor: 2,
+            },
+            { username: "ppone", wristbandNumber: 240, wristbandColor: 1 },
+          ],
+        },
+        roomType: null,
+        packages: [
+          {
+            id: 4,
+            name: "Per Mission 20",
+            cost: null,
+            started: null,
+            ended: null,
+            missions: 20,
+            missionsPlayed: 0,
+            active: false,
+          },
+        ],
+      },
+      {
+        name: "friendly_Eomer_c3d",
+        totalPoints: 0,
+        teamState: "FINISHED",
+        created: 1706472198904,
+        lastRegisterAttempt: null,
+        currentRoster: {
+          version: 1,
+          players: [
+            {
+              username: "0a5sh6llqf3v",
+              wristbandNumber: null,
+              wristbandColor: null,
+            },
+            {
+              username: "3q0vtxg1o7s",
+              wristbandNumber: null,
+              wristbandColor: null,
+            },
+          ],
+        },
+        roomType: null,
+        packages: [
+          {
+            id: 1,
+            name: "Per Mission 10",
+            cost: null,
+            started: 1706472302416,
+            ended: 1706475903814,
+            missions: 10,
+            missionsPlayed: 0,
+            active: false,
+          },
+        ],
+      },
+    ],
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    teams: [normalize(backend.response.teams)],
+  }
+#+end_src
 
-** DONE Implement Session start
+
+** TODO Implement Session start
+*** TODO Normalize
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, cashier
+  {
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+  }
+  // 2st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -1320,18 +1689,37 @@
     result: 'OK',
   }
 #+end_src
-
 **** Afm response
 #+begin_src js
   // ctx.req = ctx.args.cashier
   // resolve -> ctx.req
+  {
+    ok: true,
+    cashier: {},
+  }
 #+end_src
 
-** DONE Implement Session stop
+** TODO Implement Session stop
+*** TODO Normalize
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, cashier
+  {
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+  }
+
+  // 2nd argument, optional comment
+  comment: "Nothing unexpected ever happens!"
+
+  // 3rd argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -1347,11 +1735,32 @@
   }
 #+end_src
 
-** DONE Implement Device boot
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    cashier: {},
+  }
+#+end_src
+
+
+** TODO Implement Device boot
+*** TODO Normalize devices
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, device
+  {
+    id: "",
+  }
+  // 2nd argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   // Boot the device identified by deviceId
@@ -1377,11 +1786,33 @@
   }
 #+end_src
 
-** DONE Implement Device shutdown
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    device: null || {
+      id: "",
+    }
+  }
+#+end_src
+
+** TODO Implement Device shutdown
+*** TODO Normalize device
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, device
+  {
+    id: "",
+  }
+  // 2nd argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   // Shutdown the device identified by deviceId
@@ -1407,11 +1838,34 @@
     message: 'action executed'
   }
 #+end_src
-** DONE Implement Device restart
+
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    device: null || {
+      id: ""
+    }
+  }
+#+end_src
+
+** TODO Implement Device restart
+*** TODO Normalize
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, device
+  {
+    id: "",
+  }
+  // 2nd argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   // Shutdown the device identified by deviceId
@@ -1436,12 +1890,38 @@
   }
 #+end_src
 
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    device: null || {
+      id: ""
+    }
+  }
+#+end_src
 
-** DONE Implement Cashier registration
+
+
+** TODO Implement Cashier registration
+*** TODO Normalize
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, cashier
+  {
+    username: "",
+    email: "",
+    password: "",
+    role: ["ROLE_CASHIER"]
+  }
+  // 2nd argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -1466,21 +1946,30 @@
       username: '4b2k414jjnm',
       email: 'Saruman@gmail.com',
       password: '2u85h819i62',
-      role: 'CASHIER',
+      role: ["ROLE_CASHIER"],
       id: 28
     }
   }
 #+end_src
-** DONE Implement Cashier de-registration
+
+** TODO Implement Cashier deregistration
+*** TODO Normalize
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
 **** Afm request
 #+begin_src js
+  // 1st argument, required, cashier
   {
-    username: "someCashier",
-    id: 3,
+    username: "",
+    email: "",
+    password: "",
+    role: ["ROLE_CASHIER"]
+  }
+  // 2nd argument, optional, options
+  {
+    queue: true | false
   }
 #+end_src
 **** Backend request
@@ -1522,11 +2011,23 @@
   // ctx.res = ctx.args.cashier
   // resolve -> ctx.res
 #+end_src
-** DONE Implement Cashier login
+** TODO Implement Cashier login
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, cashier
+  {
+    username: "",
+    password: "",
+  }
+  // 2nd argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -1551,7 +2052,8 @@
 **** Afm response
 #+begin_src js
   // ctx.res
-  res: {
+  {
+    ok: true,
     cashier: {
       username: '33rksrlppga',
       password: '7c38dir1206',
@@ -1560,7 +2062,7 @@
       role: 'CASHIER'
     },
     jwt: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3OTAxMywiZXhwIjoxNzA2ODE1MDEzfQ.KztDiUAgVIjSnY56gU7lrlKU4IRNRY_4N8GKloG5-X92veQwaDCGj4284yHX_XIn_ZjJFEWbPdvhh7C4xsnFCQ'
-  },
+  }
 #+end_src
 
 

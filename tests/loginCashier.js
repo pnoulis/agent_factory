@@ -1,9 +1,10 @@
-import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
+import { randomCashier } from "../src/misc/misc.js";
 
-const b = globalThis.backend;
-const topics = globalThis.topics;
 const task = "loginCashier";
+const b = globalThis.backend;
+const afm = globalThis.afm;
+const topics = globalThis.topics;
 const modelRequest = {
   username: "33rksrlppga",
   password: "7c38dir1206",
@@ -20,14 +21,27 @@ const modelResponse = {
   },
 };
 
+const registeredCashiers = [randomCashier(), randomCashier(), randomCashier()];
+beforeAll(async () => {
+  for (let i = 0; i < registeredCashiers.length; i++) {
+    const { cashier } = await afm.registerCashier(registeredCashiers[i]);
+    registeredCashiers[i] = cashier;
+  }
+});
+
 describe(task, () => {
   it("Should have a Backend API call that resolves", async () => {
-    await expect(b[task](modelRequest)).resolves.toBeTruthy();
+    await expect(b[task](registeredCashiers.pop())).resolves.toMatchObject({
+      result: "OK",
+    });
   });
-  it.todo("Should normalize the response", () => {});
-  it("Should validate the Model request", () => {
+  it("Should validate the Model Request", () => {
     const validate = topics[task].schema.req;
+    if (validate === null) return;
     validate(modelRequest);
+    if (validate.errors) {
+      console.log(validate.errors);
+    }
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
@@ -35,6 +49,9 @@ describe(task, () => {
   it("Should validate the Model Response", () => {
     const validate = topics[task].schema.res;
     validate(modelResponse);
+    if (validate.errors) {
+      console.log(validate.errors);
+    }
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
@@ -42,8 +59,11 @@ describe(task, () => {
   it("Should validate Backend API response schema", async () => {
     const validate = topics[task].schema.res;
     try {
-      const response = await b[task](modelRequest);
+      const response = await b[task](registeredCashiers.pop());
       validate(response);
+      if (validate.errors) {
+        console.log(response.errors);
+      }
       expect(validate.errors).toBeNull();
       validate({});
       expect(validate.errors).not.toBeNull();
@@ -52,6 +72,8 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task]()).resolves.toBeTruthy();
+    await expect(afm[task](registeredCashiers.pop())).resolves.toMatchObject({
+      ok: true,
+    });
   });
 });

@@ -43,11 +43,13 @@ Command.middleware = [
 ];
 Command.onFailure = function () {
   const cmd = this;
+  cmd.res.ok = true;
   cmd.msg = "Failed to stop Session";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
+  cmd.res.ok = true;
   cmd.msg = "Successfully stopped Session";
   cmd.resolve(cmd.res);
 };

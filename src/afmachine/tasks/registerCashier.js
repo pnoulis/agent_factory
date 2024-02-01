@@ -26,7 +26,7 @@ Command.middleware = [
       username: ctx.args.cashier.username,
       email: ctx.args.cashier.email,
       password: ctx.args.cashier.password,
-      role: [`ROLE_${ctx.args.cashier.role}`],
+      role: ctx.args.cashier.role,
     };
     return next();
   },
@@ -52,11 +52,13 @@ Command.middleware = [
 ];
 Command.onFailure = function () {
   const cmd = this;
+  cmd.res.ok = false;
   cmd.msg = "Failed to register Cashier";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
+  cmd.res.ok = true;
   cmd.msg = "Successfully registered Cashier";
   cmd.resolve(cmd.res);
 };

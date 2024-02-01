@@ -37,16 +37,22 @@ Command.middleware = [
   },
   parseBackendResponse,
   validateBackendResponse,
+  (ctx, next) => {
+    ctx.res.device = null;
+    return next();
+  },
 ];
 Command.onFailure = function () {
   const cmd = this;
+  cmd.res.ok = false;
   cmd.msg = `Failed to restarted device${cmd.req.deviceId ? "" : "s"}`;
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
+  cmd.res.ok = true;
   cmd.msg = `Successfully restarted device${cmd.req.deviceId ? "" : "s"}`;
-  cmd.resolve(cmd.raw.message);
+  cmd.resolve(cmd.res);
 };
 
 export { Command as restartDevice };

@@ -1,13 +1,11 @@
-import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
 import { deleteActiveSessionRow } from "../src/mysqldb/deleteActiveSessionRow.js";
-import { DEFAULT_CASHIER } from "../src/constants.js";
 
+const task = "startSession";
 const b = globalThis.backend;
+const afm = globalThis.afm;
 const topics = globalThis.topics;
 const defaultCashier = globalThis.defaultCashier;
-const afm = globalThis.afm;
-const task = "startSession";
 const modelRequest = {
   jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
 };
@@ -23,9 +21,13 @@ describe(task, () => {
       result: "OK",
     });
   });
-  it("Should validate the Model request", () => {
+  it("Should validate the Model Request", () => {
     const validate = topics[task].schema.req;
+    if (validate === null) return;
     validate(modelRequest);
+    if (validate.errors) {
+      console.log(validate.errors);
+    }
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
@@ -33,6 +35,9 @@ describe(task, () => {
   it("Should validate the Model Response", () => {
     const validate = topics[task].schema.res;
     validate(modelResponse);
+    if (validate.errors) {
+      console.log(validate.errors);
+    }
     expect(validate.errors).toBeNull();
     validate({});
     expect(validate.errors).not.toBeNull();
@@ -43,6 +48,9 @@ describe(task, () => {
       await deleteActiveSessionRow();
       const response = await b[task](defaultCashier);
       validate(response);
+      if (validate.errors) {
+        console.log(response.errors);
+      }
       expect(validate.errors).toBeNull();
       validate({});
       expect(validate.errors).not.toBeNull();
@@ -52,6 +60,8 @@ describe(task, () => {
   });
   it("Should have an Afmachine Task", async () => {
     await deleteActiveSessionRow();
-    await expect(afm[task](defaultCashier)).resolves.toBeTruthy();
+    await expect(afm[task](defaultCashier)).resolves.toMatchObject({
+      ok: true,
+    });
   });
 });

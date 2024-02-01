@@ -2,9 +2,11 @@ import "../src/debug.js";
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
 import { normalize as normalizePackage } from "../src/afmachine/package/normalize.js";
 
-const b = globalThis.backend;
-const topics = globalThis.topics;
 const task = "listPackages";
+const b = globalThis.backend;
+const afm = globalThis.afm;
+const topics = globalThis.topics;
+const modelRequest = {};
 const modelResponse = {
   timestamp: 1706640606387,
   result: "OK",
@@ -37,7 +39,45 @@ const modelResponse = {
 
 describe(task, () => {
   it("Should have a Backend API call that resolves", async () => {
-    await expect(b[task]()).resolves.toBeTruthy();
+    await expect(b[task](modelRequest)).resolves.toMatchObject({
+      result: "OK",
+    });
+  });
+  it("Should validate the Model Request", () => {
+    const validate = topics[task].schema.req;
+    if (validate === null) return;
+    validate(modelRequest);
+    if (validate.errors) {
+      console.log(validate.errors);
+    }
+    expect(validate.errors).toBeNull();
+    validate({});
+    expect(validate.errors).not.toBeNull();
+  });
+  it("Should validate the Model Response", () => {
+    const validate = topics[task].schema.res;
+    validate(modelResponse);
+    if (validate.errors) {
+      console.log(validate.errors);
+    }
+    expect(validate.errors).toBeNull();
+    validate({});
+    expect(validate.errors).not.toBeNull();
+  });
+  it("Should validate Backend API response schema", async () => {
+    const validate = topics[task].schema.res;
+    try {
+      const response = await b[task](modelRequest);
+      validate(response);
+      if (validate.errors) {
+        console.log(validate.errors);
+      }
+      expect(validate.errors).toBeNull();
+      validate({});
+      expect(validate.errors).not.toBeNull();
+    } catch (err) {
+      throw err;
+    }
   });
   it("Should normalize the response", async () => {
     const normalized = modelResponse.packages.map((pkg) =>
@@ -136,23 +176,7 @@ describe(task, () => {
       ]),
     );
   });
-  it("Should validate Backend API request schema", () => {
-    const validate = topics[task].schema.req;
-    expect(validate).toBeNull();
-  });
-  it("Should validate Backend API response schema", async () => {
-    const validate = topics[task].schema.res;
-    try {
-      const response = await b[task]();
-      validate(response);
-      expect(validate.errors).toBeNull();
-      validate({});
-      expect(validate.errors).not.toBeNull();
-    } catch (err) {
-      throw err;
-    }
-  });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task]()).resolves.toBeTruthy();
+    await expect(afm[task]()).resolves.toMatchObject({ ok: true });
   });
 });
