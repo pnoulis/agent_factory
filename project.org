@@ -184,27 +184,54 @@
 
 player.pairWristband();
 player calls afm
+afm calls players state -> can throw error
+afm calls player's wrisband.state.pair(); -> switches state to pairing
 
+Try pairing a players wristband under normal circumstances.
 
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+*** DONE Document the req/res payload
 **** Afm request
 #+begin_src js
   // 1st argument, required, PlayerCommander
-  PlayerCommander
+  {
+    username: 'pavlos',
+    name: 'Maedhros',
+    surname: 'gracious',
+    email: '3t1ecp5utn8@gmail.com',
+    state: 'registered',
+    wristband: {}
+  },
   // 2nd argument, required, WristbandCommander
-  WristbandCommander
+  {
+    id: null,
+    color: '',
+    colorCode: null,
+    state: 'unpaired'
+  }
   // 3rd agument, optional, options
   {
     queue: true || false
   }
 #+end_src
-**** Backend request
-**** Backend response
-**** After normalize()
 **** Afm response
+#+begin_src js
+  {
+    ok: true,
+    player: {
+      username: 'pavlos',
+      name: 'Maedhros',
+      surname: 'gracious',
+      email: '3t1ecp5utn8@gmail.com',
+      state: 'registered',
+      wristband: {
+        id: 339,
+        color: 'purple',
+        colorCode: 2,
+        state: 'paired'
+      }
+    }
+  }
+#+end_src
 
 
 ** DONE Implement list Registered Players

@@ -27,11 +27,7 @@ class Player extends createStateful([
     this.wristband = wristband ?? {};
   }
   normalize(sources, { depth = 1, wristband, ...playerOpts } = {}) {
-    const {
-      wristband: wristbandSrc,
-      state,
-      ...player
-    } = playerOpts.normalized
+    const { wristband: wristbandSrc, ...player } = playerOpts.normalized
       ? sources
       : Player.normalize([this, sources], {
           depth,
@@ -48,7 +44,10 @@ class Player extends createStateful([
     // Player
     Object.assign(this, player);
 
-    return this.setState(state);
+    // Calling with apply because PlayerCommander shadows setState
+    // with stateventful implementation before Player is initialized
+    // with a this.events prop.
+    return stateful.setState.call(this, this.state);
   }
   fill(sources, options = {}) {
     return this.normalize(Player.random([this, sources], options));

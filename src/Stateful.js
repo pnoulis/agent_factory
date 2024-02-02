@@ -27,6 +27,7 @@ const stateful = {
     return null;
   },
   setState(state) {
+    trace("state_change", state);
     const nstate = this.getState(state);
     if (!nstate) {
       throw new Error(`Missing state: ${state}`);

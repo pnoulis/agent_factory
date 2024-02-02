@@ -10,8 +10,7 @@ new Task("registerPlayer", Command);
 
 function Command(player, password, opts) {
   const afm = this;
-  const playerTarget = afm.createPlayer(player, player.wristband);
-  afm.setCache("players", playerTarget.username, playerTarget);
+  afm.setCache("players", player.username, player);
   const promise = Command.createCommand(
     afm,
     {

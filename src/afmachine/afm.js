@@ -11,8 +11,7 @@ import { PlayerCommander } from "./player/PlayerCommander.js";
 
 // Player tasks
 import { registerPlayer } from "./tasks/registerPlayer.js";
-// import { pairWristband } from "./tasks/pairWristband.js";
-// import { unpairWristband } from "./tasks/unpairWristband.js";
+import { pairWristband } from "./synthetic-tasks/pairWristband.js";
 
 // Wristband tasks
 import { scanWristband } from "./tasks/scanWristband.js";
@@ -85,13 +84,8 @@ Afm.prototype.enqueueCommand = async function (cmd) {
 Afm.prototype.runCommand = async function (cmd) {
   const { queue = true } = cmd.opts;
 
-  if (queue) {
-    if (cmd.state !== "queued") {
-      this.commands = this.commands + 1;
-      return this.enqueueCommand(cmd);
-    }
-  } else {
-    this.commands = this.commands + 1;
+  if (queue && cmd.state !== "queued") {
+    return this.enqueueCommand(cmd);
   }
 
   try {
@@ -184,7 +178,7 @@ Afm.prototype.createPlayer = function (player, wristband) {
 Object.assign(Afm.prototype, {
   // Player tasks
   registerPlayer,
-  // pairWristband,
+  pairWristband,
   // unpairWristband,
 
   // Wristband tasks

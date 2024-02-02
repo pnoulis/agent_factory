@@ -34,6 +34,7 @@ function logevents(eventful) {
   if (ENV.LOGLEVEL === "silent") return;
   eventful.on("stateChange", (nstate, ostate, entity) => {
     debug(`${entity.constructor.name} changed state: ${ostate} -> ${nstate}`);
+    debug("state_change");
   });
   eventful.on("error", (err) => {
     console.log(logcmd(err));
@@ -106,7 +107,7 @@ function logafm(afm) {
   });
 }
 
-function logPlayer(player) {
+function logPlayer(player, format) {
   if (ENV.LOGLEVEL === "silent") return;
   console.log();
   console.log("PLAYER_START:----------------------------");
@@ -138,16 +139,16 @@ function logWristband(wristband) {
   console.log();
 }
 
-function logent(entity) {
+function logent(entity, format = false) {
   if (!isObject(entity)) return false;
 
   if ("username" in entity) {
-    logPlayer(entity);
+    logPlayer(entity, format);
   }
   if ("wristband" in entity) {
-    logWristband(entity.wristband);
+    logWristband(entity.wristband, format);
   } else if ("colorCode" in entity) {
-    logWristband(entity);
+    logWristband(entity, format);
   }
   return true;
 }

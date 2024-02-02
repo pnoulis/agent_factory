@@ -24,7 +24,7 @@ class Unpairing {
     )("Paired wristband in unpairing state", this.wristband, wristband);
   }
   unpair() {
-    return this.wristband.setState("unpairing");
+    return this.wristband;
   }
   unpaired(wristband) {
     return this.wristband.normalize(

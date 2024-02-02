@@ -27,6 +27,7 @@ class Task extends createEventful() {
       props = {};
     }
     const cmd = Object.create(this.Command);
+    afm.commands += 1;
     cmd.afm = afm;
     Object.assign(
       cmd,

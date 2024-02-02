@@ -42,7 +42,7 @@ class PlayerCommander extends createEventful(Player) {
 
   async register(password) {
     try {
-      const { player } = await this.afm.registerPlayer(this, password);
+      const player = await this.afm.registerPlayer(this, password);
       this.state.registered(player);
     } catch (err) {
       this.emit("error", err);
@@ -53,14 +53,15 @@ class PlayerCommander extends createEventful(Player) {
 
   async pairWristband() {
     try {
-      await this.afm.pairWristband(this, this.wristband);
+      this.wristband.setState("pairing");
+      const { wristband } = await this.afm.pairWristband(this, this.wristband);
+      this.wristband.state.paired(wristband);
     } catch (err) {
-      this.emit("error", err);
-      // if (/EWRISTBAND/.test(err.label)) {
-      //   this.wristband.emit("error", err);
-      // } else {
-      //   this.emit("error", err);
-      // }
+      if (/EWRISTBAND/.test(err.label)) {
+        this.wristband.emit("error", err);
+      } else {
+        this.emit("error", err);
+      }
     } finally {
       return this;
     }

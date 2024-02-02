@@ -14,7 +14,7 @@ class Unpaired {
     return Unpaired.order;
   }
 
-  pair() {
+  pair(player) {
     return this.wristband.setState("pairing");
   }
   paired(wristband) {

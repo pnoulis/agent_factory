@@ -39,29 +39,24 @@ class WristbandCommander extends createEventful(Wristband) {
         throw new TypeError(`Unrecognized error code: '${errCode}'`);
     }
   }
+  pair() {}
+  unpair() {}
   async scan() {
     let _unsub;
     try {
-      const { wristband } = await this.afm.scanWristband(
+      const res = await this.afm.scanWristband(
         (unsub) => {
           _unsub = unsub;
         },
         { queue: false },
       );
       _unsub = null;
-      return wristband;
+      return res;
     } finally {
       if (typeof _unsub === "function") {
         _unsub();
       }
     }
-  }
-
-  async pair() {
-    this.state.pair();
-    const wristband = await this.scan();
-    this.state.paired(wristband);
-    return this;
   }
 }
 extendProto(WristbandCommander, stateventful);
