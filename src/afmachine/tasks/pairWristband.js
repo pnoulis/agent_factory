@@ -55,12 +55,14 @@ Command.middleware = [
 
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to pair wristband to player";
+  cmd.res.ok = false;
+  cmd.msg = "Failed to pair Wristband to Player";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully paired wristband to player";
+  cmd.res.ok = true;
+  cmd.msg = "Successfully paired Wristband to Player";
   cmd.resolve(cmd.res);
 };
 

@@ -21,7 +21,12 @@ function normalize(sources, options = {}) {
   const _sources = [sources].flat(2).filter((src) => !!src);
   trace(_sources, "wristband _sources");
 
-  const target = { id: null, color: "", colorCode: null, state: "" };
+  const target = {
+    id: null,
+    color: "",
+    colorCode: null,
+    state: "",
+  };
   let active = false;
 
   if (_options.nullSupersede) {

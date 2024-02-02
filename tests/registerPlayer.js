@@ -1,37 +1,32 @@
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
+import { random as randomPlayer } from "../src/afmachine/player/random.js";
+import { normalize as normalizePlayer } from "../src/afmachine/player/normalize.js";
 
-const task = "listScoreboardDevices";
+const task = "registerPlayer";
 const b = globalThis.backend;
 const afm = globalThis.afm;
 const topics = globalThis.topics;
 const modelRequest = {
-  timestamp: 1706711522546,
+  timestamp: 1706724066778,
+  username: "test",
+  surname: "test",
+  name: "test",
+  email: "test@gmail.com",
+  password: "testpass",
 };
 const modelResponse = {
-  timestamp: 1706711522546,
+  timestamp: 1706874481773,
   result: "OK",
-  scoreboardDevices: [
-    {
-      deviceId: "scor1",
-      deviceType: "SCOREBOARD_SCREEN",
-      roomType: "SCOREBOARD1",
-      status: "ROTATING",
-    },
-    {
-      deviceId: "scor2",
-      deviceType: "SCOREBOARD_SCREEN",
-      roomType: "SCOREBOARD2",
-      status: "MONTHLY",
-    },
-  ],
+  player: {
+    name: "test",
+    surname: "test",
+    username: "test",
+    email: "test@gmail.com",
+    wristbandColor: null,
+  },
 };
 
 describe(task, () => {
-  it("Should have a Backend API call that resolves", async () => {
-    await expect(b[task](modelRequest)).resolves.toMatchObject({
-      result: "OK",
-    });
-  });
   it("Should validate the Model Request", () => {
     const validate = topics[task].schema.req;
     if (validate === null) return;
@@ -53,10 +48,12 @@ describe(task, () => {
     validate({});
     expect(validate.errors).not.toBeNull();
   });
-  it("Should validate Backend API response schema", async () => {
+  it("Should validate and normalize the Backend response", async () => {
     const validate = topics[task].schema.res;
     try {
-      const response = await b[task](modelRequest);
+      const response = await b[task]({
+        ...randomPlayer(null, { password: true }),
+      });
       validate(response);
       if (validate.errors) {
         console.log(validate.errors);
@@ -64,11 +61,26 @@ describe(task, () => {
       expect(validate.errors).toBeNull();
       validate({});
       expect(validate.errors).not.toBeNull();
+
+      expect(response).toHaveProperty("player");
+      expect(normalizePlayer(response.player, { state: "registered" })).toEqual(
+        {
+          name: response.player.name,
+          surname: response.player.surname,
+          username: response.player.username,
+          email: response.player.email,
+          state: "registered",
+          wristband: {},
+        },
+      );
     } catch (err) {
       throw err;
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task]()).resolves.toMatchObject({ ok: true });
+    const player = randomPlayer(null, { password: true });
+    await expect(afm[task](player, player.password)).resolves.toMatchObject({
+      ok: true,
+    });
   });
 });

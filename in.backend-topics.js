@@ -127,31 +127,14 @@ const registrationTopics = {
     schema: {
       req: null,
       res: ajv.compile({
-        /*
-          timestamp: 1706445720753,
-          result: 'OK',
-          wristbandNumber: 169,
-          wristbandColor: 2
-         */
         type: "object",
-        additionalProperties: true,
-        required: ["unsubed"],
+        additionalProperties: false,
+        required: ["timestamp", "result", "wristbandNumber", "wristbandColor"],
         properties: {
-          unsubed: { type: "boolean" },
-          wristband: {
-            type: "object",
-            nullable: true,
-            required: [
-              "timestamp",
-              "result",
-              "wristbandNumber",
-              "wristbandColor",
-            ],
-            properties: {
-              ...schemas.response.properties,
-              ...schemas.wristband.properties,
-            },
-          },
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          wristbandNumber: schemas.wristband.properties.wristbandNumber,
+          wristbandColor: schemas.wristband.properties.wristbandColor,
         },
       }),
     },

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
-import { randomCashier } from "../src/misc/misc.js";
+import { random as randomCashier } from "../src/afmachine/cashier/random.js";
 
 const task = "registerCashier";
 const b = globalThis.backend;
@@ -46,10 +46,13 @@ describe(task, () => {
   it("Should validate Backend API response schema", async () => {
     const validate = topics[task].schema.res;
     try {
-      const response = await b[task](randomCashier());
+      const response = await b[task]({
+        ...randomCashier(null, { password: true }),
+        role: ["ROLE_CASHIER"],
+      });
       validate(response);
       if (validate.errors) {
-        console.log(response.errors);
+        console.log(validate.errors);
       }
       expect(validate.errors).toBeNull();
       validate({});
@@ -59,8 +62,15 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task](randomCashier())).resolves.toMatchObject({
+    const cashier = randomCashier(null, { password: true });
+    await expect(afm[task](cashier, cashier.password)).resolves.toMatchObject({
       ok: true,
+      cashier: {
+        id: expect.any(Number),
+        username: cashier.username,
+        role: cashier.role,
+        email: cashier.email,
+      },
     });
   });
 });

@@ -9,25 +9,19 @@
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
 *** TODO Document the req/res payload
+**** Afm request
 **** Backend request
 **** Backend response
-**** After normalization
+**** After normalize()
+**** Afm response
 ** Entity template
 **** TODO normalization
 **** TODO random
 **** TODO tobject
 **** TODO fill
 
-** DONE Implement writsband scan
-*** DONE Object schema for req/res backend topic payload
 
-*** DONE Implement backend api topic call
-
-*** DONE Implement Task and Command
-
-*** DONE Document the req/res payload
-
-** DONE Implement wristband register
+** TODO Implement wristband register
 
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
@@ -44,15 +38,173 @@
 
 *** DONE Document the req/res payload
 
-** DONE Implement getWristbandInfo
 
+** DONE Implement Player register
 *** DONE Object schema for req/res backend topic payload
-
 *** DONE Implement backend api topic call
-
 *** DONE Implement Task and Command
-
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, player
+  {
+    username: 'test',
+    name: 'test',
+    surname: 'test',
+    email: 'testt@gmail.com',
+  },
+  // 2nd argument, required password
+  password: "testpass"
+  // 3rd argument, optional, options
+  {
+    queue: true || false
+  }
+#+end_src
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706724066778,
+    username: "test",
+    surname: "test",
+    name: "test",
+    email: "test@gmail.com",
+    password: "testpass",
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp : 1706874481773,
+    result : "OK",
+    player : {
+      name : "test",
+      surname : "test",
+      username : "test",
+      email : "test@gmail.com",
+      wristbandColor : null
+    }
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true
+    player: {
+      username: 'xpgk8ij7kt8',
+      name: 'Baggins',
+      surname: 'cool',
+      email: 'xpgk8ij7kt8@gmail.com',
+      state: 'registered',
+      wristband: {}
+    },
+  }
+#+end_src
+
+** DONE Implement Wristband info
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  {
+    id: 3,
+    colorCode: 3,
+    color: "green",
+    state: "state",
+  }
+#+end_src
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706879364557,
+    wristbandNumber: 3
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706879364557,
+    result: 'OK',
+    wristband: { wristbandNumber: 3, wristbandColor: 2, active: false }
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true
+    wristband: {
+      id: 3,
+      color: 'green',
+      colorCode: 3,
+      state: 'state',
+    },
+  }
+#+end_src
+
+** DONE Implement Wrisband scan
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, unsubcb
+  (unsub) => {...}
+  // 2nd argument, optional, options
+  {
+    queue: false || true
+  }
+#+end_src
+**** Backend request
+#+begin_src js
+  // null
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706880614077,
+    result: 'OK',
+    wristbandNumber: 3,
+    wristbandColor: 3
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true
+    wristband: { id: 3, color: 'green', colorCode: 3, state: 'unpaired' },
+    unsubed: false,
+  }
+#+end_src
+
+
+** TODO Implement Player Pair Wristband
+*** scratch
+
+player.pairWristband();
+player calls afm
+
+
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, PlayerCommander
+  PlayerCommander
+  // 2nd argument, required, WristbandCommander
+  WristbandCommander
+  // 3rd agument, optional, options
+  {
+    queue: true || false
+  }
+#+end_src
+**** Backend request
+**** Backend response
+**** After normalize()
+**** Afm response
 
 
 ** DONE Implement list Registered Players
@@ -419,45 +571,6 @@
   {
     ok: true,
     packages: [normalize(backend.response.packages)]
-  }
-#+end_src
-
-** TODO Implement list Cashiers
-*** TODO normalization
-*** DONE Object schema for req/res backend topic payload
-*** DONE Implement backend api topic call
-*** DONE Implement Task and Command
-*** DONE Document the req/res payload
-**** Afm request
-#+begin_src js
-  // 1st argument, optional, options
-  {
-    queue: true | false
-  }
-#+end_src
-**** Backend request
-#+begin_src js
-  {
-    timestamp: 1706707779283,
-  }
-#+end_src
-**** Backend response
-#+begin_src js
-  {
-    timestamp: 1706707779283,
-    result: 'OK',
-    cashiers: [
-      { id: 1, username: 'pavlos', email: 'pavlosTester123@gmail.com' },
-      { id: 3, username: 'tt', email: 'tt@gmail.com' }
-    ]
-  }
-#+end_src
-
-**** Afm response
-#+begin_src js
-  {
-    ok: true,
-    cashiers: backend.response.cashiers
   }
 #+end_src
 
@@ -1659,90 +1772,6 @@
 #+end_src
 
 
-** TODO Implement Session start
-*** TODO Normalize
-*** DONE Object schema for req/res backend topic payload
-*** DONE Implement backend api topic call
-*** DONE Implement Task and Command
-*** DONE Document the req/res payload
-**** Afm request
-#+begin_src js
-  // 1st argument, required, cashier
-  {
-    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
-  }
-  // 2st argument, optional, options
-  {
-    queue: true | false
-  }
-#+end_src
-**** Backend request
-#+begin_src js
-  {
-    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
-  }
-#+end_src
-**** Backend response
-#+begin_src js
-  {
-    timestamp: 1706780850379,
-    result: 'OK',
-  }
-#+end_src
-**** Afm response
-#+begin_src js
-  // ctx.req = ctx.args.cashier
-  // resolve -> ctx.req
-  {
-    ok: true,
-    cashier: {},
-  }
-#+end_src
-
-** TODO Implement Session stop
-*** TODO Normalize
-*** DONE Object schema for req/res backend topic payload
-*** DONE Implement backend api topic call
-*** DONE Implement Task and Command
-*** DONE Document the req/res payload
-**** Afm request
-#+begin_src js
-  // 1st argument, required, cashier
-  {
-    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
-  }
-
-  // 2nd argument, optional comment
-  comment: "Nothing unexpected ever happens!"
-
-  // 3rd argument, optional, options
-  {
-    queue: true | false
-  }
-#+end_src
-**** Backend request
-#+begin_src js
-  {
-    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
-    comment: "Nothing unexpected ever happens!"
-  }
-#+end_src
-**** Backend response
-#+begin_src js
-  {
-    timestamp: 1706780850379,
-    result: 'OK',
-  }
-#+end_src
-
-**** Afm response
-#+begin_src js
-  {
-    ok: true,
-    cashier: {},
-  }
-#+end_src
-
 
 ** TODO Implement Device boot
 *** TODO Normalize devices
@@ -1902,8 +1931,46 @@
 
 
 
-** TODO Implement Cashier registration
-*** TODO Normalize
+** DONE Implement Cashier List
+*** DONE normalization
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
+**** Backend request
+#+begin_src js
+  {
+    timestamp: 1706707779283,
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1706707779283,
+    result: 'OK',
+    cashiers: [
+      { id: 1, username: 'pavlos', email: 'pavlosTester123@gmail.com' },
+      { id: 3, username: 'tt', email: 'tt@gmail.com' }
+    ]
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    cashiers: [normalize(backend.response.cashiers)]
+  }
+#+end_src
+
+** DONE Implement Cashier registration
+*** DONE Normalize
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
@@ -1912,12 +1979,13 @@
 #+begin_src js
   // 1st argument, required, cashier
   {
-    username: "",
-    email: "",
-    password: "",
-    role: ["ROLE_CASHIER"]
+    username: "test",
+    email: "test@gmail.com",
+    role: 'test',
   }
-  // 2nd argument, optional, options
+  // 2nd argument, required, password
+  password: "oteuheno",
+  // 3nd argument, optional, options
   {
     queue: true | false
   }
@@ -1940,20 +2008,20 @@
 #+end_src
 **** Afm response
 #+begin_src js
-  // resolve -> cmd.res
-  res: {
+  {
+    ok: true,
     cashier: {
-      username: '4b2k414jjnm',
-      email: 'Saruman@gmail.com',
-      password: '2u85h819i62',
-      role: ["ROLE_CASHIER"],
-      id: 28
-    }
+      id: 3
+      username: "test",
+      email: "test@gmail.com",
+      role: "cashier",
+    },
+    password: "testpass",
   }
 #+end_src
 
-** TODO Implement Cashier deregistration
-*** TODO Normalize
+** DONE Implement Cashier deregistration
+*** DONE Normalize
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
@@ -1962,10 +2030,10 @@
 #+begin_src js
   // 1st argument, required, cashier
   {
-    username: "",
-    email: "",
-    password: "",
-    role: ["ROLE_CASHIER"]
+    id: 3,
+    username: "test",
+    email: "test@gmail.com",
+    role: "cashier",
   }
   // 2nd argument, optional, options
   {
@@ -2008,10 +2076,18 @@
 
 **** Afm response
 #+begin_src js
-  // ctx.res = ctx.args.cashier
-  // resolve -> ctx.res
+  {
+    ok: true,
+    cashier: {
+      id: 3,
+      username: "test",
+      email: "test@gmail.com"
+      role: "cashier"
+    }
+  }
 #+end_src
-** TODO Implement Cashier login
+
+** DONE Implement Cashier login
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
@@ -2020,10 +2096,14 @@
 #+begin_src js
   // 1st argument, required, cashier
   {
-    username: "",
-    password: "",
+    id: 3,
+    username: "test",
+    email: "test@gmail.com",
+    role: "cashier",
   }
-  // 2nd argument, optional, options
+  // 2nd argument, required, password
+  password: "testpass"
+  // 3nd argument, optional, options
   {
     queue: true | false
   }
@@ -2051,53 +2131,202 @@
 #+end_src
 **** Afm response
 #+begin_src js
-  // ctx.res
   {
     ok: true,
     cashier: {
-      username: '33rksrlppga',
-      password: '7c38dir1206',
-      email: '33rksrlppga@gmail.com',
-      id: 74,
-      role: 'CASHIER'
+      id: 3,
+      username: "test",
+      email: "test@gmail.com",
+      role: "cashier",
     },
+    password: "testpass",
     jwt: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3OTAxMywiZXhwIjoxNzA2ODE1MDEzfQ.KztDiUAgVIjSnY56gU7lrlKU4IRNRY_4N8GKloG5-X92veQwaDCGj4284yHX_XIn_ZjJFEWbPdvhh7C4xsnFCQ'
   }
 #+end_src
 
 
-** Task template
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+** DONE Implement Session start
+*** DONE Normalize
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, cashier
+  {
+    id: 3,
+    username: "test",
+    email: "test@gmail.com",
+    role: "cashier",
+  }
+  // 2st argument, required, jwt
+  {
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+  }
+  // 3st argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
+#+begin_src js
+  {
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+  }
+#+end_src
 **** Backend response
-**** After normalization
-** Task template
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+#+begin_src js
+  {
+    timestamp: 1706780850379,
+    result: 'OK',
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    cashier: {
+      id: 3,
+      username: "test",
+      email: "test@gmail.com",
+      role: "cashier",
+    },
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+  }
+#+end_src
+** DONE Implement Session stop
+*** DONE Normalize
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, cashier
+  {
+    id: 3,
+    username: "test",
+    email: "test@gmail.com",
+    role: "cashier",
+  }
+  // 2st argument, required, jwt
+  {
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+  }
+  // 3st argument, optional, comment
+  comment: "Nothing unexpected ever happens!"
+  // 4th argument, optional, options
+  {
+    queue: true | false
+  }
+#+end_src
 **** Backend request
+#+begin_src js
+  {
+    jwt: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA",
+    comment: "Nothing unexpected ever happens!"
+  }
+#+end_src
 **** Backend response
-**** After normalization
-** Task template
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-**** Backend request
-**** Backend response
-**** After normalization
-** Task template
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-**** Backend request
-**** Backend response
-**** After normalization
+#+begin_src js
+  {
+    timestamp: 1706780850379,
+    result: 'OK',
+  }
+#+end_src
+
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    cashier: {
+      id: 3,
+      username: "test",
+      email: "test@gmail.com",
+      role: "cashier",
+    },
+  }
+#+end_src
+
+
+** Document Cashier
+*** Backend form
+#+begin_src js
+  {
+    id: 6,
+    username: "mike",
+    email: "mike@gmai.com",
+    roles: ["ROLE_CASHIER"] || ["ROLE_MANAGER"] || ["ROLE_ADMIN"]
+  }
+#+end_src
+*** AFM form
+#+begin_src js
+  {
+    id: 6,
+    username: "mike",
+    email: "mike@gmail.com",
+    role: "cashier",
+  }
+#+end_src
+** Document Device
+*** Backend form
+#+begin_src js
+  {
+    deviceType: 'SCOREBOARD_SCREEN',
+    roomType: 'SCOREBOARD1',
+    deviceId: 'scor1',
+    macAddress: null,
+    ipAddress: null,
+    bootedTimestamp: 1702243701606
+  },
+  {
+    deviceId: 'scor1',
+    deviceType: 'SCOREBOARD_SCREEN',
+    roomType: 'SCOREBOARD1',
+    status: 'ROTATING'
+  },
+#+end_src
+*** AFM form
+#+begin_src js
+  {
+    id: "",
+    type: "",
+    room: "",
+    status: "",
+    t_boot: null,
+  }
+#+end_src
+** Document player
+*** Backend forms
+#+begin_src js
+  // As returned by Register Player.
+  {
+    name : "test",
+    surname : "test",
+    username : "test",
+    email : "test@gmail.com",
+    wristbandColor : null
+  }
+#+end_src
+*** AFM form
+#+begin_src js
+  {
+    username: 'test',
+    name: 'test',
+    surname: 'test',
+    email: 'test@gmail.com',
+    state: 'unregistered',
+    wristband: {}
+  }
+#+end_src
+** Cashier topics that need to perform a find before executing the task
+deregister
+session start
+session stop
+** Cashier topics that need to perform a find after executing a task
+register
+login
 
 * Communication between objects
 The *afmachine* acts as the *Invoker* in the *Command* pattern. It is the
@@ -2426,9 +2655,27 @@ Tasks dependent on some client state should:
    latest copy of the cached entity.
 
 * Conventions
-
+** Command inputs and outputs
+#+begin_src js
+  {
+    args: {
+      ...AFM_FORM_INPUTS
+    }
+    tmp: {
+      ...SOME_PLACE_TO_STORE_TRANSIENT_VALUES
+    }
+    req: {
+      ...BACKEND_FORM_INPUTS
+    }
+    raw: {
+      ...BACKEND_FORM_OUTPUTS
+    }
+    res: {
+      ...AFM_FORM_OUPUTS
+    }
+  }
+#+end_src
 ** Commands wrap their return value within an object
-
 Commands never return an entity object, they return an object that contains the
 entity or entities.
 

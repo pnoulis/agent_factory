@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
 import { deleteActiveSessionRow } from "../src/mysqldb/deleteActiveSessionRow.js";
+import { normalize as normalizeCashier } from "../src/afmachine/cashier/normalize.js";
 
 const task = "startSession";
 const b = globalThis.backend;
@@ -49,7 +50,7 @@ describe(task, () => {
       const response = await b[task](defaultCashier);
       validate(response);
       if (validate.errors) {
-        console.log(response.errors);
+        console.log(validate.errors);
       }
       expect(validate.errors).toBeNull();
       validate({});
@@ -60,8 +61,13 @@ describe(task, () => {
   });
   it("Should have an Afmachine Task", async () => {
     await deleteActiveSessionRow();
-    await expect(afm[task](defaultCashier)).resolves.toMatchObject({
-      ok: true,
-    });
+    const cashier = normalizeCashier(defaultCashier);
+    await expect(afm[task](cashier, defaultCashier.jwt)).resolves.toMatchObject(
+      {
+        ok: true,
+        cashier,
+        jwt: defaultCashier.jwt,
+      },
+    );
   });
 });

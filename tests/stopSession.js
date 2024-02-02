@@ -51,7 +51,7 @@ describe(task, () => {
       const response = await b[task](defaultCashier);
       validate(response);
       if (validate.errors) {
-        console.log(response.errors);
+        console.log(validate.errors);
       }
       expect(validate.errors).toBeNull();
       validate({});
@@ -63,8 +63,16 @@ describe(task, () => {
   it("Should normalize the response", () => {});
   it("Should have an Afmachine Task", async () => {
     await b.startSession(defaultCashier);
-    await expect(afm[task](defaultCashier)).resolves.toMatchObject({
+    await expect(
+      afm[task](defaultCashier, defaultCashier.jwt),
+    ).resolves.toMatchObject({
       ok: true,
+      cashier: {
+        id: defaultCashier.id,
+        username: defaultCashier.username,
+        email: defaultCashier.email,
+        role: "cashier",
+      },
     });
   });
 });

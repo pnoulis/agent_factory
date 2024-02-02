@@ -10,7 +10,7 @@ new Task("registerPlayer", Command);
 
 function Command(player, password, opts) {
   const afm = this;
-  const playerTarget = new PlayerCommander(null, player, player?.wristband);
+  const playerTarget = afm.createPlayer(player, player.wristband);
   afm.setCache("players", playerTarget.username, playerTarget);
   const promise = Command.createCommand(
     afm,
@@ -52,19 +52,21 @@ Command.middleware = [
   validateBackendResponse,
   (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
-    ctx.res = player.getState().registered(ctx.raw.player).tobject();
+    ctx.res.player = player.state.registered(ctx.raw.player).tobject();
     return next();
   },
 ];
 
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to register new player";
+  cmd.res.ok = false;
+  cmd.msg = "Failed to register new Player";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully registered new player";
+  cmd.res.ok = true;
+  cmd.msg = "Successfully registered new Player";
   cmd.resolve(cmd.res);
 };
 

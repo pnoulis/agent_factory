@@ -17,7 +17,7 @@ class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
     this.id = wristband.id ?? null;
     this.color = wristband.color || "";
     this.colorCode = wristband.colorCode ?? null;
-    this.state = wristband.state || "";
+    this.state = this.states[wristband.state || "unpaired"];
   }
   normalize(sources, options = {}) {
     if (options.normalized) {

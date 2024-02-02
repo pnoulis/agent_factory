@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { Wristband } from "../wristband/Wristband.js";
+import { normalize as normalizeWristband } from "../wristband/normalize.js";
 import { createError, ERR_CODES } from "../../errors.js";
 
 new Task("scanWristband", Command);
@@ -45,25 +45,29 @@ Command.middleware = [
   validateBackendRequest,
   async (ctx, next) => {
     ctx.raw = await ctx.afm.backend.scanWristband(ctx.args.unsubcb);
+    // Mqtt Wrapper library added property
+    ctx.res.unsubed = ctx.raw.unsubed;
+    ctx.raw = ctx.raw.wristband;
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    ctx.res.wristband = Wristband.normalize(ctx.raw.wristband);
-    ctx.res.unsubed = ctx.raw.unsubed;
+    ctx.res.wristband = normalizeWristband(ctx.raw);
     return next();
   },
 ];
 
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to scan wristband";
+  cmd.res.ok = false;
+  cmd.msg = "Failed to scan Wristband";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully scanned wristband";
+  cmd.res.ok = true;
+  cmd.msg = "Successfully scanned Wristband";
   cmd.resolve(cmd.res);
 };
 

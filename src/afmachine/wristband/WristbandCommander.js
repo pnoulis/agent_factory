@@ -4,9 +4,8 @@ import { stateventful } from "../../Stateful.js";
 import { createStateErr } from "../../errors.js";
 import { extendProto } from "../../misc/misc.js";
 
-extendProto(WristbandCommander, stateventful);
 class WristbandCommander extends createEventful(Wristband) {
-  constructor(afm, wristband, type) {
+  constructor(afm, wristband) {
     super(wristband);
     this.addEvent("stateChange");
     this.afm = afm;
@@ -60,5 +59,6 @@ class WristbandCommander extends createEventful(Wristband) {
     }
   }
 }
+extendProto(WristbandCommander, stateventful);
 
 export { WristbandCommander };

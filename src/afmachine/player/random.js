@@ -4,18 +4,20 @@ import { random as randomWristband } from "../wristband/random.js";
 
 function random(sources, options = {}) {
   trace("random player");
+  trace(sources, "player random sources");
 
   const _options = {
     longtext: options.longtext ?? false,
+    password: options.password ?? false,
     depth: options.depth ?? 0,
   };
-  trace(options, "player random options");
+  trace(_options, "player random _options");
 
   const _sources = [sources]
     .flat(2)
     .filter((src) => !!src)
     .map((src) => ("tobject" in src ? src.tobject(_options.depth) : src));
-  trace(_sources, "player random sources");
+  trace(_sources, "player random _sources");
 
   const target = Object.assign({}, ..._sources);
 
@@ -32,7 +34,11 @@ function random(sources, options = {}) {
   target.surname ||= surname;
   target.email ||= `${username}@gmail.com`;
 
-  if (options.depth) {
+  if (_options.password) {
+    target.password = target.username;
+  }
+
+  if (_options.depth) {
     target.wristband = randomWristband(target.wristband);
   }
 

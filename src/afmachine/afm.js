@@ -5,14 +5,18 @@ import { createCacheErr } from "../errors.js";
 import { createEventful } from "../Eventful.js";
 import { compose } from "./compose.js";
 
-// player tasks
-// import { registerPlayer } from "./tasks/registerPlayer.js";
+// Entities
+import { WristbandCommander } from "./wristband/WristbandCommander.js";
+import { PlayerCommander } from "./player/PlayerCommander.js";
+
+// Player tasks
+import { registerPlayer } from "./tasks/registerPlayer.js";
 // import { pairWristband } from "./tasks/pairWristband.js";
 // import { unpairWristband } from "./tasks/unpairWristband.js";
 
-// wristband tasks
-// import { scanWristband } from "./tasks/scanWristband.js";
-// import { getWristbandInfo } from "./tasks/getWristbandInfo.js";
+// Wristband tasks
+import { scanWristband } from "./tasks/scanWristband.js";
+import { getWristbandInfo } from "./tasks/getWristbandInfo.js";
 // import { registerWristband } from "./tasks/registerWristband.js";
 // import { deregisterWristband } from "./tasks/deregisterWristband.js";
 
@@ -169,18 +173,23 @@ Afm.prototype.onCmdEnd = function (cmd) {
     this.emit("idle", this);
   }
 };
+Afm.prototype.createWristband = function (wristband) {
+  return new WristbandCommander(this, wristband);
+};
+
+Afm.prototype.createPlayer = function (player, wristband) {
+  return new PlayerCommander(this, player, this.createWristband(wristband));
+};
 
 Object.assign(Afm.prototype, {
-  // player tasks
-
-  // registerPlayer,
+  // Player tasks
+  registerPlayer,
   // pairWristband,
   // unpairWristband,
 
   // Wristband tasks
-
-  // scanWristband,
-  // getWristbandInfo,
+  scanWristband,
+  getWristbandInfo,
   // registerWristband,
   // deregisterWristband,
 

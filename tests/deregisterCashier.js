@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
-import { randomCashier } from "../src/misc/misc.js";
+import { random as randomCashier } from "../src/afmachine/cashier/random.js";
 
 const task = "deregisterCashier";
 const b = globalThis.backend;
@@ -33,10 +33,17 @@ const modelResponse = {
   ],
 };
 
-const registeredCashiers = [randomCashier(), randomCashier(), randomCashier()];
+const registeredCashiers = [
+  randomCashier(null, { password: true }),
+  randomCashier(null, { password: true }),
+  randomCashier(null, { password: true }),
+];
 beforeAll(async () => {
   for (let i = 0; i < registeredCashiers.length; i++) {
-    const { cashier } = await afm.registerCashier(registeredCashiers[i]);
+    const { cashier } = await afm.registerCashier(
+      registeredCashiers[i],
+      registeredCashiers[i].password,
+    );
     registeredCashiers[i] = cashier;
   }
 });
@@ -86,7 +93,7 @@ describe(task, () => {
       });
       validate(response);
       if (validate.errors) {
-        console.log(response.errors);
+        console.log(validate.errors);
       }
       expect(validate.errors).toBeNull();
       validate({});
@@ -96,8 +103,10 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task](registeredCashiers.pop())).resolves.toMatchObject({
+    const cashier = registeredCashiers.pop();
+    await expect(afm[task](cashier)).resolves.toMatchObject({
       ok: true,
+      cashier,
     });
   });
 });

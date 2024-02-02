@@ -49,7 +49,7 @@ describe(task, () => {
       const response = await b[routeAlias](modelRequest);
       validate(response);
       if (validate.errors) {
-        console.log(response.errors);
+        console.log(validate.errors);
       }
       expect(validate.errors).toBeNull();
       validate({});

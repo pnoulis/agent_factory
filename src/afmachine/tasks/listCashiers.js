@@ -3,6 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
+import { normalize as normalizeCashier } from "../cashier/normalize.js";
 
 new Task("listCashiers", Command);
 
@@ -27,7 +28,9 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.cashiers = ctx.raw.cashiers;
+    ctx.res.cashiers = ctx.raw.cashiers.map((cashier) =>
+      normalizeCashier(cashier),
+    );
     return next();
   },
 ];

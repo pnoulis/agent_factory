@@ -50,7 +50,7 @@ describe(task, () => {
       const response = await b[task](modelRequest);
       validate(response);
       if (validate.errors) {
-        console.log(response.errors);
+        console.log(validate.errors);
       }
       expect(validate.errors).toBeNull();
       validate({});
@@ -60,6 +60,9 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task]()).resolves.toMatchObject({ ok: true });
+    await expect(afm[task]()).resolves.toMatchObject({
+      ok: true,
+      cashiers: expect.any(Array),
+    });
   });
 });

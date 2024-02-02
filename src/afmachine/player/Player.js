@@ -23,7 +23,7 @@ class Player extends createStateful([
     this.name = player.name || "";
     this.surname = player.surname || "";
     this.email = player.email || "";
-    this.state = player.state || "";
+    this.state = this.states[player.state || "unregistered"];
     this.wristband = wristband ?? {};
   }
   normalize(sources, { depth = 1, wristband, ...playerOpts } = {}) {

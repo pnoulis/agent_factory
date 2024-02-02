@@ -3,15 +3,16 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
+import { normalize as normalizeCashier } from "../cashier/normalize.js";
 
 new Task("registerCashier", Command);
 
-function Command(cashier, opts) {
+function Command(cashier, password, opts) {
   const afm = this;
   const promise = Command.createCommand(
     afm,
     {
-      args: { cashier },
+      args: { cashier, password },
       opts,
     },
     (cmd) => {
@@ -25,8 +26,8 @@ Command.middleware = [
     ctx.req = {
       username: ctx.args.cashier.username,
       email: ctx.args.cashier.email,
-      password: ctx.args.cashier.password,
-      role: ctx.args.cashier.role,
+      password: ctx.args.password,
+      role: [`ROLE_${ctx.args.cashier.role}`.toUpperCase()],
     };
     return next();
   },
@@ -42,24 +43,27 @@ Command.middleware = [
     const { cashiers } = await ctx.afm.backend.listCashiers({
       timestamp: ctx.t_start,
     });
-    ctx.res.cashier = ctx.req;
-    ctx.res.cashier.id = cashiers.find(
-      (cashier) => cashier.username === ctx.req.username,
-    )?.id;
-    ctx.res.cashier.role = ctx.req.role.at(0).split("_").at(1);
+    const thisCashier = cashiers.find(
+      (cashier) => cashier.username === ctx.args.cashier.username,
+    );
+    if (thisCashier === undefined) {
+      throw new Error(`Could not locate cashier: ${ctx.args.cashier.username}`);
+    }
+    ctx.res.cashier = normalizeCashier(thisCashier);
+    ctx.res.password = ctx.args.password;
     return next();
   },
 ];
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to register Cashier";
+  cmd.msg = "Failed to register new Cashier";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully registered Cashier";
+  cmd.msg = "Successfully registered new Cashier";
   cmd.resolve(cmd.res);
 };
 

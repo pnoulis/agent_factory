@@ -1,37 +1,23 @@
 import { describe, it, expect, beforeAll, expectTypeOf } from "vitest";
+import { normalize as normalizeWristband } from "../src/afmachine/wristband/normalize.js";
+import { random as randomWristband } from "../src/afmachine/wristband/random.js";
+import { WRISTBAND_COLORS } from "../src/constants.js";
 
-const task = "listScoreboardDevices";
+const task = "getWristbandInfo";
 const b = globalThis.backend;
 const afm = globalThis.afm;
 const topics = globalThis.topics;
 const modelRequest = {
-  timestamp: 1706711522546,
+  timestamp: 1706879364557,
+  wristbandNumber: 3,
 };
 const modelResponse = {
-  timestamp: 1706711522546,
+  timestamp: 1706879364557,
   result: "OK",
-  scoreboardDevices: [
-    {
-      deviceId: "scor1",
-      deviceType: "SCOREBOARD_SCREEN",
-      roomType: "SCOREBOARD1",
-      status: "ROTATING",
-    },
-    {
-      deviceId: "scor2",
-      deviceType: "SCOREBOARD_SCREEN",
-      roomType: "SCOREBOARD2",
-      status: "MONTHLY",
-    },
-  ],
+  wristband: { wristbandNumber: 3, wristbandColor: 2, active: false },
 };
 
 describe(task, () => {
-  it("Should have a Backend API call that resolves", async () => {
-    await expect(b[task](modelRequest)).resolves.toMatchObject({
-      result: "OK",
-    });
-  });
   it("Should validate the Model Request", () => {
     const validate = topics[task].schema.req;
     if (validate === null) return;
@@ -53,7 +39,7 @@ describe(task, () => {
     validate({});
     expect(validate.errors).not.toBeNull();
   });
-  it("Should validate Backend API response schema", async () => {
+  it("Should validate and normalize the Backend response", async () => {
     const validate = topics[task].schema.res;
     try {
       const response = await b[task](modelRequest);
@@ -64,11 +50,25 @@ describe(task, () => {
       expect(validate.errors).toBeNull();
       validate({});
       expect(validate.errors).not.toBeNull();
+      expect(response).toHaveProperty("wristband");
+      expect(normalizeWristband(response.wristband)).toEqual({
+        id: response.wristband.wristbandNumber,
+        colorCode: response.wristband.wristbandColor,
+        color: WRISTBAND_COLORS[response.wristband.wristbandColor] || "",
+        state: "unpaired",
+      });
     } catch (err) {
       throw err;
     }
   });
   it("Should have an Afmachine Task", async () => {
-    await expect(afm[task]()).resolves.toMatchObject({ ok: true });
+    const wristband = randomWristband({ id: 220 });
+    await expect(afm[task](wristband)).resolves.toMatchObject({
+      ok: true,
+      wristband: {
+        ...wristband,
+        state: "unpaired",
+      },
+    });
   });
 });

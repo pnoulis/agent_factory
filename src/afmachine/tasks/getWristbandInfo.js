@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { Wristband } from "../wristband/Wristband.js";
+import { normalize as normalizeWristband } from "../wristband/normalize.js";
 
 new Task("getWristbandInfo", Command);
 
@@ -41,19 +41,24 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    ctx.res.wristband = Wristband.normalize(ctx.raw.wristband);
+    ctx.res.wristband = normalizeWristband(
+      ctx.args.wristband,
+      ctx.raw.wristband,
+    );
     return next();
   },
 ];
 
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to retrieve wristband information";
+  cmd.res.ok = false;
+  cmd.msg = "Failed to retrieve Wristband information";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully retrieved wristband information";
+  cmd.res.ok = true;
+  cmd.msg = "Successfully retrieved Wristband information";
   cmd.resolve(cmd.res);
 };
 

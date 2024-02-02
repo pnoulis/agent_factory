@@ -3,15 +3,16 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
+import { normalize as normalizeCashier } from "../cashier/normalize.js";
 
 new Task("loginCashier", Command);
 
-function Command(cashier, opts) {
+function Command(cashier, password, opts) {
   const afm = this;
   const promise = Command.createCommand(
     afm,
     {
-      args: { cashier },
+      args: { cashier, password },
       opts,
     },
     (cmd) => {
@@ -24,7 +25,7 @@ Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
       username: ctx.args.cashier.username,
-      password: ctx.args.cashier.password,
+      password: ctx.args.password,
     };
     return next();
   },
@@ -37,12 +38,17 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    ctx.res.cashier = {
-      ...ctx.args.cashier,
-      email: ctx.raw.jwtResponse.email,
-      id: ctx.raw.jwtResponse.id,
-      role: ctx.raw.jwtResponse.roles.at(0).split("_").at(1),
-    };
+    const { cashiers } = await ctx.afm.backend.listCashiers({
+      timestamp: ctx.t_start,
+    });
+    const thisCashier = cashiers.find(
+      (cashier) => cashier.username === ctx.args.cashier.username,
+    );
+    if (thisCashier === undefined) {
+      throw new Error(`Could not locate cashier: ${ctx.args.cashier.username}`);
+    }
+    ctx.res.cashier = normalizeCashier(thisCashier);
+    ctx.res.password = ctx.args.password;
     ctx.res.jwt = ctx.raw.jwtResponse.jwt;
     return next();
   },

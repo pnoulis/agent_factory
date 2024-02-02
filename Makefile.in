@@ -111,7 +111,7 @@ stop:
 test: file?=
 test: dotenv
 	$(loadenv)
-	MODE=test $(vitest) run $(file) | tee $(out_test_log)
+	MODE=test $(vitest) run $(file) $(args) | tee $(out_test_log)
 
 ##################################################
 # run
