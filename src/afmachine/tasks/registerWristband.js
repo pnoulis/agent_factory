@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { wristband } from "../wristband/Wristband.js";
+import { normalize as normalizeWristband } from "../wristband/normalize.js";
 
 new Task("registerWristband", Command);
 
@@ -38,23 +38,29 @@ Command.middleware = [
   validateBackendRequest,
   async (ctx, next) => {
     ctx.raw = await ctx.afm.backend.registerWristband(ctx.req);
-    ctx.res.wristband = Wristband.normalize(ctx.args.wristband, {
-      state: "paired",
-    });
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
+  (ctx, next) => {
+    ctx.res.player = { ...ctx.args.player };
+    ctx.res.player.wristband = normalizeWristband(ctx.args.wristband, {
+      state: "paired",
+    });
+    return next();
+  },
 ];
 
 Command.onFailure = function () {
   const cmd = this;
-  cmd.msg = "Failed to register wristband to player";
+  cmd.res.ok = false;
+  cmd.msg = "Failed to register Wristband to Player";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
-  cmd.msg = "Successfully registered wristband to player";
+  cmd.res.ok = true;
+  cmd.msg = "Successfully registered Wristband to Player";
   cmd.resolve(cmd.res);
 };
 

@@ -21,23 +21,261 @@
 **** TODO fill
 
 
-** TODO Implement wristband register
 
+** TODO Implement Synthetic Player Pair Wristband
+*** scratch
+
+player.pairWristband();
+player calls afm
+afm calls players state -> can throw error
+afm calls player's wrisband.state.pair(); -> switches state to pairing
+
+Try pairing a players wristband under normal circumstances.
+
+*** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, PlayerCommander
+  {
+    username: 'pavlos',
+    name: 'Maedhros',
+    surname: 'gracious',
+    email: '3t1ecp5utn8@gmail.com',
+    state: 'registered',
+    wristband: {}
+  },
+  // 2nd argument, required, WristbandCommander
+  {
+    id: null,
+    color: '',
+    colorCode: null,
+    state: 'unpaired'
+  }
+  // 3rd agument, optional, options
+  {
+    queue: true || false
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    player: {
+      username: 'pavlos',
+      name: 'Maedhros',
+      surname: 'gracious',
+      email: '3t1ecp5utn8@gmail.com',
+      state: 'registered',
+      wristband: {
+        id: 339,
+        color: 'purple',
+        colorCode: 2,
+        state: 'paired'
+      }
+    }
+  }
+#+end_src
+
+
+*** Write test
+
+
+** TODO Implement Package register
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+**** Backend request
+**** Backend response
+**** After normalize()
+**** Afm response
+** TODO Implement Team register
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+**** Backend request
+**** Backend response
+**** After normalize()
+**** Afm response
+** TODO Implement Group Party Team register
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+**** Backend request
+**** Backend response
+**** After normalize()
+**** Afm response
+** TODO Implement Package deregister
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+**** Backend request
+**** Backend response
+**** After normalize()
+**** Afm response
+
+** TODO Implement Player search
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+**** Backend request
+**** Backend response
+**** After normalize()
+**** Afm response
+** TODO Implement Team start
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+**** Backend request
+**** Backend response
+**** After normalize()
+**** Afm response
+** TODO Implement Scoreboard set view
+*** TODO Object schema for req/res backend topic payload
+*** TODO Implement backend api topic call
+*** TODO Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+**** Backend request
+**** Backend response
+**** After normalize()
+**** Afm response
+
+
+
+** DONE Implement wristband register
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
 
 *** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, Player
+  {
+    username: "test",
+    name: 'test',
+    surname: 'test',
+    email: 'testt@gmail.com',
+  }
+  // 2nd argument, required, Wristband
+  {
+    id: 3,
+    color: 'green',
+    colorCode: 3
+  }
+  // 3rd argument, optional, options
+  {
+    queue: true || false
+  }
+#+end_src
+**** Backend request
+#+begin_src js
+  {
+    timestamp : 1706957679789,
+    username : "diwgp3nrrtf",
+    wristbandNumber : 234
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp : 1706957679848,
+    result : "OK",
+    message : "successfully registerWristbandToPlayer"
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    player: {
+      username: "test",
+      name: 'test',
+      surname: 'test',
+      email: 'testt@gmail.com',
+      wristband: {
+        id: 3,
+        color: "green",
+        colorCode: 3,
+        state: "paired"
+      }
+    }
+  }
+#+end_src
 
-** TODO Implement wristband deregister
+** DONE Implement wristband deregister
 *** DONE Object schema for req/res backend topic payload
 
 *** DONE Implement backend api topic call
 
 *** DONE Implement Task and Command
-
 *** DONE Document the req/res payload
-
+**** Afm request
+#+begin_src js
+  // 1st argument, required, Player
+  {
+    username: "test",
+    name: 'test',
+    surname: 'test',
+    email: 'testt@gmail.com',
+  }
+  // 2nd argument, required, Wristband
+  {
+    id: 3,
+    color: 'green',
+    colorCode: 3
+  }
+  // 3rd argument, optional, options
+  {
+    queue: true || false
+  }
+#+end_src
+**** Backend request
+#+begin_src js
+  {
+    timestamp : 1706960913052,
+    username : "a39hldmki3",
+    wristbandNumber : 432
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp : 1706960913123,
+    result : "OK",
+    message : "successfully unregisterWristbandToPlayer"
+  }
+#+end_src
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    player: {
+      username: "test",
+      name: 'test',
+      surname: 'test',
+      email: 'testt@gmail.com',
+      wristband: {
+        id: 3,
+        color: "green",
+        colorCode: 3,
+        state: "unpaired"
+      }
+    }
+  }
+#+end_src
 
 ** DONE Implement Player register
 *** DONE Object schema for req/res backend topic payload
@@ -46,7 +284,7 @@
 *** DONE Document the req/res payload
 **** Afm request
 #+begin_src js
-  // 1st argument, required, player
+  // 1st argument, required, PlayerCommander
   {
     username: 'test',
     name: 'test',
@@ -142,7 +380,7 @@
   }
 #+end_src
 
-** DONE Implement Wrisband scan
+** DONE Implement Wristband scan
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
@@ -175,61 +413,6 @@
     ok: true
     wristband: { id: 3, color: 'green', colorCode: 3, state: 'unpaired' },
     unsubed: false,
-  }
-#+end_src
-
-
-** TODO Implement Player Pair Wristband
-*** scratch
-
-player.pairWristband();
-player calls afm
-afm calls players state -> can throw error
-afm calls player's wrisband.state.pair(); -> switches state to pairing
-
-Try pairing a players wristband under normal circumstances.
-
-*** DONE Document the req/res payload
-**** Afm request
-#+begin_src js
-  // 1st argument, required, PlayerCommander
-  {
-    username: 'pavlos',
-    name: 'Maedhros',
-    surname: 'gracious',
-    email: '3t1ecp5utn8@gmail.com',
-    state: 'registered',
-    wristband: {}
-  },
-  // 2nd argument, required, WristbandCommander
-  {
-    id: null,
-    color: '',
-    colorCode: null,
-    state: 'unpaired'
-  }
-  // 3rd agument, optional, options
-  {
-    queue: true || false
-  }
-#+end_src
-**** Afm response
-#+begin_src js
-  {
-    ok: true,
-    player: {
-      username: 'pavlos',
-      name: 'Maedhros',
-      surname: 'gracious',
-      email: '3t1ecp5utn8@gmail.com',
-      state: 'registered',
-      wristband: {
-        id: 339,
-        color: 'purple',
-        colorCode: 2,
-        state: 'paired'
-      }
-    }
   }
 #+end_src
 

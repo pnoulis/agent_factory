@@ -145,11 +145,6 @@ const registrationTopics = {
   registerWristband: {
     schema: {
       req: ajv.compile({
-        /*
-          timestamp: 1706449278756,
-          username: 'Fingolfin_1iq9nl30j8fg',
-          wristbandNumber: 169
-         */
         type: "object",
         required: ["timestamp", "username", "wristbandNumber"],
         additionalProperties: false,
@@ -160,11 +155,6 @@ const registrationTopics = {
         },
       }),
       res: ajv.compile({
-        /*
-          timestamp: 1706449278833,
-          result: 'OK',
-          message: '...'
-         */
         type: "object",
         additionalProperties: false,
         required: ["timestamp", "result", "message"],
@@ -182,11 +172,6 @@ const registrationTopics = {
   deregisterWristband: {
     schema: {
       req: ajv.compile({
-        /*
-          timestamp: 1706455867765,
-          username: 'Merry_2mpmnxcgv1s',
-          wristbandNumber: 202
-         */
         type: "object",
         additionalProperties: false,
         required: ["timestamp", "username", "wristbandNumber"],
@@ -197,11 +182,6 @@ const registrationTopics = {
         },
       }),
       res: ajv.compile({
-        /*
-          timestamp: 1706455867824,
-          result: 'OK',
-          message: 'successfully unregisterWristbandToPlayer'
-         */
         type: "object",
         additionalProperties: false,
         required: ["timestamp", "result", "message"],

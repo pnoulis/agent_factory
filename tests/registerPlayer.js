@@ -78,9 +78,11 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    const player = randomPlayer(null, { password: true });
-    await expect(afm[task](player, player.password)).resolves.toMatchObject({
+    const player = afm.createPlayer().fill(null, { password: true });
+    const response = await afm[task](player, player.password);
+    expect(response).toEqual({
       ok: true,
+      player: player.tobject(),
     });
   });
 });

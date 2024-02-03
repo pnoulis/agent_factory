@@ -1,7 +1,7 @@
 function registerWristband({
-  timestamp = "",
-  username = "",
-  wristbandNumber = "",
+  timestamp = Date.now(),
+  username,
+  wristbandNumber,
 } = {}) {
   return this.publish("wristband/register", {
     timestamp,

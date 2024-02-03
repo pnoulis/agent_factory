@@ -1,7 +1,7 @@
 function deregisterWristband({
-  timestamp = "",
-  username = "",
-  wristbandNumber = "",
+  timestamp = Date.now(),
+  username,
+  wristbandNumber,
 } = {}) {
   return this.publish("wristband/deregister", {
     timestamp,

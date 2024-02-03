@@ -44,7 +44,7 @@ export default defineConfig({
     watch: false,
     globals: true,
     environment: "node",
-    testTimeout: 10000, // 10 seconds
+    testTimeout: 3000, // 3 seconds
     reporter: "verbose",
     poolOptions: {
       threads: {

@@ -51,7 +51,12 @@ class Player extends createStateful([
     return this.setState(state);
   }
   fill(sources, options = {}) {
-    return this.normalize(Player.random([this, sources], options));
+    const random = Player.random([this, sources], options);
+    this.normalize(random, options);
+    if (options.password) {
+      this.password = random.password;
+    }
+    return this;
   }
   tobject(depth = 0) {
     const player = Player.normalize(this, { depth: 0 });

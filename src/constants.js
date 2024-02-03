@@ -37,7 +37,7 @@ const SCOREBOARD_VIEWS = [
   "ROOMS",
 ];
 
-const MAX_WRISTBAND_ID = 999;
+const MAX_WRISTBAND_ID = 500;
 const FM_TIMEOUT = 5000;
 
 const PACKAGE_TYPES = ["mission", "time"];

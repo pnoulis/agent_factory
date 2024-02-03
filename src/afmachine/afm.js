@@ -9,15 +9,19 @@ import { compose } from "./compose.js";
 import { WristbandCommander } from "./wristband/WristbandCommander.js";
 import { PlayerCommander } from "./player/PlayerCommander.js";
 
+// Synthetic Player tasks
+import { pairWristband } from "./synthetic-tasks/pairWristband.js";
+
+// Synthetic Team tasks
+
 // Player tasks
 import { registerPlayer } from "./tasks/registerPlayer.js";
-import { pairWristband } from "./synthetic-tasks/pairWristband.js";
 
 // Wristband tasks
 import { scanWristband } from "./tasks/scanWristband.js";
 import { getWristbandInfo } from "./tasks/getWristbandInfo.js";
-// import { registerWristband } from "./tasks/registerWristband.js";
-// import { deregisterWristband } from "./tasks/deregisterWristband.js";
+import { registerWristband } from "./tasks/registerWristband.js";
+import { deregisterWristband } from "./tasks/deregisterWristband.js";
 
 // Cashier tasks
 import { registerCashier } from "./tasks/registerCashier.js";
@@ -176,16 +180,17 @@ Afm.prototype.createPlayer = function (player, wristband) {
 };
 
 Object.assign(Afm.prototype, {
+  // Synthetic Player tasks
+  pairWristband,
+
   // Player tasks
   registerPlayer,
-  pairWristband,
-  // unpairWristband,
 
   // Wristband tasks
   scanWristband,
   getWristbandInfo,
-  // registerWristband,
-  // deregisterWristband,
+  registerWristband,
+  deregisterWristband,
 
   // Session tasks
   startSession,
