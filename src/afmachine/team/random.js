@@ -22,7 +22,7 @@ function random(sources, options = {}) {
 
   const target = Object.assign({}, ..._sources);
 
-  target.name ||= generateRandomName() + smallid();
+  target.name ||= generateRandomName() + "_" + smallid();
   target.points ??= randomInteger(0, 500);
   target.t_created = Date.now() - t_daytomls() / randomInteger(2, 5);
 

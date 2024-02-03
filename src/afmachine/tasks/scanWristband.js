@@ -25,7 +25,7 @@ function Command(unsubcb, opts) {
 
 Command.middleware = [
   async (ctx, next) => {
-    if (!ctx.args.scanLock) {
+    if (SCAN_WRISTBAND_LOCK !== ctx.args.scanLock) {
       throw createError(
         "warn",
         "Wristband scan is busy",
@@ -36,9 +36,7 @@ Command.middleware = [
     try {
       await next();
     } finally {
-      if (ctx.args.scanLock) {
-        SCAN_WRISTBAND_LOCK = false;
-      }
+      SCAN_WRISTBAND_LOCK = false;
     }
   },
   attachBackendRegistrationRouteInfo,

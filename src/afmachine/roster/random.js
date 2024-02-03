@@ -5,6 +5,7 @@ function random(sources, options = {}) {
   trace("random roster");
 
   const _options = {
+    ...options,
     size: options.size ?? 0,
     depth: options.depth ?? 0,
     Player: options.Player,
@@ -35,7 +36,9 @@ function random(sources, options = {}) {
     }
   } else {
     for (let i = 0; i < _options.size; i++) {
-      target.push(randomPlayer(_sources[i], { depth: _options.depth - 1 }));
+      target.push(
+        randomPlayer(_sources[i], { ..._options, depth: _options.depth - 1 }),
+      );
     }
   }
   trace(target, "roster random target");

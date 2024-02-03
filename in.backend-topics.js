@@ -196,8 +196,33 @@ const registrationTopics = {
     pub: prefix("player/unregisterWristband"),
     sub: prefix("player/unregisterWristband/response"),
   },
-  mergeTeam: {
-    alias: "team/merge",
+  registerTeam: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "teamName", "usernames"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          teamName: schemas.team.name,
+          usernames: {
+            type: "array",
+            items: schemas.player.properties.username,
+          },
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "message"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          message: schemas.commons.message,
+        },
+      }),
+    },
+    alias: "team/register",
     pub: prefix("team/merge"),
     sub: prefix("team/merge/response"),
   },

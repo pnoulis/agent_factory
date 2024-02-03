@@ -80,17 +80,32 @@ Try pairing a players wristband under normal circumstances.
 *** Write test
 
 
-** TODO Implement Package register
+** TODO Implement Team register
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command
 *** TODO Document the req/res payload
-**** Afm request
+**** Afm reques
 **** Backend request
+#+begin_src js
+  {
+    timestamp : 1706979526513,
+    teamName : "testTeam",
+    usernames : [ "9qqu592xhrg", "g0dh1umskej" ]
+  }
+#+end_src
 **** Backend response
+#+begin_src js
+  {
+    timestamp : 1706979526580,
+    result : "OK",
+    message : "successfully created team: tziros1"
+  }
+#+end_src
 **** After normalize()
 **** Afm response
-** TODO Implement Team register
+
+** TODO Implement Package register
 *** TODO Object schema for req/res backend topic payload
 *** TODO Implement backend api topic call
 *** TODO Implement Task and Command

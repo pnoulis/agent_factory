@@ -56,11 +56,18 @@ class WristbandCommander extends createEventful(Wristband) {
       }
     }
   }
+  async register(player, wristband) {
+    const response = await this.afm.registerWristband(player, wristband, {
+      queue: false,
+    });
+    return response.player.wristband;
+  }
 
-  async pair() {
+  async pair(player) {
     this.state.pair();
     const wristband = await this.scan();
-    this.state.paired(wristband);
+    const registered = await this.register(player, wristband);
+    this.state.paired(registered);
     return this;
   }
 }

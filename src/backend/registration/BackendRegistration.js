@@ -13,6 +13,9 @@ import { getWristbandInfo } from "./getWristbandInfo.js";
 import { registerWristband } from "./registerWristband.js";
 import { deregisterWristband } from "./deregisterWristband.js";
 
+// Team topics
+import { registerTeam } from "./registerTeam.js";
+
 // Cashier topics
 import { registerCashier } from "./registerCashier.js";
 import { deregisterCashier } from "./deregisterCashier.js";
@@ -54,14 +57,18 @@ class BackendRegistration extends Backend {
 }
 
 Object.assign(BackendRegistration.prototype, {
-  // player topics
+  // Player topics
   registerPlayer,
   loginPlayer,
-  // wristband topics
+
+  // Wristband topics
   scanWristband,
   getWristbandInfo,
   registerWristband,
   deregisterWristband,
+
+  // Team topics
+  registerTeam,
 
   // Cashier topics
   registerCashier,

@@ -32,7 +32,7 @@ Command.middleware = [
   async (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);
     player.state.pairWristband();
-    await player.wristband.pair();
+    await player.wristband.pair(player);
     ctx.res.player = player.tobject(1);
     return next();
   },

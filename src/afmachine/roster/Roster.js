@@ -39,13 +39,18 @@ class Roster {
   }
 
   fill(sources, options = {}) {
-    return this.normalize(
-      Roster.random([this.players, sources], {
-        ...options,
-        Player: this.Player,
-        Wristband: this.Wristband,
-      }),
-    );
+    const players = Roster.random([this.players, sources], {
+      ...options,
+      Player: this.Player,
+      Wristband: this.Wristband,
+    });
+    this.normalize(players, options);
+    if (options.password) {
+      for (let i = 0; i < this.length; i++) {
+        this.players[i].password = players[i].password;
+      }
+    }
+    return this;
   }
   tobject(depth = 0) {
     return this.players.map((player) => player.tobject(depth));
