@@ -28,22 +28,30 @@ class Package extends createStateful([
     this.t_start = pkg.t_start ?? null;
     this.t_end = pkg.t_end ?? null;
     this.remainder = pkg.remainder ?? null;
-    this.state = pkg.state || "";
+    this.state = this.states[pkg.state?.name || pkg.state || "unregistered"];
   }
 
   normalize(sources, options = {}) {
-    if (options.normalized) {
-      Object.assign(this, sources);
-    } else {
-      Object.assign(this, Package.normalize([this, sources], options));
-    }
-    return stateful.setState.call(this, this.state);
+    const { state, ...pkg } = Package.normalize([this, sources], options);
+    Object.assign(this, pkg);
+    this.setState(state);
+    return this;
   }
   fill(sources) {
     return this.normalize(Package.random([this, sources]));
   }
   tobject() {
-    return Package.normalize(this);
+    return {
+      id: this.id,
+      name: this.name,
+      type: this.type,
+      amount: this.amount,
+      cost: this.cost,
+      t_start: this.t_start,
+      t_end: this.t_end,
+      remainder: this.remainder,
+      state: this.state.name,
+    };
   }
 }
 

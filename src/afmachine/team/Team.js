@@ -10,73 +10,84 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
   static random = random;
   static normalize = normalize;
 
-  constructor(team, { Player, Wristband, Package } = {}) {
+  constructor(team, createPlayer, createWristband, createPackage) {
     super();
     team ??= {};
     this.name = team.name || "";
     this.t_created = team.t_created ?? null;
-    this.points = team.points ?? 0;
-    this.roster = new Roster(team.roster, Player, Wristband);
-    this.Package = Package;
+    this.points = team.points ?? null;
     this.packages = team.packages;
+    this.roster = team.roster;
+    this.state = this.states[team.state?.name || team.state || "unregistered"];
+    this.create = {
+      player: createPlayer ?? null,
+      wristband: createWristband ?? null,
+      package: createPackage ?? null,
+    };
   }
 
+  get roster() {
+    return this._roster;
+  }
+  set roster(players) {
+    players ??= [];
+    this._roster = [];
+    for (let i = 0; i < players.length; i++) {
+      this.addPlayer(players[i]);
+    }
+  }
   get packages() {
     return this._packages;
   }
-
   set packages(packages) {
     packages ??= [];
     this._packages = [];
     for (let i = 0; i < packages.length; i++) {
-      this._packages.push(new this.Package(packages[i]));
+      this.addPackage(packages[i]);
     }
     return this;
   }
 
-  normalize(sources, { depth = 2, roster, pkgs, ...teamOpts } = {}) {
-    const {
-      packages,
-      roster: rosterSrc,
-      ...team
-    } = teamOpts.normalized
-      ? sources
-      : Team.normalize([this, sources], { depth, roster, pkgs, ...teamOpts });
-
-    // Roster
-    this.roster.normalize(
-      rosterSrc,
-      depth > 0 ? { ...roster, normalized: true } : roster,
+  addPlayer(player) {
+    this._roster.push(
+      this.create.player(player, this.create.wristband(player?.wristband)),
     );
+  }
+  addPackage(pkg) {
+    this._packages.push(this.create.package(pkg));
+  }
 
-    // Packages
-    if (depth > 0) {
-      this.packages = packages;
-    } else {
-      this.packages = packages.map((pkg) => this.Package.normalize(pkg, pkgs));
-    }
-
-    // Team
+  normalize(sources, options) {
+    const { packages, roster, state, ...team } = Team.normalize(
+      [this, sources],
+      options,
+    );
+    this.packages = packages;
+    this.roster = roster;
     Object.assign(this, team);
-    return stateful.setState.call(this, this.state);
+    this.setState(state);
+    return this;
   }
   fill(sources, options) {
-    return this.normalize(
-      Team.random([this, sources], {
-        ...options,
-        Wristband: this.roster.Wristband,
-        Player: this.roster.Player,
-      }),
-    );
+    options ??= {};
+    while (this.roster.length < options.players) {
+      this.addPlayer();
+    }
+    while (this.packages.length < options.packages) {
+      this.addPackage();
+    }
+    return this.normalize(Team.random([this, sources], options), options);
   }
   tobject(depth = 0) {
-    const team = Team.normalize(this, { depth: 0 });
+    const team = {
+      name: this.name,
+      t_created: this.t_created,
+      points: this.points,
+      state: this.state.name,
+    };
     if (depth > 0) {
-      team.roster = this.roster.tobject(depth - 1);
+      team.roster = this.roster.map((player) => player.tobject(depth - 1));
       team.packages = this.packages.map((pkg) => pkg.tobject());
-    } else {
-      team.roster = [];
-      team.packages = [];
     }
     return team;
   }

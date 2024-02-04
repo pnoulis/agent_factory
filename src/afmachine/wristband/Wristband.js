@@ -17,20 +17,28 @@ class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
     this.id = wristband.id ?? null;
     this.color = wristband.color || "";
     this.colorCode = wristband.colorCode ?? null;
-    this.state = this.states[wristband.state || "unpaired"];
+    this.state =
+      this.states[wristband.state?.name || wristband.state || "unpaired"];
   }
-  normalize(sources, options = {}) {
-    const { state, ...wristband } = options.normalized
-      ? sources
-      : Wristband.normalize([this, sources], options);
+  normalize(sources, options) {
+    const { state, ...wristband } = Wristband.normalize(
+      [this, sources],
+      options,
+    );
     Object.assign(this, wristband);
-    return this.setState(state);
+    this.setState(state);
+    return this;
   }
   fill(sources, options) {
     return this.normalize(Wristband.random([this, sources], options));
   }
   tobject() {
-    return Wristband.normalize(this);
+    return {
+      id: this.id,
+      color: this.color,
+      colorCode: this.colorCode,
+      state: this.state.name,
+    };
   }
 }
 

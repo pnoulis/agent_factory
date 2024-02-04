@@ -22,6 +22,20 @@
 
 
 
+** Roster should not normalize() nor fill()
+The roster should only exist to assist in the management
+of a teams players.
+
+It should NOT be responsible for the creation of players or wristbands.
+It should present the following inteface:
+
+find a player
+add a player
+remove a player
+roster
+length
+
+
 ** TODO Implement Synthetic Player Pair Wristband
 *** scratch
 
@@ -169,7 +183,7 @@ Try pairing a players wristband under normal circumstances.
 
 
 
-** DONE Implement wristband register
+** DONE Implement Wristband register
 *** DONE Object schema for req/res backend topic payload
 *** DONE Implement backend api topic call
 *** DONE Implement Task and Command
@@ -230,7 +244,7 @@ Try pairing a players wristband under normal circumstances.
   }
 #+end_src
 
-** DONE Implement wristband deregister
+** DONE Implement Wristband deregister
 *** DONE Object schema for req/res backend topic payload
 
 *** DONE Implement backend api topic call
@@ -2989,7 +3003,77 @@ entity or entities.
 
 
 * Normalization functions
-Normalization function are used to translate and merge entity objects.
+Normalization function take an array of source objects and merge them into one
+object. It is similar to Object.assign(target, ...sources) but adjusted to fit
+the special needs of the ENTITY being normalized. (such as a Player, Wristband
+etc). To be more exact, each normalization function is responsible for:
+
+- TRANSLATION of an object in backend form to frontend form.
+- DEDUCING the state of the entity.
+- MERGING of multiple sources.
+- NORMALIZATION of the NESTED entities contained within, if any.
+
+All normalization functions accept the following inputs:
+
+- an array of sources, or a single object, or null, or the empty object etc...
+- An Options object
+
+An Option's object contains 2 types of information:
+
+- Shared options intended to be consumed by the invoked normalization function
+  AND the nested normalization's if any.
+- Target options intended to be consumed only by the invoked normalization
+  function.
+
+The top level properties are divided into shared and target by the invoked
+normalization function.
+
+To pass along instructions to a NESTED normalization function, one must begin a
+secondary nesting in the Options object.
+
+For example:
+
+#+begin_src js
+  // Considering a Composite Entity such as a Team which
+  // contains within Players with each owning a Wristband and Packages.
+  // Team -> Players -> Wristband
+  // Team -> Packages
+  {
+    depth: 2, // Shared
+    nullSupersede: true, // Team target
+    state: 'registered', // Team Target
+    package: { // NESTED TARGET -> Package
+      state: "playing",
+    }
+    player: { // NESTED TARGET -> Player
+      state: "inTeam",
+    }
+    wristband: { // NESTED TARGET -> Player -> Wristband
+      state: "paired",
+      nullsSupersede: false
+    }
+  }
+#+end_src
+
+interpreted as the SHARED options and TARGET
+The Options object's top level properties are intended to be consumed by the
+invoked normalization function.
+
+If the normalization function finds the following properties in the option's
+object:
+
+- wristband
+- player
+
+They will be interpreted as instructions to be passed along to the normalization
+functions of their repsective entities nested within the top level entity if
+they are invoked.
+
+
+
+object.
+Normalization function are used to:
+
 
 They translate objects in backend form to frontend form.
 
@@ -3005,6 +3089,12 @@ A frontend wristband has the following properties:
 id
 color
 colorCode
+
+It is the principal task of a normalization function to perform the translation.
+
+While translatating, it also deduces the STATE of the entity.
+
+- state 
 
 The wristband normalization function is capable of taking a backend wristband
 and translating it into a frontend wristband.

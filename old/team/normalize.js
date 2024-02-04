@@ -1,6 +1,6 @@
 import { isObject, isArray } from "js_utils/misc";
-import { normalize as normalizePackage } from "../package/normalize.js";
-import { normalize as normalizePlayer } from "../player/normalize.js";
+import { normalize as normalizePackages } from "../package/normalize.js";
+import { normalize as normalizeRoster } from "../roster/normalize.js";
 
 function normalize(sources, options = {}) {
   trace("normalize team");
@@ -10,11 +10,10 @@ function normalize(sources, options = {}) {
     nullSupersede: options.nullSupersede ?? false,
     defaultState: options.defaultState ?? "unregistered",
     depth: options.depth ?? 0,
-    package: options.package,
-    player: options.player,
-    wristband: options.wristband,
+    pkgs: options.pkgs,
+    roster: options.roster,
   };
-  trace(_options, "team _options");
+  trace(_options, "team options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
   trace(_sources, "team _sources");
@@ -22,7 +21,7 @@ function normalize(sources, options = {}) {
   const target = {
     name: "",
     t_created: null,
-    points: null,
+    points: 0,
     packages: [],
     roster: [],
     state: "",
@@ -35,8 +34,14 @@ function normalize(sources, options = {}) {
       target.t_created = _sources[i].t_created || _sources[i].created || null;
       target.points = _sources[i].points ?? _sources[i].totalPoints ?? 0;
       target.packages = _sources[i].packages || [];
-      target.roster =
-        _sources[i].currentRoster?.players || _sources[i].roster || [];
+      if (Object.hasOwn(_sources[i], "currentRoster")) {
+        roster = _sources[i].currentRoster.players;
+      } else if (Object.hasOwn(_sources[i], "roster")) {
+        roster = isArray(_sources[i].roster)
+          ? _sources[i].roster
+          : _sources[i].roster.players;
+      }
+      target.roster = roster || [];
       target.state =
         _sources[i].teamState ||
         (isObject(_sources[i].state)
@@ -46,15 +51,19 @@ function normalize(sources, options = {}) {
   } else {
     for (let i = 0; i < _sources.length; i++) {
       target.name = _sources[i].name || target.name;
-      target.t_created =
-        _sources[i].created ?? _sources[i].t_created ?? target.t_created;
-      target.points =
-        _sources[i].totalPoints ?? _sources[i].points ?? target.points;
+      target.t_created = _sources[i].created || target.t_created;
+      target.points = _sources[i].totalPoints || target.points;
       target.packages = _sources[i].packages || target.packages;
-      target.roster =
-        _sources[i].currentRoster?.players ||
-        _sources[i].roster ||
-        target.roster;
+
+      if (Object.hasOwn(_sources[i], "currentRoster")) {
+        roster = _sources[i].currentRoster.players;
+      } else if (Object.hasOwn(_sources[i], "roster")) {
+        roster = isArray(_sources[i].roster)
+          ? _sources[i].roster
+          : _sources[i].roster.players;
+      }
+
+      target.roster = roster || target.roster;
       target.state =
         _sources[i].teamState ||
         (isObject(_sources[i].state)
@@ -78,25 +87,15 @@ function normalize(sources, options = {}) {
   target.state ||= _options.defaultState;
 
   if (_options.depth > 0) {
-    target.roster = target.roster.map((player) =>
-      normalizePlayer(player, {
-        depth: _options.depth - 1,
-        defaultState: target.state === "playing" ? "playing" : "inTeam",
-        ..._options.player,
-        wristband: {
-          defaultState: "paired",
-          ..._options.wristband,
-        },
-      }),
-    );
-    target.packages = target.packages.map((pkg) => {
-      debug(pkg);
-      debug("team normalize pkg");
-      return normalizePackage(pkg, _options.package);
+    target.roster = normalizeRoster(target.roster, {
+      state: target.state === "playing" ? "playing" : "inTeam",
+      depth: _options.depth - 1,
+      wristband: { defaultState: "paired" },
+      ..._options.roster,
     });
-    // target.packages = target.packages.map((pkg) =>
-    //   normalizePackage(pkg, _options.package),
-    // );
+    target.packages = target.packages.map((pkg) =>
+      normalizePackages(pkg, _options.pkgs),
+    );
   }
   trace(target, "team target");
   return target;

@@ -8,6 +8,7 @@ import { compose } from "./compose.js";
 // Entities
 import { WristbandCommander } from "./wristband/WristbandCommander.js";
 import { PlayerCommander } from "./player/PlayerCommander.js";
+import { Package } from "./package/Package.js";
 
 // Synthetic Player tasks
 import { pairWristband } from "./synthetic-tasks/pairWristband.js";
@@ -171,13 +172,13 @@ Afm.prototype.onCmdEnd = function (cmd) {
     this.emit("idle", this);
   }
 };
-Afm.prototype.createWristband = function (wristband) {
-  return new WristbandCommander(this, wristband);
-};
+// Afm.prototype.createWristband = function (wristband) {
+//   return new WristbandCommander(this, wristband);
+// };
 
-Afm.prototype.createPlayer = function (player, wristband) {
-  return new PlayerCommander(this, player, this.createWristband(wristband));
-};
+// Afm.prototype.createPlayer = function (player, wristband) {
+//   return new PlayerCommander(this, player, this.createWristband(wristband));
+// };
 
 Object.assign(Afm.prototype, {
   // Synthetic Player tasks
@@ -219,5 +220,18 @@ Object.assign(Afm.prototype, {
 });
 
 const afm = new Afm();
+
+afm.create = {
+  wristband: function (wristband) {
+    return new WristbandCommander(afm, wristband);
+  },
+  player: function (player, wristband) {
+    return new PlayerCommander(afm, player, wristband);
+  },
+  package: function (pkg) {
+    return new Package(pkg);
+  },
+  team: function (team, player, wristband, pkg) {},
+};
 
 export { afm };

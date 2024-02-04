@@ -23,32 +23,20 @@ class Player extends createStateful([
     this.name = player.name || "";
     this.surname = player.surname || "";
     this.email = player.email || "";
-    this.state = this.states[player.state || "unregistered"];
+    this.state =
+      this.states[player.state?.name || player.state || "unregistered"];
     this.wristband = wristband ?? {};
   }
-  normalize(sources, { depth = 1, wristband, ...playerOpts } = {}) {
-    const {
-      wristband: wristbandSrc,
-      state,
-      ...player
-    } = playerOpts.normalized
-      ? sources
-      : Player.normalize([this, sources], {
-          depth,
-          wristband,
-          ...playerOpts,
-        });
-
-    // Wristband
-    this.wristband.normalize(
-      wristbandSrc,
-      depth > 0 ? { ...wristband, normalized: true } : wristband,
+  normalize(sources, options) {
+    const { wristband, state, ...player } = Player.normalize(
+      [this, sources],
+      options,
     );
-
-    // Player
+    Object.assign(this.wristband, wristband);
+    this.wristband.setState(wristband.state);
     Object.assign(this, player);
-
-    return this.setState(state);
+    this.setState(state);
+    return this;
   }
   fill(sources, options = {}) {
     const random = Player.random([this, sources], options);
@@ -59,11 +47,15 @@ class Player extends createStateful([
     return this;
   }
   tobject(depth = 0) {
-    const player = Player.normalize(this, { depth: 0 });
+    const player = {
+      username: this.username,
+      name: this.name,
+      surname: this.surname,
+      email: this.email,
+      state: this.state.name,
+    };
     if (depth > 0) {
       player.wristband = this.wristband.tobject();
-    } else {
-      player.wristband = {};
     }
     return player;
   }
