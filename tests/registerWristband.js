@@ -67,7 +67,12 @@ describe(task, () => {
     expect(validate.errors).not.toBeNull();
   });
   it("Should have an Afmachine Task", async () => {
-    const player = afm.createPlayer().fill(null, { depth: 1, password: true });
+    const player = afm.create
+      .playerFactory("commander")(
+        null,
+        afm.create.wristbandFactory("commander")(),
+      )
+      .fill(null, { depth: 1, password: true });
     await b.registerPlayer(player);
     const scan = b.scanWristband();
     await reader.read({

@@ -89,7 +89,6 @@ describe(task, () => {
       throw err;
     }
   });
-  it("Should normalize the response", () => {});
   it("Should have an Afmachine Task", async () => {
     await expect(afm[task]()).resolves.toMatchObject({ ok: true });
   });

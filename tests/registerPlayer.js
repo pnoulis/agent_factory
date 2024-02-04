@@ -78,7 +78,12 @@ describe(task, () => {
     }
   });
   it("Should have an Afmachine Task", async () => {
-    const player = afm.createPlayer().fill(null, { password: true });
+    const player = afm.create
+      .playerFactory("commander")(
+        null,
+        afm.create.wristbandFactory("commander")(),
+      )
+      .fill(null, { password: true });
     const response = await afm[task](player, player.password);
     expect(response).toEqual({
       ok: true,
