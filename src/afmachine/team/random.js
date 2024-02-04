@@ -20,7 +20,7 @@ function random(sources, options = {}) {
     .map((src) => ("tobject" in src ? src.tobject(_options.depth) : src));
   trace(_sources, "team random _sources");
 
-  const target = Object.assign({}, ..._sources);
+  const target = Object.assign({ roster: [], packages: [] }, ..._sources);
 
   target.name ||= generateRandomName() + "_" + smallid();
   target.points ??= randomInteger(0, 500);

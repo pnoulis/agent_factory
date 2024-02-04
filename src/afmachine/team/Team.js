@@ -16,14 +16,14 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
     this.name = team.name || "";
     this.t_created = team.t_created ?? null;
     this.points = team.points ?? null;
-    this.packages = team.packages;
-    this.roster = team.roster;
     this.state = this.states[team.state?.name || team.state || "unregistered"];
     this.create = {
       player: createPlayer ?? null,
       wristband: createWristband ?? null,
       package: createPackage ?? null,
     };
+    this.packages = team.packages;
+    this.roster = team.roster;
   }
 
   get roster() {

@@ -4,10 +4,12 @@ import { normalize as normalizeWristband } from "../wristband/normalize.js";
 function normalize(sources, options = {}) {
   trace("normalize player");
 
+  trace(options, "player options");
   trace(sources, "player sources");
 
   // See documentation at wristband/normalize.js
   const _options = {
+    password: options.password ?? false,
     targetState: options.state || "",
     nullSupersede: options.nullSupersede ?? false,
     defaultState: options.defaultState ?? "unregistered",
@@ -79,7 +81,11 @@ function normalize(sources, options = {}) {
   target.state ||= _options.defaultState;
 
   if (_options.depth > 0) {
-    target.wristband = normalizeWristband(target.wristband, options.wristband);
+    target.wristband = normalizeWristband(target.wristband, {
+      state:
+        (target.state === "inTeam" || target.state === "playing") && "paired",
+      ...options.wristband,
+    });
   }
   trace(target, "player target");
   return target;

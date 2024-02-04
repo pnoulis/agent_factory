@@ -1,5 +1,6 @@
 import "../src/debug.js";
 import { BackendRegistration } from "../src/backend/registration/BackendRegistration.js";
+import { BackendRPIReader } from "../src/backend/rpi-reader/BackendRPIReader.js";
 import { deleteUserRows } from "../src/mysqldb/deleteUserRows.js";
 import { DEFAULT_CASHIER } from "../src/constants.js";
 import { registrationTopics } from "../backend-topics.js";
@@ -27,7 +28,10 @@ if (globalThis.backend === undefined) {
     ...defaultCashier,
     password: "mindtr@p",
   });
+  await b.startSession(jwtResponse);
   defaultCashier.jwt = jwtResponse.jwt;
   globalThis.afm = afm;
   globalThis.topics = registrationTopics;
+  globalThis.reader = new BackendRPIReader();
+  await globalThis.reader.boot();
 }

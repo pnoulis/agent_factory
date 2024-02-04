@@ -6,6 +6,7 @@ import { registrationTopics as staticRoutes } from "../../../backend-topics.js";
 // Player topics
 import { registerPlayer } from "./registerPlayer.js";
 import { loginPlayer } from "./loginPlayer.js";
+import { searchPlayer } from "./searchPlayer.js";
 
 // Wristband topics
 import { scanWristband } from "./scanWristband.js";
@@ -15,6 +16,10 @@ import { deregisterWristband } from "./deregisterWristband.js";
 
 // Team topics
 import { registerTeam } from "./registerTeam.js";
+import { registerGroupTeam } from "./registerGroupTeam.js";
+import { addTeamPackage } from "./addTeamPackage.js";
+import { removeTeamPackage } from "./removeTeamPackage.js";
+import { startTeam } from "./startTeam.js";
 
 // Cashier topics
 import { registerCashier } from "./registerCashier.js";
@@ -27,6 +32,7 @@ import { stopSession } from "./stopSession.js";
 
 // Device topics
 import { updateDevice } from "./updateDevice.js";
+import { updateScoreboardDeviceView } from "./updateScoreboardDeviceView.js";
 
 // List topics
 import { listPackages } from "./listPackages.js";
@@ -60,6 +66,7 @@ Object.assign(BackendRegistration.prototype, {
   // Player topics
   registerPlayer,
   loginPlayer,
+  searchPlayer,
 
   // Wristband topics
   scanWristband,
@@ -69,6 +76,10 @@ Object.assign(BackendRegistration.prototype, {
 
   // Team topics
   registerTeam,
+  registerGroupTeam,
+  addTeamPackage,
+  removeTeamPackage,
+  startTeam,
 
   // Cashier topics
   registerCashier,
@@ -81,6 +92,7 @@ Object.assign(BackendRegistration.prototype, {
 
   // Device topics
   updateDevice,
+  updateScoreboardDeviceView,
 
   // List topics
   listPackages,

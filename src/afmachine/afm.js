@@ -6,9 +6,12 @@ import { createEventful } from "../Eventful.js";
 import { compose } from "./compose.js";
 
 // Entities
+import { Wristband } from "./wristband/Wristband.js";
 import { WristbandCommander } from "./wristband/WristbandCommander.js";
+import { Player } from "./player/Player.js";
 import { PlayerCommander } from "./player/PlayerCommander.js";
 import { Package } from "./package/Package.js";
+import { Team } from "./team/Team.js";
 
 // Synthetic Player tasks
 import { pairWristband } from "./synthetic-tasks/pairWristband.js";
@@ -17,12 +20,20 @@ import { pairWristband } from "./synthetic-tasks/pairWristband.js";
 
 // Player tasks
 import { registerPlayer } from "./tasks/registerPlayer.js";
+import { searchPlayer } from "./tasks/searchPlayer.js";
 
 // Wristband tasks
 import { scanWristband } from "./tasks/scanWristband.js";
 import { getWristbandInfo } from "./tasks/getWristbandInfo.js";
 import { registerWristband } from "./tasks/registerWristband.js";
 import { deregisterWristband } from "./tasks/deregisterWristband.js";
+
+// Team tasks
+import { registerTeam } from "./tasks/registerTeam.js";
+import { registerGroupTeam } from "./tasks/registerGroupTeam.js";
+import { addTeamPackage } from "./tasks/addTeamPackage.js";
+import { removeTeamPackage } from "./tasks/removeTeamPackage.js";
+import { startTeam } from "./tasks/startTeam.js";
 
 // Cashier tasks
 import { registerCashier } from "./tasks/registerCashier.js";
@@ -37,6 +48,7 @@ import { stopSession } from "./tasks/stopSession.js";
 import { bootDevice } from "./tasks/bootDevice.js";
 import { shutdownDevice } from "./tasks/shutdownDevice.js";
 import { restartDevice } from "./tasks/restartDevice.js";
+import { updateScoreboardDeviceView } from "./tasks/updateScoreboardDeviceView.js";
 
 // list tasks
 import { listPackages } from "./tasks/listPackages.js";
@@ -186,12 +198,20 @@ Object.assign(Afm.prototype, {
 
   // Player tasks
   registerPlayer,
+  searchPlayer,
 
   // Wristband tasks
   scanWristband,
   getWristbandInfo,
   registerWristband,
   deregisterWristband,
+
+  // Team tasks
+  registerTeam,
+  registerGroupTeam,
+  addTeamPackage,
+  removeTeamPackage,
+  startTeam,
 
   // Session tasks
   startSession,
@@ -206,6 +226,7 @@ Object.assign(Afm.prototype, {
   bootDevice,
   shutdownDevice,
   restartDevice,
+  updateScoreboardDeviceView,
 
   // List tasks
   listPackages,
@@ -222,16 +243,42 @@ Object.assign(Afm.prototype, {
 const afm = new Afm();
 
 afm.create = {
-  wristband: function (wristband) {
-    return new WristbandCommander(afm, wristband);
+  wristbandFactory: function (type) {
+    switch (type) {
+      case "commander":
+        return (wristband) => new WristbandCommander(wristband);
+      default:
+        return (wristband) => new Wristband(wristband);
+    }
   },
-  player: function (player, wristband) {
-    return new PlayerCommander(afm, player, wristband);
+  playerFactory: function (type) {
+    switch (type) {
+      case "commander":
+        return (player, wristband) =>
+          new PlayerCommander(afm, player, wristband);
+      default:
+        return (player, wristband) => new Player(player, wristband);
+    }
   },
-  package: function (pkg) {
-    return new Package(pkg);
+  packageFactory: function (type) {
+    switch (type) {
+      case "commander":
+      default:
+        return (pkg) => new Package(pkg);
+    }
   },
-  team: function (team, player, wristband, pkg) {},
+  teamFactory: function (type, playerType, wristbandType, pkgType) {
+    switch (type) {
+      default:
+        return (team) =>
+          new Team(
+            team,
+            afm.create.playerFactory(playerType),
+            afm.create.wristbandFactory(wristbandType),
+            afm.create.packageFactory(pkgType),
+          );
+    }
+  },
 };
 
 export { afm };

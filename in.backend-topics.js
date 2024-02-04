@@ -226,15 +226,43 @@ const registrationTopics = {
     pub: prefix("team/merge"),
     sub: prefix("team/merge/response"),
   },
-  mergeGroupTeam: {
-    alias: "gteam/merge",
+  registerGroupTeam: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "teamName", "groupPlayers"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          teamName: schemas.team.name,
+          groupPlayers: {
+            type: "array",
+            items: {
+              type: "object",
+              additionalProperties: false,
+              required: ["username", "wristbandNumber"],
+              properties: {
+                username: schemas.player.properties.username,
+                wristbandNumber: schemas.wristband.properties.wristbandNumber,
+              },
+            },
+          },
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "message"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          message: schemas.commons.message,
+        },
+      }),
+    },
+    alias: "group/register",
     pub: prefix("/groupteam/merge"),
     sub: prefix("/groupteam/merge/response"),
-  },
-  isValidWristband: {
-    alias: "wristband/validate",
-    pub: prefix("player/isValid"),
-    sub: prefix("player/isValid/response"),
   },
   getWristbandInfo: {
     schema: {
@@ -271,23 +299,394 @@ const registrationTopics = {
     pub: prefix("wristband/info"),
     sub: prefix("wristband/info/response"),
   },
-  addTeamPkg: {
-    alias: "team/pkg/add",
+  addTeamPackage: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "teamName", "name"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          teamName: schemas.team.name,
+          name: schemas.pkg.properties.name,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "team"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          team: {
+            type: "object",
+            additionalProperties: false,
+            required: [
+              "name",
+              "totalPoints",
+              "teamState",
+              "created",
+              "lastRegisterAttempt",
+              "currentRoster",
+              "roomType",
+              "packages",
+            ],
+            properties: {
+              name: schemas.team.name,
+              totalPoints: schemas.team.totalPoints,
+              teamState: schemas.team.teamState,
+              created: schemas.team.created,
+              lastRegisterAttempt: schemas.team.lastRegisterAttempt,
+              roomType: schemas.team.roomType,
+              currentRoster: {
+                type: "object",
+                additionalProperties: false,
+                required: ["version", "players"],
+                properties: {
+                  version: schemas.team.version,
+                  players: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "username",
+                        "wristbandNumber",
+                        "wristbandColor",
+                      ],
+                      properties: {
+                        username: schemas.player.properties.username,
+                        wristbandNumber:
+                          schemas.wristband.properties.wristbandNumber,
+                        wristbandColor:
+                          schemas.wristband.properties.wristbandColor,
+                      },
+                    },
+                  },
+                },
+              },
+              packages: {
+                type: "array",
+                items: {
+                  anyOf: [
+                    {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "id",
+                        "name",
+                        "cost",
+                        "started",
+                        "ended",
+                        "missions",
+                        "missionsPlayed",
+                        "active",
+                      ],
+                      properties: {
+                        id: schemas.commons.id,
+                        name: schemas.pkg.properties.name,
+                        cost: schemas.pkg.properties.cost,
+                        started: schemas.commons.started,
+                        ended: schemas.commons.ended,
+                        missions: schemas.missionPkg.missions,
+                        missionsPlayed: schemas.missionPkg.missionsPlayed,
+                        active: schemas.commons.active,
+                      },
+                    },
+                    {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "id",
+                        "name",
+                        "cost",
+                        "started",
+                        "ended",
+                        "duration",
+                        "paused",
+                        "active",
+                      ],
+                      properties: {
+                        id: schemas.commons.id,
+                        name: schemas.pkg.properties.name,
+                        cost: schemas.pkg.properties.cost,
+                        started: schemas.commons.started,
+                        ended: schemas.commons.ended,
+                        duration: schemas.timePkg.duration,
+                        paused: schemas.timePkg.paused,
+                        active: schemas.commons.active,
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      }),
+    },
+    alias: "team/package/add",
     pub: prefix("team/package/add"),
     sub: prefix("team/package/add/response"),
   },
-  removeTeamPkg: {
-    alias: "team/pkg/delete",
+  removeTeamPackage: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "teamName", "packageId"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          teamName: schemas.team.name,
+          packageId: schemas.commons.id,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "team"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          team: {
+            type: "object",
+            additionalProperties: false,
+            required: [
+              "name",
+              "totalPoints",
+              "teamState",
+              "created",
+              "lastRegisterAttempt",
+              "currentRoster",
+              "roomType",
+              "packages",
+            ],
+            properties: {
+              name: schemas.team.name,
+              totalPoints: schemas.team.totalPoints,
+              teamState: schemas.team.teamState,
+              created: schemas.team.created,
+              lastRegisterAttempt: schemas.team.lastRegisterAttempt,
+              roomType: schemas.team.roomType,
+              currentRoster: {
+                type: "object",
+                additionalProperties: false,
+                required: ["version", "players"],
+                properties: {
+                  version: schemas.team.version,
+                  players: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "username",
+                        "wristbandNumber",
+                        "wristbandColor",
+                      ],
+                      properties: {
+                        username: schemas.player.properties.username,
+                        wristbandNumber:
+                          schemas.wristband.properties.wristbandNumber,
+                        wristbandColor:
+                          schemas.wristband.properties.wristbandColor,
+                      },
+                    },
+                  },
+                },
+              },
+              packages: {
+                type: "array",
+                items: {
+                  anyOf: [
+                    {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "id",
+                        "name",
+                        "cost",
+                        "started",
+                        "ended",
+                        "missions",
+                        "missionsPlayed",
+                        "active",
+                      ],
+                      properties: {
+                        id: schemas.commons.id,
+                        name: schemas.pkg.properties.name,
+                        cost: schemas.pkg.properties.cost,
+                        started: schemas.commons.started,
+                        ended: schemas.commons.ended,
+                        missions: schemas.missionPkg.missions,
+                        missionsPlayed: schemas.missionPkg.missionsPlayed,
+                        active: schemas.commons.active,
+                      },
+                    },
+                    {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "id",
+                        "name",
+                        "cost",
+                        "started",
+                        "ended",
+                        "duration",
+                        "paused",
+                        "active",
+                      ],
+                      properties: {
+                        id: schemas.commons.id,
+                        name: schemas.pkg.properties.name,
+                        cost: schemas.pkg.properties.cost,
+                        started: schemas.commons.started,
+                        ended: schemas.commons.ended,
+                        duration: schemas.timePkg.duration,
+                        paused: schemas.timePkg.paused,
+                        active: schemas.commons.active,
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      }),
+    },
+    alias: "team/package/remove",
     pub: prefix("team/package/delete"),
     sub: prefix("team/package/delete/response"),
   },
-  activateTeamPkg: {
+  startTeam: {
     schema: {
-      res: {},
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "teamName"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          teamName: schemas.team.name,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "team"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          team: {
+            type: "object",
+            additionalProperties: false,
+            required: [
+              "name",
+              "totalPoints",
+              "teamState",
+              "created",
+              "lastRegisterAttempt",
+              "currentRoster",
+              "roomType",
+              "packages",
+            ],
+            properties: {
+              name: schemas.team.name,
+              totalPoints: schemas.team.totalPoints,
+              teamState: schemas.team.teamState,
+              created: schemas.team.created,
+              lastRegisterAttempt: schemas.team.lastRegisterAttempt,
+              roomType: schemas.team.roomType,
+              currentRoster: {
+                type: "object",
+                additionalProperties: false,
+                required: ["version", "players"],
+                properties: {
+                  version: schemas.team.version,
+                  players: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "username",
+                        "wristbandNumber",
+                        "wristbandColor",
+                      ],
+                      properties: {
+                        username: schemas.player.properties.username,
+                        wristbandNumber:
+                          schemas.wristband.properties.wristbandNumber,
+                        wristbandColor:
+                          schemas.wristband.properties.wristbandColor,
+                      },
+                    },
+                  },
+                },
+              },
+              packages: {
+                type: "array",
+                items: {
+                  anyOf: [
+                    {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "id",
+                        "name",
+                        "cost",
+                        "started",
+                        "ended",
+                        "missions",
+                        "missionsPlayed",
+                        "active",
+                      ],
+                      properties: {
+                        id: schemas.commons.id,
+                        name: schemas.pkg.properties.name,
+                        cost: schemas.pkg.properties.cost,
+                        started: schemas.commons.started,
+                        ended: schemas.commons.ended,
+                        missions: schemas.missionPkg.missions,
+                        missionsPlayed: schemas.missionPkg.missionsPlayed,
+                        active: schemas.commons.active,
+                      },
+                    },
+                    {
+                      type: "object",
+                      additionalProperties: false,
+                      required: [
+                        "id",
+                        "name",
+                        "cost",
+                        "started",
+                        "ended",
+                        "duration",
+                        "paused",
+                        "active",
+                      ],
+                      properties: {
+                        id: schemas.commons.id,
+                        name: schemas.pkg.properties.name,
+                        cost: schemas.pkg.properties.cost,
+                        started: schemas.commons.started,
+                        ended: schemas.commons.ended,
+                        duration: schemas.timePkg.duration,
+                        paused: schemas.timePkg.paused,
+                        active: schemas.commons.active,
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      }),
     },
-    alias: "team/pkg/activate",
+    alias: "team/start",
     pub: prefix("team/activate"),
-    subd: prefix("team/activate/response"),
+    sub: prefix("team/activate/response"),
   },
   registerCashier: {
     schema: {
@@ -468,8 +867,29 @@ const registrationTopics = {
     pub: prefix("devices/action"),
     sub: prefix("devices/action/response"),
   },
-  updateDeviceScoreboardView: {
-    alias: "/scoreboard/devices/views/update",
+  updateScoreboardDeviceView: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "deviceId", "status"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          deviceId: schemas.device.deviceId,
+          status: schemas.device.status,
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+        },
+      }),
+    },
+    alias: "device/scoreboard/view/update",
     pub: basename("devices/scoreboard/updateStatus"),
     sub: basename("devices/scoreboard/updateStatus/response"),
   },
@@ -854,7 +1274,7 @@ const registrationTopics = {
         },
       }),
     },
-    alias: "list/scoreboard/devices",
+    alias: "list/devices/scoreboard",
     pub: basename("devices/scoreboard"),
     sub: basename("devices/scoreboard/response"),
   },
@@ -884,7 +1304,7 @@ const registrationTopics = {
         },
       }),
     },
-    alias: "/list/scoreboard/views",
+    alias: "/list/devices/scoreboard/views",
     pub: basename("devices/scoreboard/updateStatus/options"),
     sub: basename("devices/scoreboard/updateStatus/options/response"),
   },
@@ -936,8 +1356,69 @@ const registrationTopics = {
   //////////////////////////////////////////////////
   // SEARCH
   //////////////////////////////////////////////////
-  searchPlayers: {
-    alias: "search/player",
+  searchPlayer: {
+    schema: {
+      req: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "searchTerm"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          searchTerm: {
+            type: ["string", "null"],
+          },
+        },
+      }),
+      res: ajv.compile({
+        type: "object",
+        additionalProperties: false,
+        required: ["timestamp", "result", "players"],
+        properties: {
+          timestamp: schemas.commons.timestamp,
+          result: schemas.response.properties.result,
+          players: {
+            type: "array",
+            items: {
+              type: "object",
+              additionalProperties: false,
+              required: [
+                "username",
+                "name",
+                "surname",
+                "email",
+                "wristbandMerged",
+                "wristband",
+              ],
+              properties: {
+                username: schemas.player.properties.username,
+                name: schemas.player.properties.name,
+                surname: schemas.player.properties.surname,
+                email: schemas.player.properties.email,
+                wristbandMerged: schemas.player.properties.wristbandMerged,
+                wristband: {
+                  anyOf: [
+                    {
+                      type: "object",
+                      additionalProperties: false,
+                      required: ["wristbandNumber", "wristbandColor", "active"],
+                      properties: {
+                        wristbandNumber:
+                          schemas.wristband.properties.wristbandNumber,
+                        wristbandColor:
+                          schemas.wristband.properties.wristbandColor,
+                        active: schemas.wristband.properties.active,
+                      },
+                    },
+                    { type: "null" },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      }),
+    },
+    alias: "player/search",
     pub: prefix("player/search"),
     sub: prefix("player/search/response"),
   },

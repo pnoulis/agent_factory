@@ -11,13 +11,14 @@ function createMysqlDbClient(url = "", options = {}) {
   if (connectionString === "") {
     throw new Error("Missing mysqldb client connection string");
   }
-  for (const [k, v] of Object.entries(options)) {
+  for (const [k, v] of Object.entries(_options)) {
     urlparams += `${k}=${v}&`;
   }
 
   if (urlparams) {
     connectionString += `?${urlparams.slice(0, -1)}`;
   }
+
   return mysql.createConnection(connectionString);
 }
 

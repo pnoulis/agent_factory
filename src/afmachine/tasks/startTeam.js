@@ -4,8 +4,9 @@ import { validateBackendRequest } from "../middleware/validateBackendRequest.js"
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { normalize as normalizeTeam } from "../team/normalize.js";
+import { normalize as normalizePackage } from "../package/normalize.js";
 
-new Task("registerTeam", Command);
+new Task("startTeam", Command);
 
 function Command(team, opts) {
   const afm = this;
@@ -13,8 +14,7 @@ function Command(team, opts) {
     afm,
     {
       args: {
-        team: team.tobject(),
-        players: team.roster.map((player) => player.tobject(1)),
+        team: "tobject" in team ? team.tobject(2) : team,
       },
       opts,
     },
@@ -30,23 +30,19 @@ Command.middleware = [
     ctx.req = {
       timestamp: ctx.t_start,
       teamName: ctx.args.team.name,
-      usernames: ctx.args.players.map((p) => p.username),
     };
     return next();
   },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerTeam(ctx.req);
+    ctx.raw = await ctx.afm.backend.startTeam(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.team = normalizeTeam(
-      { ...ctx.args.team, roster: ctx.args.players },
-      { depth: 3, state: "registered", player: { state: "inTeam" } },
-    );
+    ctx.res.team = normalizeTeam(ctx.raw.team);
     return next();
   },
 ];
@@ -54,14 +50,14 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to register Team";
+  cmd.msg = "Failed to activate Team";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully registered Team";
+  cmd.msg = "Successfully activated Team";
   cmd.resolve(cmd.res);
 };
 
-export { Command as registerTeam };
+export { Command as startTeam };

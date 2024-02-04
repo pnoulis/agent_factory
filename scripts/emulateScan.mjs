@@ -15,6 +15,7 @@ import { BackendRPIReader } from "../src/backend/rpi-reader/BackendRPIReader.js"
 import { WRISTBAND_COLORS, MAX_WRISTBAND_ID } from "../src/constants.js";
 
 const b = new BackendRPIReader();
+await b.boot();
 
 let [id, color] = process.argv.slice(2);
 id = parseInt(id) ? id : randomInteger(1, MAX_WRISTBAND_ID);

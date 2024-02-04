@@ -3,11 +3,13 @@ const team = {
   totalPoints: { type: "integer" },
   teamState: {
     type: "string",
+    nullable: true,
     enum: [
       "PENDING_PACKAGES",
       "LOADED_PACKAGES",
       "PACKAGE_RUNNING",
       "FINISHED",
+      null,
     ],
   },
   created: {

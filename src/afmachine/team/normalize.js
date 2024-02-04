@@ -89,14 +89,9 @@ function normalize(sources, options = {}) {
         },
       }),
     );
-    target.packages = target.packages.map((pkg) => {
-      debug(pkg);
-      debug("team normalize pkg");
-      return normalizePackage(pkg, _options.package);
-    });
-    // target.packages = target.packages.map((pkg) =>
-    //   normalizePackage(pkg, _options.package),
-    // );
+    target.packages = target.packages.map((pkg) =>
+      normalizePackage(pkg, _options.package),
+    );
   }
   trace(target, "team target");
   return target;

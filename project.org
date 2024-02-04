@@ -1,5 +1,6 @@
 #+TODO: TODO DOING | DONE
 
+* TODO AFM responses should adhere to the same guidelines
 * Task Board
 ** DONE Player register() fn should need a password as input.
 
@@ -93,13 +94,47 @@ Try pairing a players wristband under normal circumstances.
 
 *** Write test
 
+** TODO Move Stateful code from Tasks into Synthetic Tasks
+
 
 ** TODO Implement Team register
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-**** Afm reques
+*** TODO Return better AFM response
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
+**** Afm request
+#+begin_src js
+  // 1st argument, required, Team
+  {
+    name: 'elated_Galadriel_cl4piph2kic',
+    t_created: null,
+    points: 0,
+    state: 'unregistered'
+    roster: [
+      {
+        username: 'lqplk9p1w68',
+        name: 'Finwe',
+        surname: 'laughing',
+        email: 'lqplk9p1w68@gmail.com',
+        state: 'registered',
+        wristband: { id: 351, color: 'red', colorCode: 1, state: 'paired' }
+      },
+      {
+        username: 'pgs5ssie3',
+        name: 'Eowyn',
+        surname: 'strange',
+        email: 'pgs5ssie3@gmail.com',
+        state: 'registered',
+        wristband: { id: 253, color: 'orange', colorCode: 6, state: 'paired' }
+      }
+    ]
+  }
+  // 2nd argument, optional, Options
+  {
+    queue: true || false
+  }
+#+end_src
 **** Backend request
 #+begin_src js
   {
@@ -116,70 +151,304 @@ Try pairing a players wristband under normal circumstances.
     message : "successfully created team: tziros1"
   }
 #+end_src
-**** After normalize()
+**** Afm response
+#+begin_src js
+  {
+    ok: true,
+    team: {
+      name: 'elated_Galadriel_cl4piph2kic',
+      t_created: 1707028052944,
+      points: 387,
+      packages: [],
+      roster: [
+        {
+          username: 'lqplk9p1w68',
+          name: 'Finwe',
+          surname: 'laughing',
+          email: 'lqplk9p1w68@gmail.com',
+          state: 'inTeam',
+          wristband: { id: 351, color: 'red', colorCode: 1, state: 'paired' }
+        },
+        {
+          username: 'pgs5ssie3',
+          name: 'Eowyn',
+          surname: 'strange',
+          email: 'pgs5ssie3@gmail.com',
+          state: 'inTeam',
+          wristband: { id: 253, color: 'orange', colorCode: 6, state: 'paired' }
+        }
+      ],
+      state: 'registered',
+    }
+  }
+#+end_src
+
+** TODO Implement Team Package add
+*** TODO Return better AFM response
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** TODO Document the req/res payload
+**** Afm request
+**** Backend request
+#+begin_src js
+  {
+    timestamp : 1707053008561,
+    teamName : "hopeful_Feanor_ng2coekx3lc",
+    name : "Per Time 30"
+  }
+#+end_src
+**** Backend response
+#+begin_src js
+  {
+    timestamp : 1707053008626,
+    result : "OK",
+    team : {
+      name : "hopeful_Feanor_ng2coekx3lc",
+      totalPoints : 0,
+      teamState : null,
+      created : null,
+      lastRegisterAttempt : null,
+      currentRoster : {
+        version : 1,
+        players : [ {
+          username : "c77r5w5mod2",
+          wristbandNumber : 455,
+          wristbandColor : null
+        }, {
+          username : "hndfw7wu1a",
+          wristbandNumber : 347,
+          wristbandColor : null
+        } ]
+      },
+      roomType : null,
+      packages : [ {
+        id : 10,
+        name : "Per Time 30",
+        cost : null,
+        started : null,
+        ended : null,
+        duration : 1800.000000000,
+        paused : false,
+        active : false
+      } ]
+    }
+  }
+#+end_src
 **** Afm response
 
-** TODO Implement Package register
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
+** TODO Implement Team Package remove
+*** TODO Return better AFM response
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
 *** TODO Document the req/res payload
 **** Afm request
 **** Backend request
+#+begin_src js
+  {
+    timestamp : 1707056780735,
+    teamName : "affectionate_Shelob_ct4pqxcce8w",
+    packageId : 17
+  }
+#+end_src
 **** Backend response
-**** After normalize()
+#+begin_src js
+  {
+    timestamp : 1707056780791,
+    result : "OK",
+    team : {
+      name : "affectionate_Shelob_ct4pqxcce8w",
+      totalPoints : 0,
+      teamState : null,
+      created : null,
+      lastRegisterAttempt : null,
+      currentRoster : {
+        version : 1,
+        players : [ {
+          username : "g9781e0di69",
+          wristbandNumber : 401,
+          wristbandColor : null
+        }, {
+          username : "18tw5isjpd7e",
+          wristbandNumber : 421,
+          wristbandColor : null
+        } ]
+      },
+      roomType : null,
+      packages : [ ]
+    }
+  }
+#+end_src
 **** Afm response
-** TODO Implement Group Party Team register
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+
+** TODO Implement Team start
+*** TODO Return better AFM response
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
 **** Afm request
 **** Backend request
+#+begin_src js
+  {
+    timestamp : 1707060079874,
+    teamName : "compassionate_Melian_ktl66x5o73f"
+  }
+#+end_src
 **** Backend response
-**** After normalize()
+#+begin_src js
+  {
+    timestamp : 1707060079952,
+    result : "OK",
+    team : {
+      name : "compassionate_Melian_ktl66x5o73f",
+      totalPoints : 0,
+      teamState : null,
+      created : null,
+      lastRegisterAttempt : null,
+      currentRoster : {
+        version : 1,
+        players : [ {
+          username : "cdc0t3lfjfg",
+          wristbandNumber : 154,
+          wristbandColor : null
+        }, {
+          username : "97tixfvlwsp",
+          wristbandNumber : 255,
+          wristbandColor : null
+        } ]
+      },
+      roomType : null,
+      packages : [ {
+        id : 21,
+        name : "Per Mission 10",
+        cost : null,
+        started : 1707060079921,
+        ended : null,
+        missions : 10,
+        missionsPlayed : 0,
+        active : true
+      } ]
+    }
+  }
+#+end_src
 **** Afm response
-** TODO Implement Package deregister
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+
+** TODO Implement Group-Team register
+*** TODO Return better AFM response
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
 **** Afm request
 **** Backend request
+#+begin_src js
+  {
+    timestamp : 1707064500654,
+    teamName : "laughing_Arwen_45xkqmncf7h",
+    groupPlayers : [ {
+      username : "ii6075ebbfb",
+      wristbandNumber : 335,
+    }, {
+      username : "v97fpbx98hc",
+      wristbandNumber : 240,
+    } ]
+  }
+#+end_src
 **** Backend response
-**** After normalize()
+#+begin_src js
+  {
+    timestamp : 1707064500758,
+    result : "OK",
+    message : "successfully created group team: laughing_Arwen_45xkqmncf7h"
+  }
+#+end_src
 **** Afm response
+
 
 ** TODO Implement Player search
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+*** TODO Return better AFM response
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
 **** Afm request
 **** Backend request
+#+begin_src js
+  {
+    timestamp : 1707068032950,
+    searchTerm : "l"
+  }
+#+end_src
 **** Backend response
-**** After normalize()
+#+begin_src js
+  {
+    timestamp: 1707067665549,
+    result: 'OK',
+    players: [
+      {
+        username: 'jgtcqvlxs6',
+        name: 'Tuor',
+        surname: 'vigorous',
+        email: 'jgtcqvlxs6@gmail.com',
+        wristbandMerged: false,
+        wristband: null
+      },
+      {
+        username: 'TG96',
+        name: null,
+        surname: null,
+        email: 'TG96@maze.com',
+        wristbandMerged: false,
+        wristband: null
+      },
+      {
+        username: 'li',
+        name: 'Melian',
+        surname: 'epic',
+        email: 'ki3fc4jx7jp@gmail.com',
+        wristbandMerged: false,
+        wristband: { wristbandNumber: 329, wristbandColor: null, active: true }
+      },
+      {
+        username: 'lo',
+        name: 'Idril',
+        surname: 'brave',
+        email: 'nsevvxw4ca6@gmail.com',
+        wristbandMerged: false,
+        wristband: { wristbandNumber: 111, wristbandColor: 2, active: true }
+      }
+
+    ]
+  }
+#+end_src
 **** Afm response
-** TODO Implement Team start
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
-**** Afm request
-**** Backend request
-**** Backend response
-**** After normalize()
-**** Afm response
+
 ** TODO Implement Scoreboard set view
-*** TODO Object schema for req/res backend topic payload
-*** TODO Implement backend api topic call
-*** TODO Implement Task and Command
-*** TODO Document the req/res payload
+*** TODO Return better AFM response
+*** DONE Object schema for req/res backend topic payload
+*** DONE Implement backend api topic call
+*** DONE Implement Task and Command
+*** DONE Document the req/res payload
 **** Afm request
 **** Backend request
+#+begin_src js
+  {
+    timestamp : 1707072209571,
+    deviceId : "scor1",
+    status : "WEEKLY"
+  }
+#+end_src
 **** Backend response
-**** After normalize()
+#+begin_src js
+  {
+    timestamp : 1707072209641,
+    result : "OK"
+  }
+#+end_src
 **** Afm response
+
 
 
 
@@ -586,9 +855,7 @@ Try pairing a players wristband under normal circumstances.
     timestamp: 1706649848057,
   }
 #+end_src
-
 **** Backend response
-
 #+begin_src js
   const response = {
     timestamp: 1706649848057,
@@ -2011,7 +2278,6 @@ Try pairing a players wristband under normal circumstances.
 #+end_src
 
 
-
 ** TODO Implement Device boot
 *** TODO Normalize devices
 *** DONE Object schema for req/res backend topic payload
@@ -2167,7 +2433,6 @@ Try pairing a players wristband under normal circumstances.
     }
   }
 #+end_src
-
 
 
 ** DONE Implement Cashier List
@@ -2383,7 +2648,6 @@ Try pairing a players wristband under normal circumstances.
   }
 #+end_src
 
-
 ** DONE Implement Session start
 *** DONE Normalize
 *** DONE Object schema for req/res backend topic payload
@@ -2487,6 +2751,10 @@ Try pairing a players wristband under normal circumstances.
     },
   }
 #+end_src
+
+
+
+
 
 
 ** Document Cashier

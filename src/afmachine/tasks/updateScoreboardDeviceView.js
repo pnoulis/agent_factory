@@ -3,65 +3,53 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeTeam } from "../team/normalize.js";
 
-new Task("registerTeam", Command);
+new Task("updateScoreboardDeviceView", Command);
 
-function Command(team, opts) {
+function Command(device, view, opts) {
   const afm = this;
   const promise = Command.createCommand(
     afm,
-    {
-      args: {
-        team: team.tobject(),
-        players: team.roster.map((player) => player.tobject(1)),
-      },
-      opts,
-    },
+    { args: { device, view }, opts },
     (cmd) => {
       afm.runCommand(cmd);
     },
   );
   return promise;
 }
-
 Command.middleware = [
-  (ctx, next) => {
+  async (ctx, next) => {
     ctx.req = {
       timestamp: ctx.t_start,
-      teamName: ctx.args.team.name,
-      usernames: ctx.args.players.map((p) => p.username),
+      deviceId: ctx.args.device.deviceId,
+      status: ctx.args.view,
     };
     return next();
   },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerTeam(ctx.req);
+    ctx.raw = await ctx.afm.backend.updateScoreboardDeviceView(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.team = normalizeTeam(
-      { ...ctx.args.team, roster: ctx.args.players },
-      { depth: 3, state: "registered", player: { state: "inTeam" } },
-    );
+    ctx.res.device = { ...ctx.args.device, view: ctx.args.view };
     return next();
   },
 ];
-
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to register Team";
+  cmd.msg = "Failed to update Scoreboard Device view";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully registered Team";
+  cmd.msg = "Successfully updated Scoreboard Device view";
   cmd.resolve(cmd.res);
 };
 
-export { Command as registerTeam };
+export { Command as updateScoreboardDeviceView };
