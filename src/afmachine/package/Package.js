@@ -1,11 +1,13 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
-import { createStateful, stateful } from "../../Stateful.js";
+import { createStateful } from "../../Stateful.js";
 import { Unregistered } from "./StateUnregistered.js";
 import { Registered } from "./StateRegistered.js";
 import { Playing } from "./StatePlaying.js";
 import { Paused } from "./StatePaused.js";
 import { Completed } from "./StateCompleted.js";
+import { schema } from "./schema.js";
+import { createValidator } from "../createValidator.js";
 
 class Package extends createStateful([
   Unregistered,
@@ -16,6 +18,7 @@ class Package extends createStateful([
 ]) {
   static random = random;
   static normalize = normalize;
+  static validate = createValidator(schema);
 
   constructor(pkg) {
     super();

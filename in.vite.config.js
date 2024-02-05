@@ -36,7 +36,7 @@ export default defineConfig({
   },
   test: {
     // ...
-    include: [...configDefaults.include, "*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    include: [...configDefaults.include, "**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     exclude: [...configDefaults.exclude, "setupFile.js", "taskTemplate.js"],
     setupFiles: "tests/setupFile.js",
     fileParallelism: false, // Run tests sequentially

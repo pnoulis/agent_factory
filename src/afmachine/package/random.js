@@ -1,18 +1,13 @@
 import { randomInteger, randomReal } from "js_utils/misc";
 import { PACKAGE_TYPES, PACKAGES } from "../../constants.js";
 import { t_stomls, t_stomin } from "../../misc/misc.js";
+import { normalize } from './normalize.js';
 
 function random(sources) {
   trace("random package");
+  trace(sources, 'package random sources');
 
-  const _sources = [sources]
-    .flat(2)
-    .filter((src) => !!src)
-    .map((src) => ("tobject" in src ? src.tobject() : src));
-  trace(_sources, "package random _souces");
-
-  const target = Object.assign({}, ..._sources);
-
+  const target = normalize(sources);
   target.id ??= randomInteger(1, 5000);
   target.cost ??= randomReal(1, 5000);
   target.type ||= PACKAGE_TYPES.at(randomInteger(0, 1));

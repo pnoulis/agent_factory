@@ -1,17 +1,13 @@
 import { WRISTBAND_COLORS, MAX_WRISTBAND_ID } from "../../constants.js";
 import { randomInteger } from "js_utils/misc";
+import { normalize } from "./normalize.js";
 
 function random(sources) {
   trace("random wristband");
-  const _sources = [sources]
-    .flat(2)
-    .filter((src) => !!src)
-    .map((src) => ("tobject" in src ? src.tobject() : src));
+  trace(sources, 'wristband random sources');
 
-  trace(_sources, "wrisband random _sources");
-
-  const target = Object.assign({}, ..._sources);
-
+  const target = normalize(sources);
+  trace(target, 'wristband normalized target');
   target.id ??= randomInteger(1, MAX_WRISTBAND_ID);
   target.colorCode ??= target.color
     ? WRISTBAND_COLORS[target.color]

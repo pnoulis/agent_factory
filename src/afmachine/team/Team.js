@@ -1,14 +1,16 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
-import { createStateful, stateful } from "../../Stateful.js";
+import { createStateful } from "../../Stateful.js";
 import { Unregistered } from "./StateUnregistered.js";
 import { Registered } from "./StateRegistered.js";
 import { Playing } from "./StatePlaying.js";
-import { Roster } from "../roster/Roster.js";
+import { schema } from "./schema.js";
+import { createValidator } from "../createValidator.js";
 
 class Team extends createStateful([Unregistered, Registered, Playing]) {
   static random = random;
   static normalize = normalize;
+  static validate = createValidator(schema);
 
   constructor(team, createPlayer, createWristband, createPackage) {
     super();
@@ -69,14 +71,15 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
     return this;
   }
   fill(sources, options) {
-    options ??= {};
-    while (this.roster.length < options.players) {
-      this.addPlayer();
-    }
-    while (this.packages.length < options.packages) {
-      this.addPackage();
-    }
-    return this.normalize(Team.random([this, sources], options), options);
+    const { packages, roster, state, ...team } = Team.random(
+      [this, sources],
+      options,
+    );
+    this.packages = packages;
+    this.roster = roster;
+    Object.assign(this, team);
+    this.setState(state);
+    return this;
   }
   tobject(depth = 0) {
     const team = {
@@ -84,6 +87,8 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
       t_created: this.t_created,
       points: this.points,
       state: this.state.name,
+      packages: [],
+      roster: [],
     };
     if (depth > 0) {
       team.roster = this.roster.map((player) => player.tobject(depth - 1));

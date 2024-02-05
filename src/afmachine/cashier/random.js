@@ -1,5 +1,5 @@
-import { generateRandomName, randomInteger } from "js_utils/misc";
-import { smallid, uuid } from "js_utils/uuid";
+import { randomInteger } from "js_utils/misc";
+import { smallid, } from "js_utils/uuid";
 import { normalize } from "./normalize.js";
 
 function random(sources, options = {}) {

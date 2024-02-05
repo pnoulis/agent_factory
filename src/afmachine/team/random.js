@@ -3,6 +3,7 @@ import { smallid } from "js_utils/uuid";
 import { t_daytomls } from "../../misc/misc.js";
 import { random as randomPackage } from "../package/random.js";
 import { random as randomPlayer } from "../player/random.js";
+import { normalize } from "./normalize.js";
 
 function random(sources, options = {}) {
   trace("random team");
@@ -10,17 +11,19 @@ function random(sources, options = {}) {
     ...options,
     longtext: options.longtext ?? false,
     depth: options.depth ?? 0,
-    size: options.size ?? 0,
+    players: options.players ?? 0,
+    packages: options.packages ?? 0,
   };
   trace(_options, "team random _options");
 
-  const _sources = [sources]
-    .flat(2)
-    .filter((src) => !!src)
-    .map((src) => ("tobject" in src ? src.tobject(_options.depth) : src));
-  trace(_sources, "team random _sources");
-
-  const target = Object.assign({ roster: [], packages: [] }, ..._sources);
+  const target = normalize(sources, _options);
+  while (target.roster.length < _options.players) {
+    target.roster.push({});
+  }
+  while (target.packages.length < _options.packages) {
+    target.packages.push({});
+  }
+  trace(target, "team random target normalized");
 
   target.name ||= generateRandomName() + "_" + smallid();
   target.points ??= randomInteger(0, 500);

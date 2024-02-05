@@ -19,6 +19,7 @@ class Player extends createStateful([
   constructor(player, wristband) {
     super();
     player ??= {};
+
     this.username = player.username || "";
     this.name = player.name || "";
     this.surname = player.surname || "";

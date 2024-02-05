@@ -6,10 +6,13 @@ import { Pairing } from "./StatePairing.js";
 import { Paired } from "./StatePaired.js";
 import { Unpairing } from "./StateUnpairing.js";
 import { ERR_CODES } from "../../errors.js";
+import { schema } from "./schema.js";
+import { createValidator } from "../createValidator.js";
 
 class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
   static random = random;
   static normalize = normalize;
+  static validate = createValidator(schema);
 
   constructor(wristband) {
     super();
@@ -30,7 +33,10 @@ class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
     return this;
   }
   fill(sources, options) {
-    return this.normalize(Wristband.random([this, sources], options));
+    const { state, ...wristband } = Wristband.random([this, sources], options);
+    Object.assign(this, wristband);
+    this.setState(state);
+    return this;
   }
   tobject() {
     return {

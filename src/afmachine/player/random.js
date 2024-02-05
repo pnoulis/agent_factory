@@ -1,10 +1,12 @@
 import { generateRandomName } from "js_utils/misc";
 import { smallid, uuid } from "js_utils/uuid";
 import { random as randomWristband } from "../wristband/random.js";
+import { normalize } from './normalize.js';
 
 function random(sources, options = {}) {
   trace("random player");
   trace(sources, "player random sources");
+  trace(options, 'player random options');
 
   const _options = {
     longtext: options.longtext ?? false,
@@ -13,13 +15,8 @@ function random(sources, options = {}) {
   };
   trace(_options, "player random _options");
 
-  const _sources = [sources]
-    .flat(2)
-    .filter((src) => !!src)
-    .map((src) => ("tobject" in src ? src.tobject(_options.depth) : src));
-  trace(_sources, "player random _sources");
-
-  const target = Object.assign({}, ..._sources);
+  const target = normalize(sources, _options);
+  trace(target, 'playre normalized target');
 
   let surname, name, username;
   if (_options.longtext) {

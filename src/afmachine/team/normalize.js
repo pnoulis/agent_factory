@@ -1,6 +1,8 @@
-import { isObject, isArray } from "js_utils/misc";
+import { isObject } from "js_utils/misc";
 import { normalize as normalizePackage } from "../package/normalize.js";
 import { normalize as normalizePlayer } from "../player/normalize.js";
+import { flatRosters } from "./flatRosters.js";
+import { flatPackages } from "./flatPackages.js";
 
 function normalize(sources, options = {}) {
   trace("normalize team");
@@ -9,10 +11,11 @@ function normalize(sources, options = {}) {
     targetState: options.state || "",
     nullSupersede: options.nullSupersede ?? false,
     defaultState: options.defaultState ?? "unregistered",
-    depth: options.depth ?? 0,
     package: options.package,
-    player: options.player,
-    wristband: options.wristband,
+    player: {
+      ...options?.player,
+      wristband: options.wristband,
+    },
   };
   trace(_options, "team _options");
 
@@ -23,20 +26,20 @@ function normalize(sources, options = {}) {
     name: "",
     t_created: null,
     points: null,
-    packages: [],
-    roster: [],
     state: "",
+    packages: flatPackages(sources).map((src) =>
+      normalizePackage(src, _options.package),
+    ),
+    roster: flatRosters(sources).map((src) =>
+      normalizePlayer(src, _options.player),
+    ),
   };
-  let roster;
 
   if (_options.nullSupersede) {
     for (let i = 0; i < _sources.length; i++) {
       target.name = _sources[i].name || "";
       target.t_created = _sources[i].t_created || _sources[i].created || null;
       target.points = _sources[i].points ?? _sources[i].totalPoints ?? 0;
-      target.packages = _sources[i].packages || [];
-      target.roster =
-        _sources[i].currentRoster?.players || _sources[i].roster || [];
       target.state =
         _sources[i].teamState ||
         (isObject(_sources[i].state)
@@ -50,11 +53,6 @@ function normalize(sources, options = {}) {
         _sources[i].created ?? _sources[i].t_created ?? target.t_created;
       target.points =
         _sources[i].totalPoints ?? _sources[i].points ?? target.points;
-      target.packages = _sources[i].packages || target.packages;
-      target.roster =
-        _sources[i].currentRoster?.players ||
-        _sources[i].roster ||
-        target.roster;
       target.state =
         _sources[i].teamState ||
         (isObject(_sources[i].state)
@@ -78,20 +76,32 @@ function normalize(sources, options = {}) {
   target.state ||= _options.defaultState;
 
   if (_options.depth > 0) {
-    target.roster = target.roster.map((player) =>
-      normalizePlayer(player, {
-        depth: _options.depth - 1,
-        defaultState: target.state === "playing" ? "playing" : "inTeam",
-        ..._options.player,
-        wristband: {
-          defaultState: "paired",
-          ..._options.wristband,
-        },
-      }),
-    );
-    target.packages = target.packages.map((pkg) =>
-      normalizePackage(pkg, _options.package),
-    );
+    // target.roster = flatRosters(_sources).map((src) =>
+    //   normalizePlayer(src, {
+    //     ..._options.player,
+    //     depth: _options.depth - 1,
+    //     wristband: _options.wristband,
+    //   }),
+    // );
+    // target.roster = target.roster.map((player) =>
+    //   normalizePlayer(player, {
+    //     depth: _options.depth - 1,
+    //     defaultState: target.state === "playing" ? "playing" : "inTeam",
+    //     ..._options.player,
+    //     wristband: {
+    //       defaultState: "paired",
+    //       ..._options.wristband,
+    //     },
+    //   }),
+    // );
+
+    // target.packages = flatPackages(_sources).map((src) =>
+    //   normalizePackage(src, _options.package),
+    // );
+
+    // target.packages = target.packages.map((pkg) =>
+    //   normalizePackage(pkg, _options.package),
+    // );
   }
   trace(target, "team target");
   return target;
