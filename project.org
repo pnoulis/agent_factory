@@ -22,21 +22,6 @@
 **** TODO fill
 
 
-
-** Roster should not normalize() nor fill()
-The roster should only exist to assist in the management
-of a teams players.
-
-It should NOT be responsible for the creation of players or wristbands.
-It should present the following inteface:
-
-find a player
-add a player
-remove a player
-roster
-length
-
-
 ** TODO Implement Synthetic Player Pair Wristband
 *** scratch
 
