@@ -17,7 +17,7 @@ const schema = {
   properties: {
     id: { type: ["integer", "null"] },
     name: { type: "string", enum: ["", ...PACKAGES.map((pkg) => pkg.name)] },
-    type: { type: "string", enum: ["", ...PACKAGE_TYPES] },
+    type: { type: "string", enum: ["", ...Object.keys(PACKAGE_TYPES)] },
     amount: { type: ["number", "null"] },
     cost: { type: ["number", "null"] },
     t_start: { type: ["integer", "null"] },

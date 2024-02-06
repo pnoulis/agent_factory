@@ -1,13 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { Cashier } from "#afm/cashier/Cashier.js";
+import { Device } from "#afm/device/Device.js";
 
-const Entity = Cashier;
+const Entity = Device;
 const random = Entity.random;
 const normalize = Entity.normalize;
 const validate = Entity.validate;
 const tobject = Entity.tobject;
 
-describe("Cashier", () => {
+describe("Device", () => {
   it("Should implement the standard interface", () => {
     expect(random).toBeTypeOf("function");
     expect(normalize).toBeTypeOf("function");
@@ -21,34 +21,31 @@ describe("Cashier", () => {
     expect(entity).toHaveProperty("tobject");
     expect(entity.tobject).toBeTypeOf("function");
   });
-  it("Should produce a random cashier", () => {
+  it("Should produce a random device", () => {
     const entity = random();
     expect(entity).toHaveProperty("id");
-    expect(entity).toHaveProperty("username");
-    expect(entity).toHaveProperty("email");
-    expect(entity).toHaveProperty("role");
+    expect(entity).toHaveProperty("type");
+    expect(entity).toHaveProperty("room");
   });
-  it("Should translate a cashier from afm to backend form", () => {
+  it("Should translate a device from afm to backend form", () => {
     const entity = random();
     const backendEntity = tobject(entity, { backendForm: true });
     expect(backendEntity).toEqual({
-      id: entity.id,
-      username: entity.username,
-      email: entity.email,
-      roles: [`ROLE_${entity.role}`.toUpperCase()],
+      deviceId: entity.id,
+      deviceType: entity.type,
+      roomType: entity.room,
     });
   });
-  it("Should translate a cashier from backend to afm form", () => {
+  it("Should translate a device from backend to afm form", () => {
     const backendEntity = tobject(random(), { backendForm: true });
     const entity = normalize(backendEntity);
     expect(entity).toEqual({
-      id: backendEntity.id,
-      username: backendEntity.username,
-      email: backendEntity.email,
-      role: backendEntity.roles.at(0).split("_").at(1).toLowerCase(),
+      id: backendEntity.deviceId,
+      type: backendEntity.deviceType,
+      room: backendEntity.roomType,
     });
   });
-  it("Should validate a cashier", () => {
+  it("Should validate a device", () => {
     const entity = new Entity();
     let tmp;
 

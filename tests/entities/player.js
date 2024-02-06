@@ -1,39 +1,110 @@
-import { describe, it, expect, } from "vitest";
-import { Wristband } from "../../src/afmachine/wristband/Wristband.js";
-import { Player } from "../../src/afmachine/player/Player.js";
+import { describe, it, expect } from "vitest";
+import { Player } from "#afm/player/Player.js";
+import { Wristband } from "#afm/wristband/Wristband.js";
 
-describe("player", () => {
-  it("Should validate AFM player", () => {
-    const validate = Player.validate;
-    let p = new Player(null, new Wristband());
-    validate(p);
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate(p.fill());
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate(p.fill(null, { depth: 1 }));
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate(p.tobject());
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate(p.tobject(1));
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate(Player.random());
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate(Player.random(null, { depth: 1 }));
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate(Player.normalize());
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate(Player.normalize(null, { depth: 1 }));
-    validate.errors && console.log(validate.errors);
-    expect(validate.errors).toBeNull();
-    validate({});
+const Entity = Player;
+const random = Entity.random;
+const normalize = Entity.normalize;
+const validate = Entity.validate;
+const tobject = Entity.tobject;
+
+describe("Player", () => {
+  it("Should implement the standard interface", () => {
+    expect(random).toBeTypeOf("function");
+    expect(normalize).toBeTypeOf("function");
+    expect(validate).toBeTypeOf("function");
+    expect(tobject).toBeTypeOf("function");
+    const entity = new Entity();
+    expect(entity).toHaveProperty("fill");
+    expect(entity.fill).toBeTypeOf("function");
+    expect(entity).toHaveProperty("normalize");
+    expect(entity.normalize).toBeTypeOf("function");
+    expect(entity).toHaveProperty("tobject");
+    expect(entity.tobject).toBeTypeOf("function");
+  });
+  it("Should produce a random player", () => {
+    const entity = random(null, { depth: 0 });
+    expect(entity).toHaveProperty("username");
+    expect(entity).toHaveProperty("name");
+    expect(entity).toHaveProperty("surname");
+    expect(entity).toHaveProperty("email");
+    expect(entity).toHaveProperty("wristband");
+    expect(entity.wristband).toBeNull();
+  });
+  it("Should translate a player from afm to backend form", () => {
+    const entity = random();
+    const backendEntity = tobject(entity, { backendForm: true });
+    expect(backendEntity).toEqual({
+      username: entity.username,
+      name: entity.name,
+      surname: entity.surname,
+      email: entity.email,
+    });
+  });
+  it("Should translate a player from backend to afm form", () => {
+    const backendEntity = tobject(random(), { backendForm: true });
+    const entity = tobject(normalize(backendEntity), { depth: 0 });
+    expect(entity).toEqual({
+      username: backendEntity.username,
+      name: backendEntity.name,
+      surname: backendEntity.surname,
+      email: backendEntity.email,
+      state: "unregistered",
+      wristband: null,
+    });
+  });
+  it("Should validate a player", () => {
+    const entity = new Entity();
+    let tmp;
+
+    // Empty device
+    validate(entity);
     expect(validate.errors).not.toBeNull();
+
+    validate(entity.tobject({ depth: 0 }));
+    expect(validate.errors).not.toBeNull();
+
+    validate(entity.normalize(null, { depth: 0 }));
+    expect(validate.errors).not.toBeNull();
+
+    // Filled device at depth 0
+    validate((tmp = entity.fill(null, { depth: 0 })));
+    validate.errors && debug(tmp, validate.errors);
+    expect(validate.errors).toBeNull();
+
+    validate((tmp = entity.normalize(null, { depth: 0 })));
+    validate.errors && debug(tmp, validate.errors);
+    expect(validate.errors).toBeNull();
+
+    validate((tmp = entity.tobject({ depth: 0 })));
+    validate.errors && debug(tmp, validate.errors);
+    expect(validate.errors).toBeNull();
+  });
+  it("Should validate a player with a wristband", () => {
+    const entity = new Entity(null, new Wristband());
+    let tmp;
+
+    // Empty device
+    validate(entity);
+    expect(validate.errors).not.toBeNull();
+
+    validate(entity.tobject({ depth: 1 }));
+    expect(validate.errors).not.toBeNull();
+
+    validate(entity.normalize(null, { depth: 1 }));
+    expect(validate.errors).not.toBeNull();
+
+    // Filled device at depth 1
+    validate((tmp = entity.fill(null, { depth: 1 })));
+    validate.errors && debug(tmp, validate.errors);
+    expect(validate.errors).toBeNull();
+
+    validate((tmp = entity.normalize(null, { depth: 1 })));
+    validate.errors && debug(tmp, validate.errors);
+    expect(validate.errors).toBeNull();
+
+    validate((tmp = entity.tobject({ depth: 1 })));
+    validate.errors && debug(tmp, validate.errors);
+    expect(validate.errors).toBeNull();
   });
 });

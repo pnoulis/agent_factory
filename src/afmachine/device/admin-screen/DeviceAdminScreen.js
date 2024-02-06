@@ -1,6 +1,5 @@
 import { Backend } from "../Backend.js";
-import { DEVICES, ROOMS } from "../../constants.js";
-import { ENV } from "../../config.js";
+import { DEVICE_TYPES, DEVICE_IDS, ROOM_TYPES } from "../../constants.js";
 import { registrationTopics as staticRoutes } from "../../../backend-topics.js";
 
 // Player topics
@@ -55,9 +54,9 @@ class BackendRegistration extends Backend {
       params,
       strict: strict ?? true,
     });
-    this.deviceType = DEVICES.registrationScreen;
-    this.deviceId = deviceId || ENV.DEVICE_ID;
-    this.roomName = roomName || ROOMS.administration1;
+    this.deviceType = DEVICE_TYPES.adminScreen
+    this.deviceId = deviceId || DEVICE_IDS.adminScreen
+    this.roomName = roomName || ROOM_TYPES.admin1;
     this.registry.setParam("deviceId", this.deviceId);
   }
 }

@@ -1,13 +1,15 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
-import { createStateful, stateful } from "../../Stateful.js";
+import { tobject } from "./tobject.js";
+import { schema } from "./schema.js";
+import { createValidator } from "../createValidator.js";
+
+import { createStateful } from "../../Stateful.js";
 import { Unregistered } from "./StateUnregistered.js";
 import { Registered } from "./StateRegistered.js";
 import { InTeam } from "./StateInTeam.js";
 import { Playing } from "./StatePlaying.js";
 import { ERR_CODES } from "../../errors.js";
-import { schema } from "./schema.js";
-import { createValidator } from "../createValidator.js";
 
 class Player extends createStateful([
   Unregistered,
@@ -17,28 +19,31 @@ class Player extends createStateful([
 ]) {
   static random = random;
   static normalize = normalize;
+  static tobject = tobject;
   static validate = createValidator(schema);
-
   constructor(player, wristband) {
     super();
     player ??= {};
-    this.username = player.username || "";
-    this.name = player.name || "";
-    this.surname = player.surname || "";
-    this.email = player.email || "";
+    this.username = player.username || null;
+    this.name = player.name || null;
+    this.surname = player.surname || null;
+    this.email = player.email || null;
     this.state =
       this.states[player.state?.name || player.state || "unregistered"];
-    this.wristband = wristband ?? {};
+    this.wristband = wristband ?? null;
   }
-  normalize(sources, options) {
+  normalize(sources, options = {}) {
     const { wristband, state, ...player } = Player.normalize(
       [this, sources],
       options,
     );
-    Object.assign(this.wristband, wristband);
-    this.wristband.setState(wristband.state);
     Object.assign(this, player);
     this.setState(state);
+
+    if (options.depth ?? 1) {
+      Object.assign(this.wristband, wristband);
+      this.wristband.setState(wristband.state);
+    }
     return this;
   }
   fill(sources, options = {}) {
@@ -46,25 +51,17 @@ class Player extends createStateful([
       [this, sources],
       options,
     );
-    Object.assign(this.wristband, wristband);
-    this.wristband.setState(wristband.state);
     Object.assign(this, player);
     this.setState(state);
+
+    if (options.depth ?? 1) {
+      Object.assign(this.wristband, wristband);
+      this.wristband.setState(wristband.state);
+    }
     return this;
   }
-  tobject(depth = 0) {
-    const player = {
-      username: this.username,
-      name: this.name,
-      surname: this.surname,
-      email: this.email,
-      state: this.state.name,
-      wristband: {},
-    };
-    if (depth > 0) {
-      player.wristband = this.wristband.tobject();
-    }
-    return player;
+  tobject(options) {
+    return Player.tobject(this, options);
   }
 }
 

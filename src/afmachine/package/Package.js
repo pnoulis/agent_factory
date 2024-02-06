@@ -23,14 +23,14 @@ class Package extends createStateful([
   constructor(pkg) {
     super();
     pkg ??= {};
-    this.id = pkg.id ?? null;
-    this.name = pkg.name || "";
-    this.type = pkg.type || "";
-    this.amount = pkg.amount ?? 0;
-    this.cost = pkg.cost ?? 0;
-    this.t_start = pkg.t_start ?? null;
-    this.t_end = pkg.t_end ?? null;
-    this.remainder = pkg.remainder ?? null;
+    this.id = pkg.id || null;
+    this.name = pkg.name || null;
+    this.type = pkg.type || null;
+    this.amount = pkg.amount || null;
+    this.cost = pkg.cost || null;
+    this.t_start = pkg.t_start || null;
+    this.t_end = pkg.t_end || null;
+    this.remainder = pkg.remainder || null;
     this.state = this.states[pkg.state?.name || pkg.state || "unregistered"];
   }
 

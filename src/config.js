@@ -15,7 +15,8 @@ const __getEnvar = getEnvar.bind(
 __getEnvar("MODE", { required: true });
 __getEnvar("NODE_ENV");
 __getEnvar("LOGLEVEL");
-__getEnvar("DEVICE_ID", { required: true });
+__getEnvar("DEVICE_ADMIN_SCREEN_ID", { required: true });
+__getEnvar("DEVICE_RPI_READER_ID", { required: true });
 __getEnvar("AFADMIN_SERVER_URL_ORIGIN_WS", {
   required: true,
   rename: "AFADMIN_SERVER_URL",

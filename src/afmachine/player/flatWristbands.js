@@ -1,4 +1,4 @@
-import { isObject, isArray, unique } from "js_utils/misc";
+import { isArray, unique } from "js_utils/misc";
 
 function gatherWristbands(car, src) {
   if (isArray) {

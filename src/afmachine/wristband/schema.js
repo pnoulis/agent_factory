@@ -1,17 +1,37 @@
+import {
+  MAX_WRISTBAND_CC,
+  MIN_WRISTBAND_CC,
+  MAX_WRISTBAND_ID,
+  MIN_WRISTBAND_ID,
+  WRISTBAND_COLORS,
+} from "../../constants.js";
+
 const schema = {
   type: "object",
   additionalProperties: true,
   required: ["id", "colorCode", "color", "state"],
   properties: {
-    id: { type: ["integer", "null"] },
-    colorCode: { type: ["integer", "null"] },
-    color: { type: "string" },
+    id: {
+      type: "integer",
+      minimum: MIN_WRISTBAND_ID,
+      maximum: MAX_WRISTBAND_ID,
+    },
+    colorCode: {
+      type: "integer",
+      minimum: MIN_WRISTBAND_CC,
+      maximum: MAX_WRISTBAND_CC,
+    },
+    color: {
+      type: "string",
+      enum: new Array(MAX_WRISTBAND_CC)
+        .fill()
+        .map((_, i) => WRISTBAND_COLORS[MIN_WRISTBAND_CC + i]),
+    },
     state: {
-      anyOf: [
-        { type: "null" },
+      oneOf: [
         {
           type: "string",
-          enum: ["", "unpaired", "pairing", "unpairing", "paired"],
+          enum: ["unpaired", "pairing", "unpairing", "paired"],
         },
         {
           type: "object",
@@ -20,7 +40,7 @@ const schema = {
           properties: {
             name: {
               type: "string",
-              enum: ["", "unpaired", "pairing", "unpairing", "paired"],
+              enum: ["unpaired", "pairing", "unpairing", "paired"],
             },
             order: { type: "integer" },
           },

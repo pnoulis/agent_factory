@@ -24,7 +24,8 @@ WITH_INSTALLDIRS_PRESET=
 export AFADMIN_SERVER_URL=
 export AFADMIN_CLIENT_URL_PUBLIC=
 export AFADMIN_CLIENT_URL_LOCAL=
-export DEVICE_ID=
+export DEVICE_ADMIN_SCREEN_ID=
+export DEVICE_RPI_READER_ID=
 export LOGLEVEL=
 
 # CONSTANTS
@@ -174,8 +175,10 @@ resolve_node_env() {
 
 resolve_options() {
   print_chapter "Resolving options..."
-  exit_if_empty DEVICE_ID
-  echo "DEVICE_ID...|$DEVICE_ID"
+  exit_if_empty DEVICE_ADMIN_SCREEN_ID
+  echo "DEVICE_ADMIN_SCREEN_ID...|$DEVICE_ADMIN_SCREEN_ID"
+  exit_if_empty DEVICE_RPI_READER_ID
+  echo "DEVICE_RPI_READER_ID...|$DEVICE_RPI_READER_ID"
   exit_if_empty LOGLEVEL
   echo "LOGLEVEL...|$LOGLEVEL"
 }
@@ -778,8 +781,11 @@ parse_args(){
       --afadmin-mysqldb-url=* | --afadmin-mysqldb-url*)
         AFADMIN_MYSQLDB_URL="$(parse_param "$@")" || shift $?
         ;;
-      --device-id=* | --device-id*)
-        DEVICE_ID="$(parse_param "$@")" || shift $?
+      --device-admin-screen-id=* | --device-admin-screen-id*)
+        DEVICE_ADMIN_SCREEN_ID="$(parse_param "$@")" || shift $?
+        ;;
+      --device-rpi-reader-id=* | --device-rpi-reader-id*)
+        DEVICE_RPI_READER_ID="$(parse_param "$@")" || shift $?
         ;;
       --with-deploy-target=* | --with-deploy-target*)
         WITH_DEPLOY_TARGET="$(parse_param "$@")" || shift $?

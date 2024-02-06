@@ -1,4 +1,3 @@
-import { isObject } from "js_utils/misc";
 import { normalize as normalizeWristband } from "../wristband/normalize.js";
 import { flatWristbands } from "./flatWristbands.js";
 
@@ -10,11 +9,12 @@ function normalize(sources, options = {}) {
 
   // See documentation at wristband/normalize.js
   const _options = {
-    password: options.password ?? false,
+    password: options.password || false,
+    depth: options.depth ?? 1,
     targetState: options.state || "",
-    nullSupersede: options.nullSupersede ?? false,
-    defaultState: options.defaultState ?? "unregistered",
-    wristband: options.wristband ?? {},
+    nullSupersede: options.nullSupersede || false,
+    defaultState: options.defaultState || "unregistered",
+    wristband: options.wristband || {},
   };
   trace(_options, "player _options");
 
@@ -22,12 +22,12 @@ function normalize(sources, options = {}) {
   trace(_sources, "player _sources");
 
   const target = {
-    username: "",
-    name: "",
-    surname: "",
-    email: "",
-    state: "",
-    wristband: normalizeWristband(flatWristbands(_sources), _options.wristband),
+    username: null,
+    name: null,
+    surname: null,
+    email: null,
+    state: null,
+    wristband: null,
   };
   let wristbandMerged = false;
 
@@ -37,18 +37,8 @@ function normalize(sources, options = {}) {
       target.name = _sources[i].name || null;
       target.surname = _sources[i].surname || null;
       target.email = _sources[i].email || null;
-      target.state = isObject(_sources[i].state)
-        ? _sources[i].state.name
-        : _sources[i].state;
-      wristbandMerged = _sources[i].wristbandMerged ?? false;
-      // target.wristband =
-      //   _sources[i].wristband ??
-      //   (Object.hasOwn(_sources[i], "wristbandNumber")
-      //     ? {
-      //         wristbandNumber: _sources[i].wristbandNumber,
-      //         wristbandColor: _sources[i].wristbandColor,
-      //       }
-      //     : {});
+      target.state = _sources[i].state?.name || _sources[i].state || null;
+      wristbandMerged = _sources[i].wristbandMerged || false;
     }
   } else {
     for (let i = 0; i < _sources.length; i++) {
@@ -56,19 +46,8 @@ function normalize(sources, options = {}) {
       target.name = _sources[i].name || target.name;
       target.surname = _sources[i].surname || target.surname;
       target.email = _sources[i].email || target.email;
-      target.state =
-        (isObject(_sources[i].state)
-          ? _sources[i].state.name
-          : _sources[i].state) || target.state;
+      target.state = _sources[i].state?.name || _sources[i].state || null;
       wristbandMerged = _sources[i].wristbandMerged ?? wristbandMerged;
-      // target.wristband =
-      //   _sources[i].wristband ??
-      //   (Object.hasOwn(_sources[i], "wristbandNumber")
-      //     ? {
-      //         wristbandNumber: _sources[i].wristbandNumber,
-      //         wristbandColor: _sources[i].wristbandColor,
-      //       }
-      //     : target.wristband);
     }
   }
 
@@ -79,16 +58,14 @@ function normalize(sources, options = {}) {
   }
 
   target.state ||= _options.defaultState;
-  // if (_options.depth > 0) {
-  //   target.wristband = normalizeWristband(target.wristband, _options.wristband);
-  //   // target.wristband = normalizeWristband(target.wristband, {
-  //   //   state:
-  //   //     (target.state === "inTeam" || target.state === "playing") && "paired",
-  //   //   ...options.wristband,
-  //   // });
-  // } else {
-  //   target.wristband = target.wristband.pop
-  // }
+
+  if (_options.depth > 0) {
+    target.wristband = normalizeWristband(
+      flatWristbands(_sources),
+      _options.wristband,
+    );
+  }
+
   trace(target, "player target");
   return target;
 }

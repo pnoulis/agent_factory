@@ -71,6 +71,11 @@ out_backend_log=$(srcdir_top_abs)/backend.log
 out_test_log=$(srcdir_top_abs)/test.log
 
 ##################################################
+# Path aliases
+##################################################
+alias_afm=$(srcdir)/afmachine
+
+##################################################
 # Default target
 ##################################################
 all: build
@@ -211,3 +216,6 @@ help:
 .PHONY: help # Display a short description about each Makefile target's function
 .PHONY: dotenv # Write environment into .env
 .PHONY: all # Default target
+
+_test:
+	echo $(alias_afm)

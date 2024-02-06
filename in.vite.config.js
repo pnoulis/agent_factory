@@ -23,6 +23,9 @@ export default defineConfig({
   },
   base: "IN_AFADMIN_CLIENT_URL_PUBLIC_BASENAME",
   plugins: [react(), svgr()],
+  alias: {
+    ["@afm"]: "src/afmachine",
+  },
   build: {
     outDir: "IN_BUILDIR",
     target: "es2022",
@@ -36,7 +39,10 @@ export default defineConfig({
   },
   test: {
     // ...
-    include: [...configDefaults.include, "**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    include: [
+      ...configDefaults.include,
+      "**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
+    ],
     exclude: [...configDefaults.exclude, "setupFile.js", "taskTemplate.js"],
     setupFiles: "tests/setupFile.js",
     fileParallelism: false, // Run tests sequentially
