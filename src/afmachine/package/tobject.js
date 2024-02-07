@@ -1,123 +1,64 @@
 import { PACKAGE_TYPES } from "../../constants.js";
-/*
-  {
-    timestamp: 1706640606387,
-    result: 'OK',
-    packages: [
-      { name: 'Per Mission 5', amount: 5, type: 'mission', cost: 50 },
-      {
-        name: 'Per Mission 10',
-        amount: 10,
-        type: 'mission',
-        cost: 100
-      },
-      {
-        name: 'Per Mission 15',
-        amount: 15,
-        type: 'mission',
-        cost: 150
-      },
-      {
-        name: 'Per Mission 20',
-        amount: 20,
-        type: 'mission',
-        cost: 200
-      },
-      { name: 'Per Time 30', amount: 30, type: 'time', cost: 50 },
-      { name: 'Per Time 60', amount: 60, type: 'time', cost: 100 },
-      { name: 'Per Time 90', amount: 90, type: 'time', cost: 150 },
-      { name: 'Per Time 120', amount: 120, type: 'time', cost: 200 }
+import { t_stomls } from "../../misc/misc.js";
 
-          {
-            // missions registered
-            id: 1,
-            name: "Per Mission 5",
-            cost: null,
-            started: null,
-            ended: null,
-            missions: 5,
-            missionsPlayed: 0,
-            active: false,
-          },
-
-          {
-            // time registered
-            id: 8,
-            name: "Per Time 30",
-            cost: null,
-            started: null,
-            ended: null,
-            duration: 1800,
-            paused: false,
-            active: false,
-          },
-
- */
-
-function tobject(pkg, { backendForm = false } = {}) {
+// pkg = AFM FORM
+function tobject(
+  pkg,
+  { defaultState = "unregistered", backendForm = false } = {},
+) {
   pkg ||= {};
 
-  if (!PACKAGE_TYPES[pkg.type]) {
-    throw new Error(`Unrecognized package type: '${pkg.type}'`);
-  }
-
-  const _tobject = {
+  const afmPkg = {
     id: pkg.id || null,
     name: pkg.name || null,
     cost: pkg.cost || null,
+    type: pkg.type || null,
+    t_start: pkg.t_start || null,
+    t_end: pkg.t_end || null,
+    amount: pkg.amount || null,
+    remainder: pkg.remainder || null,
+    state: pkg.state?.name || pkg.state || defaultState,
   };
 
-  if (!backendForm) {
-    return {
-      ..._tobject,
-      type: pkg.type,
-      t_start: pkg.t_start || null,
-      t_end: pkg.t_end || null,
-      amount: pkg.amount || null,
-      remainder: pkg.remainder || null,
-      state: pkg.state?.name || pkg.state || null,
-    }
-  }
+  if (!backendForm) return afmPkg;
 
-  if (
-    pkg.state === "unregistered" ||
-    pkg.state === "registered" ||
-    pkg.state == null
-  ) {
-    _tobject.active = false;
-  } else {
-    _tobject.active = true;
-  }
+  const backendPkg = {
+    id: afmPkg.id,
+    name: afmPkg.name,
+    cost: null,
+    started: afmPkg.t_start,
+    ended: afmPkg.t_end,
+  };
 
-  return Object.assign(_tobject, pkg.type === "mission" ? {} : {});
-
-  if (pkg.type === "mission") {
-    return;
-  }
-  switch (pkg.type) {
-    case "mission":
-      return;
-      Object.assign(
-        _tobject,
-        backendForm
-          ? {
-              started: pkg.t_start || null,
-              ended: pkg.t_end || null,
-              missions: pkg.amount || null,
-              missionsPlayed: pkg.remainder || null,
-            }
-          : {
-              t_start: pkg.t_start || null,
-              t_end: pkg.t_end || null,
-              amount: pkg.amount || null,
-              remainder: pkg.remainder || null,
-              state: pkg.state?.name || pkg.state || null,
-            },
-      );
-    case "time":
-      Object.assign(_tobject, backendForm ? {} : {});
+  switch (afmPkg.state) {
+    case "paused":
+      // A missions package should never be in this
+      // state; at least as of this moment in the project's
+      // lifecycle.
+      backendPkg.paused = true;
+    // fall through
+    case "playing":
+      backendPkg.active = true;
+      break;
     default:
-      throw new Error(`Unrecognized package type: '${pkg.type}'`);
+      backendPkg.active = false;
+  }
+
+  switch (afmPkg.type) {
+    case PACKAGE_TYPES.missions:
+      return {
+        ...backendPkg,
+        missions: afmPkg.amount,
+        missionsPlayed: afmPkg.remainder,
+      };
+    case PACKAGE_TYPES.time:
+      return {
+        ...backendPkg,
+        paused: backendPkg.paused || false,
+        duration: t_stomls(afmPkg.amount, true),
+      };
+    default:
+      throw new Error(`Unrecognized package type: '${afmPkg.type}' `);
   }
 }
 

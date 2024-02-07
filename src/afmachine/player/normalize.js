@@ -3,9 +3,8 @@ import { flatWristbands } from "./flatWristbands.js";
 
 function normalize(sources, options = {}) {
   trace("normalize player");
-
-  trace(options, "player options");
-  trace(sources, "player sources");
+  trace(sources, "player normalize sources");
+  trace(options, "player normalize options");
 
   // See documentation at wristband/normalize.js
   const _options = {
@@ -16,10 +15,10 @@ function normalize(sources, options = {}) {
     defaultState: options.defaultState || "unregistered",
     wristband: options.wristband || {},
   };
-  trace(_options, "player _options");
+  trace(_options, "player normalize _options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  trace(_sources, "player _sources");
+  trace(_sources, "player normalize _sources");
 
   const target = {
     username: null,
@@ -55,9 +54,9 @@ function normalize(sources, options = {}) {
     target.state = _options.targetState;
   } else if (wristbandMerged) {
     target.state = "inTeam";
+  } else {
+    target.state ||= _options.defaultState;
   }
-
-  target.state ||= _options.defaultState;
 
   if (_options.depth > 0) {
     target.wristband = normalizeWristband(
@@ -66,7 +65,7 @@ function normalize(sources, options = {}) {
     );
   }
 
-  trace(target, "player target");
+  trace(target, "player normalize target");
   return target;
 }
 

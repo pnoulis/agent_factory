@@ -1,16 +1,20 @@
+// device = AFM FORM
 function tobject(device, { backendForm = false } = {}) {
   device ||= {};
-  return backendForm
-    ? {
-        deviceId: device.id || null,
-        deviceType: device.type || null,
-        roomType: device.room || null,
-      }
-    : {
-        id: device.id || null,
-        type: device.type || null,
-        room: device.room || null,
-      };
+
+  const afmDevice = {
+    id: device.id || null,
+    type: device.type || null,
+    room: device.room || null,
+  };
+
+  if (!backendForm) return afmDevice;
+
+  return {
+    deviceId: afmDevice.id,
+    deviceType: afmDevice.type,
+    roomType: afmDevice.room,
+  };
 }
 
 export { tobject };

@@ -15,21 +15,19 @@ const schema = {
     "state",
   ],
   properties: {
-    id: { type: ["integer", "null"] },
-    name: { type: "string", enum: ["", ...PACKAGES.map((pkg) => pkg.name)] },
-    type: { type: "string", enum: ["", ...Object.keys(PACKAGE_TYPES)] },
-    amount: { type: ["number", "null"] },
-    cost: { type: ["number", "null"] },
-    t_start: { type: ["integer", "null"] },
-    t_end: { type: ["integer", "null"] },
-    remainder: { type: ["integer", "null"] },
+    id: { type: "integer", minimum: 1 },
+    name: { type: "string", enum: PACKAGES.map((pkg) => pkg.name) },
+    type: { type: "string", enum: Object.keys(PACKAGE_TYPES) },
+    amount: { type: "number", minimum: 1 },
+    cost: { type: "number", minimum: 1 },
+    t_start: { type: "integer", minimum: 1 }, // MILLISECONDS
+    t_end: { type: "integer", minimum: 1 }, // MILLISECONDS
+    remainder: { type: "number", minimum: 1 }, // MILLISECONDS OR MISSIONS
     state: {
       anyOf: [
-        { type: "null" },
         {
           type: "string",
           enum: [
-            "",
             "unregistered",
             "registered",
             "playing",
@@ -45,7 +43,6 @@ const schema = {
             name: {
               type: "string",
               enum: [
-                "",
                 "unregistered",
                 "registered",
                 "playing",

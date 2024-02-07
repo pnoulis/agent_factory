@@ -1,45 +1,100 @@
 import { randomInteger, randomReal } from "js_utils/misc";
 import { PACKAGE_TYPES, PACKAGES } from "../../constants.js";
-import { t_stomls, t_stomin } from "../../misc/misc.js";
+import { t_stomls, t_stomin, t_htomls } from "../../misc/misc.js";
 import { normalize } from "./normalize.js";
 
-function random(sources) {
+function random(sources, options = {}) {
   trace("random package");
   trace(sources, "package random sources");
+  trace(options, "package random options");
 
-  const target = normalize(sources);
-  target.id ??= randomInteger(1, 5000);
-  target.cost ??= randomReal(1, 5000);
-  target.type ||= PACKAGE_TYPES.at(
-    randomInteger(0, Object.keys(PACKAGE_TYPES).length - 1),
-  );
-  const packages = PACKAGES.filter((pkg) => pkg.type === target.type);
-  Object.assign(target, packages.at(randomInteger(0, packages.length - 1)));
+  // state and normalization
+  if (arguments.length === 1) {
+    options.state = sources.state;
+  }
+  const target = normalize(sources, options);
+  trace(target, "package random normalized sources");
 
-  const now = Date.now();
+  // package type (missions || time)
+  const types = Object.values(PACKAGE_TYPES);
+  target.type ||= types.at(randomInteger(0, types.length - 1));
+
+  // id and cost
+  target.id ||= randomInteger(1, 5000);
+  target.cost ||= randomReal(1, 500);
+
+  // amount and name
+  const pkgs = PACKAGES.filter((pkg) => pkg.type === target.type);
+  const { amount, name } = pkgs.at(randomInteger(0, pkgs.length - 1));
+  target.amount ||= amount;
+  target.name ||= name;
+
+  // remainder props are dependent on _options.targetState and type of package:
+  // amount, t_start, t_end, remainder
   switch (target.type) {
-    case "mission":
-      target.t_start = now;
-      target.remainder = Math.floor(target.amount / randomInteger(1, 2));
+    case PACKAGE_TYPES.missions:
+      switch (target.state) {
+        case "unregistered":
+        // fall through
+        case "registered":
+          target.t_start = null;
+          target.t_end = null;
+          target.remainder = target.amount;
+          break;
+        case "playing":
+          target.t_start =
+            Date.now() - Math.floor(t_htomls(1) / randomInteger(1, 4));
+          target.t_end = null;
+          target.remainder = Math.floor(target.amount / randomInteger(1, 4));
+          break;
+        case "completed":
+          target.t_start =
+            Date.now() - Math.floor(t_htomls(1) / randomInteger(1, 4));
+          target.t_end = target.t_start + t_htomls() / 2;
+          target.remainder = 0;
+          break;
+        default:
+          throw new Error(
+            `Unrecognized package target state: '${target.state}'`,
+          );
+      }
       break;
-    case "time":
-      const amountMs = t_stomls(t_stomin(target.amount, true));
-      target.t_start = now - amountMs / randomInteger(1, 2);
-      target.remainder = Math.floor(
-        Math.abs(now - (target.t_start + amountMs)),
-      );
+    case PACKAGE_TYPES.time:
+      const now = Date.now();
+      switch (target.state) {
+        case "unregistered":
+        // fall through
+        case "registered":
+          target.t_start = null;
+          target.t_end = null;
+          // min to ms
+          target.amount = t_stomls(t_stomin(target.amount, true));
+          target.remainder = target.amount;
+          break;
+        case "playing":
+          target.amount = t_stomls(t_stomin(target.amount, true));
+          target.t_start =
+            now - Math.floor(target.amount / randomInteger(2, 4));
+          target.t_end = null;
+          target.remainder = Math.floor(
+            Math.abs(now - (target.t_start + target.amount)),
+          );
+          break;
+        case "completed":
+          target.amount = t_stomls(t_stomin(target.amount, true));
+          target.t_start =
+            now - Math.floor(target.amount / randomInteger(1, 4));
+          target.t_end = target.t_start + target.amount;
+          target.remainder = 0;
+          break;
+        default:
+          throw new Error(
+            `Unrecognized package target state: '${target.state}'`,
+          );
+      }
       break;
     default:
-      throw TypeError(`Unrecognized package type: '${target.type}'`);
-  }
-
-  if (target.remainder === 0) {
-    target.active = false;
-    // Should it be inactive because it has been completed?
-    target.t_end = !!randomInteger(0, 1) ? now : null;
-  } else {
-    target.t_end = null;
-    target.active = true;
+      throw new Error(`Unrecognized package type: '${target.type}'`);
   }
 
   trace(target, "package random target");

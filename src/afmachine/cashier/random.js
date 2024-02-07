@@ -1,6 +1,7 @@
 import { randomInteger } from "js_utils/misc";
 import { smallid } from "js_utils/uuid";
 import { normalize } from "./normalize.js";
+import { PRIVILEGE_TYPES } from "../../constants.js";
 
 function random(sources) {
   trace("random cashier");
@@ -12,7 +13,11 @@ function random(sources) {
   target.username ||= smallid();
   target.email ||= target.username + "@gmail.com";
   target.id ||= randomInteger(1, 5000);
-  target.role ||= "cashier";
+
+  const roles = Object.keys(PRIVILEGE_TYPES);
+  target.role ||= Object.values(PRIVILEGE_TYPES).at(
+    randomInteger(0, roles.length - 1),
+  );
 
   trace(target, "cashier random target");
   return target;

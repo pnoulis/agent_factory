@@ -50,6 +50,19 @@ function t_stomls(seconds = 1, reverse = false) {
 }
 
 /*
+  Hours to Milliseconds
+  1 hour - 36 000 00 ms
+
+  if reverse:
+
+  Milliseconds to Hours
+  1 Millisecond - 1/36 000 00 ms
+ */
+function t_htomls(hours = 1, reverse = true) {
+  return reverse ? hours / 3600000 : hours * 3600000;
+}
+
+/*
   Seconds to Minutes
   60 seconds - 1 minute
 
@@ -104,6 +117,7 @@ export {
   inspectProps,
   t_stomls,
   t_stomin,
+  t_htomls,
   t_daytomls,
   t_timetolocal,
   randomCashier,

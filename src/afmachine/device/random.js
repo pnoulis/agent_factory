@@ -11,13 +11,11 @@ function random(sources) {
 
   const devices = Object.keys(DEVICE_IDS);
   const device = devices.at(randomInteger(0, devices.length - 1));
-
-  const rooms = Object.keys(ROOM_TYPES);
-  const room = rooms.at(randomInteger(0, rooms.length - 1));
-
   target.id ||= DEVICE_IDS[device];
   target.type ||= DEVICE_TYPES[device];
-  target.room ||= ROOM_TYPES[room];
+
+  const rooms = Object.keys(ROOM_TYPES);
+  target.room ||= Object.values(ROOM_TYPES).at(randomInteger(0, rooms.length - 1))
 
   trace(target, "device random target");
   return target;

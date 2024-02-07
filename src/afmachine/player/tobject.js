@@ -1,23 +1,28 @@
-import { tobject as tobjectWristband } from "../wristband/tobject.js";
+import { Wristband } from "../wristband/Wristband.js";
 
-function tobject(player, { depth = 1, backendForm = false } = {}) {
+// player = AFM FORM
+function tobject(player, options) {
   player ||= {};
 
-  const _tobject = {
+  const _options = (arguments.length < 2 ? player : options) || {};
+  _options.depth ??= 1;
+  _options.defaultState ||= "unregistered";
+  _options.backendForm ||= false;
+
+  const backendPlayer = {
     username: player.username || null,
     name: player.name || null,
     surname: player.surname || null,
     email: player.email || null,
   };
 
-  if (backendForm) {
-    return _tobject;
-  }
+  if (_options.backendForm) return backendPlayer;
 
-  _tobject.wristband = depth < 1 ? null : tobjectWristband(player.wristband);
-  _tobject.state = player.state?.name || player.state || null;
-
-  return _tobject;
+  return {
+    ...backendPlayer,
+    wristband: Wristband.tobject(player.wristband, _options.wristband),
+    state: player.state?.name || player.state || _options.defaultState,
+  };
 }
 
 export { tobject };

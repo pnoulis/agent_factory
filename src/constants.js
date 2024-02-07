@@ -1,4 +1,4 @@
-import { ENV } from './config.js';
+import { ENV } from "./config.js";
 //////////////////////////////////////////////////
 // WRISTBANDS
 //////////////////////////////////////////////////
@@ -67,7 +67,7 @@ export { ROOM_TYPES };
 // PACKAGES
 //////////////////////////////////////////////////
 const PACKAGE_TYPES = Object.freeze({
-  mission: "mission",
+  missions: "mission",
   time: "time",
 });
 const PACKAGES = Object.freeze([

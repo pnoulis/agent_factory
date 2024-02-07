@@ -34,7 +34,10 @@ class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
     return this;
   }
   fill(sources, options) {
-    const { state, ...wristband } = Wristband.random([this, sources], options);
+    const { state, ...wristband } = Wristband.random([this, sources], {
+      defaultState: this.state.name,
+      ...options,
+    });
     Object.assign(this, wristband);
     this.setState(state);
     return this;
