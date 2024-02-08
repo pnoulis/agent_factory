@@ -1,4 +1,4 @@
-import { afmForm, backendForm } from "./schemas.js";
+import { afmWristband, backendWristband } from "./schemas.js";
 import { createValidator } from "../createValidator.js";
 
 function validate(wristband, options) {
@@ -19,7 +19,7 @@ function validate(wristband, options) {
   return validator.errors ? [...validator.errors] : null;
 }
 
-validate.afm = createValidator(afmForm);
-// validate.backend = createValidator(backendForm);
+validate.afm = createValidator(afmWristband);
+validate.backend = createValidator(backendWristband);
 
 export { validate };

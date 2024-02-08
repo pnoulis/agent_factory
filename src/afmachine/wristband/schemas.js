@@ -6,7 +6,7 @@ import {
   WRISTBAND_COLORS,
 } from "../../constants.js";
 
-const afmForm = {
+const afmWristband = {
   type: "object",
   additionalProperties: true,
   required: ["id", "colorCode", "color", "state"],
@@ -50,7 +50,7 @@ const afmForm = {
   },
 };
 
-const backendForm = {
+const backendWristband = {
   type: "object",
   additionalProperties: false,
   required: ["wristbandNumber", "wristbandColor", "active"],
@@ -71,4 +71,4 @@ const backendForm = {
   },
 };
 
-export { afmForm, backendForm };
+export { afmWristband, backendWristband };

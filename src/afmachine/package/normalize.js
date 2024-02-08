@@ -1,16 +1,16 @@
 import { t_stomls, t_stomin } from "../../misc/misc.js";
 import { PACKAGE_TYPES } from "../../constants.js";
 
-function normalize(sources, options = {}) {
+function normalize(sources, options) {
   trace("normalize package");
   trace(sources, "package normalize sources");
   trace(options, "package normalize options");
 
-  // See documentation at wristband/normalize.js
+  options ||= {};
   const _options = {
-    targetState: options.state || "",
-    nullSupersede: options.nullSupersede || false,
+    targetState: options.state || null,
     defaultState: options.defaultState || "unregistered",
+    nullSupersede: options.nullSupersede || false,
   };
   trace(_options, "package normalize _options");
 
@@ -103,7 +103,6 @@ function normalize(sources, options = {}) {
     }
   }
 
-  // Calculate state
   if (_options.targetState) {
     target.state = _options.targetState;
   } else if (paused) {

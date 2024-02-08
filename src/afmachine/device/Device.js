@@ -1,14 +1,13 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
-import { tobject } from './tobject.js';
-import { schema } from "./schema.js";
-import { createValidator } from "../createValidator.js";
+import { tobject } from "./tobject.js";
+import { validate } from "./validate.js";
 
 class Device {
   static random = random;
   static normalize = normalize;
-  static validate = createValidator(schema);
   static tobject = tobject;
+  static validate = validate;
 
   constructor(mqttClient, device) {
     device ??= {};

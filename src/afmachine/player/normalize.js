@@ -1,11 +1,12 @@
 import { Wristband } from "../wristband/Wristband.js";
 import { flatWristbands } from "./flatWristbands.js";
 
-function normalize(sources, options = {}) {
+function normalize(sources, options) {
   trace("normalize player");
   trace(sources, "player normalize sources");
   trace(options, "player normalize options");
 
+  options ||= {};
   const _options = {
     targetState: options.state || null,
     defaultState: options.defaultState || "unregistered",
@@ -22,10 +23,7 @@ function normalize(sources, options = {}) {
     surname: null,
     email: null,
     state: null,
-    wristband: Wristband.normalize(
-      flatWristbands(_sources),
-      _options.wristband,
-    ),
+    wristband: Wristband.normalize(flatWristbands(_sources), options.wristband),
   };
 
   let wristbandMerged = false;

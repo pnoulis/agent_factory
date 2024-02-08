@@ -8,8 +8,8 @@ function normalize(sources, options) {
   options ||= {};
   const _options = {
     targetState: options.state || null,
-    nullSupersede: options.nullSupersede || false,
     defaultState: options.defaultState || "unpaired",
+    nullSupersede: options.nullSupersede || false,
   };
   trace(_options, "wristband normalize _options");
 

@@ -1,21 +1,16 @@
-import { isObject } from "js_utils/misc";
-import { normalize as normalizePackage } from "../package/normalize.js";
-import { normalize as normalizePlayer } from "../player/normalize.js";
+import { Package } from "../package/Package.js";
+import { Player } from "../player/Player.js";
 import { flatRosters } from "./flatRosters.js";
 import { flatPackages } from "./flatPackages.js";
 
-function normalize(sources, options = {}) {
+function normalize(sources, options) {
   trace("normalize team");
 
+  options ||= {};
   const _options = {
-    targetState: options.state || "",
-    nullSupersede: options.nullSupersede ?? false,
-    defaultState: options.defaultState ?? "unregistered",
-    package: options.package,
-    player: {
-      ...options?.player,
-      wristband: options.wristband,
-    },
+    targetState: options.state || null,
+    nullSupersede: options.nullSupersede || false,
+    defaultState: options.defaultState || "unregistered",
   };
   trace(_options, "team _options");
 
@@ -23,42 +18,37 @@ function normalize(sources, options = {}) {
   trace(_sources, "team _sources");
 
   const target = {
-    name: "",
+    name: null,
     t_created: null,
     points: null,
-    state: "",
+    state: null,
     packages: flatPackages(sources).map((src) =>
-      normalizePackage(src, _options.package),
+      Package.normalize(src, options.package),
     ),
     roster: flatRosters(sources).map((src) =>
-      normalizePlayer(src, _options.player),
+      Player.normalize(src, {
+        ...options.player,
+        wristband: options.wristband,
+      }),
     ),
   };
 
   if (_options.nullSupersede) {
     for (let i = 0; i < _sources.length; i++) {
-      target.name = _sources[i].name || "";
+      target.name = _sources[i].name || null;
       target.t_created = _sources[i].t_created || _sources[i].created || null;
-      target.points = _sources[i].points ?? _sources[i].totalPoints ?? 0;
-      target.state =
-        _sources[i].teamState ||
-        (isObject(_sources[i].state)
-          ? _sources[i].state.name
-          : _sources[i].state);
+      target.points = _sources[i].points ?? _sources[i].totalPoints ?? null;
+      target.state = _sources[i].state?.name || _sources[i].state || null;
     }
   } else {
     for (let i = 0; i < _sources.length; i++) {
       target.name = _sources[i].name || target.name;
       target.t_created =
-        _sources[i].created ?? _sources[i].t_created ?? target.t_created;
+        _sources[i].created || _sources[i].t_created || target.t_created;
       target.points =
         _sources[i].totalPoints ?? _sources[i].points ?? target.points;
       target.state =
-        _sources[i].teamState ||
-        (isObject(_sources[i].state)
-          ? _sources[i].state.name
-          : _sources[i].state) ||
-        target.state;
+        _sources[i].state?.name || _sources[i].state || target.state;
     }
   }
 
@@ -72,38 +62,11 @@ function normalize(sources, options = {}) {
     target.state === "LOADED_PACKAGES"
   ) {
     target.state = "registered";
+  } else {
+    target.state ||= _options.defaultState;
   }
-  target.state ||= _options.defaultState;
 
-  if (_options.depth > 0) {
-    // target.roster = flatRosters(_sources).map((src) =>
-    //   normalizePlayer(src, {
-    //     ..._options.player,
-    //     depth: _options.depth - 1,
-    //     wristband: _options.wristband,
-    //   }),
-    // );
-    // target.roster = target.roster.map((player) =>
-    //   normalizePlayer(player, {
-    //     depth: _options.depth - 1,
-    //     defaultState: target.state === "playing" ? "playing" : "inTeam",
-    //     ..._options.player,
-    //     wristband: {
-    //       defaultState: "paired",
-    //       ..._options.wristband,
-    //     },
-    //   }),
-    // );
-
-    // target.packages = flatPackages(_sources).map((src) =>
-    //   normalizePackage(src, _options.package),
-    // );
-
-    // target.packages = target.packages.map((pkg) =>
-    //   normalizePackage(pkg, _options.package),
-    // );
-  }
-  trace(target, "team target");
+  trace(target, "team normalize target");
   return target;
 }
 

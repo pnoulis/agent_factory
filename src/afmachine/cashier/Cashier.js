@@ -1,14 +1,14 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
 import { tobject } from "./tobject.js";
-import { schema } from "./schema.js";
-import { createValidator } from "../createValidator.js";
+import { validate } from "./validate.js";
 
 class Cashier {
   static random = random;
   static normalize = normalize;
   static tobject = tobject;
-  static validate = createValidator(schema);
+  static validate = validate;
+
   constructor(cashier) {
     cashier ??= {};
     this.id = cashier.id || null;

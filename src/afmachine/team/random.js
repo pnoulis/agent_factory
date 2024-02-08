@@ -1,22 +1,24 @@
 import { generateRandomName, randomInteger } from "js_utils/misc";
 import { smallid } from "js_utils/uuid";
 import { t_daytomls } from "../../misc/misc.js";
-import { random as randomPackage } from "../package/random.js";
-import { random as randomPlayer } from "../player/random.js";
+import { Package } from "../package/Package.js";
+import { Player } from "../player/Player.js";
 import { normalize } from "./normalize.js";
 
-function random(sources, options = {}) {
+function random(sources, options) {
   trace("random team");
+  trace(sources, "team random sources");
+  trace(options, "team  random options");
+
+  options ||= {};
   const _options = {
-    ...options,
-    longtext: options.longtext ?? false,
     depth: options.depth ?? 0,
     players: options.players ?? 0,
     packages: options.packages ?? 0,
   };
   trace(_options, "team random _options");
 
-  const target = normalize(sources, _options);
+  const target = normalize(sources, options);
   while (target.roster.length < _options.players) {
     target.roster.push({});
   }
@@ -29,12 +31,16 @@ function random(sources, options = {}) {
   target.points ??= randomInteger(0, 500);
   target.t_created = Date.now() - t_daytomls() / randomInteger(2, 5);
 
-  if (_options.depth > 0) {
+  if (_options.depth) {
     target.roster = target.roster.map((player) =>
-      randomPlayer(player, { ..._options, depth: _options.depth - 1 }),
+      Player.random(player, {
+        depth: _options.depth - 1,
+        ...options.player,
+        wristband: options.wristband,
+      }),
     );
     target.packages = target.packages.map((pkg) =>
-      randomPackage(pkg, _options),
+      Package.randome(pkg, options.package),
     );
   }
   trace(target, "team random target");

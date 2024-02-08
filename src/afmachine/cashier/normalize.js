@@ -1,10 +1,11 @@
 import { isArray } from "js_utils/misc";
 
-function normalize(sources, options = {}) {
+function normalize(sources, options) {
   trace("normalize cashier");
   trace(sources, "cashier normalize sources");
   trace(options, "cashier normalize options");
 
+  options ||= {};
   const _options = {
     nullSupersede: options.nullSupersede || false,
   };
@@ -17,7 +18,7 @@ function normalize(sources, options = {}) {
     id: null,
     username: null,
     email: null,
-    role: "cashier",
+    role: null,
   };
 
   if (_options.nullSupersede) {

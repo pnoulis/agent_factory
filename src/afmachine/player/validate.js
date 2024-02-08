@@ -1,4 +1,4 @@
-import { afmForm, backendForm } from "./schemas.js";
+import { afmPlayer, backendPlayer } from "./schemas.js";
 import { createValidator } from "../createValidator.js";
 
 function validate(player, options) {
@@ -19,7 +19,7 @@ function validate(player, options) {
   return validator.errors ? [...validator.errors] : null;
 }
 
-validate.afm = createValidator(afmForm);
-validate.backend = createValidator(backendForm);
+validate.afm = createValidator(afmPlayer);
+validate.backend = createValidator(backendPlayer);
 
 export { validate };

@@ -1,13 +1,14 @@
-import { WRISTBAND_COLORS } from "../../constants";
+import { WRISTBAND_COLORS } from "../../constants.js";
 
 function tobject(wristband, options) {
   wristband ||= {};
   options ||= {};
+
   const _options = {
     defaultState: options.defaultState || "unpaired",
     backendForm: options.backendForm || false,
   };
-  trace(_options, "wristband.tobject() options");
+  trace(_options, "wristband.tobject() _options");
 
   const afmWristband = {
     id: wristband.id || null,

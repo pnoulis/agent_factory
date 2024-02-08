@@ -3,11 +3,12 @@ import { smallid, uuid } from "js_utils/uuid";
 import { Wristband } from "../wristband/Wristband.js";
 import { normalize } from "./normalize.js";
 
-function random(sources, options = {}) {
+function random(sources, options) {
   trace("random player");
   trace(sources, "player random sources");
   trace(options, "player random options");
 
+  options ||= {};
   const _options = {
     depth: options.depth ?? 1,
     longtext: options.longtext || false,

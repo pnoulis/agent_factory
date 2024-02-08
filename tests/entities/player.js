@@ -9,7 +9,7 @@ const validate = Entity.validate;
 const tobject = Entity.tobject;
 
 describe("Player", () => {
-  it.only("Should implement the standard interface", () => {
+  it("Should implement the standard interface", () => {
     expect(random).toBeTypeOf("function");
     expect(normalize).toBeTypeOf("function");
     expect(validate).toBeTypeOf("function");
@@ -22,91 +22,142 @@ describe("Player", () => {
     expect(entity).toHaveProperty("tobject");
     expect(entity.tobject).toBeTypeOf("function");
   });
-  it('should be a valid afm player', () => {
-  })
-  it.todo("Should produce a random player", () => {
-    const entity = random(null, { depth: 0 });
-    expect(entity).toHaveProperty("username");
-    expect(entity).toHaveProperty("name");
-    expect(entity).toHaveProperty("surname");
-    expect(entity).toHaveProperty("email");
-    expect(entity).toHaveProperty("wristband");
-    expect(entity.wristband).toBeNull();
+  it("should be a valid afm player", () => {
+    // registered
+    let entity = new Entity({ state: "registered" }, new Wristband());
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
+
+    // inTeam
+    entity = new Entity({ state: "inTeam" }, new Wristband());
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
+
+    // playing
+    entity = new Entity({ state: "playing" }, new Wristband());
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
   });
-  it.todo("Should translate a player from afm to backend form", () => {
-    const entity = random();
-    const backendEntity = tobject(entity, { backendForm: true });
-    expect(backendEntity).toEqual({
-      username: entity.username,
-      name: entity.name,
-      surname: entity.surname,
-      email: entity.email,
-    });
+  it("Should be an invalid afm player", () => {
+    // Without a wristband
+    let entity = new Entity({ state: "registered" });
+    expect(() => entity.fill()).toThrowError(TypeError);
+    expect(() => entity.fill()).toThrowError("Missing wristband");
+
+    // default, Unregistered
+    entity = new Entity(null, new Wristband());
+    expect(validate(entity.fill())).not.toBeNull();
+    expect(validate(entity.normalize())).not.toBeNull();
+    expect(validate(entity.tobject())).not.toBeNull();
+
+    // unregistered
+    entity = new Entity({ state: "unregistered" }, new Wristband());
+    expect(validate(entity.fill())).not.toBeNull();
+    expect(validate(entity.normalize())).not.toBeNull();
+    expect(validate(entity.tobject())).not.toBeNull();
   });
-  it.todo("Should translate a player from backend to afm form", () => {
-    const backendEntity = tobject(random(), { backendForm: true });
-    const entity = tobject(normalize(backendEntity), { depth: 0 });
-    expect(entity).toEqual({
-      username: backendEntity.username,
-      name: backendEntity.name,
-      surname: backendEntity.surname,
-      email: backendEntity.email,
+  it("Should be a valid backend form player", () => {
+    // registered
+    let entity = new Entity({ state: "registered" }, new Wristband());
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).toBeNull();
+    // inTeam
+    entity = new Entity({ state: "inTeam" }, new Wristband());
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).toBeNull();
+
+    // playing
+    entity = new Entity({ state: "playing" }, new Wristband());
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).toBeNull();
+  });
+  it("Should be an invalid backend form player", () => {
+    // unregistered
+    let entity = new Entity(null, new Wristband());
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).not.toBeNull();
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).not.toBeNull();
+  });
+  it("Should translate players across forms", () => {
+    const entity = new Entity({ state: "unregistered" }, new Wristband());
+    expect(normalize(tobject(entity, { backendForm: true }))).toEqual(
+      entity.tobject(),
+    );
+
+    entity.fill(null, { state: "registered" });
+    expect(normalize(tobject(entity, { backendForm: true }))).toEqual({
+      ...entity.tobject(),
       state: "unregistered",
-      wristband: null,
+    });
+
+    entity.fill(null, { state: "inTeam" });
+    expect(normalize(tobject(entity, { backendForm: true }))).toEqual({
+      ...entity.tobject(),
+      state: "unregistered",
+    });
+
+    entity.fill(null, { state: "playing" });
+    expect(normalize(tobject(entity, { backendForm: true }))).toEqual({
+      ...entity.tobject(),
+      state: "unregistered",
     });
   });
-  it.todo("Should validate a player", () => {
-    const entity = new Entity();
-    let tmp;
+  it("Should merge players in all forms", () => {
+    expect(
+      normalize([
+        new Entity({ username: "test" }),
+        new Entity({ username: "test2" }),
+      ]),
+    ).toMatchObject({
+      username: "test2",
+    });
 
-    // Empty device
-    validate(entity);
-    expect(validate.errors).not.toBeNull();
-
-    validate(entity.tobject({ depth: 0 }));
-    expect(validate.errors).not.toBeNull();
-
-    validate(entity.normalize(null, { depth: 0 }));
-    expect(validate.errors).not.toBeNull();
-
-    // Filled device at depth 0
-    validate((tmp = entity.fill(null, { depth: 0 })));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.normalize(null, { depth: 0 })));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.tobject({ depth: 0 })));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-  });
-  it.todo("Should validate a player with a wristband", () => {
-    const entity = new Entity(null, new Wristband());
-    let tmp;
-
-    // Empty device
-    validate(entity);
-    expect(validate.errors).not.toBeNull();
-
-    validate(entity.tobject({ depth: 1 }));
-    expect(validate.errors).not.toBeNull();
-
-    validate(entity.normalize(null, { depth: 1 }));
-    expect(validate.errors).not.toBeNull();
-
-    // Filled device at depth 1
-    validate((tmp = entity.fill(null, { depth: 1 })));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.normalize(null, { depth: 1 })));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.tobject({ depth: 1 })));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
+    expect(
+      normalize([
+        new Entity({ username: "test" }).tobject({ backendForm: true }),
+        new Entity({ username: "test2" }).tobject({ backendForm: true }),
+      ]),
+    ).toEqual(new Entity({ username: "test2" }).tobject());
   });
 });

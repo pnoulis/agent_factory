@@ -15,9 +15,7 @@ function random(sources) {
   target.id ||= randomInteger(1, 5000);
 
   const roles = Object.keys(PRIVILEGE_TYPES);
-  target.role ||= Object.values(PRIVILEGE_TYPES).at(
-    randomInteger(0, roles.length - 1),
-  );
+  target.role ||= roles.at(randomInteger(0, roles.length - 1));
 
   trace(target, "cashier random target");
   return target;

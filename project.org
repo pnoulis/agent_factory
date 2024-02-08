@@ -2925,7 +2925,7 @@ login
 
 * Schemas
 ** Package
-*** Frontend Time
+*** AFM Time
 #+begin_src js
   {
     id: 3,
@@ -2940,7 +2940,7 @@ login
     state: "unregistered" | "registered" | "playing" | "completed"
   }
 #+end_src
-*** Frontend Missions
+*** AFM Missions
 #+begin_src js
   {
     id: 3,
@@ -2957,14 +2957,6 @@ login
 #+end_src
 *** Backend Time
 #+begin_src js
-  // package template
-  {
-    name: "Per Time 90",
-    amount: 90, // minutes
-    type: 'time',
-    cost: 150
-  }
-
   // team's package
   {
     id: 5,
@@ -2979,13 +2971,6 @@ login
 #+end_src
 *** Backend Missions
 #+begin_src js
-  // package template
-  {
-    name: "Per Mission 5",
-    amount: 5, // Missions
-    type: "mission",
-    cost: 150
-  }
   // team's package
   {
     id: 1,
@@ -2998,34 +2983,89 @@ login
     active: false
   }
 #+end_src
+*** Available Backend packages
+#+begin_src js
+  // Missions
+  {
+    name: "Per Mission 5",
+    amount: 5, // Missions
+    type: "mission",
+    cost: 150
+  }
 
+  // time
+  {
+    name: "Per Time 90",
+    amount: 90, // minutes
+    type: 'time',
+    cost: 150
+  }
+#+end_src
 ** Device
+*** AFM rpi reader
+#+begin_src js
+  {
+    id: 'ADMINISTRATION1Reader',
+    type: 'RPI_READER',
+    room: 'ADMINISTRATION1'
+  }
+#+end_src
+*** AFM admin screen
+#+begin_src js
+  {
+    id: '001',
+    type: 'REGISTRATION_SCREEN',
+    room: 'ADMINISTRATION1'
+  }
+#+end_src
+*** Backend
+#+begin_src js
+  {
+    deviceId: '001',
+    deviceType: 'REGISTRATION_SCREEN',
+    roomType: 'ADMINISTRATION1'
+  }
+#+end_src
 ** Cashier
+*** AFM
+#+begin_src js
+  {
+    id: 4394,
+    username: '80teepo7fu9',
+    email: '80teepo7fu9@gmail.com',
+    role: 'manager'
+  }
+#+end_src
 ** Player
-*** Frontend
+*** AFM
 #+begin_src js
   {
     username: "test"
     name: "testname",
     surname: "testsurname",
     email: "test@gmail.com",
-    wristband: {
-      id: null,
-      color: null,
-      colorCode: null,
-      state: "pairing" || "unpaired",
-    } || {
-      id: 3,
-      color: 'green',
-      colorCode: 3,
-      state: "paired" || 'unpairing'
-    }
     state: 'unregistered' || 'registered' || 'inTeam' || 'playing'
+    wristband: {
+      id: null || 3,
+      color: null || 'green',
+      colorCode: null || 3,
+      state: "unpaired" || "pairing" || "unpairing" || "paired"
+    }
+  }
+#+end_src
+*** Backend
+#+begin_src js
+  {
+    username: "test",
+    name: "test",
+    surname: "test",
+    email: "test@gmail.com",
+    wristbandMerged: true || false,
   }
 #+end_src
 ** Team
 ** Wristband
-*** Frontend
+*** AFM
 #+begin_src js
   {
     id: 3,
@@ -3034,7 +3074,7 @@ login
     state: "unpaired" || "pairing" || "unpairing" || "paired"
   }
 #+end_src
-*** Backend 
+*** Backend
 #+begin_src js
 
   // wristband register

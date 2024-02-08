@@ -1,7 +1,7 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
 import { tobject } from "./tobject.js";
-import { validate } from './validate.js';
+import { validate } from "./validate.js";
 
 import { createStateful } from "../../Stateful.js";
 import { Unpaired } from "./StateUnpaired.js";
@@ -21,10 +21,10 @@ class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
     super();
     wristband ??= {};
     this.id = wristband.id || null;
-    this.color = wristband.color || null;
-    this.colorCode = wristband.colorCode || null;
-    this.color ||= WRISTBAND_COLORS[this.colorCode] || null;
-    this.colorCode ||= WRISTBAND_COLORS[this.color] || null;
+    this.color =
+      wristband.color || WRISTBAND_COLORS[wristband.colorCode] || null;
+    this.colorCode =
+      wristband.colorCode || WRISTBAND_COLORS[wristband.color] || null;
     this.state =
       this.states[wristband.state?.name || wristband.state || "unpaired"];
   }

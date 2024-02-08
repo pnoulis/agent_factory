@@ -1,8 +1,7 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
 import { tobject } from "./tobject.js";
-import { schema } from "./schema.js";
-import { createValidator } from "../createValidator.js";
+import { validate } from "./validate.js";
 
 import { createStateful } from "../../Stateful.js";
 import { Unregistered } from "./StateUnregistered.js";
@@ -15,13 +14,12 @@ class Package extends createStateful([
   Unregistered,
   Registered,
   Playing,
-  Paused,
   Completed,
 ]) {
   static random = random;
   static normalize = normalize;
   static tobject = tobject;
-  static validate = createValidator(schema);
+  static validate = validate;
 
   constructor(pkg) {
     super();

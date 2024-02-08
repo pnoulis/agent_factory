@@ -1,6 +1,11 @@
-// cashier = AFM FORM
-function tobject(cashier, { backendForm = false } = {}) {
+function tobject(cashier, options) {
   cashier ||= {};
+  options ||= {};
+
+  const _options = {
+    backendForm: options.backendForm || false,
+  };
+  trace(_options, "cashier.tobject() _options");
 
   const afmCashier = {
     id: cashier.id || null,
@@ -9,7 +14,7 @@ function tobject(cashier, { backendForm = false } = {}) {
     role: cashier.role || null,
   };
 
-  if (!backendForm) return afmCashier;
+  if (!_options.backendForm) return afmCashier;
 
   return {
     id: afmCashier.id,

@@ -1,6 +1,6 @@
-import { afmForm as wristbandSchema } from "../wristband/schemas.js";
+import { afmWristband } from "../wristband/schemas.js";
 
-const afmForm = {
+const afmPlayer = {
   type: "object",
   additionalProperties: true,
   required: ["name", "surname", "username", "email", "state", "wristband"],
@@ -30,12 +30,50 @@ const afmForm = {
       ],
     },
     wristband: {
-      oneOf: [{ type: "null" }, wristbandSchema],
+      oneOf: [
+        {
+          type: "object",
+          additionalProperties: true,
+          required: ["id", "color", "colorCode", "state"],
+          properties: {
+            id: {
+              type: "null",
+            },
+            colorCode: {
+              type: "null",
+            },
+            color: {
+              type: "null",
+            },
+            state: {
+              oneOf: [
+                {
+                  type: "string",
+                  enum: ["unpaired", "pairing"],
+                },
+                {
+                  type: "object",
+                  required: ["name", "order"],
+                  additionalProperties: true,
+                  properties: {
+                    name: {
+                      type: "string",
+                      enum: ["unpaired", "pairing"],
+                    },
+                    order: { type: "integer" },
+                  },
+                },
+              ],
+            },
+          },
+        },
+        afmWristband,
+      ],
     },
   },
 };
 
-const backendForm = {
+const backendPlayer = {
   type: "object",
   additionalProperties: false,
   required: ["name", "surname", "username", "email", "wristbandMerged"],
@@ -48,4 +86,4 @@ const backendForm = {
   },
 };
 
-export { afmForm, backendForm };
+export { afmPlayer, backendPlayer };

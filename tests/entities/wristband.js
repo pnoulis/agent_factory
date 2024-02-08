@@ -110,7 +110,6 @@ describe("Wristband", () => {
   });
   it("Should translate wristbands across forms", () => {
     const entity = new Entity({ state: "unpaired" });
-
     expect(normalize(tobject(entity, { backendForm: true }))).toEqual(
       entity.tobject(),
     );

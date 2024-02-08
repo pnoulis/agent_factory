@@ -1,6 +1,11 @@
-// device = AFM FORM
-function tobject(device, { backendForm = false } = {}) {
+function tobject(device, options) {
   device ||= {};
+  options ||= {};
+
+  const _options = {
+    backendForm: options.backendForm || false,
+  };
+  trace(_options, "device.tobject() _options");
 
   const afmDevice = {
     id: device.id || null,
@@ -8,7 +13,7 @@ function tobject(device, { backendForm = false } = {}) {
     room: device.room || null,
   };
 
-  if (!backendForm) return afmDevice;
+  if (!_options.backendForm) return afmDevice;
 
   return {
     deviceId: afmDevice.id,

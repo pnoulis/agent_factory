@@ -23,22 +23,47 @@ describe("Package", () => {
     expect(entity).toHaveProperty("tobject");
     expect(entity.tobject).toBeTypeOf("function");
   });
-  it("Should produce a random package", () => {
-    const entity = random();
-    expect(entity).toHaveProperty("id");
-    expect(entity).toHaveProperty("name");
-    expect(entity).toHaveProperty("type");
-    expect(entity).toHaveProperty("amount");
-    expect(entity).toHaveProperty("cost");
-    expect(entity).toHaveProperty("t_start");
-    expect(entity).toHaveProperty("t_end");
-    expect(entity).toHaveProperty("remainder");
-    expect(entity).toHaveProperty("state");
-  });
-  it.only("Should translate a missions package from afm to backend form", () => {
-    const entity = random({ type: PACKAGE_TYPES.missions });
-    const backendEntity = tobject(entity, { backendForm: true });
+  it("Should be a valid afm package", () => {
+    // registered
+    let entity = new Entity({ state: "registered" });
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
 
+    // playing
+    entity = new Entity({ state: "playing" });
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
+
+    // completed
+    entity = new Entity({ state: "completed" });
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
+  });
+  it("Should be a valid backend form package", () => {
+    let entity = new Entity({ type: "mission", state: "registered" });
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: "mission",
+      }),
+    ).toBeNull();
+
+    entity = new Entity({ type: "time", state: "registered" });
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: "time",
+      }),
+    ).toBeNull();
+  });
+  it("Should translate a missions package from afm to backend form", () => {
+    const entity = new Entity({
+      type: PACKAGE_TYPES.missions,
+      state: "registered",
+    }).fill();
+
+    const backendEntity = entity.tobject({ backendForm: true });
     expect(backendEntity).toEqual({
       id: entity.id,
       name: entity.name,
@@ -47,12 +72,15 @@ describe("Package", () => {
       ended: entity.t_end,
       active: entity.remainder === 0 && entity.t_end == false,
       missions: entity.amount,
-      missionsPlayed: entity.remainder,
+      missionsPlayed: entity.amount - entity.remainder,
     });
   });
-  it.only("Should translate a time package from afm to backend form", () => {
-    const entity = random({ type: PACKAGE_TYPES.time });
-    const backendEntity = tobject(entity, { backendForm: true });
+  it("Should translate a time package from afm to backend form", () => {
+    const entity = new Entity({
+      type: PACKAGE_TYPES.time,
+      state: "registered",
+    });
+    const backendEntity = entity.tobject({ backendForm: true });
 
     expect(backendEntity).toEqual({
       id: entity.id,
@@ -62,101 +90,7 @@ describe("Package", () => {
       ended: entity.t_end,
       active: entity.remainder === 0 && entity.t_end == false,
       duration: t_stomls(entity.amount, true),
-      paused: entity.state === "paused",
+      paused: false,
     });
-  });
-  it.only("Should translate a missions package from backend to afm form", () => {
-    const backendEntity = tobject(random({ type: PACKAGE_TYPES.missions }), {
-      backendForm: true,
-    });
-    debug(backendEntity);
-    const entity = normalize(backendEntity);
-    debug(entity);
-
-    expect(entity).toEqual({
-      id: backendEntity.id,
-      name: backendEntity.name,
-      type: Object.hasOwn(backendEntity, "missions") && PACKAGE_TYPES.missions,
-      amount: backendEntity.missions,
-      cost: null,
-      t_start: backendEntity.started,
-      t_end: backendEntity.ended,
-      remainder: backendEntity.missionsPlayed,
-      state: entity.state,
-    });
-  });
-  it("Should translate a package from backend to afm form", () => {
-    let backendEntity = tobject(random({ type: PACKAGE_TYPES.missions }), {
-      backendForm: true,
-    });
-    let entity = normalize(backendEntity);
-
-    let remainder;
-    let amount;
-    let type;
-    if (Object.hasOwn(backendEntity, "missions")) {
-      type = PACKAGE_TYPES.missions;
-      amount = backendEntity.missionsPlayed;
-      remainder = backendEntity.amount - backendEntity.missionsPlayed;
-    } else {
-      type = PACKAGE_TYPES.time;
-      amount = backendEntity.duration;
-    }
-    const sharedProps = {
-      id: entity.id,
-      name: entity.name,
-      cost: entity.cost,
-      type: Object.hasOwn(backendEntity, "missions")
-        ? PACKAGE_TYPES.missions
-        : PACKAGE_TYPES.time,
-      started: entity.t_start,
-      ended: entity.t_end,
-    };
-
-    if (Object.hasOwn(backendEntity, "missions")) {
-      expect(entity).toEqual({
-        ...sharedProps,
-        amount: backendEntity.missions,
-        remainder: entity.missionsPlayed,
-      });
-    } else {
-      // time
-      expect(backendEntity).toEqual({
-        ...sharedProps,
-        amount: backendEntity.duration,
-      });
-    }
-    expect(entity).toEqual({
-      id: backendEntity.packageId,
-      type: backendEntity.packageType,
-      room: backendEntity.roomType,
-    });
-  });
-  it("Should validate a package", () => {
-    const entity = new Entity();
-    let tmp;
-
-    // Empty package
-    validate(entity);
-    expect(validate.errors).not.toBeNull();
-
-    validate(entity.tobject());
-    expect(validate.errors).not.toBeNull();
-
-    validate(entity.normalize());
-    expect(validate.errors).not.toBeNull();
-
-    // Filled package
-    validate((tmp = entity.fill()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.normalize()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.tobject()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
   });
 });

@@ -1,7 +1,7 @@
 import { DEVICE_TYPES, DEVICE_IDS, ROOM_TYPES } from "../../constants.js";
 import { unique } from "js_utils/misc";
 
-const schema = {
+const afmDevice = {
   type: "object",
   additionalProperties: true,
   required: ["id", "type", "room"],
@@ -21,4 +21,24 @@ const schema = {
   },
 };
 
-export { schema };
+const backendDevice = {
+  type: "object",
+  additionalProperties: false,
+  required: ["deviceId", "deviceType", "roomType"],
+  properties: {
+    deviceId: {
+      type: "string",
+      enum: unique(Object.values(DEVICE_IDS)),
+    },
+    deviceType: {
+      type: "string",
+      enum: unique(Object.values(DEVICE_TYPES)),
+    },
+    roomType: {
+      type: "string",
+      enum: unique(Object.values(ROOM_TYPES)),
+    },
+  },
+};
+
+export { afmDevice, backendDevice };

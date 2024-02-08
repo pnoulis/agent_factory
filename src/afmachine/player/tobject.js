@@ -1,27 +1,42 @@
 import { Wristband } from "../wristband/Wristband.js";
 
-// player = AFM FORM
 function tobject(player, options) {
   player ||= {};
+  options ||= {};
 
-  const _options = (arguments.length < 2 ? player : options) || {};
-  _options.depth ??= 1;
-  _options.defaultState ||= "unregistered";
-  _options.backendForm ||= false;
+  const _options = {
+    depth: options.depth ?? 1,
+    backendForm: options.backendForm || false,
+    defaultState: options.defaultState || "unregistered",
+  };
+  trace(_options, "player.tobject() _options");
 
-  const backendPlayer = {
+  const afmPlayer = {
+    state: player.state?.name || player.state || _options.defaultState,
+    wristband: _options.depth
+      ? Wristband.tobject(player.wristband, {
+          backendForm: _options.backendForm,
+          ...options.wristband,
+        })
+      : player.wristband,
+  };
+
+  const sharedProps = {
     username: player.username || null,
     name: player.name || null,
     surname: player.surname || null,
     email: player.email || null,
   };
 
-  if (_options.backendForm) return backendPlayer;
+  if (!_options.backendForm) return { ...sharedProps, ...afmPlayer };
+
+  const wristbandState =
+    afmPlayer.wristband.state?.name || afmPlayer.wristband.state;
 
   return {
-    ...backendPlayer,
-    wristband: Wristband.tobject(player.wristband, _options.wristband),
-    state: player.state?.name || player.state || _options.defaultState,
+    ...sharedProps,
+    wristbandMerged:
+      wristbandState === "unpairing" || wristbandState === "paired",
   };
 }
 

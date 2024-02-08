@@ -1,8 +1,9 @@
-function normalize(sources, options = {}) {
+function normalize(sources, options) {
   trace("normalize device");
   trace(sources, "device normalize sources");
   trace(options, "device normalize options");
 
+  options ||= {};
   const _options = {
     nullSupersede: options.nullSupersede || false,
   };
@@ -38,7 +39,7 @@ function normalize(sources, options = {}) {
     target.status = status;
   }
 
-  trace(target, 'device normalize target');
+  trace(target, "device normalize target");
   return target;
 }
 

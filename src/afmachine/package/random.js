@@ -3,15 +3,11 @@ import { PACKAGE_TYPES, PACKAGES } from "../../constants.js";
 import { t_stomls, t_stomin, t_htomls } from "../../misc/misc.js";
 import { normalize } from "./normalize.js";
 
-function random(sources, options = {}) {
+function random(sources, options) {
   trace("random package");
   trace(sources, "package random sources");
   trace(options, "package random options");
 
-  // state and normalization
-  if (arguments.length === 1) {
-    options.state = sources.state;
-  }
   const target = normalize(sources, options);
   trace(target, "package random normalized sources");
 

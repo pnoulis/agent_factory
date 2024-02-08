@@ -1,12 +1,15 @@
 import { PACKAGE_TYPES } from "../../constants.js";
 import { t_stomls } from "../../misc/misc.js";
 
-// pkg = AFM FORM
-function tobject(
-  pkg,
-  { defaultState = "unregistered", backendForm = false } = {},
-) {
+function tobject(pkg, options) {
   pkg ||= {};
+  options || {};
+
+  const _options = {
+    defaultState: options.defaultState || "unregistered",
+    backendForm: options.backendForm || false,
+  };
+  trace(_options, "package.tobject() _options");
 
   const afmPkg = {
     id: pkg.id || null,
@@ -17,10 +20,10 @@ function tobject(
     t_end: pkg.t_end || null,
     amount: pkg.amount || null,
     remainder: pkg.remainder || null,
-    state: pkg.state?.name || pkg.state || defaultState,
+    state: pkg.state?.name || pkg.state || _options.defaultState,
   };
 
-  if (!backendForm) return afmPkg;
+  if (!_options.backendForm) return afmPkg;
 
   const backendPkg = {
     id: afmPkg.id,
@@ -49,7 +52,7 @@ function tobject(
       return {
         ...backendPkg,
         missions: afmPkg.amount,
-        missionsPlayed: afmPkg.remainder,
+        missionsPlayed: afmPkg.amount - afmPkg.remainder,
       };
     case PACKAGE_TYPES.time:
       return {

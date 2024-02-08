@@ -30,7 +30,7 @@ class Player extends createStateful([
     this.email = player.email || null;
     this.state =
       this.states[player.state?.name || player.state || "unregistered"];
-    this.wristband = wristband ?? null;
+    this.wristband = wristband || null;
   }
   normalize(sources, options = {}) {
     const { wristband, state, ...player } = Player.normalize(
@@ -56,8 +56,13 @@ class Player extends createStateful([
     this.setState(state);
 
     if (options.depth ?? 1) {
-      Object.assign(this.wristband, wristband);
-      this.wristband.setState(wristband.state);
+      try {
+        Object.assign(this.wristband, wristband);
+        this.wristband.setState(wristband.state);
+      } catch (err) {
+        err.message = "Missing wristband";
+        throw err;
+      }
     }
     return this;
   }

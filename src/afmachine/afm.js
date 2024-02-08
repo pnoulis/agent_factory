@@ -184,13 +184,6 @@ Afm.prototype.onCmdEnd = function (cmd) {
     this.emit("idle", this);
   }
 };
-// Afm.prototype.createWristband = function (wristband) {
-//   return new WristbandCommander(this, wristband);
-// };
-
-// Afm.prototype.createPlayer = function (player, wristband) {
-//   return new PlayerCommander(this, player, this.createWristband(wristband));
-// };
 
 Object.assign(Afm.prototype, {
   // Synthetic Player tasks

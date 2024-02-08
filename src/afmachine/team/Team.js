@@ -1,16 +1,18 @@
 import { random } from "./random.js";
 import { normalize } from "./normalize.js";
+import { tobject } from "./tobject.js";
+import { validate } from "./validate.js";
+
 import { createStateful } from "../../Stateful.js";
 import { Unregistered } from "./StateUnregistered.js";
 import { Registered } from "./StateRegistered.js";
 import { Playing } from "./StatePlaying.js";
-import { schema } from "./schema.js";
-import { createValidator } from "../createValidator.js";
 
 class Team extends createStateful([Unregistered, Registered, Playing]) {
   static random = random;
   static normalize = normalize;
-  static validate = createValidator(schema);
+  static tobject = tobject;
+  static validate = validate;
 
   constructor(team, createPlayer, createWristband, createPackage) {
     super();
