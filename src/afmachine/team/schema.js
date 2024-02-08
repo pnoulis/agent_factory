@@ -1,5 +1,5 @@
 import { schema as packageSchema } from "../package/schema.js";
-import { schema as playerSchema } from "../player/schema.js";
+import { schema as playerSchema } from "../player/schemas.js~";
 
 const schema = {
   type: "object",

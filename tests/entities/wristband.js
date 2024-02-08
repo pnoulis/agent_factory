@@ -22,55 +22,156 @@ describe("Wristband", () => {
     expect(entity).toHaveProperty("tobject");
     expect(entity.tobject).toBeTypeOf("function");
   });
-  it("Should produce a random wristband", () => {
-    const entity = random();
-    expect(entity).toHaveProperty("id");
-    expect(entity).toHaveProperty("color");
-    expect(entity).toHaveProperty("colorCode");
+  it("Should be a valid afm wristband", () => {
+    // paired
+    let entity = new Entity({ state: "paired" });
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
+
+    // unpairing
+    entity = new Entity().fill(null, { state: "unpairing" });
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
   });
-  it("Should translate a wristband from afm to backend form", () => {
-    const entity = random();
-    const backendEntity = tobject(entity, { backendForm: true });
-    expect(backendEntity).toEqual({
-      wristbandNumber: entity.id,
-      wristbandColor: entity.colorCode,
-    });
+  it("Should be an invalid afm wristband", () => {
+    // unpaired
+    let entity = new Entity();
+    expect(validate(entity)).not.toBeNull();
+    expect(validate(entity.fill())).not.toBeNull();
+    expect(validate(entity.tobject())).not.toBeNull();
+    expect(validate(entity.normalize())).not.toBeNull();
+
+    // pairing
+    entity = new Entity().fill(null, { state: "pairing" });
+    expect(validate(entity)).not.toBeNull();
+    expect(validate(entity.fill())).not.toBeNull();
+    expect(validate(entity.tobject())).not.toBeNull();
+    expect(validate(entity.normalize())).not.toBeNull();
   });
-  it("Should translate a wristband from backend to afm form", () => {
-    const backendEntity = tobject(random(), { backendForm: true });
-    const entity = normalize(backendEntity);
-    expect(entity).toEqual({
-      id: backendEntity.wristbandNumber,
-      colorCode: backendEntity.wristbandColor,
-      color: WRISTBAND_COLORS[backendEntity.wristbandColor],
+  it("Should be a valid backend form wristband", () => {
+    // paired
+    let entity = new Entity({ state: "paired" });
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).toBeNull();
+
+    // unpairing
+    entity = new Entity().fill(null, { state: "unpairing" });
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+  });
+  it("Should be an invalid backend form wristband", () => {
+    // unpaired
+    let entity = new Entity();
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).not.toBeNull();
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).not.toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).not.toBeNull();
+
+    // pairing
+    entity = new Entity().fill(null, { state: "pairing" });
+    expect(
+      validate(entity.tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).not.toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).not.toBeNull();
+  });
+  it("Should translate wristbands across forms", () => {
+    const entity = new Entity({ state: "unpaired" });
+
+    expect(normalize(tobject(entity, { backendForm: true }))).toEqual(
+      entity.tobject(),
+    );
+
+    entity.fill(null, { state: "pairing" });
+    expect(normalize(tobject(entity, { backendForm: true }))).toEqual({
+      ...entity.tobject(),
       state: "unpaired",
     });
+
+    entity.fill(null, { state: "unpairing" });
+    expect(normalize(tobject(entity, { backendForm: true }))).toEqual({
+      ...entity.tobject(),
+      state: "paired",
+    });
+
+    entity.fill(null, { state: "paired" });
+    expect(normalize(tobject(entity, { backendForm: true }))).toEqual(
+      entity.tobject(),
+    );
   });
-  it("Should validate a wristband", () => {
-    const entity = new Entity();
-    let tmp;
+  it("Should merge wristbands in all forms", () => {
+    expect(
+      normalize([new Entity({ id: 2 }), new Entity({ id: 3 })]),
+    ).toMatchObject({
+      id: 3,
+    });
 
-    // Empty device
-    validate(entity);
-    expect(validate.errors).not.toBeNull();
+    expect(
+      normalize([
+        new Entity({ id: 3 }).tobject({ backendForm: true }),
+        new Entity({ id: 4 }).tobject({ backendForm: true }),
+      ]),
+    ).toEqual(new Entity({ id: 4 }).tobject());
 
-    validate(entity.tobject());
-    expect(validate.errors).not.toBeNull();
+    expect(
+      normalize([
+        new Entity({ id: 3, colorCode: 0 }).tobject(),
+        new Entity({ id: 4, color: "green" }).tobject({
+          backendForm: true,
+        }),
+      ]),
+    ).toEqual(
+      new Entity({
+        id: 4,
+        colorCode: WRISTBAND_COLORS["green"],
+        state: "paired",
+      }).tobject(),
+    );
 
-    validate(entity.normalize());
-    expect(validate.errors).not.toBeNull();
-
-    // Filled device
-    validate((tmp = entity.fill()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.normalize()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.tobject()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
+    expect(
+      normalize([
+        new Entity({ id: 3, colorCode: 0 }).tobject({ backendForm: true }),
+        new Entity({ id: 4, color: "green" }).tobject(),
+      ]),
+    ).toEqual(
+      new Entity({
+        id: 4,
+        colorCode: WRISTBAND_COLORS["green"],
+        state: "paired",
+      }).tobject(),
+    );
   });
 });

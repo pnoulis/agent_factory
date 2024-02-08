@@ -22,6 +22,7 @@
 **** TODO fill
 
 
+** TODO Move flats under their own directory
 ** Decide on the parameters of the random() and normalize() functions.
 
 1 argument:
@@ -32,6 +33,21 @@ sources
 
 sources + options
 
+
+** TODO Wrisband normalize(), fill(), tobject()
+*** What is a wristband
+
+A wristband is an object with the following properties:
+
+
+#+begin_src js
+  {
+    id: "",
+    color: "",
+    colorCode: "",
+    state: ""
+  }
+#+end_src
 
 ** TODO Remove paused state from Package
 ** TODO Random functions should take a target state

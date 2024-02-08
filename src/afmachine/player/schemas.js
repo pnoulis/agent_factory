@@ -1,6 +1,6 @@
-import { schema as wristbandSchema } from "../wristband/schema.js";
+import { afmForm as wristbandSchema } from "../wristband/schemas.js";
 
-const schema = {
+const afmForm = {
   type: "object",
   additionalProperties: true,
   required: ["name", "surname", "username", "email", "state", "wristband"],
@@ -35,4 +35,17 @@ const schema = {
   },
 };
 
-export { schema };
+const backendForm = {
+  type: "object",
+  additionalProperties: false,
+  required: ["name", "surname", "username", "email", "wristbandMerged"],
+  properties: {
+    name: { type: "string", minLength: 1 },
+    surname: { type: "string", minLength: 1 },
+    username: { type: "string", minLength: 1 },
+    email: { type: "string", minLength: 1 },
+    wristbandMerged: { type: "boolean" },
+  },
+};
+
+export { afmForm, backendForm };

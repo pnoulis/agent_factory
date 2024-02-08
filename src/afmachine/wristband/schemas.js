@@ -6,7 +6,7 @@ import {
   WRISTBAND_COLORS,
 } from "../../constants.js";
 
-const schema = {
+const afmForm = {
   type: "object",
   additionalProperties: true,
   required: ["id", "colorCode", "color", "state"],
@@ -50,4 +50,25 @@ const schema = {
   },
 };
 
-export { schema };
+const backendForm = {
+  type: "object",
+  additionalProperties: false,
+  required: ["wristbandNumber", "wristbandColor", "active"],
+  properties: {
+    wristbandNumber: {
+      type: "integer",
+      minimum: MIN_WRISTBAND_ID,
+      maximum: MAX_WRISTBAND_ID,
+    },
+    wristbandColor: {
+      type: "integer",
+      minimum: MIN_WRISTBAND_CC,
+      maximum: MAX_WRISTBAND_CC,
+    },
+    active: {
+      type: "boolean",
+    },
+  },
+};
+
+export { afmForm, backendForm };

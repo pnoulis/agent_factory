@@ -8,13 +8,6 @@ import {
 import { randomInteger } from "js_utils/misc";
 import { normalize } from "./normalize.js";
 
-/*
-  debug(Wristband.random())
-  debug(Wristband.random(null, { state: "unpaired" }));
-  debug(Wristband.random(null, { state: "pairing" }));
-  debug(Wristband.random(null, { state: "unpairing" }));
-  debug(Wristband.random(null, { state: "paired" }));
- */
 function random(sources, options) {
   trace("random wristband");
   trace(sources, "wristband random sources");

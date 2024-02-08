@@ -1,14 +1,8 @@
-// wristband = AFM FORM
+import { WRISTBAND_COLORS } from "../../constants";
 
-/*
-  debug(Wristband.tobject());
-  debug(Wristband.tobject(null, { backendForm: true }));
-  debug(Wristband.tobject(null, { defaultState: "paired" }));
-  debug(Wristband.tobject(null, { defaultState: "paired", backendForm: true }));
- */
 function tobject(wristband, options) {
-  wristband ??= {};
-  options ??= {};
+  wristband ||= {};
+  options ||= {};
   const _options = {
     defaultState: options.defaultState || "unpaired",
     backendForm: options.backendForm || false,
@@ -26,7 +20,8 @@ function tobject(wristband, options) {
 
   return {
     wristbandNumber: afmWristband.id,
-    wristbandColor: afmWristband.colorCode,
+    wristbandColor:
+      afmWristband.colorCode || WRISTBAND_COLORS[afmWristband.color],
     active: afmWristband.state === "paired",
   };
 }

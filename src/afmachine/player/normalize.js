@@ -1,4 +1,4 @@
-import { normalize as normalizeWristband } from "../wristband/normalize.js";
+import { Wristband } from "../wristband/Wristband.js";
 import { flatWristbands } from "./flatWristbands.js";
 
 function normalize(sources, options = {}) {
@@ -6,14 +6,10 @@ function normalize(sources, options = {}) {
   trace(sources, "player normalize sources");
   trace(options, "player normalize options");
 
-  // See documentation at wristband/normalize.js
   const _options = {
-    password: options.password || false,
-    depth: options.depth ?? 1,
-    targetState: options.state || "",
-    nullSupersede: options.nullSupersede || false,
+    targetState: options.state || null,
     defaultState: options.defaultState || "unregistered",
-    wristband: options.wristband || {},
+    nullSupersede: options.nullSupersede || false,
   };
   trace(_options, "player normalize _options");
 
@@ -26,8 +22,12 @@ function normalize(sources, options = {}) {
     surname: null,
     email: null,
     state: null,
-    wristband: null,
+    wristband: Wristband.normalize(
+      flatWristbands(_sources),
+      _options.wristband,
+    ),
   };
+
   let wristbandMerged = false;
 
   if (_options.nullSupersede) {
@@ -37,7 +37,7 @@ function normalize(sources, options = {}) {
       target.surname = _sources[i].surname || null;
       target.email = _sources[i].email || null;
       target.state = _sources[i].state?.name || _sources[i].state || null;
-      wristbandMerged = _sources[i].wristbandMerged || false;
+      wristbandMerged = _sources[i].wristbandMerged ?? false;
     }
   } else {
     for (let i = 0; i < _sources.length; i++) {
@@ -45,7 +45,8 @@ function normalize(sources, options = {}) {
       target.name = _sources[i].name || target.name;
       target.surname = _sources[i].surname || target.surname;
       target.email = _sources[i].email || target.email;
-      target.state = _sources[i].state?.name || _sources[i].state || null;
+      target.state =
+        _sources[i].state?.name || _sources[i].state || target.state;
       wristbandMerged = _sources[i].wristbandMerged ?? wristbandMerged;
     }
   }
@@ -56,13 +57,6 @@ function normalize(sources, options = {}) {
     target.state = "inTeam";
   } else {
     target.state ||= _options.defaultState;
-  }
-
-  if (_options.depth > 0) {
-    target.wristband = normalizeWristband(
-      flatWristbands(_sources),
-      _options.wristband,
-    );
   }
 
   trace(target, "player normalize target");

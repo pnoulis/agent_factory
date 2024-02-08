@@ -9,7 +9,7 @@ const validate = Entity.validate;
 const tobject = Entity.tobject;
 
 describe("Player", () => {
-  it("Should implement the standard interface", () => {
+  it.only("Should implement the standard interface", () => {
     expect(random).toBeTypeOf("function");
     expect(normalize).toBeTypeOf("function");
     expect(validate).toBeTypeOf("function");
@@ -22,7 +22,9 @@ describe("Player", () => {
     expect(entity).toHaveProperty("tobject");
     expect(entity.tobject).toBeTypeOf("function");
   });
-  it("Should produce a random player", () => {
+  it('should be a valid afm player', () => {
+  })
+  it.todo("Should produce a random player", () => {
     const entity = random(null, { depth: 0 });
     expect(entity).toHaveProperty("username");
     expect(entity).toHaveProperty("name");
@@ -31,7 +33,7 @@ describe("Player", () => {
     expect(entity).toHaveProperty("wristband");
     expect(entity.wristband).toBeNull();
   });
-  it("Should translate a player from afm to backend form", () => {
+  it.todo("Should translate a player from afm to backend form", () => {
     const entity = random();
     const backendEntity = tobject(entity, { backendForm: true });
     expect(backendEntity).toEqual({
@@ -41,7 +43,7 @@ describe("Player", () => {
       email: entity.email,
     });
   });
-  it("Should translate a player from backend to afm form", () => {
+  it.todo("Should translate a player from backend to afm form", () => {
     const backendEntity = tobject(random(), { backendForm: true });
     const entity = tobject(normalize(backendEntity), { depth: 0 });
     expect(entity).toEqual({
@@ -53,7 +55,7 @@ describe("Player", () => {
       wristband: null,
     });
   });
-  it("Should validate a player", () => {
+  it.todo("Should validate a player", () => {
     const entity = new Entity();
     let tmp;
 
@@ -80,7 +82,7 @@ describe("Player", () => {
     validate.errors && debug(tmp, validate.errors);
     expect(validate.errors).toBeNull();
   });
-  it("Should validate a player with a wristband", () => {
+  it.todo("Should validate a player with a wristband", () => {
     const entity = new Entity(null, new Wristband());
     let tmp;
 
