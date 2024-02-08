@@ -17,14 +17,14 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
   constructor(team, createPlayer, createWristband, createPackage) {
     super();
     team ??= {};
-    this.name = team.name || "";
-    this.t_created = team.t_created ?? null;
+    this.name = team.name || null;
+    this.t_created = team.t_created || null;
     this.points = team.points ?? null;
     this.state = this.states[team.state?.name || team.state || "unregistered"];
     this.create = {
-      player: createPlayer ?? null,
-      wristband: createWristband ?? null,
-      package: createPackage ?? null,
+      player: createPlayer || null,
+      wristband: createWristband || null,
+      package: createPackage || null,
     };
     this.packages = team.packages;
     this.roster = team.roster;
@@ -34,7 +34,7 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
     return this._roster;
   }
   set roster(players) {
-    players ??= [];
+    players ||= [];
     this._roster = [];
     for (let i = 0; i < players.length; i++) {
       this.addPlayer(players[i]);
@@ -44,7 +44,7 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
     return this._packages;
   }
   set packages(packages) {
-    packages ??= [];
+    packages ||= [];
     this._packages = [];
     for (let i = 0; i < packages.length; i++) {
       this.addPackage(packages[i]);
@@ -83,20 +83,8 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
     this.setState(state);
     return this;
   }
-  tobject(depth = 0) {
-    const team = {
-      name: this.name,
-      t_created: this.t_created,
-      points: this.points,
-      state: this.state.name,
-      packages: [],
-      roster: [],
-    };
-    if (depth > 0) {
-      team.roster = this.roster.map((player) => player.tobject(depth - 1));
-      team.packages = this.packages.map((pkg) => pkg.tobject());
-    }
-    return team;
+  tobject(options) {
+    return Team.tobject(this, options);
   }
 }
 

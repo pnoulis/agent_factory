@@ -22,14 +22,14 @@ function normalize(sources, options) {
     t_created: null,
     points: null,
     state: null,
-    packages: flatPackages(sources).map((src) =>
-      Package.normalize(src, options.package),
-    ),
     roster: flatRosters(sources).map((src) =>
       Player.normalize(src, {
         ...options.player,
         wristband: options.wristband,
       }),
+    ),
+    packages: flatPackages(sources).map((src) =>
+      Package.normalize(src, options.package),
     ),
   };
 

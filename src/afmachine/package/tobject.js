@@ -3,11 +3,11 @@ import { t_stomls } from "../../misc/misc.js";
 
 function tobject(pkg, options) {
   pkg ||= {};
-  options || {};
+  options ||= {};
 
   const _options = {
-    defaultState: options.defaultState || "unregistered",
     backendForm: options.backendForm || false,
+    defaultState: options.defaultState || "unregistered",
   };
   trace(_options, "package.tobject() _options");
 

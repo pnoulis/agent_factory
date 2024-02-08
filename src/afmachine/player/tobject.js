@@ -5,9 +5,9 @@ function tobject(player, options) {
   options ||= {};
 
   const _options = {
-    depth: options.depth ?? 1,
     backendForm: options.backendForm || false,
     defaultState: options.defaultState || "unregistered",
+    depth: options.depth ?? 1,
   };
   trace(_options, "player.tobject() _options");
 

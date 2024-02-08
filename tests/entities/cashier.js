@@ -21,58 +21,53 @@ describe("Cashier", () => {
     expect(entity).toHaveProperty("tobject");
     expect(entity.tobject).toBeTypeOf("function");
   });
-  it("Should produce a random cashier", () => {
-    const entity = random();
-    expect(entity).toHaveProperty("id");
-    expect(entity).toHaveProperty("username");
-    expect(entity).toHaveProperty("email");
-    expect(entity).toHaveProperty("role");
-  });
-  it("Should translate a cashier from afm to backend form", () => {
-    const entity = random();
-    const backendEntity = tobject(entity, { backendForm: true });
-    expect(backendEntity).toEqual({
-      id: entity.id,
-      username: entity.username,
-      email: entity.email,
-      roles: [`ROLE_${entity.role}`.toUpperCase()],
-    });
-  });
-  it("Should translate a cashier from backend to afm form", () => {
-    const backendEntity = tobject(random(), { backendForm: true });
-    const entity = normalize(backendEntity);
-    expect(entity).toEqual({
-      id: backendEntity.id,
-      username: backendEntity.username,
-      email: backendEntity.email,
-      role: backendEntity.roles.at(0).split("_").at(1).toLowerCase(),
-    });
-  });
-  it("Should validate a cashier", () => {
+  it("Should be a valid afm cashier", () => {
     const entity = new Entity();
-    let tmp;
+    expect(validate(entity.fill())).toBeNull();
+    expect(validate(entity.normalize())).toBeNull();
+    expect(validate(entity.tobject())).toBeNull();
+  });
+  it("Should be an invalid afm cashier", () => {
+    const entity = new Entity();
+    expect(validate(entity)).not.toBeNull();
+    expect(validate(entity.tobject())).not.toBeNull();
+    expect(validate(entity.normalize())).not.toBeNull();
+  });
+  it("Should be a valid backend form cashier", () => {
+    const entity = new Entity();
+    expect(
+      validate(entity.fill().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
 
-    // Empty device
-    validate(entity);
-    expect(validate.errors).not.toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).toBeNull();
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).toBeNull();
+  });
+  it("Should be an invalid backend form cashier", () => {
+    let entity = new Entity();
+    expect(
+      validate(entity.tobject({ backendForm: true }), { backendForm: true }),
+    ).not.toBeNull();
+    expect(
+      validate(entity.normalize().tobject({ backendForm: true }), {
+        backendForm: true,
+      }),
+    ).not.toBeNull();
+  });
+  it("Should translate cashier across forms", () => {
+    // afm to backend
+    let backendCashier = new Entity().fill().tobject({ backendForm: true });
+    expect(validate(backendCashier, { backendForm: true })).toBeNull();
 
-    validate(entity.tobject());
-    expect(validate.errors).not.toBeNull();
-
-    validate(entity.normalize());
-    expect(validate.errors).not.toBeNull();
-
-    // Filled device
-    validate((tmp = entity.fill()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.normalize()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
-
-    validate((tmp = entity.tobject()));
-    validate.errors && debug(tmp, validate.errors);
-    expect(validate.errors).toBeNull();
+    // backend to afm
+    let afmCashier = normalize(backendCashier);
+    expect(validate(afmCashier)).toBeNull();
   });
 });

@@ -1,11 +1,17 @@
+import { unique } from "js_utils/misc";
 import {
   afmPackage,
   backendMissionsPackage,
   backendTimePackage,
-} from "../package/schema.js";
-import { afmPlayer } from "../player/schemas.js~";
-import { unique } from "js_utils/misc";
+} from "../package/schemas.js";
+import { afmPlayer } from "../player/schemas.js";
 import { TEAM_STATES } from "../../constants.js";
+import {
+  MAX_WRISTBAND_CC,
+  MIN_WRISTBAND_CC,
+  MAX_WRISTBAND_ID,
+  MIN_WRISTBAND_ID,
+} from "../../constants.js";
 
 const afmTeam = {
   type: "object",
@@ -74,7 +80,7 @@ const backendTeam = {
       additionalProperties: false,
       required: ["version", "players"],
       properties: {
-        version: schemas.team.version,
+        version: { type: "integer" },
         players: {
           type: "array",
           items: {
@@ -107,4 +113,4 @@ const backendTeam = {
   },
 };
 
-export { afmTeam };
+export { afmTeam, backendTeam };

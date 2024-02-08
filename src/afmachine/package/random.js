@@ -90,7 +90,7 @@ function random(sources, options) {
       }
       break;
     default:
-      throw new Error(`Unrecognized package type: '${target.type}'`);
+      throw new Error(`Unrecognized package target type: '${target.type}'`);
   }
 
   trace(target, "package random target");

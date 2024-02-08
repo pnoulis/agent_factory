@@ -10,12 +10,24 @@ function random(sources, options) {
 
   options ||= {};
   const _options = {
-    depth: options.depth ?? 1,
     longtext: options.longtext || false,
   };
 
   const target = normalize(sources, options);
   trace(target, "player random normalized sources");
+
+  let surname, name, username;
+  if (_options.longtext) {
+    username = surname = name = uuid();
+  } else {
+    [surname, name, username] = `${generateRandomName()}_${smallid()}`.split(
+      "_",
+    );
+  }
+  target.username ||= username;
+  target.name ||= name;
+  target.surname ||= surname;
+  target.email ||= `${username}@gmail.com`;
 
   switch (target.state) {
     case "unregistered":
@@ -27,25 +39,16 @@ function random(sources, options) {
     case "inTeam":
     // fall through
     case "playing":
-    // fall through
+      // fall through
+      target.wristband = Wristband.random(target.wristband, {
+        state: "paired",
+      });
+      break;
     case "registered":
-      let surname, name, username;
-      if (_options.longtext) {
-        username = surname = name = uuid();
-      } else {
-        [surname, name, username] =
-          `${generateRandomName()}_${smallid()}`.split("_");
-      }
-      target.username ||= username;
-      target.name ||= name;
-      target.surname ||= surname;
-      target.email ||= `${username}@gmail.com`;
+      target.wristband = Wristband.random(target.wristband, options.wristband);
       break;
     default:
-  }
-
-  if (_options.depth) {
-    target.wristband = Wristband.random(target.wristband, options.wristband);
+      throw new Error(`Unrecognized player target state: '${target.state}'`);
   }
 
   trace(target, "player random target");

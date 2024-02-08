@@ -28,13 +28,7 @@ const afmPackage = {
       oneOf: [
         {
           type: "string",
-          enum: [
-            "unregistered",
-            "registered",
-            "playing",
-            "paused",
-            "completed",
-          ],
+          enum: ["unregistered", "registered", "playing", "completed"],
         },
         {
           type: "object",
@@ -43,13 +37,7 @@ const afmPackage = {
           properties: {
             name: {
               type: "string",
-              enum: [
-                "unregistered",
-                "registered",
-                "playing",
-                "paused",
-                "completed",
-              ],
+              enum: ["unregistered", "registered", "playing", "completed"],
             },
             order: { type: "integer" },
           },

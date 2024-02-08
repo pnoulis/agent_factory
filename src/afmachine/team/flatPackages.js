@@ -6,7 +6,9 @@ function gatherPackages(car, src) {
       gatherPackages(car, src[i]);
     }
   } else if (isObject(src)) {
-    if (Object.hasOwn(src, "packages")) {
+    if (Object.hasOwn(src, "_packages")) {
+      gatherPackages(car, src._packages);
+    } else if (Object.hasOwn("packages")) {
       gatherPackages(car, src.packages);
     } else {
       car.push(src);

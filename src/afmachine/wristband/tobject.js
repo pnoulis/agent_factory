@@ -5,8 +5,8 @@ function tobject(wristband, options) {
   options ||= {};
 
   const _options = {
-    defaultState: options.defaultState || "unpaired",
     backendForm: options.backendForm || false,
+    defaultState: options.defaultState || "unpaired",
   };
   trace(_options, "wristband.tobject() _options");
 

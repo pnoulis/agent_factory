@@ -6,7 +6,9 @@ function gatherPlayers(car, src) {
       gatherPlayers(car, src[i]);
     }
   } else if (isObject(src)) {
-    if (Object.hasOwn(src, "roster")) {
+    if (Object.hasOwn(src, "_roster")) {
+      gatherPlayers(car, src._roster);
+    } else if (Object.hasOwn(src, "roster")) {
       gatherPlayers(car, src.roster);
     } else if (Object.hasOwn(src, "currentRoster")) {
       gatherPlayers(car, src.currentRoster?.players);
