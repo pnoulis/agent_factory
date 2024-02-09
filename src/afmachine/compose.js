@@ -17,7 +17,9 @@ function compose(middleware) {
       if (i === middleware.length) fn = next;
       if (!fn) return Promise.resolve();
       try {
-        return Promise.resolve(fn(context, dispatch.bind(null, i + 1)));
+        // Ensures asynchronisity
+        return Promise.resolve().then(() => fn(context, dispatch.bind(null, i +1)))
+        // return Promise.resolve(fn(context, dispatch.bind(null, i + 1)));
       } catch (err) {
         return Promise.reject(err);
       }
