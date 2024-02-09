@@ -8,7 +8,6 @@ import { Unregistered } from "./StateUnregistered.js";
 import { Registered } from "./StateRegistered.js";
 import { InTeam } from "./StateInTeam.js";
 import { Playing } from "./StatePlaying.js";
-import { ERR_CODES } from "../../errors.js";
 
 class Player extends createStateful([
   Unregistered,
@@ -70,7 +69,5 @@ class Player extends createStateful([
     return Player.tobject(this, options);
   }
 }
-
-Player.prototype.errCodes = ERR_CODES;
 
 export { Player };

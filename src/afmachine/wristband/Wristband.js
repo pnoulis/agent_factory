@@ -8,7 +8,6 @@ import { Unpaired } from "./StateUnpaired.js";
 import { Pairing } from "./StatePairing.js";
 import { Paired } from "./StatePaired.js";
 import { Unpairing } from "./StateUnpairing.js";
-import { ERR_CODES } from "../../errors.js";
 import { WRISTBAND_COLORS } from "../../constants.js";
 
 class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
@@ -50,7 +49,5 @@ class Wristband extends createStateful([Unpaired, Pairing, Unpairing, Paired]) {
     return Wristband.tobject(this, options);
   }
 }
-
-Wristband.prototype.errCodes = ERR_CODES;
 
 export { Wristband };

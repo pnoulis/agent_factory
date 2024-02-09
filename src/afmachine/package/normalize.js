@@ -2,20 +2,19 @@ import { t_stomls, t_stomin } from "../../misc/misc.js";
 import { PACKAGE_TYPES } from "../../constants.js";
 
 function normalize(sources, options) {
-  trace("normalize package");
-  trace(sources, "package normalize sources");
-  trace(options, "package normalize options");
+  trace(sources, options, "package.normalize() arguments");
 
   options ||= {};
   const _options = {
     targetState: options.state || null,
     defaultState: options.defaultState || "unregistered",
     nullSupersede: options.nullSupersede || false,
+    stage2: options.stage2 ?? true,
   };
-  trace(_options, "package normalize _options");
+  trace(_options, "package.normalize() _options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  trace(_sources, "package normalize _sources");
+  trace(_sources, "package.normalize() _sources");
 
   const target = {
     id: null,
@@ -29,7 +28,6 @@ function normalize(sources, options) {
     state: null,
   };
   let active = false;
-  let paused = false;
   let amount = 0;
   let remainder = null;
 
@@ -45,7 +43,6 @@ function normalize(sources, options) {
 
       // State information
       active = _sources[i].active || false;
-      paused = _sources[i].paused || false;
 
       // Type dependant
       if (Object.hasOwn(_sources[i], "missions")) {
@@ -79,7 +76,6 @@ function normalize(sources, options) {
 
       // State information
       active = _sources[i].active || active;
-      paused = _sources[i].paused || paused;
 
       // Type dependant
       if (Object.hasOwn(_sources[i], "missions")) {
@@ -99,25 +95,81 @@ function normalize(sources, options) {
       }
       target.amount = amount || target.amount;
       target.remainder = remainder ?? target.remainder;
-      target.state = _sources[i].state?.name || _sources[i].state || null;
+      target.state =
+        _sources[i].state?.name || _sources[i].state || target.state;
     }
   }
 
+  // stage 1
   if (_options.targetState) {
     target.state = _options.targetState;
-  } else if (paused) {
-    target.state = "paused";
-  } else if (target.remainder === 0 || target.t_end > 0) {
-    target.state = "completed";
   } else if (active) {
     target.state = "playing";
-  } else if (target.id) {
-    target.state = "registered";
   } else {
     target.state ||= _options.defaultState;
   }
 
-  trace(target, "package normalize target");
+  if (!_options.stage2) {
+    trace(target, "package.normalize() target");
+    return target;
+  }
+
+  // stage 2
+  let misaligned = "";
+  switch (target.state) {
+    case "completed":
+      if (!target.t_end) {
+        misaligned = "Must have ended";
+      } else if (!target.t_start) {
+        misaligned = "Must have started";
+      } else if (!target.id) {
+        misaligned = "Must have been registered";
+      } else if (
+        !(target.amount && target.name && target.cost && target.type)
+      ) {
+        misaligned = "Missing properties";
+      }
+      break;
+    case "playing":
+      if (!target.t_start) {
+        misaligned = "Must have started";
+      } else if (target.t_end) {
+        misaligned = "Must not have ended";
+      }
+    // fall through
+    case "registered":
+      // remainder is not being checked on purpose.
+      if (!target.id) {
+        misaligned = "Must have been registered";
+      } else if (
+        !(target.amount && target.name && target.cost && target.type)
+      ) {
+        misaligned = "Missing properties";
+      }
+      break;
+    case "unregistered":
+      if (target.id) {
+        misaligned = "Must not have been registered";
+      }
+      break;
+    default:
+      throw globalThis.createError(({ EPLAYER }) =>
+        EPLAYER({
+          msg: `Unrecognized package state: '${target.state}'`,
+          target,
+        }),
+      );
+  }
+
+  trace(target, "package.normalize() target");
+  if (misaligned) {
+    throw globalThis.createError(({ EPACKAGE }) =>
+      EPACKAGE({
+        msg: `Misaligned package in '${target.state}' state: '${misaligned}'`,
+        target,
+      }),
+    );
+  }
   return target;
 }
 

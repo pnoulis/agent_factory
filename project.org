@@ -21,6 +21,15 @@
 **** TODO fill
 
 
+** TODO Implement the standardized State Deducing logic across the Entities.
+*** TODO Should I split the State deducing process to its own function?
+*** TODO SHould the backendForm translation also call the State deducing function?
+*** DONE wristband
+CLOSED: [2024-02-09 Fri 11:41]
+*** DONE player
+CLOSED: [2024-02-09 Fri 12:06]
+*** TODO package
+*** TODO team
 ** TODO Move flats under their own directory
 ** Decide on the parameters of the random() and normalize() functions.
 
@@ -3244,23 +3253,14 @@ etc). To be more exact, each normalization function is responsible for:
 
 - TRANSLATION of an object in backend form to frontend form.
 - DEDUCING the state of the entity.
-- MERGING of multiple sources.
+- MERGING of multiple sources in any form.
 - NORMALIZATION of the NESTED entities contained within, if any.
 
+** Inputs
 All normalization functions accept the following inputs:
 
 - an array of sources, or a single object, or null, or the empty object etc...
 - An Options object
-
-An Option's object contains 2 types of information:
-
-- Shared options intended to be consumed by the invoked normalization function
-  AND the nested normalization's if any.
-- Target options intended to be consumed only by the invoked normalization
-  function.
-
-The top level properties are divided into shared and target by the invoked
-normalization function.
 
 To pass along instructions to a NESTED normalization function, one must begin a
 secondary nesting in the Options object.
@@ -3273,7 +3273,6 @@ For example:
   // Team -> Players -> Wristband
   // Team -> Packages
   {
-    depth: 2, // Shared
     nullSupersede: true, // Team target
     state: 'registered', // Team Target
     package: { // NESTED TARGET -> Package
@@ -3289,121 +3288,120 @@ For example:
   }
 #+end_src
 
-interpreted as the SHARED options and TARGET
-The Options object's top level properties are intended to be consumed by the
-invoked normalization function.
+** Deducing state
+Deducing state is carried on in 2 stages. The goal is to reduce ambiguity an
+introduce Determinism.
 
-If the normalization function finds the following properties in the option's
-object:
+The first stage is about interpreting the properties that carry with them State.
 
-- wristband
-- player
+For example, given a Package with a non-nil id property:
 
-They will be interpreted as instructions to be passed along to the normalization
-functions of their repsective entities nested within the top level entity if
-they are invoked.
+#+begin_src js
+  // Package
+  {
+    id: 5
+  }
+#+end_src
+
+I could interpret the existence of a non-nil ID property as indicative of
+the Package being at least Registered.
+
+But I do not (not in the 1st stage). The only properties used in the first stage
+in that EXACT order of a Package normalization function are:
+
+- targetState
+  The targetState is passed as an option to the normalization function.
+  If it has been defined it interrupts the function and returns immediately
+  operating under the assumption that the caller already knows what
+  the state of the target should be.
+- active
+  This property is found in a BackendForm package. If it is defined and true
+  it means the Package is currently active.
+- state
+  This property is found in an AfmForm package.
+- defaultState
+  The defaultState is passed as an option to the normalization function.
+  If no state has been deduced so far in the process, it is used.
+
+The general pattern is that, the targetState has the highest precedence. It is
+followed by State backendForm, then by afmForm State, then by defaultState.
+
+In the tobject() functions which must also deduce state the order is:
+targetState, afmForm, defaultState.
+
+This is the end of the 1st stage.
+
+The 2nd stage is responsible for binding the Content of the entity to its State.
+
+What do I mean by that?.
+
+Some properties such as:
+
+state or active (in a Package)
+
+are explicitly designed to convey state.
+
+While the other properties in a Package are about its Contents.
+
+#+begin_src js
+  {
+    id,
+    t_started,
+    t_ended,
+    remainder,
+    amount,
+    ...
+  }
+#+end_src
+
+Therefore, one may allocate each Property as belonging to:
+
+- State
+- Content
+
+So the 2st stage is about making sure that the target's Contents align with the
+State from the 1st stage.
+
+So again carrying on with the above Example:
+
+A Package can be in one of four states:
+
+- Unregistered
+- Registered
+- Playing
+- Completed
+
+(-START NOTE-)
+I believe that the architecture of the backend should be based on Packages.
+What do I mean?
+Instead of having Teams with Packages and Teams having an active Package.
+You have Packages with a 'has-a' Team.
+So instead of (1)Team-(*)Packages you have a (1)Package-(1)Team.
+But it is not, so I make best with what I have.
+(-END NOTE-)
 
 
+Lets say that the target after stage 1 looks like these:
 
-object.
-Normalization function are used to:
+#+begin_src js
+  {
+    state: 'unregistered'
+    id: 5,
+    t_start: 100,
+    t_end: 500,
+  }
+#+end_src
 
+This is an example of a misalignment. The State says that this Package
+is unregistered but the Contents say that it is Completed.
 
-They translate objects in backend form to frontend form.
+What should be done in this situation?
 
-For example:
+In order to help the developer know when a situation like this arises a
+state Error is thrown.
 
-A backend wrisband has the following properties:
-
-wristbandNumber
-wristbandColor
-
-A frontend wristband has the following properties:
-
-id
-color
-colorCode
-
-It is the principal task of a normalization function to perform the translation.
-
-While translatating, it also deduces the STATE of the entity.
-
-- state 
-
-The wristband normalization function is capable of taking a backend wristband
-and translating it into a frontend wristband.
-
-A second task normalization functions fulfill, is the merging of entity objects
-in any form into a single object in frontend form.
-
-For example:
-
-Given a set of Wristbands:
-
-[ { wristband1...}, { wristband2...} ]
-
-The output would be:
-
-{ wristbandInFrontendForm... }
-
-Each normalization function accepts some standard options.
-
-** Normalization options
-*** Wristband
-normalized
-state
-nullSupersede
-defaultState
-*** Player
-normalized
-depth
-state
-nullSupersede
-defaultState
-wristband options
-
-at depth = 0 -> normalizes player
-at depth = 1 -> normalizes player + wrisband
-*** Package
-normalized
-state
-nullSupersede
-defaultState
-*** Roster
-normalized
-depth
-state
-nullSupersede
-defaultState
-wristband options
-{ wristband, ...playerOptions};
-
-at depth = 0 -> normalizes players
-at depth = 1 -> normalizes players + wristbands
-*** Team
-normalized
-depth
-state
-nullSupersede
-defaultState
-player options
-wristband options
-
-at depth = 0 -> normalizes team
-at depth = 1 -> normalizes teams + players
-at depth = 2 -> normalizes teams + players + wristbands
-*** GroupParty
-normalized
-depth
-state
-nullSupersede
-defaultState
-player options
-wristband options
-
-at depth = 0 -> normalizes teams
-at depth = 1 -> normalizes teams + players
-at depth = 2 -> normalizes teams + players + wrisbands
+So the 2nd stage is responsible for making sure that a misalignment never
+occurs.
 
 * ToObject Functions
 The tobject() functions take an entity and return the entity as an object

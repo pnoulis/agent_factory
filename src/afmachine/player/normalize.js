@@ -2,20 +2,19 @@ import { Wristband } from "../wristband/Wristband.js";
 import { flatWristbands } from "./flatWristbands.js";
 
 function normalize(sources, options) {
-  trace("normalize player");
-  trace(sources, "player normalize sources");
-  trace(options, "player normalize options");
+  trace(sources, options, "player.normalize() arguments");
 
   options ||= {};
   const _options = {
     targetState: options.state || null,
     defaultState: options.defaultState || "unregistered",
     nullSupersede: options.nullSupersede || false,
+    stage2: options.stage2 ?? true,
   };
-  trace(_options, "player normalize _options");
+  trace(_options, "player.normalize() _options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  trace(_sources, "player normalize _sources");
+  trace(_sources, "player.normalize() _sources");
 
   const target = {
     username: null,
@@ -49,6 +48,7 @@ function normalize(sources, options) {
     }
   }
 
+  // stage 1
   if (_options.targetState) {
     target.state = _options.targetState;
   } else if (wristbandMerged) {
@@ -57,7 +57,49 @@ function normalize(sources, options) {
     target.state ||= _options.defaultState;
   }
 
-  trace(target, "player normalize target");
+  if (!_options.stage2) {
+    trace(target, "player.normalize() target");
+    return target;
+  }
+
+  // stage 2
+  let misaligned = "";
+  switch (target.state) {
+    case "playing":
+      // wristband must be paired
+      if (target.wristband.state !== "paired") {
+        misaligned = "Must have a paired wristband";
+        break;
+      }
+    // fall through
+    case "inTeam":
+    // fall through
+    case "registered":
+      if (!(target.username && target.name && target.surname && target.email)) {
+        misaligned = "Missing properties";
+      }
+    // fall through
+    case "unregistered":
+      // Content could be either defined or not defined
+      break;
+    default:
+      throw globalThis.createError(({ EPLAYER }) =>
+        EPLAYER({
+          msg: `Unrecognized player state: '${target.state}'`,
+          target,
+        }),
+      );
+  }
+
+  trace(target, "player.normalize() target");
+  if (misaligned) {
+    throw globalThis.createError(({ EPLAYER }) =>
+      EPLAYER({
+        msg: `Misaligned player in '${target.state}' state: '${misaligned}'`,
+        target,
+      }),
+    );
+  }
   return target;
 }
 

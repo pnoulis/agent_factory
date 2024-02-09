@@ -9,7 +9,7 @@ class Device {
   static tobject = tobject;
   static validate = validate;
 
-  constructor(mqttClient, device) {
+  constructor(device) {
     device ??= {};
     this.id = device.id || null;
     this.type = device.type || null;

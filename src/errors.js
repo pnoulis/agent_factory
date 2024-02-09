@@ -1,3 +1,4 @@
+import { isObject } from "js_utils/misc";
 /*
   Errors severity:
 
@@ -29,72 +30,106 @@ const ERR_CODES = {
   EPLAYER_STATE: 9,
   EPLAYER_STATE_CANCELS_OUT: 10,
   EPLAYER_STATE_IMPOSSIBLE: 11,
+  EPACKAGE_STATE: 12,
 };
 
-function createError(severity, msg, errCode, cause) {
-  const errLabel = Object.keys(ERR_CODES).find((label, i) => i === errCode);
+function _createError(msg, defaults) {
+  msg ||= {};
+  defaults ||= {};
+  const err = new Error();
 
-  if (errLabel === undefined) {
-    const err = new Error(`Missing ERR_CODE: '${errCode}'`, {
-      severity,
-      msg,
-      errCode,
-      cause,
+  err.code = defaults.errCode;
+  err.label = Object.entries(ERR_CODES)
+    .find(([k, v]) => v === defaults.errCode)
+    ?.at(0);
+
+  if (!err.label) {
+    throw new Error("Goodness gracious, you couldn't even get that right", {
+      cause: defaults,
     });
-    err.code = ERR_CODES.EUNEXPECTED;
-    err.label = "UNEXPECTED";
-    err.severity = "fatal";
-    throw err;
+  } else if (typeof msg === "string") {
+    err.message = msg;
+  } else if (isObject(msg)) {
+    const { msg: _msg, severity, ...cause } = msg;
+    err.message = _msg;
+    err.severity = severity;
+    err.cause = cause;
   }
 
-  const err = new Error(msg, { cause });
-  err.code = errCode;
-  err.label = errLabel;
-  err.severity = severity;
+  err.message ||= defaults.msg;
+  err.severity ||= defaults.severity;
+
   return err;
 }
 
-function createUnexpectedErr({ ...props } = {}) {
-  return createError(
-    props.severity || "error",
-    props.msg || "Unexpected error",
-    props.errCode ?? ERR_CODES.EUNEXPECTED,
-    { ...props },
+const createError = (cb) =>
+  cb(
+    (() => ({
+      EWRISTBAND: (msg) =>
+        _createError(msg, {
+          severity: "error",
+          msg: "Wristband Error",
+          errCode: ERR_CODES.EWRISTBAND_STATE,
+        }),
+      EPLAYER: (msg) =>
+        _createError(msg, {
+          severity: "error",
+          msg: "Player Error",
+          errCode: ERR_CODES.EPLAYER_STATE,
+        }),
+      EPACKAGE: (msg) =>
+        _createError(msg, {
+          severity: "error",
+          msg: "Package Error",
+          errCode: ERR_CODES.EPLAYER_STATE,
+        }),
+    }))(),
   );
-}
 
-function createValidationErr({ validationErrors, ...props } = {}) {
-  return createError(
-    props.severity || "warn",
-    props.msg || "Validation error",
-    props.errCode ?? ERR_CODES.EINVALID,
-    { validationErrors, ...props },
-  );
-}
+globalThis.createError = createError;
 
-function createCacheErr({ cache, key, ...props } = {}) {
-  return createError(
-    props.severity || "error",
-    props.msg || `Missing key: '${key}' from cache: '${cache}'`,
-    props.errCode ?? ERR_CODES.ECACHE,
-    { cache, key, ...props },
-  );
-}
+// function createUnexpectedErr({ ...props } = {}) {
+//   return createError(
+//     props.severity || "error",
+//     props.msg || "Unexpected error",
+//     props.errCode ?? ERR_CODES.EUNEXPECTED,
+//     { ...props },
+//   );
+// }
 
-function createStateErr({ state, ...props } = {}) {
-  return createError(
-    props.severity || "warn",
-    props.msg || "State error",
-    props.errCode ?? ERR_CODES.ESTATE,
-    { state, ...props },
-  );
-}
+// function createValidationErr({ validationErrors, ...props } = {}) {
+//   return createError(
+//     props.severity || "warn",
+//     props.msg || "Validation error",
+//     props.errCode ?? ERR_CODES.EINVALID,
+//     { validationErrors, ...props },
+//   );
+// }
+
+// function createCacheErr({ cache, key, ...props } = {}) {
+//   return createError(
+//     props.severity || "error",
+//     props.msg || `Missing key: '${key}' from cache: '${cache}'`,
+//     props.errCode ?? ERR_CODES.ECACHE,
+//     { cache, key, ...props },
+//   );
+// }
+
+// function createStateErr({ state, ...props } = {}) {
+//   return createError(
+//     props.severity || "warn",
+//     props.msg || "State error",
+//     props.errCode ?? ERR_CODES.ESTATE,
+//     { state, ...props },
+//   );
+// }
 
 export {
+  // createError,
+  // createUnexpectedErr,
+  // createValidationErr,
+  // createStateErr,
+  // createCacheErr,
+  // ERR_CODES,
   createError,
-  createUnexpectedErr,
-  createValidationErr,
-  createStateErr,
-  createCacheErr,
-  ERR_CODES,
 };

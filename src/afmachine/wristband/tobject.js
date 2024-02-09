@@ -1,6 +1,8 @@
 import { WRISTBAND_COLORS } from "../../constants.js";
 
 function tobject(wristband, options) {
+  trace(wristband, "wristband.tobject() wristband");
+  trace(options, "wristband.tobject() options");
   wristband ||= {};
   options ||= {};
 
@@ -19,11 +21,14 @@ function tobject(wristband, options) {
 
   if (!_options.backendForm) return afmWristband;
 
+  const active =
+    afmWristband === "paired" || afmWristband.state === "unpairing";
+
   return {
     wristbandNumber: afmWristband.id,
     wristbandColor:
       afmWristband.colorCode || WRISTBAND_COLORS[afmWristband.color],
-    active: afmWristband.state === "paired",
+    active,
   };
 }
 

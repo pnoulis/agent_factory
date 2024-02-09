@@ -30,13 +30,12 @@ function tobject(player, options) {
 
   if (!_options.backendForm) return { ...sharedProps, ...afmPlayer };
 
-  const wristbandState =
-    afmPlayer.wristband.state?.name || afmPlayer.wristband.state;
+  const wristbandMerged =
+    wristbandState === "unpairing" || wristbandState === "paired";
 
   return {
     ...sharedProps,
-    wristbandMerged:
-      wristbandState === "unpairing" || wristbandState === "paired",
+    wristbandMerged,
   };
 }
 

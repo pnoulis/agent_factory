@@ -4,7 +4,7 @@ import { flatRosters } from "./flatRosters.js";
 import { flatPackages } from "./flatPackages.js";
 
 function normalize(sources, options) {
-  trace("normalize team");
+  trace(sources, options, "team.normalize() arguments");
 
   options ||= {};
   const _options = {
@@ -12,10 +12,10 @@ function normalize(sources, options) {
     nullSupersede: options.nullSupersede || false,
     defaultState: options.defaultState || "unregistered",
   };
-  trace(_options, "team _options");
+  trace(_options, "team.normalize() _options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  trace(_sources, "team _sources");
+  trace(_sources, "team.normalize() _sources");
 
   const target = {
     name: null,
@@ -52,6 +52,7 @@ function normalize(sources, options) {
     }
   }
 
+  // stage 1
   if (_options.targetState) {
     target.state = _options.targetState;
   } else if (target.state === "PACKAGE_RUNNING") {
@@ -66,7 +67,10 @@ function normalize(sources, options) {
     target.state ||= _options.defaultState;
   }
 
-  trace(target, "team normalize target");
+  // stage 2
+  // stage 2 is too much work for Team.
+
+  trace(target, "team.normalize() target");
   return target;
 }
 

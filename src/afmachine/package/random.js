@@ -8,7 +8,8 @@ function random(sources, options) {
   trace(sources, "package random sources");
   trace(options, "package random options");
 
-  const target = normalize(sources, options);
+  options ||= {};
+  const target = normalize(sources, { ...options, stage2: false });
   trace(target, "package random normalized sources");
 
   // package type (missions || time)
@@ -94,7 +95,7 @@ function random(sources, options) {
   }
 
   trace(target, "package random target");
-  return target;
+  return normalize(target);
 }
 
 export { random };

@@ -12,7 +12,8 @@ function random(sources, options) {
   trace("random wristband");
   trace(sources, "wristband random sources");
 
-  const target = normalize(sources, options);
+  options ||= {};
+  const target = normalize(sources, { ...options, stage2: false });
   trace(target, "wristband random normalized target");
 
   switch (target.state) {
@@ -37,7 +38,7 @@ function random(sources, options) {
   }
 
   trace(target, "wristband random target");
-  return target;
+  return normalize(target);
 }
 
 export { random };

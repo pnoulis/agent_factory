@@ -13,7 +13,7 @@ function random(sources, options) {
     longtext: options.longtext || false,
   };
 
-  const target = normalize(sources, options);
+  const target = normalize(sources, { ...options, stage2: false });
   trace(target, "player random normalized sources");
 
   let surname, name, username;
@@ -52,6 +52,6 @@ function random(sources, options) {
   }
 
   trace(target, "player random target");
-  return target;
+  return normalize(target);
 }
 export { random };

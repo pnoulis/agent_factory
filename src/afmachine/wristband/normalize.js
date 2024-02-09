@@ -1,20 +1,19 @@
 import { WRISTBAND_COLORS } from "../../constants.js";
 
 function normalize(sources, options) {
-  trace("normalize wristband");
-  trace(sources, "wristband normalize sources");
-  trace(options, "wristband normalize options");
+  trace(sources, options, "wristband.normalize() arguments");
 
   options ||= {};
   const _options = {
     targetState: options.state || null,
     defaultState: options.defaultState || "unpaired",
     nullSupersede: options.nullSupersede || false,
+    stage2: options.stage2 ?? true,
   };
-  trace(_options, "wristband normalize _options");
+  trace(_options, "wristband.normalize() _options");
 
   const _sources = [sources].flat(2).filter((src) => !!src);
-  trace(_sources, "wristband normalize _sources");
+  trace(_sources, "wristband.normalize() _sources");
 
   const target = {
     id: null,
@@ -45,19 +44,53 @@ function normalize(sources, options) {
 
   target.color = WRISTBAND_COLORS[target.colorCode] || null;
 
+  // stage 1
   if (_options.targetState) {
     target.state = _options.targetState;
   } else if (active) {
-    target.state = "paired";
-  } else if (target.id == null) {
-    target.state = "unpaired";
-  } else if (target.id && target.color && target.colorCode) {
     target.state = "paired";
   } else {
     target.state ||= _options.defaultState;
   }
 
-  trace(target, "wristband normalize target");
+  if (!_options.stage2) {
+    trace(target, "wristband.normalize() target");
+    return target;
+  }
+
+  // stage 2
+  let misaligned = "";
+  switch (target.state) {
+    case "paired":
+    // fall through
+    case "unpairing":
+    // fall through
+    case "pairing":
+      if (!(target.id && target.color && target.colorCode)) {
+        misaligned = "Missing properties";
+      }
+    // fall through
+    case "unpaired":
+      // Content could be either defined or not defined
+      break;
+    default:
+      throw globalThis.createError(({ EWRISTBAND }) =>
+        EWRISTBAND({
+          msg: `Unrecognized wristband state: '${target.state}'`,
+          target,
+        }),
+      );
+  }
+
+  trace(target, "wristband.normalize() target");
+  if (misaligned) {
+    throw globalThis.createError(({ EWRISTBAND }) =>
+      EWRISTBAND({
+        msg: `Misaligned wristband in '${target.state}' state: '${misaligned}'`,
+        target,
+      }),
+    );
+  }
   return target;
 }
 
