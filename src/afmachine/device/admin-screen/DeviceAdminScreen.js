@@ -1,6 +1,4 @@
-import { Backend } from "../Backend.js";
-import { DEVICE_TYPES, DEVICE_IDS, ROOM_TYPES } from "../../constants.js";
-import { registrationTopics as staticRoutes } from "../../../backend-topics.js";
+import { Device } from "../Device.js";
 
 // Player topics
 import { registerPlayer } from "./registerPlayer.js";
@@ -44,24 +42,14 @@ import { listScoreboard } from "./listScoreboard.js";
 import { listScoreboardDevices } from "./listScoreboardDevices.js";
 import { listScoreboardViews } from "./listScoreboardViews.js";
 
-class BackendRegistration extends Backend {
-  constructor({ deviceId, roomName, params, routes, strict } = {}) {
-    super({
-      routes: [].concat(
-        Object.values(staticRoutes),
-        Array.isArray(routes) ? routes : [],
-      ),
-      params,
-      strict: strict ?? true,
-    });
-    this.deviceType = DEVICE_TYPES.adminScreen
-    this.deviceId = deviceId || DEVICE_IDS.adminScreen
-    this.roomName = roomName || ROOM_TYPES.admin1;
-    this.registry.setParam("deviceId", this.deviceId);
+class DeviceAdminScreen extends Device {
+  constructor(device, clientMqtt) {
+    super(device);
+    this.mqtt = clientMqtt;
   }
 }
 
-Object.assign(BackendRegistration.prototype, {
+Object.assign(DeviceAdminScreen.prototype, {
   // Player topics
   registerPlayer,
   loginPlayer,
@@ -105,4 +93,4 @@ Object.assign(BackendRegistration.prototype, {
   listScoreboardViews,
 });
 
-export { BackendRegistration };
+export { DeviceAdminScreen };

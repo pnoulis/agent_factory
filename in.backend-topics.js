@@ -1436,8 +1436,8 @@ function addOrigin(topics) {
       Object.assign(car, {
         [k]: {
           ...props,
-          sub: !!sub ? `IN_AFADMIN_SERVER_URL_ORIGIN${sub}` : null,
-          pub: !!pub ? `IN_AFADMIN_SERVER_URL_ORIGIN${pub}` : null,
+          sub: !!sub ? `IN_AFADMIN_SERVER_URL_ORIGIN/${sub}` : null,
+          pub: !!pub ? `IN_AFADMIN_SERVER_URL_ORIGIN/${pub}` : null,
         },
       }),
     {},
@@ -1457,6 +1457,17 @@ function toServer(topics) {
     {},
   );
 }
+
+function removeSchema(topics) {
+  return Object.entries(topics).reduce(
+    (car, [k, { alias, pub, sub } = {}]) =>
+      Object.assign(car, {
+        [k]: { alias, pub, sub },
+      }),
+    {},
+  );
+}
+
 function toJson(topics) {
   return JSON.stringify(topics);
 }
@@ -1478,8 +1489,8 @@ if (/backend-topics\.js/.test(scriptPath)) {
     _rpiReaderTopics = toServer(_rpiReaderTopics);
   }
   const _topics = {
-    registration: _registrationTopics,
-    rpiReader: _rpiReaderTopics,
+    registration: removeSchema(_registrationTopics),
+    rpiReader: removeSchema(_rpiReaderTopics),
   };
   console.log(_toJson ? toJson(_topics) : _topics);
 }

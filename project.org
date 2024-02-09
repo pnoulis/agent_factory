@@ -1,6 +1,8 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** TODO Check if a Promise.resolve().then() executes its onFullfilled listener asynchronously
+*** TODO Replate delay() with Promise.resolve().then()
 ** DONE Player register() fn should need a password as input.
 
 ** TODO Task should invoke onSuccess(),onFailure() before postask middleware
@@ -3211,9 +3213,6 @@ be invoked regardless of the sequnce itself.
     args: {
       ...AFM_FORM_INPUTS
     }
-    tmp: {
-      ...SOME_PLACE_TO_STORE_TRANSIENT_VALUES
-    }
     req: {
       ...BACKEND_FORM_INPUTS
     }
@@ -3402,92 +3401,3 @@ state Error is thrown.
 
 So the 2nd stage is responsible for making sure that a misalignment never
 occurs.
-
-* ToObject Functions
-The tobject() functions take an entity and return the entity as an object
-striped down from all unecessary properties.
-
-
-For example, given a Wristband instance:
-
-
-WristbandInstance = {
-
-afm: ...
-states: {
-   Unregistered: ...
-   Registered: ...
-}
-state: "",
-...
-}
-
-Would produce:
-
-WristbandInstance.tobject()
-
-{
-   id: 0,
-   color: "",
-   colorCode: 0,
-   state: "",
-}
-
-** tobject options
-*** Wrisband
-none
-*** Package
-none
-*** Player
-depth
-
-at depth = 0 -> do not tobject() wrisband
-at depth = 1 -> tobject() wristband
-
-*** Roster
-depth
-
-at depth = 0 -> do not tobject() wristband
-at depth = 1 -> tobject() wrisband
-
-*** Team
-depth
-
-at depth = 0 -> do not tobject() players or wristbands or packages
-at depth = 1 -> tobject() packages and players
-at depth = 2 -> tobject() packages and players and wristbands
-
-* Fill functions
-
-the .fill() functions are used to quickly produce random entities.
-
-** fill options
-*** wristband
-sources
-*** Package
-sources
-*** player
-sources
-depth
-
-at depth = 0 -> do not fill() wristband
-at depth = 1 -> fill() wristband
-
-*** Roster
-size
-sources
-depth
-
-at depth = 0 -> do not fill() wristband
-at depth = 1 -> fill() wristband
-
-*** Team
-size
-sources
-depth
-
-at depth = 0 -> do not fill() wristband, or players or packages
-at depth = 1 -> fill() players and packages
-at depth = 2 -> fill() players and packages and wristbands
-
-

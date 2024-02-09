@@ -19,7 +19,7 @@ import { isObject } from "js_utils/misc";
 
 const ERR_CODES = {
   EUNEXPECTED: 0,
-  EINVALID: 1,
+  EVALIDATION: 1,
   ESTATE: 2,
   ECACHE: 3,
   ESTATEPAST: 4,
@@ -31,6 +31,7 @@ const ERR_CODES = {
   EPLAYER_STATE_CANCELS_OUT: 10,
   EPLAYER_STATE_IMPOSSIBLE: 11,
   EPACKAGE_STATE: 12,
+  EUNKNOWN: 13,
 };
 
 function _createError(msg, defaults) {
@@ -82,6 +83,18 @@ const createError = (cb) =>
           severity: "error",
           msg: "Package Error",
           errCode: ERR_CODES.EPLAYER_STATE,
+        }),
+      EVALIDATION: (msg) =>
+        _createError(msg, {
+          severity: "warn",
+          msg: "Validation Error",
+          errCode: ERR_CODES.EVALIDATION,
+        }),
+      EUNKNOWN: (msg) =>
+        _createError(msg, {
+          severity: "error",
+          msg: "Unknown Error",
+          errCode: ERR_CODES.EUNKNOWN,
         }),
     }))(),
   );

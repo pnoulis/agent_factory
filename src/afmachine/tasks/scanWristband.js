@@ -4,7 +4,6 @@ import { validateBackendRequest } from "../middleware/validateBackendRequest.js"
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { normalize as normalizeWristband } from "../wristband/normalize.js";
-import { createError, ERR_CODES } from "../../errors.js";
 
 new Task("scanWristband", Command);
 
@@ -26,11 +25,8 @@ function Command(unsubcb, opts) {
 Command.middleware = [
   async (ctx, next) => {
     if (SCAN_WRISTBAND_LOCK !== ctx.args.scanLock) {
-      throw createError(
-        "warn",
-        "Wristband scan is busy",
-        ERR_CODES.EWRISTBAND_SCAN_LOCK,
-        { SCAN_WRISTBAND_LOCK },
+      throw globalThis.createError(({ EWRISTBAND }) =>
+        EWRISTBAND("Wristband scan is busy"),
       );
     }
     try {

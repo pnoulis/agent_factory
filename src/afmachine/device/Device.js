@@ -14,7 +14,6 @@ class Device {
     this.id = device.id || null;
     this.type = device.type || null;
     this.room = device.room || null;
-    this.mqtt = mqttClient || null;
   }
   normalize(sources, options) {
     const device = Device.normalize([this, sources], options);

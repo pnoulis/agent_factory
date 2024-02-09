@@ -1,5 +1,4 @@
 import { isObject, isFunction } from "js_utils/misc";
-import { createValidationErr } from "../../errors.js";
 
 function validateBackendResponse(ctx, next) {
   const schema = ctx.route.schema;
@@ -30,11 +29,13 @@ function validateBackendResponse(ctx, next) {
     return { key: propname, value: ctx.req[propname], msg };
   });
 
-  throw createValidationErr({
-    validationErrors,
-    severity: "fatal",
-    msg: "Invalid API response",
-  });
+  throw globalThis.createError(({ EVALIDATION }) =>
+    EVALIDATION({
+      msg: "Invalid Backend API response",
+      severity: "fatal",
+      validationErrors,
+    }),
+  );
 }
 
 export { validateBackendResponse };

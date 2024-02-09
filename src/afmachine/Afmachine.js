@@ -1,17 +1,16 @@
-import "../debug.js";
 import { delay } from "js_utils/misc";
-import { BackendRegistration } from "../backend/registration/BackendRegistration.js";
-import { createCacheErr } from "../errors.js";
 import { createEventful } from "../Eventful.js";
-import { compose } from "./compose.js";
+import { DEVICE_TYPES } from "../constants.js";
 
 // Entities
 import { Wristband } from "./wristband/Wristband.js";
-import { WristbandCommander } from "./wristband/WristbandCommander.js";
 import { Player } from "./player/Player.js";
-import { PlayerCommander } from "./player/PlayerCommander.js";
 import { Package } from "./package/Package.js";
 import { Team } from "./team/Team.js";
+import { Device } from "./device/Device.js";
+import { DeviceAdminScreen } from "./device/admin-screen/DeviceAdminScreen.js";
+import { DeviceRPIReader } from "./device/rpi-reader/DeviceRPIReader.js";
+import { Cashier } from "./cashier/Cashier.js";
 
 // Synthetic Player tasks
 import { pairWristband } from "./synthetic-tasks/pairWristband.js";
@@ -61,9 +60,7 @@ import { listScoreboardDevices } from "./tasks/listScoreboardDevices.js";
 import { listScoreboardViews } from "./tasks/listScoreboardViews.js";
 import { listScoreboard } from "./tasks/listScoreboard.js";
 
-class Afm extends createEventful([
-  "connected",
-  "disconnected",
+class Afmachine extends createEventful([
   "error",
   "precmd",
   "postcmd",
@@ -76,15 +73,16 @@ class Afm extends createEventful([
   constructor() {
     super();
     this.commandQueue = [];
-    this.backend = new BackendRegistration();
     this.players = new Map();
     this.wristbands = new Map();
     this.teams = new Map();
+    this.devices = new Map();
+    this.cashiers = new Map();
     this.commands = 0;
     this.history = [];
   }
 }
-Afm.prototype.enqueueCommand = async function (cmd) {
+Afmachine.prototype.enqueueCommand = async function (cmd) {
   this.commandQueue.push(cmd);
   cmd.queued();
   this.onCmdQueue(cmd);
@@ -98,7 +96,7 @@ Afm.prototype.enqueueCommand = async function (cmd) {
   }
   return runQueue(this.commandQueue, this.runCommand.bind(this));
 };
-Afm.prototype.runCommand = async function (cmd) {
+Afmachine.prototype.runCommand = async function (cmd) {
   const { queue = true } = cmd.opts;
 
   if (queue && cmd.state !== "queued") {
@@ -121,23 +119,23 @@ Afm.prototype.runCommand = async function (cmd) {
     this.onCmdEnd(cmd);
   }
 };
-Afm.prototype.getCache = function (cache, key, strict = true) {
-  if (!Object.hasOwn(this, cache)) {
-    throw createCacheErr({ cache, msg: `Unknown cache: ${cache}` });
-  }
+Afmachine.prototype.getCache = function (cache, key, strict = true) {
+  // if (!Object.hasOwn(this, cache)) {
+  //   throw createCacheErr({ cache, msg: `Unknown cache: ${cache}` });
+  // }
   const value = this[cache].get(key);
-  if (strict && value === undefined) {
-    throw createCacheErr({ cache, key });
-  }
+  // if (strict && value === undefined) {
+  //   throw createCacheErr({ cache, key });
+  // }
   return value;
 };
-Afm.prototype.setCache = function (cache, key, value) {
-  if (!Object.hasOwn(this, cache)) {
-    throw createCacheErr({ cache, msg: `Unknown cache: ${cache}` });
-  }
+Afmachine.prototype.setCache = function (cache, key, value) {
+  // if (!Object.hasOwn(this, cache)) {
+  //   throw createCacheErr({ cache, msg: `Unknown cache: ${cache}` });
+  // }
   return this[cache].set(key, value);
 };
-Afm.prototype.onCmdCreate = function (cmd) {
+Afmachine.prototype.onCmdCreate = function (cmd) {
   this.history.push({
     task: cmd.taskname,
     stage: "create",
@@ -145,7 +143,7 @@ Afm.prototype.onCmdCreate = function (cmd) {
   });
   this.emit("cmdcreate", cmd);
 };
-Afm.prototype.onCmdQueue = function (cmd) {
+Afmachine.prototype.onCmdQueue = function (cmd) {
   this.history.push({
     task: cmd.taskname,
     state: "queue",
@@ -155,7 +153,7 @@ Afm.prototype.onCmdQueue = function (cmd) {
   });
   this.emit("cmdqueue", cmd);
 };
-Afm.prototype.onCmdStart = function (cmd) {
+Afmachine.prototype.onCmdStart = function (cmd) {
   this.history.push({
     task: cmd.taskname,
     stage: "start",
@@ -163,7 +161,7 @@ Afm.prototype.onCmdStart = function (cmd) {
   });
   this.emit("cmdstart", cmd);
 };
-Afm.prototype.onCmdEnd = function (cmd) {
+Afmachine.prototype.onCmdEnd = function (cmd) {
   this.history.push({
     task: cmd.taskname,
     stage: "end",
@@ -185,7 +183,7 @@ Afm.prototype.onCmdEnd = function (cmd) {
   }
 };
 
-Object.assign(Afm.prototype, {
+Object.assign(Afmachine.prototype, {
   // Synthetic Player tasks
   pairWristband,
 
@@ -231,47 +229,52 @@ Object.assign(Afm.prototype, {
   listScoreboardDevices,
   listScoreboardViews,
   listScoreboard,
-});
 
-const afm = new Afm();
-
-afm.create = {
-  wristbandFactory: function (type) {
+  // Creates
+  createWristbandFactory(type) {
     switch (type) {
-      case "commander":
-        return (wristband) => new WristbandCommander(wristband);
       default:
         return (wristband) => new Wristband(wristband);
     }
   },
-  playerFactory: function (type) {
+  createPlayerFactory(type) {
     switch (type) {
-      case "commander":
-        return (player, wristband) =>
-          new PlayerCommander(afm, player, wristband);
       default:
         return (player, wristband) => new Player(player, wristband);
     }
   },
-  packageFactory: function (type) {
+  createPackageFactory(type) {
     switch (type) {
-      case "commander":
       default:
         return (pkg) => new Package(pkg);
     }
   },
-  teamFactory: function (type, playerType, wristbandType, pkgType) {
+  createTeamFactory(type, playerType, wristbandType, pkgType) {
     switch (type) {
       default:
         return (team) =>
           new Team(
             team,
-            afm.create.playerFactory(playerType),
-            afm.create.wristbandFactory(wristbandType),
-            afm.create.packageFactory(pkgType),
+            this.createPlayerFactory(playerType),
+            this.createWristbandFactory(wristbandType),
+            this.createPackageFactory(pkgType),
           );
     }
   },
-};
+  createDeviceFactory(type) {
+    switch (type) {
+      case DEVICE_TYPES.adminScreen:
+        return (device, clientMqtt) =>
+          new DeviceAdminScreen(device, clientMqtt);
+      case DEVICE_TYPES.rpiReader:
+        return (device, clientMqtt) => new DeviceRPIReader(device, clientMqtt);
+      default:
+        return (device) => new Device(device);
+    }
+  },
+  createCashierFactory() {
+    return (cashier) => new Cashier(cashier);
+  },
+});
 
-export { afm };
+export { Afmachine };

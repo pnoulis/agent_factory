@@ -1,17 +1,24 @@
-import { createUnexpectedErr, createValidationErr } from "../../errors.js";
 function parseBackendResponse(ctx, next) {
-  const { result, message, validationErrors } = ctx.raw;
-  if (result === "NOK") {
-    if (validationErrors) {
-      throw createValidationErr({
+  const { result, validationErrors } = ctx.raw;
+
+  if (result === "OK") {
+    return next();
+  } else if (validationErrors) {
+    throw globalThis.createError(({ EVALIDATION }) =>
+      EVALIDATION({
+        msg: "Invalid Backend API request",
+        severity: "warn",
         validationErrors,
-        msg: "Invalid API request",
-      });
-    } else {
-      throw createUnexpectedErr(ctx.raw);
-    }
+      }),
+    );
+  } else {
+    throw globalThis.createError(({ EUNKNOWN }) =>
+      EUNKNOWN({
+        msg: "NOK Backend API response",
+        response: ctx.raw,
+      }),
+    );
   }
-  return next();
 }
 
 export { parseBackendResponse };
