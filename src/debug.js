@@ -4,7 +4,7 @@ import { isObject, isArray } from "js_utils/misc";
 function trace(...args) {
   if (ENV.LOGLEVEL !== "trace") return;
   args.forEach((arg) => {
-    console.dir(arg, { depth: 5 });
+    console.log(arg);
   });
   console.log();
   console.log();
@@ -12,7 +12,7 @@ function trace(...args) {
 
 function debug(...args) {
   args.forEach((arg) => {
-    console.dir(arg, { depth: 5 });
+    console.log(arg);
   });
   console.log();
   console.log();
@@ -161,12 +161,12 @@ globalThis.logPlayer = logPlayer;
 globalThis.logWristband = logWristband;
 globalThis.logent = logent;
 
-process.on("unhandledRejection", (err) => {
-  console.log("UNHANDLED_REJECTION:");
-  console.log(err);
-  console.log(
-    isArray(err)
-      ? err.map((er) => er.msg ?? er.message)
-      : err.msg ?? err.message,
-  );
-});
+// process.on("unhandledRejection", (err) => {
+//   console.log("UNHANDLED_REJECTION:");
+//   console.log(err);
+//   console.log(
+//     isArray(err)
+//       ? err.map((er) => er.msg ?? er.message)
+//       : err.msg ?? err.message,
+//   );
+// });

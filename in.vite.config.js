@@ -24,9 +24,6 @@ export default defineConfig({
   },
   base: "IN_AFADMIN_CLIENT_URL_PUBLIC_BASENAME",
   plugins: [react(), svgr()],
-  alias: {
-    ["@afm"]: "src/afmachine",
-  },
   build: {
     outDir: "IN_BUILDIR",
     target: "es2022",

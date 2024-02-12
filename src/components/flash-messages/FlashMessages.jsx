@@ -7,19 +7,27 @@ import IconWarning from "/assets/icons/semantic-warning-outlined.svg?react";
 import IconError from "/assets/icons/semantic-warning-outlined.svg?react";
 
 function FlashMessages({ fms = [], setfms } = {}) {
-  function rmStales() {
-    const now = Date.now();
-    const remainder = [];
-    for (let i = 0; i < fms.length; i++) {
-      if (now > fms[i].timeout) continue;
-      remainder.push(fms[i]);
-    }
-    if (remainder.length !== fms.length) setfms(remainder);
-  }
+  const intervalRef = React.useRef();
 
   React.useEffect(() => {
-    const e = window.setInterval(rmStales, [1000]);
-    return () => window.clearInterval(e);
+    if (!fms.length) {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
+      return;
+    }
+    intervalRef.current ??= window.setInterval(() => {
+      const now = Date.now();
+      const remainder = [];
+      for (let i = 0; i < fms.length; i++) {
+        now < fms[i].timeout && remainder.push(fms[i]);
+      }
+      remainder.length !== fms.length && setfms(remainder);
+    }, [1000]);
+
+    return () => {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    };
   }, [fms, setfms]);
 
   return (
@@ -114,6 +122,7 @@ const StandardFm = styled.div`
   gap: 30px;
 
   .msg {
+    color: white;
     font-size: var(--tx-md);
     word-spacing: 2px;
     font-weight: 600;

@@ -1,4 +1,4 @@
-function PageMerge() {
+async function Component() {
   return <div>page merge</div>;
 }
 // import { useContextApp } from "../../contexts/ContextApp.jsx";
@@ -30,4 +30,4 @@ function PageMerge() {
 //   );
 // }
 
-export { PageMerge };
+export { Component };

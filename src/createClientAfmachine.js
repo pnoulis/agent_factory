@@ -50,7 +50,7 @@ async function createClientAfmachine() {
     );
 
     const afm = new Afmachine(adminScreen, rpiReader);
-    return afm;
+    return Promise.resolve(afm);
   } catch (err) {
     debug(err);
   }

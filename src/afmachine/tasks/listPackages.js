@@ -18,14 +18,14 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.listPackages();
+    ctx.raw = await ctx.afm.adminScreen.listPackages();
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.packages = ctx.raw.packages.map((pkg) =>
-      normalizePackage(pkg, { state: "registered" }),
+      normalizePackage(pkg, { state: "registered", stage2: false, }),
     );
     return next();
   },

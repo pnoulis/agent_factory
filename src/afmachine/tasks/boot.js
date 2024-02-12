@@ -4,14 +4,24 @@ import { validateBackendRequest } from "../middleware/validateBackendRequest.js"
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 
+import { ENV } from "../../config.js";
+import * as CONSTANTS from "../../constants.js";
+import { Mqtt } from "../../Mqtt.js";
+import { MqttProxy } from "mqtt_proxy";
+import {
+  registrationTopics,
+  rpiReaderTopics,
+} from "../../../backend-topics.js";
+import { DeviceAdminScreen } from "../device/admin-screen/DeviceAdminScreen.js";
+import { DeviceRPIReader } from "../device/rpi-reader/DeviceRPIReader.js";
+
 new Task("boot", Command);
 
-function Command(device, opts) {
+function Command(opts) {
   const afm = this;
   const promise = Command.createCommand(
     afm,
     {
-      args: { device },
       opts,
     },
     (cmd) => afm.runCommand(cmd),
@@ -21,6 +31,47 @@ function Command(device, opts) {
 
 Command.middleware = [
   async (ctx, next) => {
+    const clientMqtt = await Mqtt.connectAsync(ENV.AFADMIN_SERVER_URL);
+
+    const adminScreen = new DeviceAdminScreen(
+      {
+        id: CONSTANTS.DEVICE_IDS.adminScreen,
+        type: CONSTANTS.DEVICE_TYPES.adminScreen,
+        room: CONSTANTS.ROOM_TYPES.admin1,
+      },
+      new MqttProxy({
+        server: clientMqtt,
+        registry: {
+          routes: Object.values(registrationTopics),
+          strict: true,
+          params: {
+            deviceId: CONSTANTS.DEVICE_IDS.adminScreen,
+          },
+        },
+      }),
+    );
+
+    const rpiReader = new DeviceRPIReader(
+      {
+        id: CONSTANTS.DEVICE_IDS.rpiReader,
+        type: CONSTANTS.DEVICE_TYPES.rpiReader,
+        room: CONSTANTS.ROOM_TYPES.admin1,
+      },
+      new MqttProxy({
+        server: clientMqtt,
+        registry: {
+          routes: Object.values(rpiReaderTopics),
+          strict: true,
+          params: {
+            deviceId: CONSTANTS.DEVICE_IDS.rpiReader,
+          },
+        },
+      }),
+    );
+
+    ctx.afm.adminScreen = adminScreen;
+    ctx.afm.rpiReader = rpiReader;
+    ctx.args.device = ctx.afm.adminScreen;
     ctx.req = {
       timestamp: ctx.t_start,
       deviceId: ctx.args.device.id,
@@ -42,13 +93,13 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = `Failed to boot Device`;
+  cmd.msg = `Failed to start Agent Factory`;
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = `Successfully booted Device`;
+  cmd.msg = `Successfully started Agent Factory`;
   cmd.resolve(cmd.res);
 };
 

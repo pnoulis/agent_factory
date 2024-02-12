@@ -1,10 +1,51 @@
 import * as React from "react";
-import { Outlet } from "react-router-dom";
+import { FlashMessages } from "#components/flash-messages/FlashMessages.jsx";
+import { Outlet, useLoaderData, Await } from "react-router-dom";
+import { Authorize } from "#components/Authorize.jsx";
+import { AwaitTask } from "#components/AwaitTask.jsx";
+import { Afmachine } from "./afmachine/Afmachine.js";
+import { useTask } from "./hooks/useTask.jsx";
+import "./debug.js";
+
+globalThis.afm = new Afmachine();
 
 function App() {
+  const [fms, setfms] = React.useState([]);
+  const { boot, state } = useTask(afm.boot);
+
+  function addFm(cmd) {
+    setfms(
+      fms.concat({ msg: cmd.msg, type: "info", timeout: Date.now() + 5000 }),
+    );
+  }
+
+  React.useEffect(() => {
+    afm.boot().then((res) => {
+      debug(res, "response");
+    });
+
+    afm.on("cmdend", addFm);
+    return () => {
+      afm.removeListener("cmdend", addFm);
+    };
+  }, []);
+
   return (
     <div>
-      <Outlet />
+      <button onClick={() => addFm({ msg: "yolo" })}> add fm</button>
+      <AwaitTask task={boot} state={state}>
+        {(data) => {
+          debug(data, "data");
+          return (
+            <Authorize as="cashier">
+              <div>
+                <Outlet />
+              </div>
+            </Authorize>
+          );
+        }}
+      </AwaitTask>
+      <FlashMessages fms={fms} setfms={setfms} />
     </div>
   );
 }

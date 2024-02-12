@@ -41,7 +41,6 @@ class Task extends createEventful() {
     cmd.raw ??= {};
     cmd.opts ??= {};
     cmd.args ??= {};
-    cmd.tmp ??= {};
     cmd.req ??= {};
     cmd.res ??= {};
     cmd.errs ??= [];
@@ -56,7 +55,7 @@ class Task extends createEventful() {
     promise.cmd = cmd;
     cmd.promise = promise;
 
-    setImmediate(() => {
+    setTimeout(() => {
       let pretask = [...afm.events.precmd, ...cmd.events.pretask].map(
         (fn) => fn.listener,
       );
@@ -137,7 +136,7 @@ class Task extends createEventful() {
       };
 
       cb(cmd);
-    });
+    }, 0);
 
     return promise;
   }
