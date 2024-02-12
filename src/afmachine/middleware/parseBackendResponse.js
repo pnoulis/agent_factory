@@ -12,8 +12,8 @@ function parseBackendResponse(ctx, next) {
       }),
     );
   } else {
-    throw globalThis.createError(({ EUNKNOWN }) =>
-      EUNKNOWN({
+    throw globalThis.createError(({ EGENERIC }) =>
+      EGENERIC({
         msg: "NOK Backend API response",
         response: ctx.raw,
       }),

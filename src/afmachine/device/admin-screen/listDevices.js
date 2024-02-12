@@ -1,5 +1,5 @@
 function listDevices({ timestamp = Date.now() } = {}) {
-  return this.publish("list/devices", { timestamp });
+  return this.mqtt.publish("list/devices", { timestamp });
 }
 
 export { listDevices };

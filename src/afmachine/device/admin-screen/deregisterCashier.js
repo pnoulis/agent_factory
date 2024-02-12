@@ -1,5 +1,5 @@
 function deregisterCashier({ timestamp = Date.now(), username, userId } = {}) {
-  return this.publish("cashier/deregister", {
+  return this.mqtt.publish("cashier/deregister", {
     timestamp,
     username,
     userId,

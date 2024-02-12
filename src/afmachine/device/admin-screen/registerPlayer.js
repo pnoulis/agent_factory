@@ -6,7 +6,7 @@ function registerPlayer({
   email = "",
   password = "",
 } = {}) {
-  return this.publish("player/register", {
+  return this.mqtt.publish("player/register", {
     timestamp,
     username,
     surname,

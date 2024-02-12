@@ -3,7 +3,7 @@ function registerWristband({
   username,
   wristbandNumber,
 } = {}) {
-  return this.publish("wristband/register", {
+  return this.mqtt.publish("wristband/register", {
     timestamp,
     username,
     wristbandNumber,

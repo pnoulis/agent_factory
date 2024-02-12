@@ -4,7 +4,9 @@ function validateBackendResponse(ctx, next) {
   const schema = ctx.route.schema;
 
   if (!isObject(ctx.route.schema)) {
-    throw new Error(`Missing route schema: ${ctx.taskname}`);
+    throw globalThis.createError(({ EGENERIC }) =>
+      EGENERIC({ msg: `Missing route schema: ${ctx.taskName}` }),
+    );
   } else if (!isFunction(schema.res) || schema.res(ctx.raw)) {
     return next();
   }

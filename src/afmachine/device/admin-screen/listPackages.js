@@ -1,5 +1,5 @@
 function listPackages() {
-  return this.publish("list/packages");
+  return this.mqtt.publish("list/packages");
 }
 
 export { listPackages };

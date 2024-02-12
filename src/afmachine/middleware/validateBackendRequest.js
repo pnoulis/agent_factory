@@ -1,11 +1,12 @@
 import { isObject, isFunction } from "js_utils/misc";
-import { createValidationErr } from "../../errors.js";
 
 function validateBackendRequest(ctx, next) {
   const schema = ctx.route.schema;
 
   if (!isObject(ctx.route.schema)) {
-    throw new Error(`Missing route schema: ${ctx.taskname}`);
+    throw globalThis.createError(({ EGENERIC }) =>
+      EGENERIC({ msg: `Missing route schema: ${ctx.taskName}` }),
+    );
   } else if (!isFunction(schema.req) || schema.req(ctx.req)) {
     return next();
   }
@@ -30,11 +31,13 @@ function validateBackendRequest(ctx, next) {
     return { key: propname, value: ctx.req[propname], msg };
   });
 
-  throw createValidationErr({
-    validationErrors,
-    severity: "fatal",
-    msg: "Invalid API request",
-  });
+  throw globalThis.createError(({ EVALIDATION }) =>
+    EVALIDATION({
+      msg: "Invalid Backend API request",
+      severity: "fatal",
+      validationErrors,
+    }),
+  );
 }
 
 export { validateBackendRequest };

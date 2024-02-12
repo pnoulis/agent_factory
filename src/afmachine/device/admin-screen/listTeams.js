@@ -1,5 +1,5 @@
 function listTeams() {
-  return this.publish("list/teams");
+  return this.mqtt.publish("list/teams");
 }
 
 export { listTeams };

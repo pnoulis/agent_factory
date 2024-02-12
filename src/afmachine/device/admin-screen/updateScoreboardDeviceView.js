@@ -3,7 +3,7 @@ function updateScoreboardDeviceView({
   deviceId,
   status,
 } = {}) {
-  return this.publish("device/scoreboard/view/update", {
+  return this.mqtt.publish("device/scoreboard/view/update", {
     timestamp,
     deviceId,
     status,

@@ -1,5 +1,5 @@
 function listPlayers({ timestamp = Date.now() } = {}) {
-  return this.publish("list/players", { timestamp });
+  return this.mqtt.publish("list/players", { timestamp });
 }
 
 export { listPlayers };

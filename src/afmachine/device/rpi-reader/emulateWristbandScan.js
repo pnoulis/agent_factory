@@ -1,5 +1,5 @@
 function emulateWristbandScan({ id, color }) {
-  return this.publish("read", {
+  return this.mqtt.publish("read", {
     timestamp: Date.now(),
     wristbandNumber: id,
     wristbandColor: color,

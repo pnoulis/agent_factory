@@ -13,12 +13,12 @@ import { DeviceRPIReader } from "./device/rpi-reader/DeviceRPIReader.js";
 import { Cashier } from "./cashier/Cashier.js";
 
 // Synthetic Player tasks
-import { pairWristband } from "./synthetic-tasks/pairWristband.js";
+// import { pairWristband } from "./synthetic-tasks/pairWristband.js";
 
 // Synthetic Team tasks
 
 // Player tasks
-import { registerPlayer } from "./tasks/registerPlayer.js";
+// import { registerPlayer } from "./tasks/registerPlayer.js";
 import { searchPlayer } from "./tasks/searchPlayer.js";
 
 // Wristband tasks
@@ -44,6 +44,7 @@ import { startSession } from "./tasks/startSession.js";
 import { stopSession } from "./tasks/stopSession.js";
 
 // Device tasks
+import { boot } from './tasks/boot.js';
 import { bootDevice } from "./tasks/bootDevice.js";
 import { shutdownDevice } from "./tasks/shutdownDevice.js";
 import { restartDevice } from "./tasks/restartDevice.js";
@@ -70,8 +71,10 @@ class Afmachine extends createEventful([
   "cmdend",
   "idle",
 ]) {
-  constructor() {
+  constructor(adminScreen, rpiReader) {
     super();
+    this.adminScreen = adminScreen;
+    this.rpiReader = rpiReader;
     this.commandQueue = [];
     this.players = new Map();
     this.wristbands = new Map();
@@ -185,10 +188,10 @@ Afmachine.prototype.onCmdEnd = function (cmd) {
 
 Object.assign(Afmachine.prototype, {
   // Synthetic Player tasks
-  pairWristband,
+  // pairWristband,
 
   // Player tasks
-  registerPlayer,
+  // registerPlayer,
   searchPlayer,
 
   // Wristband tasks
@@ -214,6 +217,7 @@ Object.assign(Afmachine.prototype, {
   loginCashier,
 
   // Device tasks
+  boot,
   bootDevice,
   shutdownDevice,
   restartDevice,

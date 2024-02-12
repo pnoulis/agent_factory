@@ -1,5 +1,5 @@
 function addTeamPackage({ timestamp = Date.now(), teamName, name } = {}) {
-  return this.publish("team/package/add", {
+  return this.mqtt.publish("team/package/add", {
     timestamp,
     teamName,
     name,

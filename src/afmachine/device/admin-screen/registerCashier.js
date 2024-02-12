@@ -4,7 +4,7 @@ function registerCashier({
   password = "",
   role = "",
 } = {}) {
-  return this.publish("/cashier/register", {
+  return this.mqtt.publish("/cashier/register", {
     username,
     email,
     password,

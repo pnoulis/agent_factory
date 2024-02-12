@@ -3,7 +3,7 @@ function removeTeamPackage({
   teamName,
   packageId,
 } = {}) {
-  return this.publish("team/package/remove", {
+  return this.mqtt.publish("team/package/remove", {
     timestamp,
     teamName,
     packageId,

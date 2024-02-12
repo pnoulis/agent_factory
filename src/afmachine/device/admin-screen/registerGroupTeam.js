@@ -3,7 +3,7 @@ function registerGroupTeam({
   teamName,
   groupPlayers,
 } = {}) {
-  return this.publish("group/register", { timestamp, teamName, groupPlayers });
+  return this.mqtt.publish("group/register", { timestamp, teamName, groupPlayers });
 }
 
 export { registerGroupTeam };

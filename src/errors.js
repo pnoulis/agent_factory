@@ -32,6 +32,7 @@ const ERR_CODES = {
   EPLAYER_STATE_IMPOSSIBLE: 11,
   EPACKAGE_STATE: 12,
   EUNKNOWN: 13,
+  EGENERIC: 14,
 };
 
 function _createError(msg, defaults) {
@@ -90,59 +91,13 @@ const createError = (cb) =>
           msg: "Validation Error",
           errCode: ERR_CODES.EVALIDATION,
         }),
-      EUNKNOWN: (msg) =>
+      EGENERIC: (msg) =>
         _createError(msg, {
           severity: "error",
-          msg: "Unknown Error",
-          errCode: ERR_CODES.EUNKNOWN,
+          msg: "Generic Error",
+          errCode: ERR_CODES.EGENERIC,
         }),
     }))(),
   );
 
 globalThis.createError = createError;
-
-// function createUnexpectedErr({ ...props } = {}) {
-//   return createError(
-//     props.severity || "error",
-//     props.msg || "Unexpected error",
-//     props.errCode ?? ERR_CODES.EUNEXPECTED,
-//     { ...props },
-//   );
-// }
-
-// function createValidationErr({ validationErrors, ...props } = {}) {
-//   return createError(
-//     props.severity || "warn",
-//     props.msg || "Validation error",
-//     props.errCode ?? ERR_CODES.EINVALID,
-//     { validationErrors, ...props },
-//   );
-// }
-
-// function createCacheErr({ cache, key, ...props } = {}) {
-//   return createError(
-//     props.severity || "error",
-//     props.msg || `Missing key: '${key}' from cache: '${cache}'`,
-//     props.errCode ?? ERR_CODES.ECACHE,
-//     { cache, key, ...props },
-//   );
-// }
-
-// function createStateErr({ state, ...props } = {}) {
-//   return createError(
-//     props.severity || "warn",
-//     props.msg || "State error",
-//     props.errCode ?? ERR_CODES.ESTATE,
-//     { state, ...props },
-//   );
-// }
-
-export {
-  // createError,
-  // createUnexpectedErr,
-  // createValidationErr,
-  // createStateErr,
-  // createCacheErr,
-  // ERR_CODES,
-  createError,
-};

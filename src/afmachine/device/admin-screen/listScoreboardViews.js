@@ -1,5 +1,5 @@
 function listScoreboardViews({ timestamp = Date.now() } = {}) {
-  return this.publish("list/devices/scoreboard/views", { timestamp });
+  return this.mqtt.publish("list/devices/scoreboard/views", { timestamp });
 }
 
 export { listScoreboardViews };

@@ -3,7 +3,7 @@ function updateDevice({
   deviceId,
   devicesAction,
 } = {}) {
-  return this.publish("devices/update", {
+  return this.mqtt.publish("devices/update", {
     timestamp,
     devicesAction,
     deviceId,

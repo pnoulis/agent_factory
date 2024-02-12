@@ -3,7 +3,7 @@ function deregisterWristband({
   username,
   wristbandNumber,
 } = {}) {
-  return this.publish("wristband/deregister", {
+  return this.mqtt.publish("wristband/deregister", {
     timestamp,
     username,
     wristbandNumber,

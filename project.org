@@ -3206,6 +3206,14 @@ Events on the other hand are not part any sequence. As such their handlers will
 be invoked regardless of the sequnce itself.
 ** Invoking tasks (creating commands)
 ** Error handling
+* Afmachine initialization
+instantiate an mqtt client
+instantiate an mqtt proxy
+set deviceId parameter
+boot the device
+get the session from the database.
+try and see if the session is stored localhost.
+if not there is an error
 * Conventions
 ** Command inputs and outputs
 #+begin_src js

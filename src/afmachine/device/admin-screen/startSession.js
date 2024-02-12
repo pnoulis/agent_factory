@@ -1,5 +1,5 @@
 function startSession({ jwt } = {}) {
-  return this.publish("session/start", { jwt });
+  return this.mqtt.publish("session/start", { jwt });
 }
 
 export { startSession };
