@@ -84,9 +84,17 @@ all: build
 # Build
 ##################################################
 build: buildclean dotenv | $(buildir_abs)
+	$(loadenv)
+	$(vite) build
 
 buildclean: | $(buildir_abs)
 	rm -rf $(buildir)/*
+
+##################################################
+# Deploy
+##################################################
+deploy:
+	rsync -r $(buildir) /mnt/c/laragon/www
 
 ##################################################
 # Start
