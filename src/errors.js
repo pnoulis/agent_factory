@@ -101,3 +101,4 @@ const createError = (cb) =>
   );
 
 globalThis.createError = createError;
+globalThis.ERR_CODES = ERR_CODES;

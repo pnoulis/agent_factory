@@ -32,7 +32,15 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.loginCashier(ctx.req);
+    throw globalThis.createError(({ EVALIDATION }) =>
+      EVALIDATION({
+        validationErrors: {
+          username:
+            "toolong toheunsoe uhosetuh oesuthoe ustoheu stoeuh soeuths",
+        },
+      }),
+    );
+    // ctx.raw = await ctx.afm.backend.loginCashier(ctx.req);
     return next();
   },
   parseBackendResponse,

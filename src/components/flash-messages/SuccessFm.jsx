@@ -8,7 +8,7 @@ function SuccessFm({ message }) {
       <Svg className="icon">
         <IconSuccess />
       </Svg>
-      <p classname="msg">{message}</p>
+      <p className="msg">{message}</p>
     </StandardFm>
   );
 }

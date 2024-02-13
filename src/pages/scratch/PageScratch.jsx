@@ -1,5 +1,25 @@
+import { Submit } from "#components/forms/Submit.jsx";
+import { TextInput } from "#components/forms/TextInput.jsx";
+import { Form } from "#components/forms/Form.jsx";
+
 function PageScratch() {
-  return <div>page scratch</div>;
+  return (
+    <>
+      <h1>page scratch</h1>
+      <Form
+        id="loginCashier"
+        fields={{ username: "", password: "" }}
+        onSubmit={(fields, setForm) => {
+          setForm("setErrors", { username: "toolong" });
+          setForm("setSubmit", false);
+        }}
+      >
+        <TextInput name="username" />
+        <TextInput name="password" type="password" />
+        <Submit>login</Submit>
+      </Form>
+    </>
+  );
 }
 
 export { PageScratch };

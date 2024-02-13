@@ -18,7 +18,11 @@ afm.boot.on("fulfilled", () => {
 });
 
 afm.on("cmdend", (cmd) => {
-  fmagent.info({ message: cmd.msg });
+  if (cmd.res.ok) {
+    fmagent.info({ message: cmd.msg });
+  } else {
+    fmagent.warn({ message: cmd.msg });
+  }
 });
 logafm(afm);
 
@@ -104,13 +108,13 @@ function App() {
         }}
       >
         <AwaitTask {...currentTask}>
-          <Authorize as="cashier">
+          <Authorize>
             {(authorized) =>
               authorized ? (
                 <Site language={language} onLanguageChange={setLanguage} t={t}>
                   <Outlet />
                 </Site>
-              ) : location === "/login" ? (
+              ) : location.pathname === "/login" ? (
                 <Outlet />
               ) : (
                 <Navigate to={login.path} />

@@ -8,7 +8,7 @@ function ErrorFm({ message }) {
       <Svg className="icon">
         <IconError />
       </Svg>
-      <p classname="msg">{message}</p>
+      <p className="msg">{message}</p>
     </StandardFm>
   );
 }

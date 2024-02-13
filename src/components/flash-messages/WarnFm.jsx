@@ -8,7 +8,7 @@ function WarnFm({ message }) {
       <Svg className="icon">
         <IconWarn />
       </Svg>
-      <p classname="msg">{message}</p>
+      <p className="msg">{message}</p>
     </StandardFm>
   );
 }

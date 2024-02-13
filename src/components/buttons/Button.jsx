@@ -1,13 +1,9 @@
-// ------------------------------ std libs ------------------------------- //
-// ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 import styled from "styled-components";
-// ------------------------------ own libs ------------------------------- //
-// ------------------------------ project  ------------------------------- //
 
 function Button({ type, disabled, form, children, className, ...props }) {
   return (
-    <StyleButton
+    <button
       className={className}
       type={type}
       disabled={disabled}
@@ -15,9 +11,8 @@ function Button({ type, disabled, form, children, className, ...props }) {
       {...props}
     >
       {children}
-    </StyleButton>
+    </button>
   );
 }
 
-const StyleButton = styled("button")``;
 export { Button };
