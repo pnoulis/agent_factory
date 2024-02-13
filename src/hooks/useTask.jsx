@@ -1,12 +1,13 @@
 import * as React from "react";
 
-function useTask(task, { run = false, delay = 2000 } = {}) {
+function useTask(task, { run = false, delay = 2000, propagate = false } = {}) {
   const [state, setState] = React.useState("");
   const cmdRef = React.useRef(task);
 
   React.useEffect(() => {
     const followState = (nstate, ostate, cmd) => {
       cmdRef.current = cmd;
+      cmd.propagate = propagate;
       setState(nstate);
       if (nstate === "rejected") {
         window.setTimeout(() => setState(""), delay);
@@ -18,8 +19,10 @@ function useTask(task, { run = false, delay = 2000 } = {}) {
     task.on("stateChange", followState);
 
     if (run && !(cmdRef.current instanceof Promise)) {
+      debug(cmdRef.current, "run");
       cmdRef.current = task();
     }
+
     return () => {
       task.removeListener("stateChange", followState);
     };

@@ -147,6 +147,8 @@ Afmachine.prototype.onCmdCreate = function (cmd) {
     stage: "create",
     state: cmd.state,
   });
+  debug(`Calling onCMdCreate`);
+  debug(this.events.cmdcreate);
   this.emit("cmdcreate", cmd);
 };
 Afmachine.prototype.onCmdQueue = function (cmd) {

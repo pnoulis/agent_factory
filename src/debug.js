@@ -1,21 +1,18 @@
 import { ENV } from "./config.js";
 import { isObject, isArray } from "js_utils/misc";
 
+debug(ENV);
 function trace(...args) {
   if (ENV.LOGLEVEL !== "trace") return;
   args.forEach((arg) => {
     console.log(arg);
   });
-  console.log();
-  console.log();
 }
 
 function debug(...args) {
   args.forEach((arg) => {
     console.log(arg);
   });
-  console.log();
-  console.log();
 }
 
 function inspectProtoChain(obj) {

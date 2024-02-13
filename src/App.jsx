@@ -8,32 +8,10 @@ import { Site } from "#components/site/Site.jsx";
 import { login } from "/src/links.jsx";
 import { ContextApp } from "./contexts/ContextApp.jsx";
 import { translate } from "/src/translate.js";
+import { removeIndex } from "/src/misc/misc.js";
 
 globalThis.afm = new Afmachine();
 let booted = false;
-
-const tasks = {
-  boot: {
-    wait: true,
-    manage: true,
-    run: !booted,
-    task: afm.boot,
-    state: booted && "render",
-    delay: 0,
-  },
-  logout: {
-    wait: false,
-    manage: false,
-    run: false,
-    delay: 1000,
-  },
-  login: {
-    wait: false,
-    manage: false,
-    run: false,
-    delay: 1000,
-  },
-};
 
 afm.boot.on("fulfilled", () => {
   booted = true;
@@ -42,17 +20,90 @@ afm.boot.on("fulfilled", () => {
 afm.on("cmdend", (cmd) => {
   fmagent.info({ message: cmd.msg });
 });
+logafm(afm);
+
+const { registerListener, deregisterListener } = (() => {
+  const listeners = {};
+  return {
+    registerListener(event, name, listener) {
+      const registered = listeners[event]?.find((l) => l.name === name);
+      if (registered) {
+        trace(`'${name}' listener is already registered`);
+        return;
+      }
+      listeners[event] ??= [];
+      listeners[event].push({ name, listener });
+      trace(`Registering listener: '${name}'`);
+      globalThis.afm.on(event, listener);
+    },
+    deregisterListener(event, name) {
+      if (arguments.length < 2) {
+        trace("Deregistering all listeners");
+        for (const [k, v] of Object.entries(listeners)) {
+          for (let i = 0; i < v.length; i++) {
+            trace(`Deregistering listener: '${v[i].name}'`);
+            globalThis.afm.removeListener(k, v[i].listener);
+          }
+          listeners[k] = [];
+        }
+      } else {
+        const listener = listeners[event]?.findIndex((l) => l.name === name);
+        if (listener < 0) {
+          throw new Error(`Could not find listener: '${name}'`);
+        }
+        trace(`Deregistering listener: '${name}'`);
+        globalThis.afm.removeListener(event, listener);
+        listeners[event] = removeIndex(listeners[event], listener);
+      }
+    },
+  };
+})();
 
 function App() {
   const location = useLocation();
   const [language, setLanguage] = React.useState(navigator.language);
-  const [currentTask, setCurrentTask] = React.useState("boot");
+  const [currentTask, setCurrentTask] = React.useState({
+    wait: true,
+    manage: true,
+    run: !booted,
+    task: globalThis.afm.boot,
+    state: booted && "render",
+    delay: 500,
+  });
   const t = React.useMemo(() => translate.bind(null, language), [language]);
+  React.useEffect(() => {
+    registerListener("cmdcreate", "propagate", (cmd) => {
+      cmd.propagate = true;
+    });
+    registerListener("cmdcreate", "renderCmdState", (cmd) => {
+      trace(`Propagate ${cmd.propagate} cmd: ${cmd.taskname}`);
+      if (cmd.propagate && currentTask !== cmd.taskname) {
+        trace("Will render cmd state");
+        setCurrentTask({
+          wait: false,
+          manage: true,
+          run: false,
+          task: globalThis.afm[cmd.taskname],
+          delay: 500,
+        });
+      }
+    });
+    return () => deregisterListener();
+  }, []);
 
   return (
     <>
-      <ContextApp ctx={{ t, language, setLanguage, location }}>
-        <AwaitTask {...tasks[currentTask]}>
+      <ContextApp
+        ctx={{
+          t,
+          language,
+          setLanguage,
+          location,
+          registerListener,
+          deregisterListener,
+        }}
+      >
+        <AwaitTask {...currentTask}>
           <Authorize as="cashier">
             {(authorized) =>
               authorized ? (

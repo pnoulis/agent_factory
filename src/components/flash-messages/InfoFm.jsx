@@ -1,4 +1,4 @@
-import { StandardFm } from "./StandardFm.jsx~";
+import { StandardFm } from "./StandardFm.jsx";
 import { Svg } from "react_utils/svgs";
 import IconInfo from "/assets/icons/semantic-info-outlined.svg?react";
 

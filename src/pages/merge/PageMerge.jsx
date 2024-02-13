@@ -1,5 +1,15 @@
+import * as React from "react";
+import { delay } from "js_utils/misc";
+
 function Component() {
-  return <div>page merge</div>;
+  React.useEffect(() => {
+    afm.listPackages();
+  }, []);
+  return (
+    <>
+      <h1>page merge</h1>
+    </>
+  );
 }
 // import { useContextApp } from "../../contexts/ContextApp.jsx";
 // import { RegistrationQueue } from "../../components/registration-queue/RegistrationQueue.jsx";

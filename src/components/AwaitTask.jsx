@@ -17,40 +17,43 @@ function AwaitTask({
     ? useTask(managedTask, options)
     : [managedTask, managedState];
 
-  switch (state || managedState) {
-    case "pending":
-      return (
-        <Wrapper>
-          <Pending />
-        </Wrapper>
-      );
-    case "rejected":
-      return (
-        <Wrapper>
-          <Fail />
-        </Wrapper>
-      );
-    case "fulfilled":
-      return (
-        <Wrapper>
-          <Success />
-        </Wrapper>
-      );
-    case "render":
-      return children
-        ? React.isValidElement(children)
-          ? children
-          : children(task)
-        : null;
-    default:
-      return children
-        ? wait
-          ? null
-          : React.isValidElement(children)
-            ? children
-            : children(task)
-        : null;
+  if (wait) {
+    switch (state || managedState) {
+      case "pending":
+        return (
+          <Wrapper>
+            <Pending />
+          </Wrapper>
+        );
+      case "rejected":
+        return (
+          <Wrapper>
+            <Fail />
+          </Wrapper>
+        );
+      case "fulfilled":
+        return (
+          <Wrapper>
+            <Success />
+          </Wrapper>
+        );
+      case "render":
+        return React.isValidElement(children) ? children : children(task);
+      default:
+        return null;
+    }
   }
+
+  return (
+    <>
+      {React.isValidElement(children) ? children : children(task)}
+      <Wrapper>
+        {(state === "pending" && <Pending />) ||
+          (state === "fulfilled" && <Success />) ||
+          (state === "rejected" && <Fail />)}
+      </Wrapper>
+    </>
+  );
 }
 
 const Wrapper = styled("div")`

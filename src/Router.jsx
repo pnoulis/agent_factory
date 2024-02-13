@@ -1,9 +1,9 @@
 import * as React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ENV } from "./config.js";
-import Pages from "./pages/index.js";
 import { App } from "./App.jsx";
 import * as links from "./links.jsx";
+import { PageScratch } from "./pages/scratch/PageScratch.jsx";
 
 function Router() {
   return <RouterProvider router={router} />;
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/scratch",
-    element: <Pages.Scratch />,
+    element: <PageScratch />,
   },
   { basename: ENV.BASENAME },
 ]);

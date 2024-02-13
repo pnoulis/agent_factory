@@ -110,6 +110,16 @@ function randomCashier() {
   };
 }
 
+function removeIndex(arr, index) {
+  if (!index) {
+    return arr.slice(1);
+  } else if (index === arr.length - 1) {
+    return arr.slice(0, -1);
+  } else {
+    return arr.slice(0, index).concat(arr.slice(index + 1));
+  }
+}
+
 export {
   mergec,
   inspectProtoChain,
@@ -121,4 +131,5 @@ export {
   t_daytomls,
   t_timetolocal,
   randomCashier,
+  removeIndex,
 };
