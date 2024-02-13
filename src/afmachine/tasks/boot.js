@@ -18,7 +18,7 @@ import { DeviceRPIReader } from "../device/rpi-reader/DeviceRPIReader.js";
 new Task("boot", Command);
 
 function Command(opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {

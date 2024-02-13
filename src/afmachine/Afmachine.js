@@ -1,3 +1,5 @@
+import "../debug.js";
+import "../errors.js";
 import { delay } from "js_utils/misc";
 import { createEventful } from "../Eventful.js";
 import { DEVICE_TYPES } from "../constants.js";
@@ -44,7 +46,7 @@ import { startSession } from "./tasks/startSession.js";
 import { stopSession } from "./tasks/stopSession.js";
 
 // Device tasks
-import { boot } from './tasks/boot.js';
+import { boot } from "./tasks/boot.js";
 import { bootDevice } from "./tasks/bootDevice.js";
 import { shutdownDevice } from "./tasks/shutdownDevice.js";
 import { restartDevice } from "./tasks/restartDevice.js";
@@ -83,6 +85,7 @@ class Afmachine extends createEventful([
     this.cashiers = new Map();
     this.commands = 0;
     this.history = [];
+    this.boot.afm = this;
   }
 }
 Afmachine.prototype.enqueueCommand = async function (cmd) {

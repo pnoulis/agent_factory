@@ -1,4 +1,4 @@
-async function Component() {
+function Component() {
   return <div>page merge</div>;
 }
 // import { useContextApp } from "../../contexts/ContextApp.jsx";

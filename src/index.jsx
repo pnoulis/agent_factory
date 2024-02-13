@@ -1,3 +1,5 @@
+import "./debug.js";
+import "./errors.js";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { Router } from "./Router.jsx";

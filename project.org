@@ -3409,3 +3409,8 @@ state Error is thrown.
 
 So the 2nd stage is responsible for making sure that a misalignment never
 occurs.
+
+* React
+Rendering children.
+
+A child can be either a React component or a Function.
