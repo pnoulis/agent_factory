@@ -42,19 +42,25 @@ function Site({ children, language, onLanguageChange, onLogout, t }) {
           >
             {t("registration")}
           </SidebarNavLink>
-          <SidebarNavLink to={links.teams.path}>
-            {t(links.teams.label)}
+          <SidebarNavLink to={links.registerTeam.path}>
+            {t(links.registerTeam.label)}
           </SidebarNavLink>
           <SidebarNavLink to={links.grouparty.path}>
             {t(links.grouparty.label)}
           </SidebarNavLink>
-          <SidebarNavLink to={links.liveview.path}>
-            {t(links.liveview.label)}
+          <SidebarNavLink to={links.liveView.path}>
+            {t(links.liveView.label)}
           </SidebarNavLink>
           <SidebarNavLink to={links.scoreboard.path}>
             {t(links.scoreboard.label)}
           </SidebarNavLink>
-          <SidebarNavLink to={links.administration.path}>
+          <SidebarNavLink
+            to={links.administration.path}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(links.cashoutCashier.path);
+            }}
+          >
             {t(links.administration.label)}
           </SidebarNavLink>
         </SidebarNavigation>

@@ -1,8 +1,11 @@
+import { Center } from "#components/Center.jsx";
+import { FormRegisterPlayer } from "#components/forms/FormRegisterPlayer.jsx";
+
 function Component() {
   return (
-    <>
-      <h1>page register player</h1>
-    </>
+    <Center>
+      <FormRegisterPlayer />
+    </Center>
   );
 }
 

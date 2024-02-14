@@ -4,15 +4,10 @@
 const home = {
   path: "/",
   label: "home",
-  module: "/src/pages/home/PageHome.jsx",
 };
-const liveview = {
-  path: "/liveview",
+const liveView = {
+  path: "/live-view",
   label: "live view",
-};
-const scoreboard = {
-  path: "/scoreboard",
-  label: "scoreboard",
 };
 const administration = {
   path: "/administration",
@@ -38,6 +33,18 @@ const pairWristband = {
 };
 
 //////////////////////////////////////////////////
+// Scoreboard
+//////////////////////////////////////////////////
+const scoreboard = {
+  path: "/scoreboard",
+  label: "scoreboard",
+};
+const scoreboardTop10 = {
+  path: "/scoreboard/top10",
+  label: "top 10",
+};
+
+//////////////////////////////////////////////////
 // Wristbands
 //////////////////////////////////////////////////
 const wristbands = {
@@ -49,11 +56,11 @@ const wristbands = {
 // Teams
 //////////////////////////////////////////////////
 const teams = {
-  path: "/teams",
-  label: "merge",
+  path: "/live-view/teams",
+  label: "teams",
 };
 const registerTeam = {
-  path: "register",
+  path: "/team/register",
   label: "merge",
 };
 
@@ -64,43 +71,48 @@ const grouparty = {
   path: "/grouparty",
   label: "group party",
 };
-const registerGroupParty = {
-  path: "register",
-  label: "register group party",
-};
 
 //////////////////////////////////////////////////
 // Cashiers
 //////////////////////////////////////////////////
 const cashiers = {
-  path: "/cashiers",
-  label: "cashier",
+  path: "/administration/cashiers",
+  label: "cashiers",
 };
 const loginCashier = {
   path: "login",
   label: "login cashier",
-  module: "/src/pages/cashiers/PageLogin.jsx",
 };
 const registerCashier = {
-  path: "register",
+  path: "/administration/cashiers/register",
   label: "register cashier",
-  module: "/src/pages/cashiers/PageRegister.jsx",
+};
+const cashoutCashier = {
+  path: "/administration/cashiers/cashout",
+  label: "cashout cashier",
 };
 
 //////////////////////////////////////////////////
 // Devices
 //////////////////////////////////////////////////
 const devices = {
-  ptah: "/devices",
+  path: "/administration/devices",
   label: "devices",
+};
+const scoreboardDevices = {
+  path: "/administration/devices/scoreboard",
+  label: "scoreboard devices",
 };
 
 export {
   // Layout Pages
   home,
-  liveview,
-  scoreboard,
+  liveView,
   administration,
+
+  // Scoreboard
+  scoreboard,
+  scoreboardTop10,
 
   // Players
   players,
@@ -116,13 +128,14 @@ export {
 
   // Group Party
   grouparty,
-  registerGroupParty,
 
   // Cashiers
   cashiers,
   loginCashier,
   registerCashier,
+  cashoutCashier,
 
   // Devices
   devices,
+  scoreboardDevices,
 };
