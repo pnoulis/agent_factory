@@ -5,13 +5,27 @@ import styled from "styled-components";
 function Panel({ children }) {
   const [mounted, setMounted] = React.useState();
   const actionbarRef = React.useRef();
+  const nodesRef = React.useRef([]);
+
+  function handleMount(mounted) {
+    for (const node of nodesRef.current) {
+      node.style.display = "none";
+    }
+    nodesRef.current.push(mounted);
+  }
+
+  function handleUnmount(unmounted) {
+    nodesRef.current.pop();
+    for (const node of nodesRef.current) {
+      node.style.display = "initial";
+    }
+  }
 
   return (
-    <ContextPanel ctx={{ actionbarRef }}>
+    <ContextPanel ctx={{ actionbarRef, handleMount, handleUnmount }}>
       <Wrapper>
         <header
           ref={(node) => {
-            debug("ref calling");
             setMounted(!!node);
             actionbarRef.current = node;
           }}

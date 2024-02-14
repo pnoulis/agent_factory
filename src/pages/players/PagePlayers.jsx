@@ -13,7 +13,7 @@ function Component() {
   const ctx = useContextApp();
   return (
     <Panel>
-      <PanelActionbar id='page players'>
+      <PanelActionbar>
         <PanelNavbar>
           <PanelNavLink.Anchor end to={registerPlayer.path}>
             <PanelNavLink.Text>{t(registerPlayer.label)}</PanelNavLink.Text>
