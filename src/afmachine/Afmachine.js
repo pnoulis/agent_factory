@@ -1,5 +1,3 @@
-import "../debug.js";
-import "../errors.js";
 import { delay } from "js_utils/misc";
 import { createEventful } from "../Eventful.js";
 import { DEVICE_TYPES } from "../constants.js";
@@ -85,7 +83,10 @@ class Afmachine extends createEventful([
     this.cashiers = new Map();
     this.commands = 0;
     this.history = [];
+
     this.boot.afm = this;
+    this.registerCashier.afm = this;
+    this.loginCashier.afm = this;
   }
 }
 Afmachine.prototype.enqueueCommand = async function (cmd) {
@@ -147,8 +148,6 @@ Afmachine.prototype.onCmdCreate = function (cmd) {
     stage: "create",
     state: cmd.state,
   });
-  debug(`Calling onCMdCreate`);
-  debug(this.events.cmdcreate);
   this.emit("cmdcreate", cmd);
 };
 Afmachine.prototype.onCmdQueue = function (cmd) {

@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as links from "/src/links.jsx";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Header } from "./Header.jsx";
 import { WidgetDate } from "#components/widgets/WidgetDate.jsx";
@@ -13,6 +14,7 @@ import { SidebarNavLink } from "./SidebarNavLink.jsx";
 import { Main } from "./Main.jsx";
 
 function Site({ children, language, onLanguageChange, onLogout, t }) {
+  const navigate = useNavigate();
   return (
     <Div>
       <Header>
@@ -31,23 +33,29 @@ function Site({ children, language, onLanguageChange, onLogout, t }) {
       <Sidebar>
         <SidebarLogo />
         <SidebarNavigation>
-          <SidebarNavLink to={links.registration.path}>
-            {t(links.registration.label)}
+          <SidebarNavLink
+            to={links.players.path}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(links.registerPlayer.path);
+            }}
+          >
+            {t("registration")}
           </SidebarNavLink>
-          <SidebarNavLink to={links.merge.path}>
-            {t(links.merge.label)}
+          <SidebarNavLink to={links.teams.path}>
+            {t(links.teams.label)}
           </SidebarNavLink>
-          <SidebarNavLink to={links.groupParty.path}>
-            {t(links.groupParty.label)}
+          <SidebarNavLink to={links.grouparty.path}>
+            {t(links.grouparty.label)}
           </SidebarNavLink>
-          <SidebarNavLink to={links.liveView.path}>
-            {t(links.liveView.label)}
+          <SidebarNavLink to={links.liveview.path}>
+            {t(links.liveview.label)}
           </SidebarNavLink>
           <SidebarNavLink to={links.scoreboard.path}>
             {t(links.scoreboard.label)}
           </SidebarNavLink>
-          <SidebarNavLink to={links.admin.path}>
-            {t(links.admin.label)}
+          <SidebarNavLink to={links.administration.path}>
+            {t(links.administration.label)}
           </SidebarNavLink>
         </SidebarNavigation>
       </Sidebar>

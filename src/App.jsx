@@ -5,7 +5,7 @@ import { Authorize } from "#components/Authorize.jsx";
 import { AwaitTask } from "#components/AwaitTask.jsx";
 import { Afmachine } from "./afmachine/Afmachine.js";
 import { Site } from "#components/site/Site.jsx";
-import { login } from "/src/links.jsx";
+import { loginCashier } from "/src/links.jsx";
 import { ContextApp } from "./contexts/ContextApp.jsx";
 import { translate } from "/src/translate.js";
 import { removeIndex } from "/src/misc/misc.js";
@@ -74,7 +74,12 @@ function App() {
     state: booted && "render",
     delay: 500,
   });
-  const t = React.useMemo(() => translate.bind(null, language), [language]);
+
+  const t = React.useMemo(() => {
+    globalThis.t = translate.bind(null, language);
+    return globalThis.t;
+  }, [language]);
+
   React.useEffect(() => {
     registerListener("cmdcreate", "propagate", (cmd) => {
       cmd.propagate = true;
@@ -108,16 +113,24 @@ function App() {
         }}
       >
         <AwaitTask {...currentTask}>
-          <Authorize>
+          <Authorize as="cashier">
             {(authorized) =>
               authorized ? (
-                <Site language={language} onLanguageChange={setLanguage} t={t}>
+                location.pathname === loginCashier.path ? (
                   <Outlet />
-                </Site>
-              ) : location.pathname === "/login" ? (
+                ) : (
+                  <Site
+                    language={language}
+                    onLanguageChange={setLanguage}
+                    t={t}
+                  >
+                    <Outlet />
+                  </Site>
+                )
+              ) : location.pathname === loginCashier.path ? (
                 <Outlet />
               ) : (
-                <Navigate to={login.path} />
+                <Navigate to={loginCashier.path} />
               )
             }
           </Authorize>

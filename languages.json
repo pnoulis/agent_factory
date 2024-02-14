@@ -2,5 +2,9 @@
   "registration": {
     "en-US": "registration",
     "ar-SA": "hathatnh"
+  },
+  "register player": {
+    "en-US": "register player",
+    "ar-SA": "toehun"
   }
 }

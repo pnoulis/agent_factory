@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { isFunction } from "js_utils/misc";
-import { login } from "/src/links.jsx";
+import { loginCashier } from "/src/links.jsx";
 
 function Authorize({ as, level = "cashier", children }) {
   const user = as || "";
@@ -9,7 +9,7 @@ function Authorize({ as, level = "cashier", children }) {
   ) : user === level ? (
     children
   ) : (
-    <Navigate to={login.path} />
+    <Navigate to={loginCashier.path} />
   );
 }
 

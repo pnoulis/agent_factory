@@ -6,8 +6,8 @@ import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 
 import { ENV } from "../../config.js";
 import * as CONSTANTS from "../../constants.js";
-import { Mqtt } from "../../Mqtt.js";
-import { MqttProxy } from "mqtt_proxy";
+const { Mqtt } = await import("../../Mqtt.js");
+const { MqttProxy } = await import("mqtt_proxy");
 import {
   registrationTopics,
   rpiReaderTopics,
@@ -31,8 +31,8 @@ function Command(opts) {
 
 Command.middleware = [
   async (ctx, next) => {
-    const clientMqtt = await Mqtt.connectAsync(ENV.AFADMIN_SERVER_URL);
 
+    const clientMqtt = await Mqtt.connectAsync(ENV.AFADMIN_SERVER_URL);
     const adminScreen = new DeviceAdminScreen(
       {
         id: CONSTANTS.DEVICE_IDS.adminScreen,

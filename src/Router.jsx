@@ -19,13 +19,46 @@ const router = createBrowserRouter([
         lazy: async () => import("./pages/home/PageHome.jsx"),
       },
       {
-        path: "/merge",
-        lazy: async () => import("./pages/merge/PageMerge.jsx"),
+        path: links.players.path,
+        lazy: async () => import("./pages/players/PagePlayers.jsx"),
+        children: [
+          {
+            index: true,
+            lazy: async () => import("./pages/players/PageIndex.jsx"),
+          },
+          {
+            path: links.registerPlayer.path,
+            lazy: async () => import("./pages/players/PageRegister.jsx"),
+          },
+          {
+            path: links.pairWristband.path,
+            lazy: async () => import("./pages/players/PagePairWristband.jsx"),
+          },
+        ],
       },
-      {
-        path: "/login",
-        lazy: async () => import("./pages/cashier/PageLogin.jsx"),
-      },
+      // {
+      //   index: true,
+      //   path: links.home.path,
+      //   lazy: async () => import("./pages/home/PageHome.jsx"),
+      // },
+      // {
+      //   path: links.registerTeam.path,
+      //   lazy: async () => import("./pages/merge/PageMerge.jsx"),
+      // },
+      // {
+      //   path: links.loginCashier.path,
+      //   lazy: async () => import(links.loginCashier.module),
+      // },
+      // {
+      //   path: links.admin.path,
+      //   lazy: async () => import(links.admin.module),
+      //   children: [
+      //     {
+      //       path: links.registerCashier.path,
+      //       lazy: async () => import(links.registerCashier.module),
+      //     },
+      //   ],
+      // },
     ],
   },
   {

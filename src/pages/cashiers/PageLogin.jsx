@@ -15,7 +15,7 @@ function Component() {
           onSubmit={async (fields, setForm) => {
             try {
               const cashier = await afm.loginCashier(
-                { username: fields.username },
+                { username: "".concat(fields.username).toUpperCase() },
                 fields.password,
               );
             } catch (err) {

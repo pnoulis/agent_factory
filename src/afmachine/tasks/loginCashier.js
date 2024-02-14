@@ -32,21 +32,13 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    throw globalThis.createError(({ EVALIDATION }) =>
-      EVALIDATION({
-        validationErrors: {
-          username:
-            "toolong toheunsoe uhosetuh oesuthoe ustoheu stoeuh soeuths",
-        },
-      }),
-    );
-    // ctx.raw = await ctx.afm.backend.loginCashier(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.loginCashier(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    const { cashiers } = await ctx.afm.backend.listCashiers({
+    const { cashiers } = await ctx.afm.adminScreen.listCashiers({
       timestamp: ctx.t_start,
     });
     const thisCashier = cashiers.find(

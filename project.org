@@ -1,6 +1,8 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** TODO Register cashier page
+*** Register cashier task
 ** TODO Check if a Promise.resolve().then() executes its onFullfilled listener asynchronously
 *** TODO Replate delay() with Promise.resolve().then()
 ** DONE Player register() fn should need a password as input.
