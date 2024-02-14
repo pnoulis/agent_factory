@@ -17,16 +17,9 @@ function FormRegisterCashier({ onSubmit }) {
       }}
       onSubmit={onSubmit}
     >
-      <TextInput autoFocus name="name" label="first name" />
-      <TextInput name="surname" label="last name" />
+      <TextInput autoFocus name="username" />
       <TextInput name="email" type="email" />
-      <TextInput name="username" />
-      <TextInput
-        optional
-        name="password"
-        type="password"
-        autoComplete="new-password"
-      />
+      <TextInput name="password" type="password" autoComplete="new-password" />
       <Submit>register cashier</Submit>
     </Form>
   );

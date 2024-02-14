@@ -1,9 +1,16 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
 
 function Component() {
+  const navigate = useNavigate();
+
   return (
     <>
-      <h1>page cashiers</h1>
+      <WidgetAdd
+        onClick={(e) => navigate("register")}
+        color="var(--primary-base)"
+        fill="white"
+      />
       <Outlet />
     </>
   );

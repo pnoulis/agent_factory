@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Widget } from "./Widget.jsx";
 
 const StandardWidget = styled(Widget)`

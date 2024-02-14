@@ -1,8 +1,11 @@
+import { Center } from "#components/Center.jsx";
+import { FormRegisterCashier } from "#components/forms/FormRegisterCashier";
+
 function Component() {
   return (
-    <>
-      <h1>register cashier</h1>
-    </>
+    <Center>
+      <FormRegisterCashier />
+    </Center>
   );
 }
 
