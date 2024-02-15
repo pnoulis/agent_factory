@@ -1,8 +1,11 @@
+// mui
+import MuiTableCell from "@mui/material/TableCell";
+
+// -
 import * as React from "react";
 import styled from "styled-components";
 import { Svg } from "react_utils/svgs";
 import IconArrow from "/assets/icons/filter-pointer.svg?react";
-import TableCell from "@mui/material/TableCell";
 import { TableDataTuple } from "./TableDataTuple.jsx";
 import { DataTuple } from "#components/tuple/DataTuple.jsx";
 
@@ -38,16 +41,15 @@ import { DataTuple } from "#components/tuple/DataTuple.jsx";
 
 function HeaderCell({
   active,
-  orderBy,
   order,
-  onSortButtonClick,
+  orderBy,
+  onSort,
   className,
   style,
   name,
-  children,
 }) {
   return (
-    <TableCell
+    <MuiTableCell
       align="center"
       style={{
         lineHeight: "1",
@@ -58,13 +60,11 @@ function HeaderCell({
         type="button"
         style={style}
         className={className}
-        onClick={() => onSortButtonClick?.(orderBy)}
+        onClick={() => onSort?.(orderBy || name)}
       >
-        {children || (
-          <TableDataTuple>
-            <DataTuple nov name={name} />
-          </TableDataTuple>
-        )}
+        <TableDataTuple>
+          <DataTuple nov name={name} />
+        </TableDataTuple>
         {active ? (
           <StyledSortButtonIcon order={active ? order : "asc"}>
             <Svg>
@@ -75,7 +75,7 @@ function HeaderCell({
           <StyledSortButtonStub />
         )}
       </StyledSortButton>
-    </TableCell>
+    </MuiTableCell>
   );
 }
 

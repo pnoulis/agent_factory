@@ -16,9 +16,7 @@ function PageScratch() {
   );
 }
 
-const Div = styled("div")`
-  width: 500px;
-`;
+const Div = styled("div")``;
 
 export { PageScratch };
 // import { Player } from "../player/Player.js";

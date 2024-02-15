@@ -25,12 +25,13 @@ function Panel({ className, style, children }) {
     <ContextPanel ctx={{ actionbarRef, handleMount, handleUnmount }}>
       <Wrapper className={className} style={style}>
         <header
+          className="panel-header"
           ref={(node) => {
             setMounted(!!node);
             actionbarRef.current = node;
           }}
         />
-        <article>{mounted && children}</article>
+        <article className="panel-main">{mounted && children}</article>
       </Wrapper>
     </ContextPanel>
   );

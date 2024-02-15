@@ -80,7 +80,7 @@ const cashiers = {
   label: "cashiers",
 };
 const loginCashier = {
-  path: "login",
+  path: "/login",
   label: "login cashier",
 };
 const registerCashier = {

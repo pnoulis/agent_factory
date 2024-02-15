@@ -4,12 +4,16 @@ import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
 import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
 import { WidgetRemove } from "#components/widgets/WidgetRemove.jsx";
+import styled from "styled-components";
+import { cashiers } from "/src/links.jsx";
+import { TableCashiers } from "#components/tables/TableCashiers.jsx";
+import { Center } from "#components/Center.jsx";
 
 function Component() {
   const navigate = useNavigate();
 
   return (
-    <Panel className="oteuhn" style={{ maxWidth: "70%", margin: "auto" }}>
+    <PageCashiers>
       <PanelActionbar>
         <PanelNavbar style={{ justifyContent: "end", gap: "30px" }}>
           <WidgetRemove
@@ -26,8 +30,14 @@ function Component() {
         </PanelNavbar>
       </PanelActionbar>
       <Outlet />
-    </Panel>
+    </PageCashiers>
   );
 }
+
+const PageCashiers = styled(Panel)`
+  max-width: 70%;
+  margin: auto;
+  gap: 50px;
+`;
 
 export { Component };

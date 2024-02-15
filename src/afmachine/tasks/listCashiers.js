@@ -29,7 +29,7 @@ Command.middleware = [
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.cashiers = ctx.raw.cashiers.map((cashier) =>
-      normalizeCashier(cashier),
+      normalizeCashier([cashier, { role: "cashier" }]),
     );
     return next();
   },
@@ -37,13 +37,13 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve cashiers";
+  cmd.msg = "Failed to retrieve Cashiers";
   cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved cashiers";
+  cmd.msg = "Successfully retrieved Cashiers";
   cmd.resolve(cmd.res);
 };
 

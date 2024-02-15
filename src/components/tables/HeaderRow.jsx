@@ -1,27 +1,46 @@
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import Checkbox from "@mui/material/Checkbox";
+// mui
+import MuiTableRow from "@mui/material/TableRow";
+import MuiTableCell from "@mui/material/TableCell";
+import MuiCheckbox from "@mui/material/Checkbox";
+
+// -
 import { useContextTable } from "/src/contexts/ContextTable.jsx";
 import { HeaderCell } from "./HeaderCell.jsx";
 
-function HeaderRow() {
+function HeaderRow({ showCheckbox, showIndex }) {
   const ctx = useContextTable();
   return (
-    <TableRow>
-      <TableCell padding="checkbox">
-        <Checkbox
-          indeterminate={
-            ctx.rowSelectedCount > 0 && ctx.rowSelectedCount < ctx.rowCount
-          }
-          checked={ctx.rowCount > 0 && ctx.rowSelectedCount === ctx.rowCount}
-          onChange={ctx.handleRowSelectAll}
+    <MuiTableRow>
+      {showCheckbox && (
+        <MuiTableCell padding="checkbox">
+          <MuiCheckbox
+            indeterminate={
+              ctx.rowSelectedCount > 0 && ctx.rowSelectedCount < ctx.rowCount
+            }
+            checked={ctx.rowCount > 0 && ctx.rowSelectedCount === ctx.rowCount}
+            onChange={ctx.handleRowSelectAll}
+          />
+        </MuiTableCell>
+      )}
+      {showIndex && (
+        <HeaderCell
+          name="No"
+          order={ctx.order}
+          orderBy="index"
+          active={ctx.orderBy === "index"}
+          onSort={ctx.handleChangeOrderBy}
         />
-      </TableCell>
-      <HeaderCell name="No" />
+      )}
       {Object.keys(ctx.fields).map((k, i) => (
-        <HeaderCell key={i} name={k} />
+        <HeaderCell
+          key={i}
+          name={k}
+          order={ctx.order}
+          active={ctx.orderBy === k}
+          onSort={ctx.handleChangeOrderBy}
+        />
       ))}
-    </TableRow>
+    </MuiTableRow>
   );
 }
 

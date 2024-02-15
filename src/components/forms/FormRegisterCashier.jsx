@@ -11,17 +11,20 @@ function FormRegisterCashier({ onSubmit }) {
       id="registerCashier"
       fields={{
         username: "",
-        name: "",
-        surname: "",
         email: "",
         password: "",
+        role: "",
       }}
       onSubmit={onSubmit}
     >
       <TextInput autoFocus name="username" />
       <TextInput name="email" type="email" />
       <TextInput name="password" type="password" autoComplete="new-password" />
-      <ComboboxCashierPrivilege />
+      <ComboboxCashierPrivilege
+        onSelect={(v) => {
+          debug(v, "selected");
+        }}
+      />
       <Submit>register cashier</Submit>
     </Form>
   );

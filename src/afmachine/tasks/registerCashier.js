@@ -24,7 +24,7 @@ function Command(cashier, password, opts) {
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
-      username: ctx.args.cashier.username,
+      username: ctx.args.cashier.username?.toUpperCase(),
       email: ctx.args.cashier.email,
       password: ctx.args.password,
       role: [`ROLE_${ctx.args.cashier.role}`.toUpperCase()],
@@ -58,13 +58,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to register new Cashier";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully registered new Cashier";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as registerCashier };

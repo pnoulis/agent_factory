@@ -1,30 +1,13 @@
 import * as React from "react";
-import { fmagent } from "#components/flash-messages/fmagent.js";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
-import { Authorize } from "#components/Authorize.jsx";
-import { AwaitTask } from "#components/AwaitTask.jsx";
-import { Afmachine } from "./afmachine/Afmachine.js";
+import { fmagent } from "#components/flash-messages/fmagent.js";
 import { Site } from "#components/site/Site.jsx";
-import { loginCashier } from "/src/links.jsx";
 import { ContextApp } from "./contexts/ContextApp.jsx";
 import { translate } from "/src/translate.js";
 import { removeIndex } from "/src/misc/misc.js";
 
-globalThis.afm = new Afmachine();
-let booted = false;
-
-afm.boot.on("fulfilled", () => {
-  booted = true;
-});
-
-afm.on("cmdend", (cmd) => {
-  if (cmd.res.ok) {
-    fmagent.info({ message: cmd.msg });
-  } else {
-    fmagent.warn({ message: cmd.msg });
-  }
-});
-logafm(afm);
+// import { AwaitTask } from "#components/AwaitTask.jsx";
+// import { loginCashier } from "/src/links.jsx";
 
 const { registerListener, deregisterListener } = (() => {
   const listeners = {};
@@ -63,82 +46,114 @@ const { registerListener, deregisterListener } = (() => {
   };
 })();
 
-function App() {
+function Component() {
   const location = useLocation();
   const [language, setLanguage] = React.useState(navigator.language);
-  const [currentTask, setCurrentTask] = React.useState({
-    wait: true,
-    manage: true,
-    run: !booted,
-    task: globalThis.afm.boot,
-    state: booted && "render",
-    delay: 500,
-  });
 
   const t = React.useMemo(() => {
     globalThis.t = translate.bind(null, language);
     return globalThis.t;
-  }, [language]);
-
-  React.useEffect(() => {
-    registerListener("cmdcreate", "propagate", (cmd) => {
-      cmd.propagate = true;
-    });
-    registerListener("cmdcreate", "renderCmdState", (cmd) => {
-      trace(`Propagate ${cmd.propagate} cmd: ${cmd.taskname}`);
-      if (cmd.propagate && currentTask !== cmd.taskname) {
-        trace("Will render cmd state");
-        setCurrentTask({
-          wait: false,
-          manage: true,
-          run: false,
-          task: globalThis.afm[cmd.taskname],
-          delay: 500,
-        });
-      }
-    });
-    return () => deregisterListener();
-  }, []);
+  }, [language, setLanguage]);
 
   return (
-    <>
-      <ContextApp
-        ctx={{
-          t,
-          language,
-          setLanguage,
-          location,
-          registerListener,
-          deregisterListener,
-        }}
-      >
-        <AwaitTask {...currentTask}>
-          <Authorize as="cashier">
-            {(authorized) =>
-              authorized ? (
-                location.pathname === loginCashier.path ? (
-                  <Outlet />
-                ) : (
-                  <Site
-                    language={language}
-                    onLanguageChange={setLanguage}
-                    t={t}
-                  >
-                    <Outlet />
-                  </Site>
-                )
-              ) : location.pathname === loginCashier.path ? (
-                <Outlet />
-              ) : (
-                <Navigate to={loginCashier.path} />
-              )
-            }
-          </Authorize>
-        </AwaitTask>
-      </ContextApp>
-    </>
+    <ContextApp
+      ctx={{
+        t,
+        language,
+        setLanguage,
+        location,
+        registerListener,
+        deregisterListener,
+      }}
+    >
+      <Site language={language} onLanguageChange={setLanguage} t={t}>
+        <Outlet />
+      </Site>
+    </ContextApp>
   );
 }
+
+// afm.on("cmdend", (cmd) => {
+//   if (cmd.res.ok) {
+//     fmagent.info({ message: cmd.msg });
+//   } else {
+//     fmagent.warn({ message: cmd.msg });
+//   }
+// });
+// logafm(afm);
+
+// function App() {
+//   const location = useLocation();
+//   const [language, setLanguage] = React.useState(navigator.language);
+//   const [currentTask, setCurrentTask] = React.useState({
+//     wait: true,
+//     manage: true,
+//     run: !booted,
+//     task: globalThis.afm.boot,
+//     state: booted && "render",
+//     delay: 500,
+//   });
+
+//   React.useEffect(() => {
+//     registerListener("cmdcreate", "propagate", (cmd) => {
+//       cmd.propagate = true;
+//     });
+//     registerListener("cmdcreate", "renderCmdState", (cmd) => {
+//       trace(`Propagate ${cmd.propagate} cmd: ${cmd.taskname}`);
+//       if (cmd.propagate && currentTask !== cmd.taskname) {
+//         trace("Will render cmd state");
+//         setCurrentTask({
+//           wait: false,
+//           manage: true,
+//           run: false,
+//           task: globalThis.afm[cmd.taskname],
+//           delay: 500,
+//         });
+//       }
+//     });
+//     return () => deregisterListener();
+//   }, []);
+
+//   return (
+//     <>
+//       <ContextApp
+//         ctx={{
+//           t,
+//           language,
+//           setLanguage,
+//           location,
+//           registerListener,
+//           deregisterListener,
+//         }}
+//       >
+//         <AwaitTask {...currentTask}>
+//           <Authorize as="cashier">
+//             {(authorized) =>
+//               authorized ? (
+//                 location.pathname === loginCashier.path ? (
+//                   <Outlet />
+//                 ) : (
+//                   <Site
+//                     language={language}
+//                     onLanguageChange={setLanguage}
+//                     t={t}
+//                   >
+//                     <Outlet />
+//                   </Site>
+//                 )
+//               ) : location.pathname === loginCashier.path ? (
+//                 <Outlet />
+//               ) : (
+//                 <Navigate to={loginCashier.path} />
+//               )
+//             }
+//           </Authorize>
+//         </AwaitTask>
+//       </ContextApp>
+//     </>
+//   );
+// }
+
 // import * as React from "react";
 // import { Outlet } from "react-router-dom";
 // import { FlashMessages } from "./components/flash-messages/FlashMessages.jsx";
@@ -204,4 +219,4 @@ function App() {
 //   );
 // }
 
-export { App };
+export { Component };

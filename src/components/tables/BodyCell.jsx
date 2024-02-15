@@ -1,14 +1,17 @@
+// mui
+import MuiTableCell from "@mui/material/TableCell";
+
+// -
 import { TableDataTuple } from "./TableDataTuple.jsx";
 import { DataTuple } from "#components/tuple/DataTuple.jsx";
-import TableCell from "@mui/material/TableCell";
 
 function BodyCell(props) {
   return (
-    <TableCell align="center">
+    <MuiTableCell align="center">
       <TableDataTuple className={props.className} style={props.style}>
         <DataTuple nok name={props.name} src={props.src} />
       </TableDataTuple>
-    </TableCell>
+    </MuiTableCell>
   );
 }
 

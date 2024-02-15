@@ -24,7 +24,7 @@ function Command(cashier, password, opts) {
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
-      username: ctx.args.cashier.username,
+      username: ctx.args.cashier.username?.toUpperCase(),
       password: ctx.args.password,
     };
     return next();
@@ -63,7 +63,7 @@ Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully logged in Cashier";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as loginCashier };

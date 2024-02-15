@@ -1,7 +1,7 @@
 import * as React from "react";
 
 function useTable({
-  data: initialData,
+  data: initialData = [],
   rowId = "index",
   getComparator,
   sort,
@@ -17,16 +17,25 @@ function useTable({
   const [rowsPerPage, setRowsPerPage] = React.useState(
     initialRowsPerPage ?? 10,
   );
+  const comparatorsRef = React.useRef();
 
-  const data = React.useMemo(
-    () =>
-      initialData.map((d, i) => ({
-        ...d,
-        index: i + 1,
-        selected: false,
-      })),
-    [initialData],
-  );
+  if (!comparatorsRef.current) {
+    comparatorsRef.current = {};
+    for (const [k, v] of Object.entries(fields)) {
+      comparatorsRef.current[k] = v?.comparator;
+    }
+  }
+
+  const data = React.useMemo(() => {
+    const _data = [];
+    for (let i = 0; i < initialData.length; i++) {
+      _data.push({ ...initialData[i], index: i + 1, selected: false });
+    }
+    return (
+      sort?.(_data, getComparator?.(comparatorsRef.current, order, orderBy)) ||
+      _data
+    );
+  }, [order, orderBy]);
 
   function handleChangeOrderBy(newOrderBy) {
     const isasc = orderBy === newOrderBy && order === "asc";
@@ -42,11 +51,6 @@ function useTable({
     setRowsPerPage(parseInt(e.target.value));
     setPage(0);
   }
-
-  const sortedData = React.useMemo(
-    () => sort?.(data, getComparator?.(order, orderBy)) || data,
-    [order, orderBy],
-  );
 
   function handleRowSelectAll(e) {
     for (let i = 0; i < data.length; i++) {
@@ -88,7 +92,7 @@ function useTable({
     selected,
     setSelected,
     handleChangeOrderBy,
-    sortedData,
+    data,
     page,
     rowsPerPage,
     handlePageChange,

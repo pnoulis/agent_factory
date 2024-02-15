@@ -1,5 +1,8 @@
+// mui
+import MuiPagination from "@mui/material/TablePagination";
+
+// -
 import styled from "styled-components";
-import MUIPagination from "@mui/material/TablePagination";
 import { useContextTable } from "/src/contexts/ContextTable";
 
 function Pagination({ className, style }) {
@@ -21,16 +24,19 @@ function Pagination({ className, style }) {
   );
 }
 
-const Div = styled(MUIPagination)`
+const Div = styled(MuiPagination)`
   font-family: Saira !important;
+  padding-right: 40px !important;
+  min-height: 45px !important;
   .MuiTablePagination-spacer {
     display: none;
   }
 
   .MuiTablePagination-selectLabel {
+    margin-left: auto;
     line-height: 1;
     font-family: Saira;
-    font-size: var(--tx-md);
+    font-size: var(--tx-nl);
     font-weight: 450;
   }
 
@@ -50,8 +56,8 @@ const Div = styled(MUIPagination)`
     text-align: center !important;
     cursor: pointer !important;
     width: 80px !important;
-    // padding: 0 30px 0 20px !important;
   }
+
   .MuiSvgIcon-root {
     display: inline;
     right: 5px;
@@ -61,10 +67,6 @@ const Div = styled(MUIPagination)`
     font-family: Saira;
     font-size: var(--tx-md);
     font-weight: 450;
-  }
-
-  .MuiPaper-root > * {
-    font-family: Saira !important;
   }
 `;
 

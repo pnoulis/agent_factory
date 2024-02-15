@@ -11,7 +11,7 @@ const switchOrder = (order, key, comparator) =>
 
 // Bind 1st argument to supply comparators
 const getComparator = (comparators, order, key) =>
-  switchOrder(order, key, comparators[key] || lessThan);
+  switchOrder(order, key, comparators[key] || comparatorLessThan);
 
 // comparator
 // a < b
