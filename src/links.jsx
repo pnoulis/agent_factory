@@ -88,7 +88,7 @@ const registerCashier = {
   label: "register cashier",
 };
 const cashoutCashier = {
-  path: "/administration/cashiers/cashout",
+  path: "/administration/cashier/cashout",
   label: "cashout cashier",
 };
 

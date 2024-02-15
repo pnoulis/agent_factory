@@ -6,11 +6,9 @@ import { PanelNavLink } from "#components/links/PanelNavLink";
 import IconCashout from "/assets/icons/cash-out.svg?react";
 import IconCashiers from "/assets/icons/players-two.svg?react";
 import IconDevice from "/assets/icons/devices.svg?react";
-import IconBracelet from "/assets/icons/bracelet.svg?react";
 import IconScoreboardDevices from "/assets/icons/scoreboard.svg?react";
 import {
   cashiers,
-  registerCashier,
   cashoutCashier,
   devices,
   scoreboardDevices,
@@ -29,12 +27,14 @@ function Component() {
             </PanelNavLink.Icon>
             <PanelNavLink.Text>{t(cashoutCashier.label)}</PanelNavLink.Text>
           </PanelNavLink.Anchor>
-          <PanelNavLink.Anchor end to={t(cashiers.path)}>
+
+          <PanelNavLink.Anchor to={t(cashiers.path)}>
             <PanelNavLink.Icon>
               <IconCashiers />
             </PanelNavLink.Icon>
             <PanelNavLink.Text>{t(cashiers.label)}</PanelNavLink.Text>
           </PanelNavLink.Anchor>
+
           <PanelNavLink.Anchor end to={t(devices.path)}>
             <PanelNavLink.Icon>
               <IconDevice />

@@ -22,7 +22,7 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.listCashiers();
+    ctx.raw = await ctx.afm.adminScreen.listCashiers();
     return next();
   },
   parseBackendResponse,

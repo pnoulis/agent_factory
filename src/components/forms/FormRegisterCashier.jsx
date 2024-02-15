@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Submit } from "./Submit.jsx";
 import { TextInput_0 } from "react_utils/inputs";
 import { Form } from "./Form.jsx";
+import { ComboboxCashierPrivilege } from "#components/comboboxes/ComboboxCashierPrivilege.jsx";
 
 function FormRegisterCashier({ onSubmit }) {
   return (
@@ -20,6 +21,7 @@ function FormRegisterCashier({ onSubmit }) {
       <TextInput autoFocus name="username" />
       <TextInput name="email" type="email" />
       <TextInput name="password" type="password" autoComplete="new-password" />
+      <ComboboxCashierPrivilege />
       <Submit>register cashier</Submit>
     </Form>
   );

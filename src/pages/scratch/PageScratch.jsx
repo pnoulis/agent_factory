@@ -1,26 +1,24 @@
+import styled from "styled-components";
 import { Submit } from "#components/forms/Submit.jsx";
 import { TextInput } from "#components/forms/TextInput.jsx";
 import { Form } from "#components/forms/Form.jsx";
+import { ComboboxCashierPrivilege } from "#components/comboboxes/ComboboxCashierPrivilege";
+import { TableCashiers } from "#components/tables/TableCashiers.jsx";
 
 function PageScratch() {
   return (
     <>
       <h1>page scratch</h1>
-      <Form
-        id="loginCashier"
-        fields={{ username: "", password: "" }}
-        onSubmit={(fields, setForm) => {
-          setForm("setErrors", { username: "toolong" });
-          setForm("setSubmit", false);
-        }}
-      >
-        <TextInput name="username" />
-        <TextInput name="password" type="password" />
-        <Submit>login</Submit>
-      </Form>
+      <Div>
+        <TableCashiers />
+      </Div>
     </>
   );
 }
+
+const Div = styled("div")`
+  width: 500px;
+`;
 
 export { PageScratch };
 // import { Player } from "../player/Player.js";

@@ -2,7 +2,7 @@ import * as React from "react";
 import { ContextPanel } from "/src/contexts/ContextPanel.jsx";
 import styled from "styled-components";
 
-function Panel({ children }) {
+function Panel({ className, style, children }) {
   const [mounted, setMounted] = React.useState();
   const actionbarRef = React.useRef();
   const nodesRef = React.useRef([]);
@@ -23,7 +23,7 @@ function Panel({ children }) {
 
   return (
     <ContextPanel ctx={{ actionbarRef, handleMount, handleUnmount }}>
-      <Wrapper>
+      <Wrapper className={className} style={style}>
         <header
           ref={(node) => {
             setMounted(!!node);
