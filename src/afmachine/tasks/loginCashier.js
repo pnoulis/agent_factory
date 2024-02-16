@@ -57,7 +57,7 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to login Cashier";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;

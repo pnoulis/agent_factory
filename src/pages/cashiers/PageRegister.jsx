@@ -21,18 +21,11 @@ function Component() {
       </PanelActionbar>
       <Center>
         <FormRegisterCashier
-          onSubmit={async (fields, setForm) => {
-            try {
-              const cashier = await afmResponse(
-                afm.registerCashier(fields, fields.password),
-              );
-            } catch (err) {
-              if (err.code === ERR_CODES.EVALIDATION) {
-                setForm("setErrors", err.cause.validationErrors);
-              }
-            } finally {
-              setForm("setSubmit", false);
-            }
+          onSubmit={async ({ fields }, onError) => {
+            const cashier = await afmResponse(
+              afm.registerCashier(fields, fields.password),
+            ).catch(onError);
+            debug(cashier);
           }}
         />
       </Center>

@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { defer, Await, useLoaderData } from "react-router-dom";
-import { Pending } from "#components/Pending.jsx";
 
 const loadCashiers = () =>
   defer({ cashiers: globalThis.afm.listCashiers({ queue: false }) });

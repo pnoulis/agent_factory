@@ -12,19 +12,11 @@ function Component() {
       </header>
       <section>
         <FormLoginCashier
-          onSubmit={async (fields, setForm) => {
-            try {
-              const cashier = await afm.loginCashier(
-                { username: "".concat(fields.username).toUpperCase() },
-                fields.password,
-              );
-            } catch (err) {
-              if (err.code === ERR_CODES.EVALIDATION) {
-                setForm("setErrors", err.cause.validationErrors);
-              }
-            } finally {
-              setForm("setSubmit", false);
-            }
+          onSubmit={async ({ fields }, onError) => {
+            const cashier = await afmResponse(
+              afm.loginCashier(fields, fields.password),
+            ).catch(onError);
+            debug(cashier);
           }}
         />
       </section>

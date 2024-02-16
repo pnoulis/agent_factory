@@ -2,12 +2,20 @@ import * as React from "react";
 import { useForm, FormProvider } from "react_utils/inputs";
 import styled from "styled-components";
 
-function Form({ id, fields, onSubmit, className, style, children }) {
-  const [form, setForm] = useForm({ submitting: false, fields });
+function Form({ id, fields, ctx, onSubmit, className, style, children }) {
+  const [form, setForm] = ctx ?? useForm({ submitting: false, fields });
 
   React.useEffect(() => {
     if (!form.submitting) return;
-    onSubmit?.(form.fields, setForm);
+    onSubmit?.({ ...form, setForm }, (err) => {
+      if (err.code === ERR_CODES.EVALIDATION) {
+        setForm("setErrors", err.cause.validationErrors);
+      } else {
+        throw err;
+      }
+    }).finally(() => {
+      setForm("setSubmit", false);
+    });
   }, [form.submitting]);
 
   return (

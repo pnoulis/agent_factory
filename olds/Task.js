@@ -12,7 +12,6 @@ class Task extends createEventful() {
 
     Object.assign(this.events, {
       pretask: [],
-      task: [],
       postask: [],
       queued: [],
       pending: [],
@@ -57,7 +56,13 @@ class Task extends createEventful() {
     cmd.promise = promise;
 
     setTimeout(() => {
+      let pretask = [...afm.events.precmd, ...cmd.events.pretask].map(
+        (fn) => fn.listener,
+      );
       let thetask = [].concat(cmd.middleware);
+      let postask = [...cmd.events.postask, ...afm.events.postcmd].map(
+        (fn) => fn.listener,
+      );
 
       cmd.queued = function () {
         const ostate = cmd.state;
@@ -68,7 +73,12 @@ class Task extends createEventful() {
       };
 
       cmd.run = async function () {
+        pretask = compose(pretask);
         thetask = compose(thetask);
+        postask = compose(postask);
+        let pretaskerr;
+        let taskerr;
+        let postaskerr;
         let ostate;
 
         try {
@@ -78,34 +88,53 @@ class Task extends createEventful() {
           cmd.emit("stateChange", cmd.state, ostate, cmd);
           cmd.onPending?.();
           cmd.emit("pending", cmd);
-
-          await cmd
-            .emit("pretask", cmd)
-            .then(() => thetask(cmd))
-            .then(() => cmd.emit("task", cmd))
-            .then(() => {
-              ostate = cmd.state;
-              cmd.state = "fulfilled";
-              cmd.emit("stateChange", cmd.state, ostate, cmd);
-              cmd.onSuccess?.();
-              cmd.emit("fulfilled", cmd);
-            })
-            .catch((err) => {
-              cmd.state = "rejected";
-              cmd.emit("stateChange", cmd.state, ostate, cmd);
-              cmd.onFailure?.();
-              cmd.emit("rejected", cmd);
-              throw err;
-            })
-            .finally(() => cmd.emit("postask", cmd));
-        } finally {
-          if (cmd.errs) {
-            cmd.reject(cmd);
+          await pretask(cmd).catch((err) => {
+            pretaskerr = err;
+            throw err;
+          });
+          await thetask(cmd).catch((err) => {
+            taskerr = err;
+            throw err;
+          });
+          await postask(cmd).catch((err) => {
+            postaskerr = err;
+            throw err;
+          });
+        } catch (err) {
+          if (err instanceof Task) {
+            cmd.errs.push(...err.errs);
           } else {
+            cmd.errs.push(err);
+          }
+
+          if (err === pretaskerr || err === taskerr) {
+            await postask(cmd).catch((err) => {
+              if (err instanceof Task) {
+                cmd.errs.push(...err.errs);
+              } else {
+                cmd.errs.push(err);
+              }
+            });
+          }
+        } finally {
+          ostate = cmd.state;
+          cmd.t_end = Date.now();
+          if (cmd.errs.length === 0) {
+            cmd.state = "fulfilled";
+            cmd.emit("stateChange", cmd.state, ostate, cmd);
+            cmd.onSuccess?.();
             cmd.resolve(cmd);
+            cmd.emit("fulfilled", cmd);
+          } else {
+            cmd.state = "rejected";
+            cmd.emit("stateChange", cmd.state, ostate, cmd);
+            cmd.onFailure?.();
+            cmd.reject(cmd);
+            cmd.emit("rejected", cmd);
           }
         }
       };
+
       cb(cmd);
     }, 0);
 

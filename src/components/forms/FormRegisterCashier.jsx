@@ -1,20 +1,25 @@
 import styled from "styled-components";
 import { Submit } from "./Submit.jsx";
-import { TextInput_0 } from "react_utils/inputs";
+import { TextInput_0, useForm, FormProvider } from "react_utils/inputs";
 import { Form } from "./Form.jsx";
 import { ComboboxCashierPrivilege } from "#components/comboboxes/ComboboxCashierPrivilege.jsx";
 
 function FormRegisterCashier({ onSubmit }) {
+  const [form, setForm] = useForm({
+    submitting: false,
+    fields: {
+      username: "",
+      email: "",
+      password: "",
+      role: "",
+    },
+  });
+
   return (
     <Form
       style={{ rowGap: "20px" }}
       id="registerCashier"
-      fields={{
-        username: "",
-        email: "",
-        password: "",
-        role: "",
-      }}
+      ctx={[form, setForm]}
       onSubmit={onSubmit}
     >
       <TextInput autoFocus name="username" />
@@ -22,7 +27,7 @@ function FormRegisterCashier({ onSubmit }) {
       <TextInput name="password" type="password" autoComplete="new-password" />
       <ComboboxCashierPrivilege
         onSelect={(v) => {
-          debug(v, "selected");
+          setForm("setInput", "role", v);
         }}
       />
       <Submit>register cashier</Submit>

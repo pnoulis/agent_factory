@@ -1,34 +1,37 @@
 import * as React from "react";
 
 function useTask(task, { run = false, delay = 2000, propagate = false } = {}) {
-  const [state, setState] = React.useState("");
-  const cmdRef = React.useRef(task);
+  const [state, setState] = React.useState(task?.state);
+  const taskRef = React.useRef(task ? [task] : []);
 
   React.useEffect(() => {
-    const followState = (nstate, ostate, cmd) => {
-      cmdRef.current = cmd;
+    let timeout;
+    debug(taskRef.current[0], "useEffect: taskRef.current.length");
+    const followState = (s, os, cmd) => {
       cmd.propagate = propagate;
-      setState(nstate);
-      if (nstate === "rejected") {
-        window.setTimeout(() => setState(""), delay);
-      } else if (nstate === "fulfilled") {
-        window.setTimeout(() => setState("render"), delay);
+      taskRef.current[0] = cmd;
+      setState(s);
+      if (s === "fulfilled" || s === "rejected") {
+        timeout = setTimeout(() => {
+          taskRef.current.shift();
+          setState("");
+        }, delay);
       }
     };
-
-    task.on("stateChange", followState);
-
-    if (run && !(cmdRef.current instanceof Promise)) {
-      debug(cmdRef.current, "run");
-      cmdRef.current = task();
-    }
+    taskRef.current[0]?.on("stateChange", followState);
 
     return () => {
-      task.removeListener("stateChange", followState);
+      taskRef.current[0]?.removeListener("stateChange", followState);
+      window.clearTimeout(timeout);
     };
-  }, [task]);
+  }, [taskRef.current.length]);
 
-  return [cmdRef.current, state];
+  function add(task) {
+    taskRef.current.push(task);
+    debug(task, "add task");
+  }
+
+  return { task: taskRef.current[0], add };
 }
 
 export { useTask };

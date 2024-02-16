@@ -75,7 +75,7 @@ const Wrapper = styled("div")`
   flex-flow: column nowrap;
   box-shadow: var(--sd-9);
   border-radius: var(--br-xl);
-  padding: 5px;
+  padding: 5px 5px 0 5px;
   overflow: none;
 
   .table-bounds {

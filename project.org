@@ -1,6 +1,15 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** Show task progress
+on command create
+
+attach command state handles
+react to those handlers
+
+
+
+** TODO Afm responses should return CMD and handled using afmResponse()
 ** TODO Register cashier page
 *** Register cashier task
 ** TODO Check if a Promise.resolve().then() executes its onFullfilled listener asynchronously

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { MoonLoader } from "react-spinners";
 
-function Pending({ className }) {
+function Pending({ className, style, size }) {
   return (
-    <Wrapper className={className}>
-      <MoonLoader loading color="var(--info-strong)" size="70px" />
+    <Wrapper className={className} style={style}>
+      <MoonLoader loading color="var(--info-strong)" size={size} />
     </Wrapper>
   );
 }

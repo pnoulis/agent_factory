@@ -26,15 +26,17 @@ function PageLanding() {
     >
       <Await resolve={pending.afm}>
         {(afm) => (
-          <Authorize as="cashier">
-            {(authorized) =>
-              authorized || location === loginCashier.path ? (
-                <Outlet />
-              ) : (
-                <Navigate replace to={loginCashier.path} />
-              )
-            }
-          </Authorize>
+          <>
+            <Authorize as="cashier">
+              {(authorized) =>
+                authorized || location === loginCashier.path ? (
+                  <Outlet />
+                ) : (
+                  <Navigate replace to={loginCashier.path} />
+                )
+              }
+            </Authorize>
+          </>
         )}
       </Await>
     </Suspense>

@@ -4,17 +4,53 @@ import { TextInput } from "#components/forms/TextInput.jsx";
 import { Form } from "#components/forms/Form.jsx";
 import { ComboboxCashierPrivilege } from "#components/comboboxes/ComboboxCashierPrivilege";
 import { TableCashiers } from "#components/tables/TableCashiers.jsx";
+import { Pending } from "#components/Pending.jsx";
+import { MoonLoader } from "react-spinners";
 
 function PageScratch() {
   return (
     <>
       <h1>page scratch</h1>
       <Div>
-        <TableCashiers />
+        <Wrapper>
+          <p id="taskname">some taskname</p>
+          <MoonLoader loading color="var(--info-strong)" size='35px' />
+        </Wrapper>
       </Div>
     </>
   );
 }
+
+const Wrapper = styled("div")`
+  background-color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 5px 20px;
+  height: 50px;
+  box-shadow: var(--sd-9);
+  gap: 40px;
+  text-transform: capitalize;
+
+  #taskname::after {
+    content: "...";
+    margin-left: 5px;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  // position: fixed;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+  // box-sizing: border-box;
+  // width: 150px;
+  // height: 150px;
+  // border-radius: 50%;
+  // ::backdrop {
+  //   background-color: rgba(0, 0, 0, 0.2);
+  // }
+`;
 
 const Div = styled("div")``;
 

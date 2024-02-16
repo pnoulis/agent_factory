@@ -34,13 +34,13 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerCashier(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.registerCashier(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    const { cashiers } = await ctx.afm.backend.listCashiers({
+    const { cashiers } = await ctx.afm.adminScreen.listCashiers({
       timestamp: ctx.t_start,
     });
     const thisCashier = cashiers.find(

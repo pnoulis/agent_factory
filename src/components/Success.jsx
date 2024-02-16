@@ -15,11 +15,11 @@ function Success({ className }) {
 
 const Wrapper = styled("div")`
   box-sizing: border-box;
-  width: 150px;
-  height: 150px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   background-color: var(--grey-light);
-  padding: 33px;
+  padding: 5px;
   svg {
     fill: var(--success-medium);
     position: relative;

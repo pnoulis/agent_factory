@@ -5,6 +5,12 @@ const eventful = {
     this.events[event] ??= [];
     return this.events[event];
   },
+  hasEvent(event, listener) {
+    for (let i = 0; i < this.events[event].length; i++) {
+      if (this.events[event][i] === listener) return true;
+    }
+    return false;
+  },
   on(event, options, listener) {
     if (isFunction(options)) {
       listener = options;
@@ -40,11 +46,13 @@ const eventful = {
   onceReverse(event, listener) {
     return this.on(event, { persist: false, reverse: true }, listener);
   },
-  emit(event, ...args) {
+  async emit(event, ...args) {
     if (event === "error" && this.events.error.length < 1) throw args[0];
     const nextevents = [];
     for (let i = 0; i < this.addEvent(event).length; i++) {
-      this.events[event][i].listener(...args);
+      await Promise.resolve().then(() =>
+        this.events[event][i].listener(...args),
+      );
       if (this.events[event][i].persist) {
         nextevents.push(this.events[event][i]);
       }

@@ -37,7 +37,7 @@ function Component() {
 const PageCashiers = styled(Panel)`
   max-width: 70%;
   margin: auto;
-  gap: 50px;
+  gap: 30px;
 `;
 
 export { Component };
