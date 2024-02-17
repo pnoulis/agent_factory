@@ -4,17 +4,6 @@ import { validateBackendRequest } from "../middleware/validateBackendRequest.js"
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 
-import { ENV } from "../../config.js";
-import * as CONSTANTS from "../../constants.js";
-const { Mqtt } = await import("../../Mqtt.js");
-const { MqttProxy } = await import("mqtt_proxy");
-import {
-  registrationTopics,
-  rpiReaderTopics,
-} from "../../../backend-topics.js";
-import { DeviceAdminScreen } from "../device/admin-screen/DeviceAdminScreen.js";
-import { DeviceRPIReader } from "../device/rpi-reader/DeviceRPIReader.js";
-
 new Task("boot", Command);
 
 function Command(opts) {
@@ -29,47 +18,9 @@ function Command(opts) {
   return promise;
 }
 
+Command.verb = "boot agent factory";
 Command.middleware = [
   async (ctx, next) => {
-    const clientMqtt = await Mqtt.connectAsync(ENV.AFADMIN_SERVER_URL);
-    const adminScreen = new DeviceAdminScreen(
-      {
-        id: CONSTANTS.DEVICE_IDS.adminScreen,
-        type: CONSTANTS.DEVICE_TYPES.adminScreen,
-        room: CONSTANTS.ROOM_TYPES.admin1,
-      },
-      new MqttProxy({
-        server: clientMqtt,
-        registry: {
-          routes: Object.values(registrationTopics),
-          strict: true,
-          params: {
-            deviceId: CONSTANTS.DEVICE_IDS.adminScreen,
-          },
-        },
-      }),
-    );
-
-    const rpiReader = new DeviceRPIReader(
-      {
-        id: CONSTANTS.DEVICE_IDS.rpiReader,
-        type: CONSTANTS.DEVICE_TYPES.rpiReader,
-        room: CONSTANTS.ROOM_TYPES.admin1,
-      },
-      new MqttProxy({
-        server: clientMqtt,
-        registry: {
-          routes: Object.values(rpiReaderTopics),
-          strict: true,
-          params: {
-            deviceId: CONSTANTS.DEVICE_IDS.rpiReader,
-          },
-        },
-      }),
-    );
-
-    ctx.afm.adminScreen = adminScreen;
-    ctx.afm.rpiReader = rpiReader;
     ctx.args.device = ctx.afm.adminScreen;
     ctx.req = {
       timestamp: ctx.t_start,

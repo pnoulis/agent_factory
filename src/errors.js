@@ -1,4 +1,4 @@
-import { isObject } from "js_utils/misc";
+import { isObject, isFunction } from "js_utils/misc";
 /*
   Errors severity:
 
@@ -64,6 +64,39 @@ function _createError(msg, defaults) {
   return err;
 }
 
+const craterr = (cb) =>
+  cb({
+    EWRISTBAND: (msg) =>
+      _createError(msg, {
+        severity: "error",
+        msg: "Wristband Error",
+        errCode: ERR_CODES.EWRISTBAND_STATE,
+      }),
+    EPLAYER: (msg) =>
+      _createError(msg, {
+        severity: "error",
+        msg: "Player Error",
+        errCode: ERR_CODES.EPLAYER_STATE,
+      }),
+    EPACKAGE: (msg) =>
+      _createError(msg, {
+        severity: "error",
+        msg: "Package Error",
+        errCode: ERR_CODES.EPLAYER_STATE,
+      }),
+    EVALIDATION: (msg) =>
+      _createError(msg, {
+        severity: "warn",
+        msg: "Validation Error",
+        errCode: ERR_CODES.EVALIDATION,
+      }),
+    EGENERIC: (msg) =>
+      _createError(msg, {
+        severity: "error",
+        msg: "Generic Error",
+        errCode: ERR_CODES.EGENERIC,
+      }),
+  });
 const createError = (cb) =>
   cb(
     (() => ({
@@ -101,4 +134,5 @@ const createError = (cb) =>
   );
 
 globalThis.createError = createError;
+globalThis.craterr = craterr;
 globalThis.ERR_CODES = ERR_CODES;

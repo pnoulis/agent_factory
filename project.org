@@ -1,14 +1,18 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** TODO Rename afmResponse to parseCmd
+** TODO Rename createError to craterr
+** TODO make craterr and parsecmd global
 ** Show task progress
 on command create
 
 attach command state handles
 react to those handlers
 
+A component which reacts to state changes from a command.
 
-
+** TODO Wrap afmachine into a function that returns it.
 ** TODO Afm responses should return CMD and handled using afmResponse()
 ** TODO Register cashier page
 *** Register cashier task

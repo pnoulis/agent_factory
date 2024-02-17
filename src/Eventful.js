@@ -29,6 +29,7 @@ const eventful = {
     } else {
       listeners.push(opts);
     }
+    this.emit("newListener", event, listener);
     return this;
   },
   onReverse(event, listener) {
@@ -92,7 +93,7 @@ function createEventful(Base, events) {
   class Eventful extends Base {
     constructor(...args) {
       super(...args);
-      this.events = { error: [] };
+      this.events = { error: [], newListener: [] };
       for (const e of events) {
         this.addEvent(e);
       }

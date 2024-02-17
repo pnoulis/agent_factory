@@ -63,6 +63,7 @@ import { listScoreboard } from "./tasks/listScoreboard.js";
 
 class Afmachine extends createEventful([
   "error",
+  "booted",
   "precmd",
   "postcmd",
   "cmdcreate",
@@ -73,6 +74,7 @@ class Afmachine extends createEventful([
 ]) {
   constructor(adminScreen, rpiReader) {
     super();
+    this.booted = false;
     this.adminScreen = adminScreen;
     this.rpiReader = rpiReader;
     this.commandQueue = [];
@@ -87,6 +89,17 @@ class Afmachine extends createEventful([
     this.boot.afm = this;
     this.registerCashier.afm = this;
     this.loginCashier.afm = this;
+
+    this.on("newListener", (event) => {
+      if (event === "booted" && this.booted) {
+        this.emit("booted", this);
+      }
+    });
+
+    this.boot.on("fulfilled", () => {
+      this.booted = true;
+      this.emit("booted", this);
+    });
   }
 }
 Afmachine.prototype.enqueueCommand = async function (cmd) {
@@ -116,12 +129,14 @@ Afmachine.prototype.runCommand = async function (cmd) {
     // This registered error handler ensures
     // that an error will not result
     // in an unhandled exception.
-    cmd.promise.catch(() => {});
+    // cmd.promise.catch(() => {});
 
     await cmd.run();
   } catch (err) {
+    trace("catch 2");
     cmd.errs.push(err);
   } finally {
+    trace("finally 3");
     this.commands = this.commands - 1;
     this.onCmdEnd(cmd);
   }

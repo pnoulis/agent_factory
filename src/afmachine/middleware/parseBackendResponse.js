@@ -4,19 +4,23 @@ function parseBackendResponse(ctx, next) {
   if (result === "OK") {
     return next();
   } else if (validationErrors) {
-    throw globalThis.createError(({ EVALIDATION }) =>
-      EVALIDATION({
-        msg: "Invalid Backend API request",
-        severity: "warn",
-        validationErrors,
-      }),
+    return Promise.reject(
+      craterr(({ EVALIDATION }) =>
+        EVALIDATION({
+          msg: "Invalid Backend API request",
+          severity: "warn",
+          validationErrors,
+        }),
+      ),
     );
   } else {
-    throw globalThis.createError(({ EGENERIC }) =>
-      EGENERIC({
-        msg: "NOK Backend API response",
-        response: ctx.raw,
-      }),
+    return Promise.reject(
+      craterr(({ EGENERIC }) =>
+        EGENERIC({
+          msg: "NOK Backend API response",
+          response: ctx.raw,
+        }),
+      ),
     );
   }
 }

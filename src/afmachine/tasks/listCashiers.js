@@ -7,7 +7,6 @@ import { normalize as normalizeCashier } from "../cashier/normalize.js";
 
 new Task("listCashiers", Command);
 
-
 function Command(opts) {
   const afm = this;
   const promise = Command.createCommand(afm, { opts }, (cmd) => {
@@ -15,7 +14,7 @@ function Command(opts) {
   });
   return promise;
 }
-Command.verb = "Listing cashiers";
+Command.verb = "list cashiers";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = { timestamp: ctx.t_start };

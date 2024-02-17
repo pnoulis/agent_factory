@@ -22,10 +22,9 @@ function Component() {
       <Center>
         <FormRegisterCashier
           onSubmit={async ({ fields }, onError) => {
-            const cashier = await afmResponse(
+            const cashier = await parsecmd(
               afm.registerCashier(fields, fields.password),
             ).catch(onError);
-            debug(cashier);
           }}
         />
       </Center>

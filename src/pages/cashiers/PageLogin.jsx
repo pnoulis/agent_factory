@@ -13,10 +13,9 @@ function Component() {
       <section>
         <FormLoginCashier
           onSubmit={async ({ fields }, onError) => {
-            const cashier = await afmResponse(
+            const cashier = await parsecmd(
               afm.loginCashier(fields, fields.password),
             ).catch(onError);
-            debug(cashier);
           }}
         />
       </section>

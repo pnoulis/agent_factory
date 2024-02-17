@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import styled, { css, keyframes } from "styled-components";
+import * as ReactDOM from "react-dom";
 import { Center } from "#components/Center.jsx";
 import BrandFigure from "/assets/brand/logo-agent-white.png";
 import {
@@ -11,6 +12,7 @@ import {
 } from "react-router-dom";
 import { Authorize } from "#components/Authorize.jsx";
 import { loginCashier } from "/src/links.jsx";
+import { TrackCommands } from "#components/track-commands/TrackCommands.jsx";
 
 function PageLanding() {
   const pending = useLoaderData();
@@ -36,6 +38,10 @@ function PageLanding() {
                 )
               }
             </Authorize>
+            {ReactDOM.createPortal(
+              <TrackCommands />,
+              document.getElementById("flash-messages-react-root"),
+            )}
           </>
         )}
       </Await>

@@ -4,8 +4,10 @@ function validateBackendRequest(ctx, next) {
   const schema = ctx.route.schema;
 
   if (!isObject(ctx.route.schema)) {
-    throw globalThis.createError(({ EGENERIC }) =>
-      EGENERIC({ msg: `Missing route schema: ${ctx.taskName}` }),
+    return Promise.reject(
+      craterr(({ EGENERIC }) =>
+        EGENERIC({ msg: `Missing route schema: ${ctx.taskName}` }),
+      ),
     );
   } else if (!isFunction(schema.req) || schema.req(ctx.req)) {
     return next();
@@ -31,12 +33,14 @@ function validateBackendRequest(ctx, next) {
     return { key: propname, value: ctx.req[propname], msg };
   });
 
-  throw globalThis.createError(({ EVALIDATION }) =>
-    EVALIDATION({
-      msg: "Invalid Backend API request",
-      severity: "fatal",
-      validationErrors,
-    }),
+  return Promise.reject(
+    craterr(({ EVALIDATION }) =>
+      EVALIDATION({
+        msg: "Invalid Backend API request",
+        severity: "fatal",
+        validationErrors,
+      }),
+    ),
   );
 }
 

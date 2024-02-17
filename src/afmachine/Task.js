@@ -91,15 +91,21 @@ class Task extends createEventful() {
               cmd.emit("fulfilled", cmd);
             })
             .catch((err) => {
+              trace("catch 1");
+              cmd.errs.push(err);
               cmd.state = "rejected";
               cmd.emit("stateChange", cmd.state, ostate, cmd);
               cmd.onFailure?.();
               cmd.emit("rejected", cmd);
               throw err;
             })
-            .finally(() => cmd.emit("postask", cmd));
+            .finally(() => {
+              trace("finally 1");
+              return cmd.emit("postask", cmd);
+            });
         } finally {
           if (cmd.errs) {
+            trace("finally 2");
             cmd.reject(cmd);
           } else {
             cmd.resolve(cmd);
