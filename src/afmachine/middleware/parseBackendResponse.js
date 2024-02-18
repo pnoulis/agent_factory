@@ -18,7 +18,7 @@ function parseBackendResponse(ctx, next) {
       craterr(({ EGENERIC }) =>
         EGENERIC({
           msg: "NOK Backend API response",
-          response: ctx.raw,
+          ...ctx.raw,
         }),
       ),
     );

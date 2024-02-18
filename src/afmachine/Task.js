@@ -57,8 +57,6 @@ class Task extends createEventful() {
     cmd.promise = promise;
 
     setTimeout(() => {
-      let thetask = [].concat(cmd.middleware);
-
       cmd.queued = function () {
         const ostate = cmd.state;
         cmd.state = "queued";
@@ -68,44 +66,47 @@ class Task extends createEventful() {
       };
 
       cmd.run = async function () {
-        thetask = compose(thetask);
+        const thetask = compose(cmd.middleware);
         let ostate;
 
         try {
           ostate = cmd.state;
           cmd.t_start = Date.now();
           cmd.state = "pending";
-          cmd.emit("stateChange", cmd.state, ostate, cmd);
+          await cmd.emit("stateChange", cmd.state, ostate, cmd);
+          debug("after state change emit");
           cmd.onPending?.();
-          cmd.emit("pending", cmd);
+          await cmd.emit("pending", cmd);
 
           await cmd
             .emit("pretask", cmd)
-            .then(() => thetask(cmd))
-            .then(() => cmd.emit("task", cmd))
-            .then(() => {
+            .then(async () => await thetask(cmd))
+            .then(async () => await cmd.emit("task", cmd))
+            .then(async () => {
               ostate = cmd.state;
               cmd.state = "fulfilled";
-              cmd.emit("stateChange", cmd.state, ostate, cmd);
+              await cmd.emit("stateChange", cmd.state, ostate, cmd);
               cmd.onSuccess?.();
-              cmd.emit("fulfilled", cmd);
+              await cmd.emit("fulfilled", cmd);
             })
-            .catch((err) => {
-              trace("catch 1");
+            .catch(async (err) => {
+              debug("catch 1");
               cmd.errs.push(err);
               cmd.state = "rejected";
-              cmd.emit("stateChange", cmd.state, ostate, cmd);
+              debug("calling state change");
+              await cmd.emit("stateChange", cmd.state, ostate, cmd);
+              debug("after state change");
               cmd.onFailure?.();
               cmd.emit("rejected", cmd);
               throw err;
             })
             .finally(() => {
-              trace("finally 1");
+              debug("finally 1");
               return cmd.emit("postask", cmd);
             });
         } finally {
           if (cmd.errs) {
-            trace("finally 2");
+            debug("finally 2");
             cmd.reject(cmd);
           } else {
             cmd.resolve(cmd);

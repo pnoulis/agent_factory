@@ -21,6 +21,7 @@ function Command(cashier, password, opts) {
   );
   return promise;
 }
+Command.verb = "register cashier";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
@@ -44,10 +45,10 @@ Command.middleware = [
       timestamp: ctx.t_start,
     });
     const thisCashier = cashiers.find(
-      (cashier) => cashier.username === ctx.args.cashier.username,
+      (cashier) => cashier.username === ctx.req.username,
     );
     if (thisCashier === undefined) {
-      throw new Error(`Could not locate cashier: ${ctx.args.cashier.username}`);
+      throw new Error(`Could not locate cashier: ${ctx.req.username}`);
     }
     ctx.res.cashier = normalizeCashier(thisCashier);
     ctx.res.password = ctx.args.password;

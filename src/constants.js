@@ -114,5 +114,5 @@ export { PRIVILEGE_TYPES, DEFAULT_CASHIER };
 //////////////////////////////////////////////////
 // FLASH MESSAGES
 //////////////////////////////////////////////////
-const FM_TIMEOUT = 8000;
+const FM_TIMEOUT = 10000;
 export { FM_TIMEOUT };

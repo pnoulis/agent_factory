@@ -93,8 +93,13 @@ async function getafm(waitBoot = true) {
     afm.registerListener = registerListener;
     afm.deregisterListener = deregisterListener;
 
+    // logafm(afm);
     afm.on("error", (cmd) => {
-      console.error(cmd.errs.at(-1));
+      const { msg } = cmd;
+      const { message, cause } = cmd.errs.at(-1);
+      console.error(msg);
+      console.error(message);
+      console.error(cause.message);
     });
     globalThis.afm = afm;
   }

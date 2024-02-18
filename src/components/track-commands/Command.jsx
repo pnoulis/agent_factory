@@ -16,7 +16,9 @@ const Command = React.forwardRef((props, ref) => {
   }, [props.cmd]);
 
   React.useEffect(() => {
-    if (state === "fulfilled" || state === "rejected") {
+    if (state === "fulfilled") {
+      setTimeout(() => props.umount(props.cmd), FM_TIMEOUT / 2);
+    } else if (state === "rejected") {
       setTimeout(() => props.umount(props.cmd), FM_TIMEOUT);
     }
   }, [state, setState]);
@@ -62,6 +64,7 @@ const Li = styled("li")`
   }
 
   .msg {
+    grid-column: 1 / -1;
     color: var(--error-light);
   }
 `;

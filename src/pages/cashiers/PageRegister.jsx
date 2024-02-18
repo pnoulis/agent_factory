@@ -4,6 +4,7 @@ import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
 import { WidgetBack } from "#components/widgets/WidgetBack.jsx";
 import { useNavigate } from "react-router-dom";
+import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
 
 function Component() {
   const navigate = useNavigate();
@@ -20,13 +21,15 @@ function Component() {
         </PanelNavbar>
       </PanelActionbar>
       <Center>
-        <FormRegisterCashier
-          onSubmit={async ({ fields }, onError) => {
-            const cashier = await parsecmd(
-              afm.registerCashier(fields, fields.password),
-            ).catch(onError);
-          }}
-        />
+        <AwaitCommand cmd={afm.registerCashier}>
+          <FormRegisterCashier
+            onSubmit={async ({ fields }, onError) => {
+              const cashier = await parsecmd(
+                afm.registerCashier(fields, fields.password),
+              ).catch(onError);
+            }}
+          />
+        </AwaitCommand>
       </Center>
     </>
   );
