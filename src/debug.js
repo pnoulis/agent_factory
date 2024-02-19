@@ -15,6 +15,10 @@ function debug(...args) {
   });
 }
 
+function deebug(...args) {
+  args.forEach((arg) => console.dir(arg, { depth: null }));
+}
+
 function inspectProtoChain(obj) {
   const chain = [];
   if (obj == null) return chain;
@@ -151,6 +155,7 @@ function logent(entity, format = false) {
 }
 
 globalThis.debug = debug;
+globalThis.deebug = deebug;
 globalThis.trace = trace;
 globalThis.logevents = logevents;
 globalThis.logafm = logafm;

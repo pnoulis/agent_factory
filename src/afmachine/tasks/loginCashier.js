@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeCashier } from "../cashier/normalize.js";
+import { Cashier } from "../cashier/Cashier.js";
 
 new Task("loginCashier", Command);
 
@@ -47,7 +47,7 @@ Command.middleware = [
     if (thisCashier === undefined) {
       throw new Error(`Could not locate cashier: ${ctx.args.cashier.username}`);
     }
-    ctx.res.cashier = normalizeCashier(thisCashier);
+    ctx.res.cashier = Cashier.normalize(thisCashier);
     ctx.res.password = ctx.args.password;
     ctx.res.jwt = ctx.raw.jwtResponse.jwt;
     return next();

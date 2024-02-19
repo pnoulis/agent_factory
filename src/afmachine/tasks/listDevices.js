@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { Device } from "#afm/device/Device.js";
+import { Device } from "../device/Device.js";
 
 new Task("listDevices", Command);
 
@@ -14,6 +14,7 @@ function Command(opts) {
   });
   return promise;
 }
+Command.verb = "list devices";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = { timestamp: ctx.t_start };

@@ -11,6 +11,7 @@ function tobject(device, options) {
     id: device.id || null,
     type: device.type || null,
     room: device.room || null,
+    view: device.view || null,
   };
 
   if (!_options.backendForm) return afmDevice;
@@ -19,6 +20,7 @@ function tobject(device, options) {
     deviceId: afmDevice.id,
     deviceType: afmDevice.type,
     roomType: afmDevice.room,
+    status: afmDevice.view,
   };
 }
 

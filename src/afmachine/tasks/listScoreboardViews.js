@@ -13,6 +13,7 @@ function Command(opts) {
   });
   return promise;
 }
+Command.verb = "list scoreboard device views";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = { timestamp: ctx.t_start };
@@ -21,7 +22,7 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.listScoreboardViews();
+    ctx.raw = await ctx.afm.adminScreen.listScoreboardViews();
     return next();
   },
   parseBackendResponse,
@@ -35,13 +36,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve scoreboard views";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved scoreboard views";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as listScoreboardViews };

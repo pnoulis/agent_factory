@@ -15,7 +15,9 @@ function random(sources) {
   target.type ||= DEVICE_TYPES[device];
 
   const rooms = Object.keys(ROOM_TYPES);
-  target.room ||= Object.values(ROOM_TYPES).at(randomInteger(0, rooms.length - 1))
+  target.room ||= Object.values(ROOM_TYPES).at(
+    randomInteger(0, rooms.length - 1),
+  );
 
   trace(target, "device random target");
   return target;

@@ -3,6 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
+import { Device } from "../device/Device.js";
 
 new Task("listScoreboardDevices", Command);
 
@@ -13,6 +14,7 @@ function Command(opts) {
   });
   return promise;
 }
+Command.verb = "list scoreboard devices";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = { timestamp: ctx.t_start };
@@ -21,13 +23,15 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.listScoreboardDevices();
+    ctx.raw = await ctx.afm.adminScreen.listScoreboardDevices();
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.scoreboardDevices = ctx.raw.scoreboardDevices;
+    ctx.res.scoreboardDevices = ctx.raw.scoreboardDevices.map((device) =>
+      Device.normalize(device),
+    );
     return next();
   },
 ];
@@ -35,13 +39,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve scoreboard devices";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved scoreboard devices";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as listScoreboardDevices };

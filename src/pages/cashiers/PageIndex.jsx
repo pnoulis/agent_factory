@@ -30,7 +30,7 @@ function Component() {
                   <DialogAlertStandard
                     initialOpen
                     heading="deregister cashiers"
-                    msg="Empty cashier selection"
+                    msg="No cashier's selected!"
                   />,
                 );
               }

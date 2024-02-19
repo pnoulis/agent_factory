@@ -10,6 +10,7 @@ function TableDevices({ devices, onSelectionChange }) {
         id: null,
         type: null,
         room: null,
+        view: null,
       }}
       onSelectionChange={onSelectionChange}
     />

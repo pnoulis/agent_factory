@@ -17,11 +17,12 @@ function Command(device, view, opts) {
   );
   return promise;
 }
+Command.verb = "set device view";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
       timestamp: ctx.t_start,
-      deviceId: ctx.args.device.deviceId,
+      deviceId: ctx.args.device.id,
       status: ctx.args.view,
     };
     return next();
@@ -29,7 +30,7 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.updateScoreboardDeviceView(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.updateScoreboardDeviceView(ctx.req);
     return next();
   },
   parseBackendResponse,
@@ -43,13 +44,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to update Scoreboard Device view";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully updated Scoreboard Device view";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as updateScoreboardDeviceView };

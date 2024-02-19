@@ -10,6 +10,8 @@ import { DialogInputStandard } from "../../components/dialogs/inputs/DialogInput
 // import { BasicDialog } from "react_utils/dialogs";
 import { FormLoginCashier } from "#components/forms/FormLoginCashier.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { ComboboxDeviceView } from "../../components/comboboxes/ComboboxDeviceView";
+import { Pending } from "#components/await-command/Pending.jsx";
 
 // const DialogContent = styled(BasicDialog.Content)``;
 // const DialogHeading = styled(BasicDialog.Heading)``;
@@ -71,28 +73,35 @@ import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 //   align-self: end;
 //   justify-self: end;
 // `;
+const SPending = styled(Pending)`
+  .spinner {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 function PageScratch() {
   return (
     <>
       <h1>page scratch</h1>
       <Div>
-        <button
-          onClick={() => {
-            renderDialog(
-              DialogAlertStandard,
-              {
-                heading: "heading",
-                msg: "description",
-              },
-              (c) => {
-                debug("dialog closed");
-              },
-            );
-          }}
-        >
-          render dialog
-        </button>
+        <SPending size="40px" />
+        {/* <button */}
+        {/*   onClick={() => { */}
+        {/*     renderDialog( */}
+        {/*       DialogAlertStandard, */}
+        {/*       { */}
+        {/*         heading: "heading", */}
+        {/*         msg: "description", */}
+        {/*       }, */}
+        {/*       (c) => { */}
+        {/*         debug("dialog closed"); */}
+        {/*       }, */}
+        {/*     ); */}
+        {/*   }} */}
+        {/* > */}
+        {/*   render dialog */}
+        {/* </button> */}
         {/* <DialogInputStandard */}
         {/*   initialOpen */}
         {/*   heading="login cashier" */}
