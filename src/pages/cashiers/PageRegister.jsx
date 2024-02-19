@@ -24,12 +24,11 @@ function Component() {
       <Center>
         <AwaitCommand cmd={afm.registerCashier}>
           <FormRegisterCashier
-            onSubmit={async ({ fields }, onError) => {
-              const cashier = await parsecmd(
-                afm.registerCashier(fields, fields.password),
-              ).catch(onError);
-              navigate(cashiers.path);
-            }}
+            onSubmit={({ fields }, onError) =>
+              parsecmd(afm.registerCashier(fields, fields.password))
+                .then(() => navigate(cashiers.path))
+                .catch(onError)
+            }
           />
         </AwaitCommand>
       </Center>
