@@ -1,88 +1,145 @@
 import styled from "styled-components";
-import { Submit } from "#components/forms/Submit.jsx";
-import { TextInput } from "#components/forms/TextInput.jsx";
-import { Form } from "#components/forms/Form.jsx";
-import { ComboboxCashierPrivilege } from "#components/comboboxes/ComboboxCashierPrivilege";
-import { TableCashiers } from "#components/tables/TableCashiers.jsx";
-import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
+// import { Dialog } from "#components/dialogs/Dialog.jsx";
+// import { Heading } from "#components/dialogs/confirm/Heading.jsx";
+// import { Description } from "#components/dialogs/confirm/Description.jsx";
+// import { DialogConfirm } from "#components/dialogs/DialogConfirm.jsx";
+import { DialogConfirmStandard } from "#components/dialogs/confirms/DialogConfirmStandard.jsx";
+import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
+import { DialogInputStandard } from "../../components/dialogs/inputs/DialogInputStandard";
+// import { StandardAlertDialog } from "../../components/dialogs/alerts/StandardAlertDialog.jsx";
+// import { BasicDialog } from "react_utils/dialogs";
+import { FormLoginCashier } from "#components/forms/FormLoginCashier.jsx";
+import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 
-const cmds = [
-  {
-    taskname: "cmd 1",
-    state: "pending",
-    error: "tehunetuh",
-  },
-  {
-    taskname: "cmd 2",
-    state: "fulfilled",
-    error: "tehunetuh",
-  },
-  {
-    taskname: "cmd 3",
-    state: "rejected",
-    error: "tehunetuh",
-  },
-];
+// const DialogContent = styled(BasicDialog.Content)``;
+// const DialogHeading = styled(BasicDialog.Heading)``;
+// const DialogMsg = styled(BasicDialog.Description)``;
+// const DialogClose = styled(BasicDialog.Close)``;
+// const DialogConfirm = styled(BasicDialog.Confirm)``;
 
-const ListCommands = styled("ul")`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  pointer-events: none;
-  z-index: 3;
-  display: flex;
-  flex-flow: column-reverse nowrap;
-  gap: 20px;
-  padding: 30px;
-`;
+// function Dialog({ msg, heading, onClose }) {
+//   return (
+//     <BasicDialog.Provider initialOpen={true} onClose={onClose}>
+//       <DialogContent>
+//         <DialogHeading>{heading}</DialogHeading>
+//         <DialogMsg>{msg}</DialogMsg>
+//         <DialogClose>close</DialogClose>
+//         <DialogConfirm>confirm</DialogConfirm>
+//       </DialogContent>
+//     </BasicDialog.Provider>
+//   );
+// }
 
-function getState(state) {
-  switch (state) {
-    case "rejected":
-      return <Fail />;
-    case "fulfilled":
-      return <Success />;
-    default:
-      return <MoonLoader loading color="var(--info-strong)" size="40px" />;
-  }
-}
+// const StyledDialog = styled(Dialog)`
+//   min-width: 450px;
+//   max-width: 600px;
+//   min-height: 150px;
+//   font-family: Saira;
+//   box-sizing: border-box;
+//   z-index: 4;
+//   gap: 15px 20px;
+//   padding: 20px 35px;
+//   border: none;
+//   box-shadow: var(--sd-9);
+//   text-align: center;
+
+//   display: grid;
+//   grid-template-columns: 1fr auto;
+//   grid-template-rows: auto auto minmax(70px, auto);
+//   justify-items: center;
+// `;
+
+// const StyledHeading = styled(Heading)`
+//   grid-column: 1 / -1;
+//   text-transform: uppercase;
+//   color: var(--primary-base);
+//   letter-spacing: 1px;
+//   font-weight: 550;
+// `;
+
+// const StyledDescription = styled(Description)`
+//   grid-column: 1 / -1;
+// `;
+
+// const StyledNo = styled(No)`
+//   ${ButtonDialog}
+//   align-self: end;
+// `;
+
+// const StyledYes = styled(Yes)`
+//   ${ButtonDialog}
+//   align-self: end;
+//   justify-self: end;
+// `;
 
 function PageScratch() {
   return (
     <>
       <h1>page scratch</h1>
       <Div>
-        <ListCommands>
-          {cmds.map((cmd, i) => (
-            <AwaitCommand key={i} cmd={cmd}>
-              {({ cmd }) => <p>{cmd.taskname}</p>}
-            </AwaitCommand>
-          ))}
-        </ListCommands>
-        {/* <Wrapper> */}
-        {/*   <span id="taskname">taskname</span> */}
-        {/*   <span id="state"> */}
-        {/*     <MoonLoader size="35px" loading color="var(--info-strong)" /> */}
-        {/*   </span> */}
-        {/*   <span id="error">error</span> */}
-        {/* </Wrapper> */}
-
-        {/* <Wrapper> */}
-        {/*   <span id="taskname">taskname</span> */}
-        {/*   <span id="state"> */}
-        {/*     <Success /> */}
-        {/*   </span> */}
-        {/*   <span id="error">error</span> */}
-        {/* </Wrapper> */}
-
-        {/* <Wrapper> */}
-        {/*   <span id="taskname">taskname</span> */}
-        {/*   <span id="state"> */}
-        {/*     <Fail /> */}
-        {/*   </span> */}
-        {/*   <span id="error">error</span> */}
-        {/* </Wrapper> */}
+        <button
+          onClick={() => {
+            renderDialog(
+              DialogAlertStandard,
+              {
+                heading: "heading",
+                msg: "description",
+              },
+              (c) => {
+                debug("dialog closed");
+              },
+            );
+          }}
+        >
+          render dialog
+        </button>
+        {/* <DialogInputStandard */}
+        {/*   initialOpen */}
+        {/*   heading="login cashier" */}
+        {/*   form="loginCashier" */}
+        {/* > */}
+        {/*   {(closeDialog) => ( */}
+        {/*     <FormLoginCashier */}
+        {/*       onSubmit={() => { */}
+        {/*         debug("submitting"); */}
+        {/*         closeDialog(); */}
+        {/*       }} */}
+        {/*     /> */}
+        {/*   )} */}
+        {/* </DialogInputStandard> */}
+        {/* <DialogConfirmStandard */}
+        {/*   initialOpen */}
+        {/*   heading="heading" */}
+        {/*   msg="otuhoenuh thoeun etouhonetu hoeustoheu soethuoes utoehu soeuthoeu stoehus oetuoesut hoeusthoe ush" */}
+        {/*   yes="confirm" */}
+        {/*   no="close" */}
+        {/* /> */}
+        {/* <DialogConfirmStandard */}
+        {/*   initialOpen={true} */}
+        {/*   onClose={(...args) => { */}
+        {/*     debug(args); */}
+        {/*     debug("let me know"); */}
+        {/*   }} */}
+        {/* > */}
+        {/*   <Heading>heading</Heading> */}
+        {/*   <Description> */}
+        {/*     description tohusoet uoestuhoe sutoehu oesuthoeus oeutoeahs oetsunh */}
+        {/*     oeaustoeahu soeauhtoesu toeahusthoesuth oeustohu */}
+        {/*   </Description> */}
+        {/*   <Yes autoFocus>yes</Yes> */}
+        {/*   <No>no</No> */}
+        {/* </DialogConfirmStandard> */}
+        <ul>
+          {new Array(50)
+            .fill(
+              "one otuhnoeuh oeutnh oeutnhoeu ntoeh noetuhoentu oentuhoenuthoeunt oeunt",
+            )
+            .map((k, i) => (
+              <li key={i}>
+                <p>{k}</p>
+              </li>
+            ))}
+        </ul>
       </Div>
     </>
   );

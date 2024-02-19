@@ -22,6 +22,7 @@ function Table({
   showIndex,
   className,
   style,
+  onSelectionChange,
 }) {
   ctx ??= useTable({
     data,
@@ -30,6 +31,7 @@ function Table({
     rowsPerPage: 10,
     sort,
     getComparator,
+    onSelectionChange,
   });
 
   return (

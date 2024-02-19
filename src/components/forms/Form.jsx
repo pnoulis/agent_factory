@@ -13,7 +13,7 @@ function Form({ id, fields, ctx, onSubmit, className, style, children }) {
       } else {
         throw err;
       }
-    }).finally(() => {
+    })?.finally(() => {
       setForm("setSubmit", false);
     });
   }, [form.submitting]);

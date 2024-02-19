@@ -120,14 +120,6 @@ function removeIndex(arr, index) {
   }
 }
 
-function afmResponse(promise) {
-  return promise
-    .then((cmd) => cmd.res)
-    .catch((cmd) => {
-      throw cmd.errs.at(-1);
-    });
-}
-
 export {
   mergec,
   inspectProtoChain,
@@ -140,5 +132,4 @@ export {
   t_timetolocal,
   randomCashier,
   removeIndex,
-  afmResponse,
 };

@@ -29,6 +29,10 @@ function PageLanding() {
       <Await resolve={pending.afm}>
         {(afm) => (
           <>
+            {ReactDOM.createPortal(
+              <TrackCommands />,
+              document.getElementById("flash-messages-react-root"),
+            )}
             <Authorize as="cashier">
               {(authorized) =>
                 authorized || location === loginCashier.path ? (
@@ -38,10 +42,6 @@ function PageLanding() {
                 )
               }
             </Authorize>
-            {ReactDOM.createPortal(
-              <TrackCommands />,
-              document.getElementById("flash-messages-react-root"),
-            )}
           </>
         )}
       </Await>

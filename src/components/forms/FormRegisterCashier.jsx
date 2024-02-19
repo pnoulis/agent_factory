@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Submit } from "./Submit.jsx";
-import { TextInput_0, useForm, FormProvider } from "react_utils/inputs";
+import { TextInput_0, useForm } from "react_utils/inputs";
 import { Form } from "./Form.jsx";
 import { ComboboxCashierPrivilege } from "#components/comboboxes/ComboboxCashierPrivilege.jsx";
 

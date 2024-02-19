@@ -4,7 +4,6 @@ import { Outlet, Navigate, useLocation } from "react-router-dom";
 import { Site } from "#components/site/Site.jsx";
 import { ContextApp } from "./contexts/ContextApp.jsx";
 import { translate } from "/src/translate.js";
-import { removeIndex } from "/src/misc/misc.js";
 // import { TaskProgress } from "./components/TaskProgress.jsx";
 
 // import { AwaitTask } from "#components/AwaitTask.jsx";
@@ -29,7 +28,6 @@ function Component() {
         afm,
       }}
     >
-      {/* <TaskProgress /> */}
       <Site language={language} onLanguageChange={setLanguage} t={t}>
         <Outlet />
       </Site>

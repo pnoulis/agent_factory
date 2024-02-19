@@ -9,6 +9,7 @@ function useTable({
   order: defaultOrder = "asc",
   rowsPerPage: initialRowsPerPage,
   fields,
+  onSelectionChange,
 } = {}) {
   const [order, setOrder] = React.useState(defaultOrder);
   const [orderBy, setOrderBy] = React.useState(defaultOrderBy);
@@ -82,6 +83,10 @@ function useTable({
       );
     }
   }
+
+  React.useEffect(() => {
+    onSelectionChange?.(selected);
+  }, [selected, setSelected]);
 
   return {
     order,

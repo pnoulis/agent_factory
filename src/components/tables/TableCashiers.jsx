@@ -1,6 +1,6 @@
 import { Table } from "./Table.jsx";
 
-function TableCashiers({ cashiers }) {
+function TableCashiers({ cashiers, onSelectionChange }) {
   return (
     <Table
       showIndex
@@ -12,6 +12,7 @@ function TableCashiers({ cashiers }) {
         email: null,
         role: null,
       }}
+      onSelectionChange={onSelectionChange}
     />
   );
 }
