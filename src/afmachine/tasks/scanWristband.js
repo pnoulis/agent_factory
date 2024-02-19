@@ -25,7 +25,7 @@ function Command(unsubcb, opts) {
 Command.middleware = [
   async (ctx, next) => {
     if (SCAN_WRISTBAND_LOCK !== ctx.args.scanLock) {
-      throw globalThis.createError(({ EWRISTBAND }) =>
+      throw globalThis.craterr(({ EWRISTBAND }) =>
         EWRISTBAND("Wristband scan is busy"),
       );
     }

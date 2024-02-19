@@ -83,7 +83,7 @@ function normalize(sources, options) {
       // Content could be either defined or not defined
       break;
     default:
-      throw globalThis.createError(({ EPLAYER }) =>
+      throw globalThis.craterr(({ EPLAYER }) =>
         EPLAYER({
           msg: `Unrecognized player state: '${target.state}'`,
           target,
@@ -93,7 +93,7 @@ function normalize(sources, options) {
 
   trace(target, "player.normalize() target");
   if (misaligned) {
-    throw globalThis.createError(({ EPLAYER }) =>
+    throw globalThis.craterr(({ EPLAYER }) =>
       EPLAYER({
         msg: `Misaligned player in '${target.state}' state: '${misaligned}'`,
         target,

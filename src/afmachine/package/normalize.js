@@ -153,7 +153,7 @@ function normalize(sources, options) {
       }
       break;
     default:
-      throw globalThis.createError(({ EPLAYER }) =>
+      throw globalThis.craterr(({ EPLAYER }) =>
         EPLAYER({
           msg: `Unrecognized package state: '${target.state}'`,
           target,
@@ -163,7 +163,7 @@ function normalize(sources, options) {
 
   trace(target, "package.normalize() target");
   if (misaligned) {
-    throw globalThis.createError(({ EPACKAGE }) =>
+    throw globalThis.craterr(({ EPACKAGE }) =>
       EPACKAGE({
         msg: `Misaligned package in '${target.state}' state: '${misaligned}'`,
         target,

@@ -74,7 +74,7 @@ function normalize(sources, options) {
       // Content could be either defined or not defined
       break;
     default:
-      throw globalThis.createError(({ EWRISTBAND }) =>
+      throw globalThis.craterr(({ EWRISTBAND }) =>
         EWRISTBAND({
           msg: `Unrecognized wristband state: '${target.state}'`,
           target,
@@ -84,7 +84,7 @@ function normalize(sources, options) {
 
   trace(target, "wristband.normalize() target");
   if (misaligned) {
-    throw globalThis.createError(({ EWRISTBAND }) =>
+    throw globalThis.craterr(({ EWRISTBAND }) =>
       EWRISTBAND({
         msg: `Misaligned wristband in '${target.state}' state: '${misaligned}'`,
         target,
