@@ -19,11 +19,11 @@ function TrackCommands({ cmds: initial = [] }) {
         cmd,
         node: null,
       });
-      await waitForUi(() => cmdRefs.current[index].node);
+      await waitForUi(() => cmdRefs.current[index]?.node);
     });
 
     return () => afm.deregisterListener("cmdstart", "fms");
-  }, [cmds, setCmds]);
+  }, []);
 
   const umountCommand = (cmd) => {
     const newCmds = [];

@@ -29,7 +29,7 @@ const eventful = {
     } else {
       listeners.push(opts);
     }
-    // this.emit("newListener", event, listener);
+    this.emit("newListener", event, listener);
     return this;
   },
   onReverse(event, listener) {
@@ -50,17 +50,10 @@ const eventful = {
   async emit(event, ...args) {
     if (event === "error" && this.events.error.length < 1) throw args[0];
     const nextevents = [];
-    debug(event);
-    if (event === "stateChange") {
-      console.log(`state change: ${args[0]}`);
-      console.log(`listeners: ${this.events[event].length}`);
-    }
     for (let i = 0; i < this.addEvent(event).length; i++) {
-      debug("calling listener", this.events[event][i]);
-      await this.events[event][i].listener(...args);
-      // await Promise.resolve().then(() =>
-      //   this.events[event][i].listener(...args),
-      // );
+      await Promise.resolve().then(() =>
+        this.events[event][i].listener(...args),
+      );
       if (this.events[event][i].persist) {
         nextevents.push(this.events[event][i]);
       }

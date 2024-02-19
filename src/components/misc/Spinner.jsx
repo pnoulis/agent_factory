@@ -1,8 +1,9 @@
 import { MoonLoader } from "react-spinners";
+import { mergec } from "/src/misc/misc.js";
 
 function Spinner({ className, style, size, color }) {
   return (
-    <div className={className} style={style}>
+    <div className={mergec("spinner", className)} style={style}>
       <MoonLoader loading color={color} size={size} />
     </div>
   );

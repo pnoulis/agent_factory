@@ -38,10 +38,10 @@ function PageLanding() {
                 )
               }
             </Authorize>
-            {/* {ReactDOM.createPortal( */}
-            {/*   <TrackCommands />, */}
-            {/*   document.getElementById("flash-messages-react-root"), */}
-            {/* )} */}
+            {ReactDOM.createPortal(
+              <TrackCommands />,
+              document.getElementById("flash-messages-react-root"),
+            )}
           </>
         )}
       </Await>

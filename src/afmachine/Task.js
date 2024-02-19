@@ -74,7 +74,7 @@ class Task extends createEventful() {
           cmd.t_start = Date.now();
           cmd.state = "pending";
           await cmd.emit("stateChange", cmd.state, ostate, cmd);
-          debug("after state change emit");
+          trace("after state change emit");
           cmd.onPending?.();
           await cmd.emit("pending", cmd);
 
@@ -90,23 +90,23 @@ class Task extends createEventful() {
               await cmd.emit("fulfilled", cmd);
             })
             .catch(async (err) => {
-              debug("catch 1");
+              trace("catch 1");
               cmd.errs.push(err);
               cmd.state = "rejected";
-              debug("calling state change");
+              trace("calling state change");
               await cmd.emit("stateChange", cmd.state, ostate, cmd);
-              debug("after state change");
+              trace("after state change");
               cmd.onFailure?.();
               cmd.emit("rejected", cmd);
               throw err;
             })
             .finally(() => {
-              debug("finally 1");
+              trace("finally 1");
               return cmd.emit("postask", cmd);
             });
         } finally {
           if (cmd.errs) {
-            debug("finally 2");
+            trace("finally 2");
             cmd.reject(cmd);
           } else {
             cmd.resolve(cmd);
