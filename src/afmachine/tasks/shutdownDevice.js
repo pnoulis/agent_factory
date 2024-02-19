@@ -6,12 +6,12 @@ import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 
 new Task("shutdownDevice", Command, "updateDevice");
 
-function Command(deviceId, opts) {
+function Command(device, opts) {
   const afm = this;
   const promise = Command.createCommand(
     afm,
     {
-      args: { deviceId },
+      args: { device },
       opts,
     },
     (cmd) => {
@@ -20,39 +20,44 @@ function Command(deviceId, opts) {
   );
   return promise;
 }
+Command.verb = "shutdown device";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
       timestamp: ctx.t_start,
-      deviceId: ctx.args.deviceId ?? "",
-      devicesAction: ctx.args.deviceId ? "SHUTDOWN" : "SHUTDOWN_ALL",
+      deviceId: ctx.args.device?.id ?? "",
+      devicesAction: ctx.args.device?.id ? "SHUTDOWN" : "SHUTDOWN_ALL",
     };
     return next();
   },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.updateDevice(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.updateDevice(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.device = null;
+    ctx.res.device = ctx.args.device;
     return next();
   },
 ];
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = `Failed to switch off device${cmd.req.deviceId ? "" : "s"}`;
-  cmd.reject(cmd.errs.at(-1));
+  cmd.msg = `Failed to switch off ${
+    cmd.req.deviceId ? "device" : "all devices"
+  }`;
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = `Successfully switched off device${cmd.req.deviceId ? "" : "s"}`;
-  cmd.resolve(cmd.res);
+  cmd.msg = `Successfully switched off ${
+    cmd.req.deviceId ? "device" : "all devices"
+  }`;
+  cmd.resolve(cmd);
 };
 
 export { Command as shutdownDevice };

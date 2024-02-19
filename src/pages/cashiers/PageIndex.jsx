@@ -1,3 +1,4 @@
+import * as React from "react";
 import { TableCashiers } from "#components/tables/TableCashiers.jsx";
 import { AwaitCashiers } from "/src/loaders/loadCashiers.jsx";
 import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
@@ -23,7 +24,7 @@ function Component() {
             color="var(--primary-base)"
             fill="white"
             content="remove cashier"
-            onClick={async (e) => {
+            onClick={async () => {
               if (!selectedCashiersRef.current.length) {
                 return renderDialog(
                   <DialogAlertStandard
@@ -57,8 +58,8 @@ function Component() {
               <TableCashiers
                 key={cashiers}
                 cashiers={cashiers}
-                onSelectionChange={(cashiers) => {
-                  selectedCashiersRef.current = cashiers;
+                onSelectionChange={(selection) => {
+                  selectedCashiersRef.current = selection;
                 }}
               />
             )}

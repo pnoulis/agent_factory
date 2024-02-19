@@ -1,7 +1,10 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
-
+** TODO implement device action procedure
+*** TODO Shutdown
+*** TODO Reboot
+*** TODO Boot
 ** Cashier session
 *** register cashier
 ** DONE Rename afmResponse to parseCmd

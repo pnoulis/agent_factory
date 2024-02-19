@@ -4,18 +4,16 @@ import { getafm } from "/src/getafm.js";
 import { parsecmd } from "#afm/parsecmd.js";
 import { Pending } from "#components/await-command/Pending.jsx";
 
-const loadCashiers = () =>
-  defer({
-    cashiers: getafm().then((afm) => parsecmd(afm.listCashiers())),
-  });
+const loadDevices = () =>
+  defer({ devices: getafm().then((afm) => parsecmd(afm.listDevices())) });
 
-function AwaitCashiers({ children }) {
+function AwaitDevices({ children }) {
   const pending = useLoaderData();
   return (
     <Suspense fallback={<Pending />}>
-      <Await resolve={pending.cashiers}>{children}</Await>
+      <Await resolve={pending.devices}>{children}</Await>
     </Suspense>
   );
 }
 
-export { loadCashiers, AwaitCashiers };
+export { loadDevices, AwaitDevices };

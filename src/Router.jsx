@@ -9,6 +9,7 @@ import * as links from "./links.jsx";
 import { PageScratch } from "./pages/scratch/PageScratch.jsx";
 import { loadAfmachine } from "./loaders/loadAfmachine.jsx";
 import { loadCashiers } from "./loaders/loadCashiers.jsx";
+import { loadDevices } from "./loaders/loadDevices.jsx";
 import { PageLanding } from "./pages/PageLanding.jsx";
 
 function Router() {
@@ -106,6 +107,7 @@ const router = createBrowserRouter(
                   ],
                 },
                 {
+                  loader: loadDevices,
                   path: links.devices.path,
                   lazy: async () => import("./pages/devices/PageDevices.jsx"),
                 },
