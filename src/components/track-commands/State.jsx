@@ -8,7 +8,7 @@ function State({ cmd }) {
       const messages = [cmd.msg];
       const { message, cause } = cmd.errs.at(-1);
       messages.push(message);
-      if (cause.message) {
+      if (cause?.message) {
         messages.push(cause.message);
       }
       return (

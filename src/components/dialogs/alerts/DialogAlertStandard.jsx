@@ -33,6 +33,10 @@ const StyledDialogAlert = styled(DialogAlert)`
     letter-spacing: 1px;
     font-weight: 550;
   }
+
+  .description {
+    font-size: var(--tx-lg);
+  }
 `;
 
 export { DialogAlertStandard };

@@ -69,6 +69,7 @@ const StyledDialogInput = styled(DialogInput)`
 
   .description {
     grid-column: 1 / -1;
+    font-size: var(--tx-lg);
   }
 
   .confirm {

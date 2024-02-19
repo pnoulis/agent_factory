@@ -21,6 +21,7 @@ function Command(cashier, opts) {
   );
   return promise;
 }
+Command.verb = "deregister cashier";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
@@ -33,7 +34,7 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.deregisterCashier(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.deregisterCashier(ctx.req);
     return next();
   },
   parseBackendResponse,
@@ -47,13 +48,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to deregister Cashier";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully deregistered Cashier";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as deregisterCashier };

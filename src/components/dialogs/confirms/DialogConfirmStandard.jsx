@@ -14,11 +14,12 @@ function DialogConfirmStandard({
   msg,
   yes = "yes",
   no = "no",
+  children,
 }) {
   return (
     <StyledDialogConfirm id={id} initialOpen={initialOpen} onClose={onClose}>
       <Heading>{heading}</Heading>
-      <Description>{msg}</Description>
+      <Description>{children || msg}</Description>
       <No autoFocus>{no}</No>
       <Yes>{yes}</Yes>
     </StyledDialogConfirm>
@@ -53,6 +54,7 @@ const StyledDialogConfirm = styled(DialogConfirm)`
 
   .description {
     grid-column: 1 / -1;
+    font-size: var(--tx-lg);
   }
 
   .confirm {

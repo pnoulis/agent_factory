@@ -6,6 +6,10 @@ import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
 import { WidgetRemove } from "#components/widgets/WidgetRemove.jsx";
 import { useNavigate } from "react-router-dom";
 import { Center } from "#components/Center.jsx";
+import { confirmDeregisterCashier } from "#components/dialogs/confirms/confirmDeregisterCashier.jsx";
+import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
+import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { DialogAlertStandard } from "../../components/dialogs/alerts/DialogAlertStandard.jsx";
 
 function Component() {
   const navigate = useNavigate();
@@ -19,6 +23,24 @@ function Component() {
             color="var(--primary-base)"
             fill="white"
             content="remove cashier"
+            onClick={async (e) => {
+              if (!selectedCashiersRef.current.length) {
+                return renderDialog(
+                  <DialogAlertStandard
+                    initialOpen
+                    heading="deregister cashiers"
+                    msg="Empty cashier selection"
+                  />,
+                );
+              }
+              const yes = await confirmDeregisterCashier(
+                selectedCashiersRef.current,
+              );
+              if (!yes) return;
+              for (const cashier of selectedCashiersRef.current) {
+                afm.deregisterCashier(cashier);
+              }
+            }}
           />
           <WidgetAdd
             onClick={(e) => navigate("register")}
@@ -29,16 +51,19 @@ function Component() {
         </PanelNavbar>
       </PanelActionbar>
       <Center>
-        <AwaitCashiers>
-          {({ cashiers }) => (
-            <TableCashiers
-              cashiers={cashiers}
-              onSelectionChange={(cashiers) => {
-                selectedCashiersRef.current = cashiers;
-              }}
-            />
-          )}
-        </AwaitCashiers>
+        <AwaitCommand revalidate cmd={afm.deregisterCashier}>
+          <AwaitCashiers>
+            {({ cashiers }) => (
+              <TableCashiers
+                key={cashiers}
+                cashiers={cashiers}
+                onSelectionChange={(cashiers) => {
+                  selectedCashiersRef.current = cashiers;
+                }}
+              />
+            )}
+          </AwaitCashiers>
+        </AwaitCommand>
       </Center>
     </>
   );
