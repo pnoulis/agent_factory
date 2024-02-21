@@ -36,7 +36,9 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.players = ctx.raw.players.map((player) => Player.normalize(player));
+    ctx.res.players = ctx.raw.players.map((player) =>
+      Player.normalize(player, { state: "registered", stage2: false }),
+    );
     return next();
   },
 ];

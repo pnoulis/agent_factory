@@ -35,8 +35,6 @@ function deregisterListener(event, name) {
     }
     trace(`Deregistering listener:'${name}' from event:'${event}'`);
     globalThis.afm.removeListener(event, listener);
-    debug(listeners);
-    debug(listeners[event], "listeners");
     listeners[event] = removeIndex(listeners[event], listener);
   }
 }

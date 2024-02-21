@@ -38,17 +38,18 @@ const Li = styled("li")`
   cursor: pointer;
   display: grid;
   grid-template-columns: 1fr max-content;
-  grid-template-rows: auto;
+  grid-template-rows: max-content;
   align-items: center;
   padding: 5px 20px;
   gap: 5px;
-  min-height: 50px;
-  height: auto;
+  min-height: max-content;
   min-width: 400px;
-  width: max-content;
+  max-width: 600px;
 
   border-radius: var(--br-nl);
   box-shadow: var(--sd-5);
+  text-wrap: wrap;
+  overflow-wrap: anywhere;
 
   text-transform: capitalize;
   color: black;
@@ -61,11 +62,6 @@ const Li = styled("li")`
     margin-left: 5px;
     letter-spacing: 3px;
     font-weight: 500;
-  }
-
-  .msg {
-    grid-column: 1 / -1;
-    color: var(--error-light);
   }
 `;
 

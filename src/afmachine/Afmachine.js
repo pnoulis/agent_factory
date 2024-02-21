@@ -98,6 +98,8 @@ class Afmachine extends createEventful([
     this.on("newListener", (event) => {
       if (event === "booted" && this.booted) {
         this.emit("booted", this);
+      } else if (event === "idle") {
+        this.emit("idle", this);
       }
     });
 
@@ -134,7 +136,7 @@ Afmachine.prototype.runCommand = async function (cmd) {
     // This registered error handler ensures
     // that an error will not result
     // in an unhandled exception.
-    // cmd.promise.catch(() => {});
+    cmd.promise.catch(() => {});
 
     await cmd.run();
   } catch (err) {

@@ -7,7 +7,7 @@ import { Player } from "../player/Player.js";
 
 new Task("registerPlayer", Command);
 
-function Command(player, password, { synthetic = true, queued = false } = {}) {
+function Command(player, password, { synthetic = false, queued = false } = {}) {
   const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,

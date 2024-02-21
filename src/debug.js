@@ -75,6 +75,7 @@ function logafm(afm) {
   afm.on("cmdqueue", (cmd) => {
     console.log(`CMD_QUEUE: '${cmd.taskname}'`);
     console.log("--------------------------------------------------");
+    console.log(cmd.afm.commandQueue);
     console.log();
     console.log();
   });

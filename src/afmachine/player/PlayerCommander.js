@@ -18,11 +18,15 @@ class PlayerCommander extends createEventful(Player) {
   }
 
   async pairWristband() {
-    return await parsecmd(afm.pairWristband(this, this.wristband));
+    return await parsecmd(
+      afm.pairWristband(this, this.wristband, { queue: false }),
+    );
   }
 
   async unpairWristband() {
-    return await parsecmd(afm.unpairWristband(this, this.wristband));
+    return await parsecmd(
+      afm.unpairWristband(this, this.wristband, { queue: false }),
+    );
   }
 }
 extendProto(PlayerCommander, stateventful);

@@ -41,8 +41,11 @@ Command.middleware = [
   validateBackendRequest,
   async (ctx, next) => {
     ctx.raw = await ctx.afm.adminScreen.scanWristband(ctx.args.unsubcb);
-    // Mqtt Wrapper library added property
-    ctx.res.unsubed = ctx.raw.unsubed;
+    if (ctx.raw.unsubed) {
+      throw craterr(({ EWRISTBAND }) =>
+        EWRISTBAND({ msg: "Unsubscribed", severity: "info" }),
+      );
+    }
     ctx.raw = ctx.raw.wristband;
     return next();
   },

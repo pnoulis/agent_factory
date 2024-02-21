@@ -1,8 +1,4 @@
 import { Task } from "../Task.js";
-import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendRegistrationRouteInfo.js";
-import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
-import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
-import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { PlayerCommander } from "../player/PlayerCommander.js";
 import { WristbandCommander } from "../wristband/WristbandCommander.js";
 
@@ -23,6 +19,8 @@ function Command(player, wristband, opts) {
   );
   return promise;
 }
+
+Command.verb = "unpair player's wristband";
 
 Command.middleware = [
   async (ctx, next) => {

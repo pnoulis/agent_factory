@@ -7,6 +7,7 @@ class WristbandCommander extends createEventful(Wristband) {
   constructor(wristband) {
     super(wristband);
     this.addEvent("stateChange");
+    this.pairing = null;
   }
 
   async scan() {
@@ -15,7 +16,7 @@ class WristbandCommander extends createEventful(Wristband) {
       const { wristband } = await parsecmd(
         afm.scanWristband(
           (unsub) => {
-            _unsub = unsub;
+            this.pairing.unsub = unsub;
           },
           { queue: false },
         ),
@@ -44,16 +45,49 @@ class WristbandCommander extends createEventful(Wristband) {
     return response.player.wristband;
   }
 
-  async pair(player) {
-    const wristband = await this.scan();
-    const registered = await this.register(player, wristband);
-    this.state.paired(registered);
-    return this;
+  async cancelPairing() {
+    if (!this.pairing) return Promise.resolve(false);
+    if (this.pairing.unsub) {
+      await this.pairing.unsub();
+    }
+    this.pairing.reject(
+      craterr(({ EWRISTBAND }) =>
+        EWRISTBAND({ msg: "Unsubscribed", severity: "info" }),
+      ),
+    );
+    this.pairing = null;
+    return Promise.resolve().then(() => this.state.unpaired(this));
+  }
+
+  pair(player) {
+    return new Promise(async (resolve, reject) => {
+      this.pairing = {
+        resolve,
+        reject,
+      };
+      try {
+        const wristband = await this.scan();
+        const registered = await this.register(player, wristband);
+        this.state.paired(registered);
+        resolve(this);
+      } catch (err) {
+        reject(err);
+      } finally {
+        this.pairing = null;
+      }
+    });
   }
   async unpair(player) {
-    const deregistered = await this.deregister(player, this);
-    this.state.unpaired(deregistered);
-    return this;
+    try {
+      const cancelled = await this.cancelPairing();
+      if (cancelled) return cancelled;
+      const deregistered = await this.deregister(player, this);
+      this.state.unpaired(deregistered);
+    } catch (err) {
+      this.state.unpaired(this);
+    } finally {
+      return this;
+    }
   }
 }
 extendProto(WristbandCommander, stateventful);
