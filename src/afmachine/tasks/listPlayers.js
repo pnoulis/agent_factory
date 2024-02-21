@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizePlayer } from "../player/normalize.js";
+import { Player } from "../player/Player.js";
 
 new Task("listPlayers", Command);
 
@@ -25,14 +25,14 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.listPlayers();
+    ctx.raw = await ctx.afm.adminScreen.listPlayers();
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.players = ctx.raw.players.map((player) =>
-      normalizePlayer(player, { depth: 1, defaultState: "registered" }),
+      Player.normalize(player, { defaultState: "registered", stage2: false }),
     );
     return next();
   },
@@ -41,13 +41,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve players";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved players";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as listPlayers };

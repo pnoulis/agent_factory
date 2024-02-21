@@ -9,6 +9,7 @@ import * as links from "./links.jsx";
 import { PageScratch } from "./pages/scratch/PageScratch.jsx";
 import { loadAfmachine } from "./loaders/loadAfmachine.jsx";
 import { loadCashiers } from "./loaders/loadCashiers.jsx";
+import { loadPlayers } from "./loaders/loadPlayers.jsx";
 import { loadDevices } from "./loaders/loadDevices.jsx";
 import { PageLanding } from "./pages/PageLanding.jsx";
 
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
               lazy: async () => import("./pages/players/PagePlayers.jsx"),
               children: [
                 {
+                  loader: loadPlayers,
                   index: true,
                   lazy: async () => import("./pages/players/PageIndex.jsx"),
                 },

@@ -48,6 +48,11 @@ const Wrapper = styled("div")`
   grid-template-columns: 1fr;
   row-gap: 20px;
   position: relative;
+
+  .panel-main {
+    display: flex;
+    align-items: end;
+  }
 `;
 
 export { Panel };
