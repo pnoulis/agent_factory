@@ -23,8 +23,7 @@ class Paired {
     );
   }
   unpair() {
-    return this.wristband;
-    // return this.wristband.setState("unpairing");
+    return this.wristband.setState("unpairing");
   }
   unpaired(wristband) {
     throw globalThis.craterr(({ EWRISTBAND }) =>

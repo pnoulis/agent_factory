@@ -1,6 +1,8 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** TODO Wristband commander
+*** DONE Unpair a wristband
 ** TODO implement device action procedure
 *** DONE Shutdown
 *** DONE Reboot

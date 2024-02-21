@@ -25,14 +25,12 @@ class Unpairing {
   }
   unpair() {
     return this.wristband;
-    // return this.wristband.setState("unpairing");
   }
   unpaired(wristband) {
-    return this.wristband;
-    // return this.wristband.normalize(
-    //   {},
-    //   { state: "unpaired", nullSupersede: true },
-    // );
+    return this.wristband.normalize(
+      {},
+      { state: "unpaired", nullSupersede: true },
+    );
   }
 }
 

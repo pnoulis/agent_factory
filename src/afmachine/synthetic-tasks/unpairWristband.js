@@ -1,4 +1,3 @@
-import { delay } from "js_utils/misc";
 import { Task } from "../Task.js";
 import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendRegistrationRouteInfo.js";
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
@@ -10,56 +9,42 @@ import { WristbandCommander } from "../wristband/WristbandCommander.js";
 new Task("unpairWristband", Command);
 
 function Command(player, wristband, opts) {
-  const afm = this;
-  const wristbandTarget = new WristbandCommander(afm, wristband);
-  const playerTarget = new PlayerCommander(null, player, wristbandTarget);
-  afm.setCache("players", playerTarget.username, playerTarget);
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {
       args: {
-        player: "tobject" in player ? player.tobject() : player,
-        wristband: "tobject" in wristband ? wristband.tobject() : wristband,
+        player,
+        wristband,
       },
       opts,
     },
-    (cmd) => {
-      afm.runCommand(cmd);
-    },
+    (cmd) => afm.runCommand(cmd),
   );
   return promise;
 }
 
 Command.middleware = [
   async (ctx, next) => {
-    const player = ctx.afm.getCache("players", ctx.args.player.username);
-    player.state.unpairWristband();
-    player.wristband.state.unpair();
-    ctx.raw = await ctx.afm.getWristbandInfo(ctx.args.wristband, {
-      queue: false,
-    });
-    if (ctx.raw.wristband.state === "paired") {
-      ctx.raw = await ctx.afm.deregisterWristband(
-        ctx.args.player,
-        ctx.args.wristband,
-        { queue: false },
-      );
-    }
-    player.wristband.state.unpaired(ctx.raw.wristband);
-    ctx.res = player.wristband.tobject();
+    ctx.args.player.state.unpairWristband();
+    ctx.args.wristband.state.unpair();
+    await ctx.args.wristband.unpair(ctx.args.player);
+    ctx.res.player = ctx.args.player.tobject(null, { depth: 1 });
     return next();
   },
 ];
 
 Command.onFailure = function () {
   const cmd = this;
+  cmd.res.ok = false;
   cmd.msg = "Failed to unpair wristband from player";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
+  cmd.res.ok = true;
   cmd.msg = "Successfully unpaired wristband from player";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as unpairWristband };

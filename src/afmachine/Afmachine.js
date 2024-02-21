@@ -16,12 +16,13 @@ import { Cashier } from "./cashier/Cashier.js";
 import { readWristband } from "./tasks/readWristband.js";
 
 // Synthetic Player tasks
-// import { pairWristband } from "./synthetic-tasks/pairWristband.js";
+import { pairWristband } from "./synthetic-tasks/pairWristband.js";
+import { unpairWristband } from "./synthetic-tasks/unpairWristband.js";
 
 // Synthetic Team tasks
 
 // Player tasks
-// import { registerPlayer } from "./tasks/registerPlayer.js";
+import { registerPlayer } from "./tasks/registerPlayer.js";
 import { searchPlayer } from "./tasks/searchPlayer.js";
 
 // Wristband tasks
@@ -219,10 +220,11 @@ Object.assign(Afmachine.prototype, {
   readWristband,
 
   // Synthetic Player tasks
-  // pairWristband,
+  pairWristband,
+  unpairWristband,
 
   // Player tasks
-  // registerPlayer,
+  registerPlayer,
   searchPlayer,
 
   // Wristband tasks

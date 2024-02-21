@@ -3,25 +3,25 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { PlayerCommander } from "../player/PlayerCommander.js";
+import { Player } from "../player/Player.js";
 
 new Task("registerPlayer", Command);
 
-function Command(player, password, opts) {
-  const afm = this;
-  afm.setCache("players", player.username, player);
+function Command(player, password, { synthetic = true, queued = false } = {}) {
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {
       args: {
-        player: "tobject" in player ? player.tobject() : player,
+        player,
         password,
       },
-      opts,
+      opts: {
+        synthetic,
+        queued,
+      },
     },
-    (cmd) => {
-      afm.runCommand(cmd);
-    },
+    (cmd) => afm.runCommand(cmd),
   );
   return promise;
 }
@@ -30,8 +30,9 @@ Command.verb = "register player";
 
 Command.middleware = [
   async (ctx, next) => {
-    const player = ctx.afm.getCache("players", ctx.args.player.username);
-    player.state.register();
+    if (ctx.opts.synthetic) {
+      ctx.args.player.state.register();
+    }
     ctx.req = {
       timestamp: ctx.t_start,
       name: ctx.args.player.name,
@@ -45,14 +46,13 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerPlayer(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.registerPlayer(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    const player = ctx.afm.getCache("players", ctx.args.player.username);
-    ctx.res.player = player.state.registered(ctx.raw.player).tobject();
+    ctx.res.player = Player.normalize(ctx.raw.player, { state: "registered" });
     return next();
   },
 ];
@@ -61,13 +61,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to register new Player";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully registered new Player";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as registerPlayer };

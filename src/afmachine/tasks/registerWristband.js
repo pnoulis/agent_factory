@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeWristband } from "../wristband/normalize.js";
+import { Player } from "../player/Player.js";
 
 new Task("registerWristband", Command);
 
@@ -13,8 +13,8 @@ function Command(player, wristband, opts) {
     afm,
     {
       args: {
-        player: "tobject" in player ? player.tobject() : player,
-        wristband: "tobject" in wristband ? wristband.tobject() : wristband,
+        player,
+        wristband,
       },
       opts,
     },
@@ -45,10 +45,14 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.player = { ...ctx.args.player };
-    ctx.res.player.wristband = normalizeWristband(ctx.args.wristband, {
-      state: "paired",
-    });
+    ctx.res.player = Player.normalize(
+      [
+        ctx.args.player,
+        { wristband: ctx.args.wristband },
+        { wristband: ctx.raw },
+      ],
+      { wristband: { state: "paired" } },
+    );
     return next();
   },
 ];

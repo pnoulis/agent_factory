@@ -5,35 +5,31 @@ import { validateBackendResponse } from "../middleware/validateBackendResponse.j
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { PlayerCommander } from "../player/PlayerCommander.js";
 import { WristbandCommander } from "../wristband/WristbandCommander.js";
-import { createStateErr, ERR_CODES } from "../../errors.js";
 
 new Task("pairWristband", Command);
 
 function Command(player, wristband, opts) {
-  const afm = this;
-  afm.setCache("players", player.username, player);
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {
       args: {
-        player: "tobject" in player ? player.tobject() : player,
-        wristband: "tobject" in wristband ? wristband.tobject() : wristband,
+        player,
+        wristband,
       },
       opts,
     },
-    (cmd) => {
-      afm.runCommand(cmd);
-    },
+    (cmd) => afm.runCommand(cmd),
   );
   return promise;
 }
 
 Command.middleware = [
   async (ctx, next) => {
-    const player = ctx.afm.getCache("players", ctx.args.player.username);
-    player.state.pairWristband();
-    await player.wristband.pair(player);
-    ctx.res.player = player.tobject(1);
+    ctx.args.player.state.pairWristband();
+    ctx.args.wristband.state.pair();
+    await ctx.args.wristband.pair(ctx.args.player);
+    ctx.res.player = ctx.args.player.tobject(null, { depth: 1 });
     return next();
   },
 ];
@@ -42,13 +38,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to pair Wristband to Player";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully paired Wristband to Player";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as pairWristband };

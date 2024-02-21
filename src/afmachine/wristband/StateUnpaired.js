@@ -15,8 +15,7 @@ class Unpaired {
   }
 
   pair() {
-    return this.wristband;
-    // return this.wristband.setState("pairing");
+    return this.wristband.setState("pairing");
   }
   paired(wristband) {
     throw globalThis.craterr(({ EWRISTBAND }) =>
@@ -25,10 +24,6 @@ class Unpaired {
   }
   unpair() {
     return this.wristband;
-    // return this.wristband.normalize(
-    //   {},
-    //   { state: "unpaired", nullSupersede: true },
-    // );
   }
   unpaired(wristband) {
     throw globalThis.craterr(({ EWRISTBAND }) =>

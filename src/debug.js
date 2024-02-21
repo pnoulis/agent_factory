@@ -54,7 +54,11 @@ function logcmd(cmd) {
     t_end: cmd.t_end,
     msg: cmd.msg,
   };
-  debug(_cmd);
+  if (ENV.RUNTIME === "node") {
+    deebug(_cmd);
+  } else {
+    debug(_cmd);
+  }
 }
 function logafm(afm) {
   if (ENV.LOGLEVEL === "silent") return;
@@ -154,6 +158,12 @@ function logent(entity, format = false) {
   return true;
 }
 
+function logstate(stateventful) {
+  stateventful.on("stateChange", (newState, oldState, staeventful) => {
+    debug(`state change '${oldState}' -> '${newState}'`);
+  });
+}
+
 globalThis.debug = debug;
 globalThis.deebug = deebug;
 globalThis.trace = trace;
@@ -162,13 +172,4 @@ globalThis.logafm = logafm;
 globalThis.logPlayer = logPlayer;
 globalThis.logWristband = logWristband;
 globalThis.logent = logent;
-
-// process.on("unhandledRejection", (err) => {
-//   console.log("UNHANDLED_REJECTION:");
-//   console.log(err);
-//   console.log(
-//     isArray(err)
-//       ? err.map((er) => er.msg ?? er.message)
-//       : err.msg ?? err.message,
-//   );
-// });
+globalThis.logstate = logstate;

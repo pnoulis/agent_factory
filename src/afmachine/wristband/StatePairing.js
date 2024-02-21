@@ -18,13 +18,10 @@ class Pairing {
     return this.wristband;
   }
   paired(wristband) {
-    return this.wristband;
-    // return this.wristband.normalize(wristband, { state: "paired" });
+    return this.wristband.normalize(wristband, { state: "paired" });
   }
   unpair() {
-    throw globalThis.craterr(({ EWRISTBAND }) =>
-      EWRISTBAND("Wristband is pairing"),
-    );
+    return this.wristband.setState("unpairing");
   }
   unpaired(wristband) {
     throw globalThis.craterr(({ EWRISTBAND }) =>
