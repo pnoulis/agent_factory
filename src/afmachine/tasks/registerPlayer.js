@@ -26,6 +26,8 @@ function Command(player, password, opts) {
   return promise;
 }
 
+Command.verb = "register player";
+
 Command.middleware = [
   async (ctx, next) => {
     const player = ctx.afm.getCache("players", ctx.args.player.username);

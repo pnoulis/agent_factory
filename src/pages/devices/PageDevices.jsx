@@ -17,6 +17,7 @@ import { confirmUpdateDevicesView } from "#components/dialogs/confirms/confirmUp
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
 import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
+import { Pending } from "#components/await-command/Pending.jsx";
 
 function Component() {
   const selectedDevicesRef = React.useRef([]);
@@ -24,12 +25,16 @@ function Component() {
   return (
     <PageDevices>
       <PanelActionbar>
-        <PanelNavbar
-          style={{ justifyContent: "end", gap: "30px", alignItems: "center" }}
-        >
-          <AwaitViews>
-            {({ scoreboardViews, id }) => {
-              return (
+        <AwaitViews>
+          {({ scoreboardViews, id }) => (
+            <>
+              <PanelNavbar
+                style={{
+                  justifyContent: "end",
+                  gap: "30px",
+                  alignItems: "center",
+                }}
+              >
                 <ComboboxDeviceView
                   key={id}
                   views={scoreboardViews}
@@ -63,70 +68,82 @@ function Component() {
                     }
                   }}
                 />
-              );
-            }}
-          </AwaitViews>
-          <WidgetRestart
-            color="var(--primary-base)"
-            fill="white"
-            content="restart device"
-            onClick={async (e) => {
-              const yes = await confirmUpdateDevices(
-                "restart",
-                selectedDevicesRef.current,
-              );
-              if (!yes) {
-                return;
-              } else if (!selectedDevicesRef.current.length) {
-                afm.restartDevice();
-              } else {
-                for (let i = 0; i < selectedDevicesRef.current.length; i++) {
-                  afm.restartDevice(selectedDevicesRef.current[i]);
-                }
-              }
-            }}
-          />
-          <WidgetShutdown
-            color="var(--primary-base)"
-            fill="white"
-            content="shutdown device"
-            onClick={async () => {
-              const yes = await confirmUpdateDevices(
-                "shutdown",
-                selectedDevicesRef.current,
-              );
-              if (!yes) {
-                return;
-              } else if (!selectedDevicesRef.current.length) {
-                afm.shutdownDevice();
-              } else {
-                for (let i = 0; i < selectedDevicesRef.current.length; i++) {
-                  afm.shutdownDevice(selectedDevicesRef.current[i]);
-                }
-              }
-            }}
-          />
-          <WidgetBoot
-            color="var(--primary-base)"
-            fill="white"
-            content="boot device"
-            onClick={async () => {
-              const yes = await confirmUpdateDevices(
-                "boot",
-                selectedDevicesRef.current,
-              );
-              if (!yes) {
-                return;
-              } else if (!selectedDevicesRef.current.length) {
-                afm.bootDevice();
-              } else {
-                for (let i = 0; i < selectedDevicesRef.current.length; i++) {
-                  afm.bootDevice(selectedDevicesRef.current[i]);
-                }
-              }
-            }}
-          />
-        </PanelNavbar>
+                <WidgetRestart
+                  color="var(--primary-base)"
+                  fill="white"
+                  content="restart device"
+                  onClick={async (e) => {
+                    const yes = await confirmUpdateDevices(
+                      "restart",
+                      selectedDevicesRef.current,
+                    );
+                    if (!yes) {
+                      return;
+                    } else if (!selectedDevicesRef.current.length) {
+                      afm.restartDevice();
+                    } else {
+                      for (
+                        let i = 0;
+                        i < selectedDevicesRef.current.length;
+                        i++
+                      ) {
+                        afm.restartDevice(selectedDevicesRef.current[i]);
+                      }
+                    }
+                  }}
+                />
+                <WidgetShutdown
+                  color="var(--primary-base)"
+                  fill="white"
+                  content="shutdown device"
+                  onClick={async () => {
+                    const yes = await confirmUpdateDevices(
+                      "shutdown",
+                      selectedDevicesRef.current,
+                    );
+                    if (!yes) {
+                      return;
+                    } else if (!selectedDevicesRef.current.length) {
+                      afm.shutdownDevice();
+                    } else {
+                      for (
+                        let i = 0;
+                        i < selectedDevicesRef.current.length;
+                        i++
+                      ) {
+                        afm.shutdownDevice(selectedDevicesRef.current[i]);
+                      }
+                    }
+                  }}
+                />
+                <WidgetBoot
+                  color="var(--primary-base)"
+                  fill="white"
+                  content="boot device"
+                  onClick={async () => {
+                    const yes = await confirmUpdateDevices(
+                      "boot",
+                      selectedDevicesRef.current,
+                    );
+                    if (!yes) {
+                      return;
+                    } else if (!selectedDevicesRef.current.length) {
+                      afm.bootDevice();
+                    } else {
+                      for (
+                        let i = 0;
+                        i < selectedDevicesRef.current.length;
+                        i++
+                      ) {
+                        afm.bootDevice(selectedDevicesRef.current[i]);
+                      }
+                    }
+                  }}
+                />
+              </PanelNavbar>
+            </>
+          )}
+        </AwaitViews>
       </PanelActionbar>
       <Center>
         <AwaitCommand revalidate cmd={afm.updateScoreboardDeviceView}>
@@ -153,6 +170,10 @@ const PageDevices = styled(Panel)`
   max-width: 70%;
   margin: auto;
   gap: 30px;
+
+  .panel-header {
+    height: 70px;
+  }
 `;
 
 export { Component };

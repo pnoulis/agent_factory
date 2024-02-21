@@ -3,14 +3,14 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeWristband } from "../wristband/normalize.js";
+import { Wristband } from "../wristband/Wristband.js";
 
 new Task("scanWristband", Command);
 
 let SCAN_WRISTBAND_LOCK = false;
 
 function Command(unsubcb, opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     { args: { unsubcb, scanLock: !SCAN_WRISTBAND_LOCK }, opts },
@@ -21,6 +21,8 @@ function Command(unsubcb, opts) {
   SCAN_WRISTBAND_LOCK = true;
   return promise;
 }
+
+Command.verb = "scan wristband";
 
 Command.middleware = [
   async (ctx, next) => {
@@ -38,7 +40,7 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.scanWristband(ctx.args.unsubcb);
+    ctx.raw = await ctx.afm.adminScreen.scanWristband(ctx.args.unsubcb);
     // Mqtt Wrapper library added property
     ctx.res.unsubed = ctx.raw.unsubed;
     ctx.raw = ctx.raw.wristband;
@@ -47,7 +49,7 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    ctx.res.wristband = normalizeWristband(ctx.raw);
+    ctx.res.wristband = Wristband.normalize(ctx.raw);
     return next();
   },
 ];
@@ -56,13 +58,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to scan Wristband";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully scanned Wristband";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as scanWristband };

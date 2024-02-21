@@ -5,7 +5,7 @@ import { mergec } from "../../misc/misc.js";
 
 function WidgetWristband({ $wristbandColor, $pairing, ...props }) {
   return (
-    <WristbandWidget
+    <StandardWidgetWristband
       $pairing={$pairing}
       $wristbandColor={$wristbandColor}
       content={"pair wristband"}
@@ -13,7 +13,7 @@ function WidgetWristband({ $wristbandColor, $pairing, ...props }) {
       {...props}
     >
       <IconSignal />
-    </WristbandWidget>
+    </StandardWidgetWristband>
   );
 }
 
@@ -49,9 +49,9 @@ function paint({ $wristbandColor } = {}) {
   `;
 }
 
-const WristbandWidget = styled(StandardWidget)`
-  ${animate}
+const StandardWidgetWristband = styled(StandardWidget)`
   ${paint}
+  ${animate}
 
 &.trigger > svg {
     position: relative;

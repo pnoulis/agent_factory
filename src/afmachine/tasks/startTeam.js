@@ -25,6 +25,8 @@ function Command(team, opts) {
   return promise;
 }
 
+Command.verb = "start team";
+
 Command.middleware = [
   (ctx, next) => {
     ctx.req = {

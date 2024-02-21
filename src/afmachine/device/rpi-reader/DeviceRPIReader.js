@@ -1,5 +1,5 @@
 import { Device } from "../Device.js";
-import { emulateWristbandScan } from "./emulateWristbandScan.js";
+import { readWristband } from "./readWristband.js";
 
 class DeviceRPIReader extends Device {
   constructor(device, clientMqtt) {
@@ -8,8 +8,6 @@ class DeviceRPIReader extends Device {
   }
 }
 
-Object.assign(DeviceRPIReader.prototype, {
-  read: emulateWristbandScan,
-});
+DeviceRPIReader.prototype.readWristband = readWristband;
 
 export { DeviceRPIReader };

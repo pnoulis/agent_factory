@@ -16,14 +16,13 @@ class Registered {
 }
 
 Registered.prototype.register = function () {
-  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE)(
-    "Trying to register a player in registered state",
+  throw globalThis.craterr(({ EPLAYER }) =>
+    EPLAYER("Trying to register a player in registered state"),
   );
 };
 Registered.prototype.registered = function (player) {
-  this.player.throwStateErr(this.player.errCodes.EPLAYER_STATE_IMPOSSIBLE)(
-    "Registered a player in registered state",
-    player,
+  throw globalThis.craterr(({ EPLAYER }) =>
+    EPLAYER("Registered a player in registered state"),
   );
 };
 Registered.prototype.pairWristband = function () {

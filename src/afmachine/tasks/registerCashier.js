@@ -50,7 +50,7 @@ Command.middleware = [
     if (thisCashier === undefined) {
       throw new Error(`Could not locate cashier: ${ctx.req.username}`);
     }
-    ctx.res.cashier = Cashier.normalize(thisCashier);
+    ctx.res.cashier = Cashier.normalize([{ role: "cashier" }, thisCashier]);
     ctx.res.password = ctx.args.password;
     return next();
   },

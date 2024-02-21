@@ -14,23 +14,25 @@ class Unpairing {
     return Unpairing.order;
   }
   pair() {
-    this.wristband.throwStateErr(
-      this.wristband.errCodes.EWRISTBAND_STATE_CANCELS_OUT,
-    )("Wristband is unpairing");
+    throw globalThis.craterr(({ EWRISTBAND }) =>
+      EWRISTBAND("Wristband is unpairing"),
+    );
   }
   paired(wristband) {
-    this.wristband.throwStateErr(
-      this.wristband.errCodes.EWRISTBAND_STATE_IMPOSSIBLE,
-    )("Paired wristband in unpairing state", this.wristband, wristband);
+    throw globalThis.craterr(({ EWRISTBAND }) =>
+      EWRISTBAND("Paired wristband in unpairing state"),
+    );
   }
   unpair() {
-    return this.wristband.setState("unpairing");
+    return this.wristband;
+    // return this.wristband.setState("unpairing");
   }
   unpaired(wristband) {
-    return this.wristband.normalize(
-      {},
-      { state: "unpaired", nullSupersede: true },
-    );
+    return this.wristband;
+    // return this.wristband.normalize(
+    //   {},
+    //   { state: "unpaired", nullSupersede: true },
+    // );
   }
 }
 

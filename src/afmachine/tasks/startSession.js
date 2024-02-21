@@ -21,6 +21,7 @@ function Command(cashier, jwt, opts) {
   );
   return promise;
 }
+Command.verb = "start session";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req.jwt = ctx.args.jwt;

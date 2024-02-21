@@ -18,15 +18,18 @@ function AwaitCommand({
   const ref = React.useRef();
   const revalidator = useRevalidator();
 
+  const _revalidate = () => revalidator.revalidate();
+
   React.useEffect(() => {
     const followState = async (s) => {
       setState(s);
       await waitForUi(() => ref.current);
     };
 
-    const onFulfilled = () => {
+    const onFulfilled = (cmd) => {
       if (revalidate) {
-        revalidator.revalidate();
+        cmd.afm.removeListener("idle", _revalidate);
+        cmd.afm.once("idle", _revalidate);
       }
     };
 
@@ -41,13 +44,19 @@ function AwaitCommand({
 
   switch (state) {
     case "rejected":
-      return React.isValidElement(children)
-        ? children
-        : children({ cmd, rejected: true, pending: false });
+      return (
+        children &&
+        (React.isValidElement(children)
+          ? children
+          : children({ cmd, rejected: true, pending: false }))
+      );
     case "fulfilled":
-      return React.isValidElement(children)
-        ? children
-        : children({ cmd, rejected: false, pending: false });
+      return (
+        children &&
+        (React.isValidElement(children)
+          ? children
+          : children({ cmd, rejected: false, pending: false }))
+      );
     case "created":
     // fall through
     case "queued":
@@ -57,9 +66,10 @@ function AwaitCommand({
     default:
       return wait
         ? null
-        : React.isValidElement(children)
-          ? children
-          : children({ cmd, rejected: false, pending: true });
+        : children &&
+            (React.isValidElement(children)
+              ? children
+              : children({ cmd, rejected: false, pending: true }));
   }
 }
 

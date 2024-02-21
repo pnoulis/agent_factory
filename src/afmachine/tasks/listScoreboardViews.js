@@ -13,7 +13,7 @@ function Command(opts) {
   });
   return promise;
 }
-Command.verb = "list scoreboard device views";
+Command.verb = "list device views";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = { timestamp: ctx.t_start };

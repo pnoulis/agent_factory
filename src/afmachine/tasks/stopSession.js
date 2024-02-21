@@ -21,6 +21,7 @@ function Command(cashier, jwt, comment, opts) {
   );
   return promise;
 }
+Command.verb = "stop session";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {

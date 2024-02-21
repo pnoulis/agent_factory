@@ -6,13 +6,7 @@ import { PanelNavLink } from "#components/links/PanelNavLink";
 import IconCashout from "/assets/icons/cash-out.svg?react";
 import IconCashiers from "/assets/icons/players-two.svg?react";
 import IconDevice from "/assets/icons/devices.svg?react";
-import IconScoreboardDevices from "/assets/icons/scoreboard.svg?react";
-import {
-  cashiers,
-  cashoutCashier,
-  devices,
-  scoreboardDevices,
-} from "/src/links.jsx";
+import { cashiers, cashoutCashier, devices } from "/src/links.jsx";
 import { useContextApp } from "/src/contexts/ContextApp.jsx";
 
 function Component() {
@@ -40,12 +34,6 @@ function Component() {
               <IconDevice />
             </PanelNavLink.Icon>
             <PanelNavLink.Text>{t(devices.label)}</PanelNavLink.Text>
-          </PanelNavLink.Anchor>
-          <PanelNavLink.Anchor end to={t(scoreboardDevices.path)}>
-            <PanelNavLink.Icon>
-              <IconScoreboardDevices />
-            </PanelNavLink.Icon>
-            <PanelNavLink.Text>{t(scoreboardDevices.label)}</PanelNavLink.Text>
           </PanelNavLink.Anchor>
         </PanelNavbar>
       </PanelActionbar>

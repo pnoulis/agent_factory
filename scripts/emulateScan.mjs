@@ -11,32 +11,29 @@
  */
 
 import { randomInteger } from "js_utils/misc";
-import { BackendRPIReader } from "../src/backend/rpi-reader/BackendRPIReader.js";
-import { WRISTBAND_COLORS, MAX_WRISTBAND_ID } from "../src/constants.js";
-
-const b = new BackendRPIReader();
-await b.boot();
+import { getafm } from '../src/getafm.js';
+import * as CONSTANTS from '../src/constants.js';
 
 let [id, color] = process.argv.slice(2);
-id = parseInt(id) ? id : randomInteger(1, MAX_WRISTBAND_ID);
-color = WRISTBAND_COLORS[color];
+id = parseInt(id) ? id : randomInteger(1, CONSTANTS.MAX_WRISTBAND_ID);
+color = CONSTANTS.WRISTBAND_COLORS[color];
 if (typeof color !== 'number') {
-  color = WRISTBAND_COLORS[color];
+  color = CONSTANTS.WRISTBAND_COLORS[color];
 }
 if (color == null) {
-  color = randomInteger(1, WRISTBAND_COLORS.max);
+  color = randomInteger(1, CONSTANTS.WRISTBAND_COLORS.max);
 }
 
 let err;
 try {
-  await b.read({ id, color });
+  await getafm(false).then((afm) => afm.readWristband({ id, colorCode: color }));
   console.log(`id: ${id}`);
   console.log(`colorCode: ${color}`)
-  console.log(`color: ${WRISTBAND_COLORS[color]}`)
+  console.log(`color: ${CONSTANTS.WRISTBAND_COLORS[color]}`)
 } catch (err) {
   console.log(err);
   err = err;
 } finally {
-  await b.stop();
+  await getafm(false).then((afm) => afm.stop());
   process.exit(err ? 1 : 0);
 }

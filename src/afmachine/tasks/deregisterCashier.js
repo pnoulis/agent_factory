@@ -40,7 +40,7 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    ctx.res.cashier = normalizeCashier(ctx.args.cashier);
+    ctx.res.cashier = normalizeCashier([{ role: "cashier" }, ctx.args.cashier]);
     return next();
   },
 ];

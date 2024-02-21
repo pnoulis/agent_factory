@@ -5,6 +5,7 @@ import { parsecmd } from "#afm/parsecmd.js";
 import { Pending } from "#components/await-command/Pending.jsx";
 import { unique } from "js_utils/misc";
 import { smallid } from "js_utils/uuid";
+import { Center } from "#components/Center.jsx";
 
 const loadDevices = () => {
   const devices = getafm().then((afm) => parsecmd(afm.listDevices()));
@@ -27,10 +28,12 @@ const loadDevices = () => {
         ),
       }),
     ),
-    scoreboardViews: scoreboardViews.then(({ scoreboardViews }) => ({
-      scoreboardViews,
-      id,
-    })),
+    scoreboardViews: devices.then(() =>
+      scoreboardViews.then(({ scoreboardViews }) => ({
+        scoreboardViews,
+        id,
+      })),
+    ),
   });
 };
 
@@ -48,13 +51,15 @@ function AwaitViews({ children }) {
   return (
     <Suspense
       fallback={
-        <Pending
-          size="40px"
-          style={{
-            width: "75px",
-            height: "75px",
-          }}
-        />
+        <Center style={{ justifyContent: "end" }}>
+          <Pending
+            size="40px"
+            style={{
+              width: "70px",
+              height: "70px",
+            }}
+          />
+        </Center>
       }
     >
       <Await resolve={pending.scoreboardViews}>{children}</Await>

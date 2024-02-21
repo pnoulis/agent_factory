@@ -1,6 +1,7 @@
 import { removeIndex } from "./misc/misc.js";
 import { ENV } from "./config.js";
 import * as CONSTANTS from "./constants.js";
+import "./debug.js";
 
 let afm;
 let listeners = {};
@@ -19,7 +20,7 @@ function registerListener(event, name, listener) {
 
 function deregisterListener(event, name) {
   if (arguments.length < 2) {
-    trace("Deregistering all listeners");
+    trace(`Deregistering all listeners from event:'${event}'`);
     for (const [k, v] of Object.entries(listeners)) {
       for (let i = 0; i < v.length; i++) {
         trace(`Deregistering listener: '${v[i].name}'`);
@@ -32,8 +33,10 @@ function deregisterListener(event, name) {
     if (listener < 0) {
       throw new Error(`Could not find listener: '${name}'`);
     }
-    trace(`Deregistering listener: '${name}'`);
+    trace(`Deregistering listener:'${name}' from event:'${event}'`);
     globalThis.afm.removeListener(event, listener);
+    debug(listeners);
+    debug(listeners[event], "listeners");
     listeners[event] = removeIndex(listeners[event], listener);
   }
 }

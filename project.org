@@ -2,11 +2,24 @@
 
 * Task Board
 ** TODO implement device action procedure
-*** TODO Shutdown
-*** TODO Reboot
-*** TODO Boot
+*** DONE Shutdown
+*** DONE Reboot
+*** DONE Boot
 ** Cashier session
+The following procedure is followed when a cashier logs in:
+
+Login the cashier
+Persist the cashier in local storage.
+The cashiers are stored in a LIFO stack.
+Start the session.
+
+Now that last step is important.
+If the backend declines to start a session it may only mean
+that a session is already active belonging to a previous logged in cashier.
+
 *** register cashier
+*** login cashier
+
 ** DONE Rename afmResponse to parseCmd
 ** TODO Rename createError to craterr
 ** TODO make craterr and parsecmd global

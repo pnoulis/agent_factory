@@ -12,7 +12,7 @@ function TrackCommands({ cmds: initial = [] }) {
   const cmdRefs = React.useRef(initial);
 
   React.useEffect(() => {
-    afm.registerListener("cmdstart", "fms", async (cmd) => {
+    afm.registerListener("cmdcreate", "fms", async (cmd) => {
       const index = cmdRefs.current.length;
       setCmds(index + 1);
       cmdRefs.current.push({
@@ -22,7 +22,7 @@ function TrackCommands({ cmds: initial = [] }) {
       await waitForUi(() => cmdRefs.current[index]?.node);
     });
 
-    return () => afm.deregisterListener("cmdstart", "fms");
+    return () => afm.deregisterListener("cmdcreate", "fms");
   }, []);
 
   const umountCommand = (cmd) => {

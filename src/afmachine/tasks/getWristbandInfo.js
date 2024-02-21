@@ -24,6 +24,7 @@ function Command(wristband, opts) {
   return promise;
 }
 
+Command.verb = "get wristband info";
 Command.middleware = [
   attachBackendRegistrationRouteInfo,
   async (ctx, next) => {

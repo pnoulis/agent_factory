@@ -145,6 +145,7 @@ const router = createBrowserRouter(
       ],
     },
     {
+      loader: loadAfmachine,
       path: "/scratch",
       element: <PageScratch />,
     },

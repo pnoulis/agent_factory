@@ -25,6 +25,8 @@ function Command(player, wristband, opts) {
   return promise;
 }
 
+Command.verb = "register wristband";
+
 Command.middleware = [
   (ctx, next) => {
     ctx.req = {
@@ -37,7 +39,7 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerWristband(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.registerWristband(ctx.req);
     return next();
   },
   parseBackendResponse,
@@ -55,13 +57,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to register Wristband to Player";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully registered Wristband to Player";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as registerWristband };

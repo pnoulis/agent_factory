@@ -12,7 +12,9 @@ function PanelActionbar(props) {
   }, [handleMount, handleUnmount, node.current]);
 
   return createPortal(
-    <div ref={node}>{props.children}</div>,
+    <div ref={node} style={{ width: "100%", height: "100%" }}>
+      {props.children}
+    </div>,
     actionbarRef.current,
   );
 }

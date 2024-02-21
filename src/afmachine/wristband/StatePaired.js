@@ -18,17 +18,18 @@ class Paired {
     return this.wristband;
   }
   paired(wristband) {
-    this.wristband.throwStateErr(
-      this.wristband.errCodes.EWRISTBAND_STATE_IMPOSSIBLE,
-    )("Paired wristband in paired state", wristband);
+    throw globalThis.craterr(({ EWRISTBAND }) =>
+      EWRISTBAND("Paired wristband in paired state"),
+    );
   }
   unpair() {
-    return this.wristband.setState("unpairing");
+    return this.wristband;
+    // return this.wristband.setState("unpairing");
   }
   unpaired(wristband) {
-    this.wristband.throwStateErr(
-      this.wristband.errCodes.EWRISTBAND_STATE_IMPOSSIBLE,
-    )("Unpaired wristband in paired state", wristband);
+    throw globalThis.craterr(({ EWRISTBAND }) =>
+      EWRISTBAND("Unpaired wristband in paired state"),
+    );
   }
 }
 

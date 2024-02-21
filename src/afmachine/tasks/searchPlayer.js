@@ -3,12 +3,12 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizePlayer } from "../player/normalize.js";
+import { Player } from "../player/Player.js";
 
 new Task("searchPlayer", Command);
 
 function Command(searchTerm, opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     { args: { searchTerm }, opts },
@@ -18,6 +18,7 @@ function Command(searchTerm, opts) {
   );
   return promise;
 }
+Command.verb = "search player";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
@@ -29,15 +30,13 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.searchPlayer(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.searchPlayer(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.players = ctx.raw.players.map((player) =>
-      normalizePlayer(player, { depth: 1, defaultState: "registered" }),
-    );
+    ctx.res.players = ctx.raw.players.map((player) => Player.normalize(player));
     return next();
   },
 ];
@@ -45,13 +44,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to search for Player";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully searched Player";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as searchPlayer };

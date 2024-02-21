@@ -1,7 +1,6 @@
 import { Wristband } from "./Wristband.js";
 import { createEventful } from "../../Eventful.js";
 import { stateventful } from "../../Stateful.js";
-import { createStateErr } from "../../errors.js";
 import { extendProto } from "../../misc/misc.js";
 
 class WristbandCommander extends createEventful(Wristband) {
@@ -11,34 +10,6 @@ class WristbandCommander extends createEventful(Wristband) {
     this.afm = afm;
   }
 
-  throwStateErr(errCode) {
-    const state = this.getState().name;
-    switch (errCode) {
-      case this.errCodes.EWRISTBAND_STATE:
-      // fall through
-      case this.errCodes.EWRISTBAND_STATE_CANCELS_OUT:
-        return (msg) => {
-          throw createStateErr({
-            msg,
-            severity: "warn",
-            errCode,
-            state,
-          });
-        };
-      case this.errCodes.EWRISTBAND_STATE_IMPOSSIBLE:
-        return (msg, wristband) => {
-          throw createStateErr({
-            msg,
-            severity: "fatal",
-            errCode,
-            state,
-            wristband,
-          });
-        };
-      default:
-        throw new TypeError(`Unrecognized error code: '${errCode}'`);
-    }
-  }
   async scan() {
     let _unsub;
     try {

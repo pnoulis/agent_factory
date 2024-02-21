@@ -1,4 +1,5 @@
 import { isFunction, isObject } from "js_utils/misc";
+import { mergec } from "/src/misc/misc.js";
 
 function __parseValue(src, value, name) {
   return value ?? (isObject(src) ? src[name] : src);
@@ -17,6 +18,7 @@ function DataTuple({
   renderKey /* Delegate rendering of key */,
   renderValue /* Delegate rendering of value */,
   children /* Turns DataTuple into a pipeline filter */,
+  className,
 } = {}) {
   const props = {
     name: label || name,
@@ -34,13 +36,13 @@ function DataTuple({
         (isFunction(renderKey) ? (
           renderKey(props)
         ) : (
-          <span className="key">{props.name}</span>
+          <span className={mergec("key", className)}>{props.name}</span>
         ))}
       {!nov &&
         (isFunction(renderValue) ? (
           renderValue(props)
         ) : (
-          <span className="value">{props.value}</span>
+          <span className={mergec("value", className)}>{props.value}</span>
         ))}
     </>
   );

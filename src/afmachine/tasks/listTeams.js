@@ -14,6 +14,7 @@ function Command(opts) {
   });
   return promise;
 }
+Command.verb = "list teams";
 Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,

@@ -24,7 +24,7 @@ function Command(player, wristband, opts) {
   );
   return promise;
 }
-
+Command.verb = "deregister cashier";
 Command.middleware = [
   (ctx, next) => {
     ctx.req = {

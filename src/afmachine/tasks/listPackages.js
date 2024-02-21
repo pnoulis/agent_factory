@@ -14,6 +14,7 @@ function Command(opts) {
   });
   return promise;
 }
+Command.verb = "list packages";
 Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
@@ -25,7 +26,7 @@ Command.middleware = [
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.packages = ctx.raw.packages.map((pkg) =>
-      normalizePackage(pkg, { state: "registered", stage2: false, }),
+      normalizePackage(pkg, { state: "registered", stage2: false }),
     );
     return next();
   },

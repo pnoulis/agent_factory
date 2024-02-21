@@ -30,7 +30,7 @@ Command.middleware = [
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.cashiers = ctx.raw.cashiers.map((cashier) =>
-      Cashier.normalize([cashier, { role: "cashier" }]),
+      Cashier.normalize([{ role: "cashier" }, cashier]),
     );
     return next();
   },

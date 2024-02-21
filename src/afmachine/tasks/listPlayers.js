@@ -14,6 +14,7 @@ function Command(opts) {
   });
   return promise;
 }
+Command.verb = "list players";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {

@@ -26,6 +26,8 @@ function Command(team, pkg, opts) {
   return promise;
 }
 
+Command.verb = "remove team package";
+
 Command.middleware = [
   (ctx, next) => {
     ctx.req = {

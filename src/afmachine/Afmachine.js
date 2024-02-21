@@ -12,6 +12,9 @@ import { DeviceAdminScreen } from "./device/admin-screen/DeviceAdminScreen.js";
 import { DeviceRPIReader } from "./device/rpi-reader/DeviceRPIReader.js";
 import { Cashier } from "./cashier/Cashier.js";
 
+// RPI Reader tasks
+import { readWristband } from "./tasks/readWristband.js";
+
 // Synthetic Player tasks
 // import { pairWristband } from "./synthetic-tasks/pairWristband.js";
 
@@ -89,6 +92,7 @@ class Afmachine extends createEventful([
     this.boot.afm = this;
     this.registerCashier.afm = this;
     this.loginCashier.afm = this;
+    this.searchPlayer.afm = this;
 
     this.on("newListener", (event) => {
       if (event === "booted" && this.booted) {
@@ -205,7 +209,15 @@ Afmachine.prototype.onCmdEnd = function (cmd) {
   }
 };
 
+Afmachine.prototype.stop = function () {
+  this.adminScreen.mqtt.server.end();
+  this.rpiReader.mqtt.server.end();
+};
+
 Object.assign(Afmachine.prototype, {
+  // RPI Reader tasks
+  readWristband,
+
   // Synthetic Player tasks
   // pairWristband,
 
