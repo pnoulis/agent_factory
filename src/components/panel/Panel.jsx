@@ -39,14 +39,14 @@ function Panel({ className, style, children }) {
 
 const Wrapper = styled("div")`
   box-sizing: border-box;
-  display: grid;
   width: 100%;
   height: 100%;
-  padding: 20px;
+  display: grid;
   grid-template-areas: "panel-header" "panel-main";
   grid-template-rows: max-content 1fr;
   grid-template-columns: 1fr;
   row-gap: 20px;
+  padding: 20px;
   position: relative;
 
   .panel-main {

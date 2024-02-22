@@ -1,13 +1,33 @@
+import * as React from "react";
 import styled from "styled-components";
 import { DialogAlert } from "./DialogAlert.jsx";
 import { Heading } from "./Heading.jsx";
 import { Description } from "./Description.jsx";
 
-function DialogAlertStandard({ id, initialOpen, onClose, heading, msg }) {
+function DialogAlertStandard({
+  id,
+  initialOpen,
+  onClose,
+  heading,
+  msg,
+  children,
+  className,
+  style,
+}) {
   return (
-    <StyledDialogAlert id={id} initialOpen={initialOpen} onClose={onClose}>
-      <Heading>{heading}</Heading>
-      <Description>{msg}</Description>
+    <StyledDialogAlert
+      className={className}
+      style={style}
+      id={id}
+      initialOpen={initialOpen}
+      onClose={onClose}
+    >
+      {children || (
+        <>
+          <Heading>{heading}</Heading>
+          <Description>{msg}</Description>
+        </>
+      )}
     </StyledDialogAlert>
   );
 }

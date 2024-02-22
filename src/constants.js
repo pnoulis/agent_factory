@@ -38,7 +38,9 @@ const TEAM_STATES = {
   playing: "PACKAGE_RUNNING",
   finished: "FINISHED",
 };
-export { TEAM_STATES };
+const MAX_ROSTER_SIZE = 6;
+const MIN_ROSTER_SIZE = 2;
+export { TEAM_STATES, MAX_ROSTER_SIZE, MIN_ROSTER_SIZE };
 
 //////////////////////////////////////////////////
 // DEVICES

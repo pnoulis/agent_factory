@@ -109,7 +109,7 @@ function normalize(sources, options) {
     target.state ||= _options.defaultState;
   }
 
-  if (!_options.stage2) {
+  if (true) {
     trace(target, "package.normalize() target");
     return target;
   }

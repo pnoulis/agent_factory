@@ -10,6 +10,7 @@ import { PageScratch } from "./pages/scratch/PageScratch.jsx";
 import { loadAfmachine } from "./loaders/loadAfmachine.jsx";
 import { loadCashiers } from "./loaders/loadCashiers.jsx";
 import { loadPlayers } from "./loaders/loadPlayers.jsx";
+import { loadPlayersWithWristband } from "./loaders/loadPlayersWithWristband.jsx";
 import { loadDevices } from "./loaders/loadDevices.jsx";
 import { PageLanding } from "./pages/PageLanding.jsx";
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
             //////////////////////////////////////////////////
             {
               path: links.registerTeam.path,
+              loader: loadPlayersWithWristband,
               lazy: async () => import("./pages/teams/PageRegister.jsx"),
             },
 

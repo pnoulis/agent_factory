@@ -2,9 +2,9 @@ import * as React from "react";
 import styled from "styled-components";
 import BackgroundWrisband from "/assets/icons/wristband-gear.svg";
 
-function RegistrationQueue({ className, style, $shouldEven, children }) {
+function RegistrationQueue({ className, style, children }) {
   return (
-    <List className={className} style={style} $shouldEven={$shouldEven}>
+    <List className={className} style={style}>
       {children}
     </List>
   );
@@ -18,13 +18,11 @@ const List = styled("ul")`
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: center;
-  height: 610px;
-  max-width: 650px;
-  margin-left: auto;
-  align-self: end;
+  height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 170px);
-  grid-auto-rows: max-content;
+  grid-auto-rows: minmax(190px, max-content);
   overflow-y: scroll;
   gap: 40px 30px;
   padding: 30px 20px;

@@ -3,10 +3,11 @@ import { Submit } from "./Submit.jsx";
 import { TextInput_0 } from "react_utils/inputs";
 import { Form } from "./Form.jsx";
 
-function FormRegisterPlayer({ onSubmit }) {
+function FormRegisterPlayer({ onSubmit, style, className }) {
   return (
     <Form
-      style={{ rowGap: "20px" }}
+      className={className}
+      style={{ rowGap: "20px", ...style }}
       id="registerPlayer"
       fields={{
         username: "",

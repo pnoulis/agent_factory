@@ -3,7 +3,7 @@ import { FormLoginCashier } from "#components/forms/FormLoginCashier.jsx";
 import BrandText from "/assets/brand/logo-white.png";
 import BrandFigure from "/assets/brand/logo-agent-white.png";
 import BackgroundFactory from "/assets/backgrounds/homepage-background-1920x1080px.png";
-import { getSession } from "../../mysqldb/getSession.js";
+// import { getSession } from "../../mysqldb/getSession.js";
 
 function Component() {
   return (

@@ -54,7 +54,7 @@ const eventful = {
       await Promise.resolve().then(() =>
         this.events[event][i].listener(...args),
       );
-      if (this.events[event][i].persist) {
+      if (this.events[event][i]?.persist) {
         nextevents.push(this.events[event][i]);
       }
     }

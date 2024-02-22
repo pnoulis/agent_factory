@@ -62,12 +62,12 @@ function useRegistrationQueue(players) {
   }
 
   React.useEffect(() => {
-    const onIdle = () => nextPlayer(queue).pairWristband?.();
+    const onIdle = () => nextPlayer(queue)?.pairWristband?.();
     afm.on("idle", onIdle);
     return () => afm.removeListener("idle", onIdle);
   }, [queue, setQueue]);
 
-  return { queue, enqueue, dequeue, pairWristband, unpairWristband };
+  return { queue, setQueue, enqueue, dequeue, pairWristband, unpairWristband };
 }
 
 export { useRegistrationQueue };

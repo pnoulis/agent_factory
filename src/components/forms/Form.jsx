@@ -2,7 +2,16 @@ import * as React from "react";
 import { useForm, FormProvider } from "react_utils/inputs";
 import styled from "styled-components";
 
-function Form({ id, fields, ctx, onSubmit, className, style, children }) {
+function Form({
+  id,
+  fields,
+  ctx,
+  onSubmit,
+  onChange,
+  className,
+  style,
+  children,
+}) {
   const [form, setForm] = ctx ?? useForm({ submitting: false, fields });
 
   React.useEffect(() => {
@@ -17,6 +26,10 @@ function Form({ id, fields, ctx, onSubmit, className, style, children }) {
       setForm("setSubmit", false);
     });
   }, [form.submitting]);
+
+  React.useEffect(() => {
+    onChange?.({ form, setForm });
+  }, [form.fields]);
 
   return (
     <FormProvider value={{ ...form, id, setForm }}>
@@ -38,7 +51,7 @@ function Form({ id, fields, ctx, onSubmit, className, style, children }) {
 const StyledForm = styled("form")`
   z-index: 2;
   display: flex;
-  width: 330px;
+  width: 100%;
   flex-flow: column nowrap;
   font-family: Saira;
   font-weight: 500;

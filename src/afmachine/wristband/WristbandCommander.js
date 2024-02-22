@@ -47,7 +47,7 @@ class WristbandCommander extends createEventful(Wristband) {
 
   async cancelPairing() {
     if (!this.pairing) return Promise.resolve(false);
-    if (this.pairing.unsub) {
+    if (this.pairing?.unsub) {
       await this.pairing.unsub();
     }
     this.pairing.reject(
@@ -60,11 +60,10 @@ class WristbandCommander extends createEventful(Wristband) {
   }
 
   pair(player) {
+    this.pairing = {};
     return new Promise(async (resolve, reject) => {
-      this.pairing = {
-        resolve,
-        reject,
-      };
+      this.pairing.resolve = resolve;
+      this.pairing.reject = reject;
       try {
         const wristband = await this.scan();
         const registered = await this.register(player, wristband);

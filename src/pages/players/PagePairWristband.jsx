@@ -8,61 +8,75 @@ import { useRegistrationQueue } from "#components/registration-queue/useRegistra
 import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
 import { Center } from "#components/Center.jsx";
 
-const team = Team.random(null, {
-  players: 5,
-  state: "registered",
-  player: { state: "registered", stage2: false },
-  wristband: { state: "paired", stage2: false },
-});
-
 function Component() {
   const { queue, enqueue, dequeue, pairWristband, unpairWristband } =
-    useRegistrationQueue(team.roster);
+    useRegistrationQueue();
 
   return (
-    <Wrapper>
-      <AwaitCommand cmd={afm.deregisterWristband}>
-        <AwaitCommand cmd={afm.registerWristband}>
-          <section>
-            <Heading id="combobox-label">Add Players</Heading>
-            <ComboboxSearchPlayer
-              labelledBy="combobox-label"
-              onSelect={enqueue}
-            />
-          </section>
-        </AwaitCommand>
-      </AwaitCommand>
-      <RegistrationQueue $shouldEven={queue.length > 3}>
-        {queue.map((p, i) => {
-          return (
-            <StandardPlayerActionCard
-              key={p.username + i}
-              ctx={p}
-              onPlayerRemove={dequeue}
-              onWristbandPair={pairWristband}
-              onWristbandUnpair={unpairWristband}
-            />
-          );
-        })}
-      </RegistrationQueue>
-    </Wrapper>
+    <Center>
+      <Page>
+        <section>
+          <AwaitCommand cmd={afm.deregisterWristband}>
+            <AwaitCommand cmd={afm.registerWristband}>
+              <>
+                <Label id="combobox-label" htmlFor="search-player-trigger">
+                  Add Players
+                </Label>
+                <ComboboxSearchPlayer
+                  labelledBy="combobox-label"
+                  onSelect={enqueue}
+                />
+              </>
+            </AwaitCommand>
+          </AwaitCommand>
+        </section>
+        <section>
+          <RegistrationQueue>
+            {queue.map((p, i) => {
+              return (
+                <StandardPlayerActionCard
+                  key={p.username + i}
+                  ctx={p}
+                  onPlayerRemove={dequeue}
+                  onWristbandPair={pairWristband}
+                  onWristbandUnpair={unpairWristband}
+                />
+              );
+            })}
+          </RegistrationQueue>
+        </section>
+      </Page>
+    </Center>
   );
 }
 
-const Wrapper = styled("div")`
+const Page = styled("div")`
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  grid-template-rows: auto;
+  grid-template-columns: 1fr 650px;
+  grid-template-rows: 1fr;
   width: 90%;
-  margin: auto;
   height: 100%;
   padding: 20px;
+  gap: 80px;
+
+  section:nth-of-type(1) {
+    width: 550px;
+  }
+
+  section:nth-of-type(2) {
+    align-self: end;
+    width: 100%;
+    height: 100%;
+    max-width: 650px;
+    max-height: 600px;
+    justify-self: end;
+  }
 `;
 
-const Heading = styled("h1")`
+const Label = styled("label")`
   color: var(--primary-base);
   font-size: var(--tx-xxh);
-  font-weight: 550;
+  letter-spacing: 1.5px;
   text-transform: capitalize;
   letter-spacing: 2px;
 `;

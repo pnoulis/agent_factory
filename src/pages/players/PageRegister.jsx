@@ -7,6 +7,7 @@ function Component() {
     <Center>
       <AwaitCommand cmd={afm.registerCashier}>
         <FormRegisterPlayer
+          style={{ width: "350px" }}
           onSubmit={({ fields, setForm }, onError) =>
             parsecmd(afm.registerPlayer(fields, fields.password))
               .then(() => setForm("reset"))

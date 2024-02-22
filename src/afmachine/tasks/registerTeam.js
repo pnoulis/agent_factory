@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeTeam } from "../team/normalize.js";
+import { Team } from "../team/Team.js";
 
 new Task("registerTeam", Command);
 
@@ -13,14 +13,11 @@ function Command(team, opts) {
     afm,
     {
       args: {
-        team: team.tobject(),
-        players: team.roster.map((player) => player.tobject(1)),
+        team,
       },
       opts,
     },
-    (cmd) => {
-      afm.runCommand(cmd);
-    },
+    (cmd) => afm.runCommand(cmd),
   );
   return promise;
 }
@@ -31,23 +28,23 @@ Command.middleware = [
     ctx.req = {
       timestamp: ctx.t_start,
       teamName: ctx.args.team.name,
-      usernames: ctx.args.players.map((p) => p.username),
+      usernames: ctx.args.team.roster.map((p) => p.username),
     };
     return next();
   },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.registerTeam(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.registerTeam(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.team = normalizeTeam(
-      { ...ctx.args.team, roster: ctx.args.players },
-      { depth: 3, state: "registered", player: { state: "inTeam" } },
-    );
+    ctx.res.team = Team.normalize(ctx.args.team, {
+      state: "registered",
+      player: { state: "inTeam" },
+    });
     return next();
   },
 ];
@@ -56,13 +53,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to register Team";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully registered Team";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as registerTeam };
