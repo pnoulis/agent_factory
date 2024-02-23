@@ -9,7 +9,7 @@ const ListCommands = styled("ul")`
   width: max-content;
   flex-flow: column-reverse nowrap;
   gap: 20px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 20px 20px;
 
   ${({ $topLeft }) =>

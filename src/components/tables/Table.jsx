@@ -80,8 +80,8 @@ const Wrapper = styled("div")`
   width: 100%;
   height: 100%;
   display: flex;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
   background-color: white;
   flex-flow: column nowrap;
   box-shadow: var(--sd-9);
@@ -91,8 +91,6 @@ const Wrapper = styled("div")`
 
   .table-bounds {
     position: relative;
-    overflow-y: scroll;
-    overflow-x: scroll;
     scrollbar-color: black var(--primary-base);
     scrollbar-gutter: stable both-edges;
     height: 100%;
@@ -100,6 +98,7 @@ const Wrapper = styled("div")`
 
   .table-pagination {
     margin-top: auto;
+overflow: hidden;
   }
 `;
 

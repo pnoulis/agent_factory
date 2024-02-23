@@ -60,7 +60,7 @@ const StyledDialogConfirm = styled(DialogConfirm)`
   .confirm {
     ${ButtonDialog}
     align-self: end;
-    justify-self: end;
+    justify-self: start;
   }
 
   .close {

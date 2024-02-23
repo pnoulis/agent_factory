@@ -59,38 +59,41 @@ function normalize(sources, options) {
   }
 
   // stage 2
-  let misaligned = "";
-  switch (target.state) {
-    case "paired":
-    // fall through
-    case "unpairing":
-    // fall through
-    case "pairing":
-      if (!(target.id && target.color && target.colorCode)) {
-        misaligned = "Missing properties";
-      }
-    // fall through
-    case "unpaired":
-      // Content could be either defined or not defined
-      break;
-    default:
-      throw globalThis.craterr(({ EWRISTBAND }) =>
-        EWRISTBAND({
-          msg: `Unrecognized wristband state: '${target.state}'`,
-          target,
-        }),
-      );
+  if (!target.id && target.state !== "pairing") {
+    target.state = "unpaired";
   }
+  // let misaligned = "";
+  // switch (target.state) {
+  //   case "paired":
+  //   // fall through
+  //   case "unpairing":
+  //   // fall through
+  //   case "pairing":
+  //     if (!(target.id && target.color && target.colorCode)) {
+  //       misaligned = "Missing properties";
+  //     }
+  //   // fall through
+  //   case "unpaired":
+  //     // Content could be either defined or not defined
+  //     break;
+  //   default:
+  //     throw globalThis.craterr(({ EWRISTBAND }) =>
+  //       EWRISTBAND({
+  //         msg: `Unrecognized wristband state: '${target.state}'`,
+  //         target,
+  //       }),
+  //     );
+  // }
 
-  trace(target, "wristband.normalize() target");
-  if (misaligned) {
-    throw globalThis.craterr(({ EWRISTBAND }) =>
-      EWRISTBAND({
-        msg: `Misaligned wristband in '${target.state}' state: '${misaligned}'`,
-        target,
-      }),
-    );
-  }
+  // trace(target, "wristband.normalize() target");
+  // if (misaligned) {
+  //   throw globalThis.craterr(({ EWRISTBAND }) =>
+  //     EWRISTBAND({
+  //       msg: `Misaligned wristband in '${target.state}' state: '${misaligned}'`,
+  //       target,
+  //     }),
+  //   );
+  // }
   return target;
 }
 

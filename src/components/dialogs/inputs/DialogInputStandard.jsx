@@ -58,7 +58,7 @@ const StyledDialogInput = styled(DialogInput)`
   text-align: center;
 
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto minmax(60px, auto);
   justify-items: center;
 
@@ -78,7 +78,7 @@ const StyledDialogInput = styled(DialogInput)`
   .confirm {
     ${ButtonDialog}
     align-self: end;
-    justify-self: end;
+    justify-self: start;
   }
 
   .close {

@@ -1,15 +1,19 @@
 import styled from "styled-components";
 import { SelectOnlyCombobox as Combobox } from "react_utils/comboboxes";
 
-function ComboboxDeviceView({ views = [], onSelect }) {
+function ComboboxSelectPackage({ pkg, onSelect, labelledBy }) {
+  pkg ||= {};
+
   return (
     <Combobox.Provider
-      options={views}
-      labelledBy="scoreboard-view-label"
-      name="scoreboard-view"
-      onSelect={onSelect}
+      options={pkg.catalogue.map(({ label }) => label)}
+      labelledBy={labelledBy}
+      name={`select-${pkg.type}-package`}
+      onSelect={(label) =>
+        onSelect?.(pkg.catalogue.find((p) => (p.label === label)))
+      }
     >
-      <Trigger placeholder="scoreboard view" />
+      <Trigger placeholder={pkg.catalogue[0].label} />
       <ListOptions renderOption={(props) => <Option {...props} />} />
     </Combobox.Provider>
   );
@@ -25,14 +29,12 @@ const Trigger = styled(Combobox.Trigger)`
   min-height: 50px;
   text-align: center;
   text-transform: uppercase;
-  background-color: var(--primary-base);
+  background-color: var(--grey-light);
   border-radius: var(--br-md);
-  font-weight: 550;
-  color: white;
+  color: black;
   &::placeholder {
-    font-size: var(--tx-md);
-    color: white;
-    opacity: 1;
+    font-size: var(--tx-nl);
+    opacity: 0.7;
   }
   z-index: 10;
 `;
@@ -68,6 +70,7 @@ const Option = styled(Combobox.Option)`
         : active
           ? "var(--grey-base)"
           : "transparent"};
+  color: ${({ selected }) => selected && "white"};
 `;
 
-export { ComboboxDeviceView };
+export { ComboboxSelectPackage };

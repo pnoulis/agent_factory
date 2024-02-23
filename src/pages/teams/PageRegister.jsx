@@ -16,7 +16,6 @@ import { ComboboxSelectPlayer } from "#components/comboboxes/ComboboxSelectPlaye
 import { Center } from "#components/Center.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { useTeam } from "#components/team/useTeam.jsx";
 import { AwaitCommand2 } from "#components/await-command/AwaitCommand2.jsx";
 import { TeamCommander } from "#afm/team/TeamCommander.js";
 import { PlayerCommander } from "#afm/player/PlayerCommander.js";

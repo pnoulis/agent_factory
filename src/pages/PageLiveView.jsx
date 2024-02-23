@@ -7,7 +7,6 @@ import IconLiveView from "/assets/icons/liveView.svg?react";
 import { liveView } from "/src/links.jsx";
 import { useContextApp } from "/src/contexts/ContextApp";
 import { TableTeams } from "#components/tables/TableTeams.jsx";
-import { Center } from "#components/Center.jsx";
 import styled from "styled-components";
 import { AwaitTeams } from "/src/loaders/loadTeams.jsx";
 import { team } from "/src/links.jsx";

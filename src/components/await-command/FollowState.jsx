@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Pending } from "./Pending2.jsx";
 import { delay } from "js_utils/misc";
+import { useEntityState } from "../../hooks/useEntityState.jsx";
 
 function waitForUi(cb) {
   return cb() ? Promise.resolve() : delay(50).then(() => waitForUi(cb));
 }
 
 function FollowState({
-  state,
+  state: followedState,
   cmd,
   entityCb,
   overlay = true,
@@ -18,18 +19,24 @@ function FollowState({
   children,
 }) {
   const ref = React.useRef();
-
-  const idle = !state;
-  const pending =
-    state === "created" || state === "queued" || state === "pending";
-  const fulfilled = state === "fulfilled";
+  const { state, idle, pending, fulfilled } =
+    followedState || useEntityState(cmd);
 
   React.useEffect(() => {
     const delayPending = async () => await delay(timePending);
-    const onFulfilled = (cmd) => entityCb(cmd) && handleFullfilled?.(cmd);
-    const onRejected = (cmd) => entityCb(cmd) && handleRejected?.(cmd);
+    const onFulfilled = (cmd) =>
+      entityCb
+        ? entityCb(cmd) && handleFullfilled?.(cmd)
+        : handleFullfilled?.(cmd);
+    const onRejected = (cmd) =>
+      entityCb
+        ? entityCb(cmd) && handleFullfilled?.(cmd)
+        : handleFullfilled?.(cmd);
 
-    cmd.on?.("pretask", delayPending);
+    cmd.on?.("pending", async () => {
+      await waitForUi(() => ref.current);
+      await delay(timePending);
+    });
     cmd.on?.("fulfilled", onFulfilled);
     cmd.on?.("rejected", onRejected);
 

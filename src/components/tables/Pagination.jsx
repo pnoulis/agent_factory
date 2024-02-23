@@ -28,6 +28,11 @@ const Div = styled(MuiPagination)`
   font-family: Saira !important;
   padding-right: 40px !important;
   min-height: 45px !important;
+overflow: hidden;
+
+& > * {
+overflow: hidden;
+}
   .MuiTablePagination-spacer {
     display: none;
   }

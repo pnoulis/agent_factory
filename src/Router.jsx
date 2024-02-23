@@ -14,6 +14,7 @@ import { loadPlayersWithWristband } from "./loaders/loadPlayersWithWristband.jsx
 import { loadDevices } from "./loaders/loadDevices.jsx";
 import { loadTeams } from "./loaders/loadTeams.jsx";
 import { loadTeam } from "./loaders/loadTeam.jsx";
+import { loadPackages } from "./loaders/loadPackages.jsx";
 import { PageLanding } from "./pages/PageLanding.jsx";
 
 function Router() {
@@ -50,6 +51,17 @@ const router = createBrowserRouter(
               path: links.team().path,
               loader: loadTeam,
               lazy: async () => import("./pages/team/PageTeam.jsx"),
+              children: [
+                {
+                  loader: loadPackages,
+                  path: links.teamPackage.path,
+                  lazy: async () => import("./pages/team/PagePackage.jsx"),
+                },
+                {
+                  path: links.teamRoster.path,
+                  lazy: async () => import("./pages/team/PageRoster.jsx"),
+                },
+              ],
             },
 
             //////////////////////////////////////////////////

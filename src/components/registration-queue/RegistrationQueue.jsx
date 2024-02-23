@@ -23,7 +23,7 @@ const List = styled("ul")`
   display: grid;
   grid-template-columns: repeat(3, 170px);
   grid-auto-rows: minmax(190px, max-content);
-  overflow-y: scroll;
+  overflow-y: auto;
   gap: 40px 30px;
   padding: 30px 20px;
   justify-content: space-between;

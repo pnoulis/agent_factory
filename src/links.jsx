@@ -69,6 +69,14 @@ const team = (teamname) => ({
   label: "team",
 });
 
+const teamPackage = {
+  path: "package",
+};
+
+const teamRoster = {
+  path: "roster",
+};
+
 //////////////////////////////////////////////////
 // Group Party
 //////////////////////////////////////////////////
@@ -136,6 +144,8 @@ export {
   teams,
   team,
   registerTeam,
+  teamPackage,
+  teamRoster,
 
   // Group Party
   grouparty,

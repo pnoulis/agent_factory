@@ -21,7 +21,6 @@ import { DialogInputStandard } from "#components/dialogs/inputs/DialogInputStand
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { MAX_ROSTER_SIZE } from "../../constants.js";
 import { confirmRegisterGroupTeam } from "#components/dialogs/confirms/confirmRegisterGroupTeam.jsx";
-import { Team } from "#afm/team/Team.js";
 import { Player } from "#afm/player/Player.js";
 import { GrouPartyTeam } from "#afm/grouparty/GrouPartyTeam.js";
 import { GrouPartyPlayer } from "#afm/grouparty/GrouPartyPlayer.js";

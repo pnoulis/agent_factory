@@ -1,6 +1,10 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** TODO Cover the case where a user navigates to a non existent team page
+notify using an alert
+then navigate to live view
+
 ** page group party
 cannot re-distribute of if there is a merged team
 

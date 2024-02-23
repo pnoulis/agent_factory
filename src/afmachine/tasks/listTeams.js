@@ -25,7 +25,13 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.teams = ctx.raw.teams.map((team) => Team.normalize(team));
+    ctx.res.teams = ctx.raw.teams.map((team) =>
+      Team.normalize(team, {
+        defaultState: "registered",
+        player: { defaultState: "inTeam" },
+        wristband: { defaultState: "paired", stage2: true },
+      }),
+    );
     return next();
   },
 ];

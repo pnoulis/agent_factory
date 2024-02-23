@@ -1,6 +1,5 @@
 import { DataTuple } from "../tuple/DataTuple.jsx";
 import { useContextWristband } from "../../contexts/ContextWristband.jsx";
-import { WidgetWristband } from "../widgets/WidgetWristband.jsx";
 import { mergec } from "../../misc/misc.js";
 import { Bracelet } from "./Bracelet.jsx";
 

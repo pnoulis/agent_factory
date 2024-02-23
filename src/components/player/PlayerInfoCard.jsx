@@ -2,7 +2,6 @@ import { DataTuple } from "../tuple/DataTuple.jsx";
 import { useContextPlayer } from "../../contexts/ContextPlayer.jsx";
 import { WristbandInfoCard } from "../wristband/WristbandInfoCard.jsx";
 import { mergec } from "../../misc/misc.js";
-import { TupleInfoCard } from "../tuple/TupleInfoCard.jsx";
 
 function PlayerInfoCard({ ctx, className, style }) {
   ctx ??= useContextPlayer();

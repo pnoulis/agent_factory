@@ -3,12 +3,12 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizePackage } from "../package/normalize.js";
+import { Package } from "../package/Package.js";
 
 new Task("listPackages", Command);
 
 function Command(opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(afm, { opts }, (cmd) => {
     afm.runCommand(cmd);
   });
@@ -26,7 +26,7 @@ Command.middleware = [
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.packages = ctx.raw.packages.map((pkg) =>
-      normalizePackage(pkg, { state: "registered", stage2: false }),
+      Package.normalize(pkg, { state: "registered" }),
     );
     return next();
   },
@@ -35,13 +35,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve packages";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved packages";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as listPackages };

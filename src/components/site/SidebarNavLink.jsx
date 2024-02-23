@@ -8,7 +8,7 @@ const SidebarNavLink = styled(NavLink)`
   text-align: center;
   font-size: var(--tx-md);
   font-weight: 600;
-  text-transform: capitalize;
+  text-transform: uppercase;
   color: white;
   letter-spacing: 0.5px;
 

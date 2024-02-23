@@ -3,19 +3,18 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeTeam } from "../team/normalize.js";
-import { normalize as normalizePackage } from "../package/normalize.js";
+import { Package } from "../package/Package.js";
 
 new Task("addTeamPackage", Command);
 
 function Command(team, pkg, opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {
       args: {
-        team: "tobject" in team ? team.tobject(2) : team,
-        package: "tobject" in pkg ? pkg.tobject() : pkg,
+        team,
+        package: pkg,
       },
       opts,
     },
@@ -40,15 +39,13 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.addTeamPackage(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.addTeamPackage(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.package = normalizePackage(ctx.raw.team.packages.pop(), {
-      depth: 1,
-    });
+    ctx.res.package = Package.normalize(ctx.raw.team.packages.pop());
     return next();
   },
 ];
@@ -57,13 +54,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to add Package to Team";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully added Package to Team";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as addTeamPackage };

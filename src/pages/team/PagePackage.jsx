@@ -1,0 +1,188 @@
+import * as React from "react";
+import { Panel } from "#components/panel/Panel.jsx";
+import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
+import styled from "styled-components";
+import { useOutletContext, useNavigate } from "react-router-dom";
+import { FollowState } from "#components/await-command/FollowState.jsx";
+import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { confirmAddTeamPackage } from "#components/dialogs/confirms/confirmAddTeamPackage.jsx";
+import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
+import { WidgetRegister } from "#components/widgets/WidgetRegister.jsx";
+import { DataTuple } from "../../components/tuple/DataTuple.jsx";
+import { AwaitPackages } from "../../loaders/loadPackages.jsx";
+import { ComboboxSelectPackage } from "#components/comboboxes/ComboboxSelectPackage.jsx";
+
+function Component() {
+  const [pkg, setPkg] = React.useState({});
+  const { team } = useOutletContext();
+  const navigate = useNavigate();
+
+  async function handleRegisterClick() {
+    const yes = await confirmAddTeamPackage(pkg.name);
+    if (!yes) return;
+    afm.addTeamPackage(team, pkg).then(() => navigate(-1));
+  }
+
+  return (
+    <Page className="page">
+      <AwaitPackages>
+        {({ packages }) => (
+          <>
+            <FollowState
+              cmd={afm.addTeamPackage}
+              delayPending={200}
+              onFulfilled={(cmd) =>
+                renderDialog(
+                  <DialogAlertStandard
+                    initialOpen
+                    heading="new team package"
+                    msg={cmd.msg}
+                  />,
+                )
+              }
+              onRejected={(cmd) =>
+                renderDialog(
+                  <DialogAlertStandard
+                    initialOpen
+                    heading="new team package"
+                    msg={cmd.msg}
+                  />,
+                )
+              }
+            >
+              <Panel className="panel">
+                <PanelActionbar>
+                  <PanelNavbar style={{ gap: "40px" }}>
+                    <WidgetRegister
+                      color="var(--primary-base)"
+                      fill="white"
+                      content="add package"
+                      onClick={handleRegisterClick}
+                    />
+                    <Cost>
+                      <DataTuple src={pkg} name="cost" dval="0" />
+                    </Cost>
+                  </PanelNavbar>
+                </PanelActionbar>
+                <Content className="content">
+                  <Package $selected={pkg.type === packages[0].type}>
+                    <Label
+                      id={`select-${packages[0]?.type}-label`}
+                      htmlFor={`select-${packages[0]?.type}-package-trigger`}
+                    >
+                      {`Select ${packages[0].type} package`}
+                    </Label>
+                    <Heading>{packages[0].description}</Heading>
+                    <ComboboxSelectPackage
+                      labelledBy={`select-${packages[0]?.type}-label`}
+                      pkg={packages[0]}
+                      onSelect={(pkg) => {
+                        setPkg({ ...pkg });
+                      }}
+                    />
+                  </Package>
+                  <Package $selected={pkg.type === packages[1].type}>
+                    <Label
+                      id={`select-${packages[1]?.type}-label`}
+                      htmlFor={`select-${packages[1]?.type}-package-trigger`}
+                    >
+                      {`Select ${packages[1].type} package`}
+                    </Label>
+                    <Heading>{packages[1].description}</Heading>
+                    <ComboboxSelectPackage
+                      labelledBy={`select-${packages[1]?.type}-label`}
+                      pkg={packages[1]}
+                      onSelect={(pkg) => {
+                        setPkg({ ...pkg });
+                      }}
+                    />
+                  </Package>
+                </Content>
+              </Panel>
+            </FollowState>
+          </>
+        )}
+      </AwaitPackages>
+    </Page>
+  );
+}
+
+const Package = styled("article")`
+  border-radius: var(--br-xl);
+  box-shadow: var(--sd-14), var(--sd-4);
+  background-color: white;
+  text-transform: uppercase;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+
+  > input {
+    background-color: ${({ $selected }) => $selected && "var(--primary-base)"};
+    color: ${({ $selected }) => $selected && "white"};
+    font-weight: ${({ $selected }) => $selected && "600"};
+  }
+`;
+
+const Label = styled("label")`
+  color: var(--primary-base);
+  letter-spacing: 1.5px;
+  letter-spacing: 2px;
+`;
+
+const Heading = styled("h2")`
+  letter-spacing: 1.5px;
+  letter-spacing: 2px;
+`;
+
+const Page = styled("div")`
+  width: 100%;
+  height: 100%;
+
+  .panel {
+    padding: 0;
+  }
+`;
+
+const Cost = styled("div")`
+  display: flex;
+  align-items: center;
+  width: 150px;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--grey-light);
+  border-radius: var(--br-sm);
+  padding: 10px 20px;
+  text-transform: capitalize;
+  font-weight: 450;
+  line-height: 3px;
+
+  .key::after {
+    content: ":";
+    margin-left: 3px;
+  }
+
+  .value {
+    font-weight: 550;
+  }
+  .value::after {
+    position: relative;
+    top: 1.5px;
+    font-size: var(--tx-xl);
+    content: "\u20AC";
+    margin-left: 5px;
+  }
+`;
+
+const Content = styled("div")`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 300px 300px;
+  grid-template-rows: 200px;
+  justify-content: space-around;
+  align-content: center;
+`;
+
+export { Component };

@@ -1,21 +1,17 @@
-import { ComboboxSearchPlayer } from "../../components/comboboxes/ComboboxSearchPlayer.jsx";
-import styled from "styled-components";
-import BackgroundWrisband from "/assets/icons/wristband-gear.svg";
-import { Team } from "#afm/team/Team.js";
+import { PlayerCommander } from "#afm/player/PlayerCommander.js";
+import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
+import { Center } from "#components/Center.jsx";
+import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
 import { StandardPlayerActionCard } from "#components/player/StandardPlayerActionCard.jsx";
 import { RegistrationQueue } from "#components/registration-queue/RegistrationQueue.jsx";
 import { useRegistrationQueue } from "#components/registration-queue/useRegistrationQueue.jsx";
-import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
-import { Center } from "#components/Center.jsx";
-import { useContextApp } from "../../contexts/ContextApp.jsx";
-import { PlayerCommander } from "#afm/player/PlayerCommander.js";
-import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
+import styled from "styled-components";
+import { ComboboxSearchPlayer } from "../../components/comboboxes/ComboboxSearchPlayer.jsx";
 
 const createPlayer = (player, wristband) =>
   new PlayerCommander(player, new WristbandCommander(wristband));
 
 function Component() {
-  const { createPlayerCommander } = useContextApp();
   const { queue, enqueue, dequeue, pairWristband, unpairWristband } =
     useRegistrationQueue();
 

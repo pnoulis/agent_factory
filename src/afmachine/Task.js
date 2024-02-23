@@ -74,9 +74,10 @@ class Task extends createEventful() {
           cmd.t_start = Date.now();
           cmd.state = "pending";
           await cmd.emit("stateChange", cmd.state, ostate, cmd);
-          trace("after state change emit");
+          debug("after state change emit");
           cmd.onPending?.();
           await cmd.emit("pending", cmd);
+          debug('after pending');
 
           await cmd
             .emit("pretask", cmd)
