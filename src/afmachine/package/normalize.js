@@ -9,7 +9,7 @@ function normalize(sources, options) {
     targetState: options.state || null,
     defaultState: options.defaultState || "unregistered",
     nullSupersede: options.nullSupersede || false,
-    stage2: options.stage2 ?? true,
+    stage2: options.stage2 ?? false,
   };
   trace(_options, "package.normalize() _options");
 
@@ -109,7 +109,7 @@ function normalize(sources, options) {
     target.state ||= _options.defaultState;
   }
 
-  if (true) {
+  if (!_options.stage2) {
     trace(target, "package.normalize() target");
     return target;
   }

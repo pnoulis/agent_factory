@@ -17,6 +17,14 @@ function random(sources, options) {
   trace(target, "wristband random normalized target");
 
   switch (target.state) {
+    case "asis":
+      target.state = "unpaired";
+      target.id ||= randomInteger(MIN_WRISTBAND_ID, MAX_WRISTBAND_ID);
+      target.colorCode ||= target.color
+        ? WRISTBAND_COLORS[target.color]
+        : randomInteger(MIN_WRISTBAND_CC, MAX_WRISTBAND_CC);
+      target.color ||= WRISTBAND_COLORS[target.colorCode];
+      break;
     case "unpaired":
     // fall through
     case "pairing":

@@ -23,6 +23,7 @@ function Table({
   className,
   style,
   onSelectionChange,
+  ...props
 }) {
   ctx ??= useTable({
     data,
@@ -36,7 +37,11 @@ function Table({
 
   return (
     <ContextTable ctx={ctx}>
-      <Wrapper className={mergec(className, "table-wrapper")} style={style}>
+      <Wrapper
+        className={mergec(className, "table-wrapper")}
+        style={style}
+        {...props}
+      >
         <section className="table-bounds">
           <MuiTable stickyHeader>
             <MuiTableHead>
@@ -73,6 +78,8 @@ const Wrapper = styled("div")`
   width: 100%;
   height: 100%;
   display: flex;
+  overflow-x: scroll;
+  overflow-y: scroll;
   background-color: white;
   flex-flow: column nowrap;
   box-shadow: var(--sd-9);
@@ -86,6 +93,7 @@ const Wrapper = styled("div")`
     overflow-x: scroll;
     scrollbar-color: black var(--primary-base);
     scrollbar-gutter: stable both-edges;
+    height: 100%;
   }
 
   .table-pagination {

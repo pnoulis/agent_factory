@@ -3,17 +3,17 @@ import { Wristband } from "../wristband/Wristband.js";
 
 new Task("readWristband", Command);
 
-function Command(wristband, opts) {
+function Command(wristband, { queue } = {}) {
   const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {
       args: { wristband },
-      opts,
+      opts: {
+        queue: queue || false,
+      },
     },
-    (cmd) => {
-      afm.runCommand(cmd);
-    },
+    (cmd) => afm.runCommand(cmd),
   );
   return promise;
 }

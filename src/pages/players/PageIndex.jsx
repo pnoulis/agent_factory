@@ -2,22 +2,30 @@ import { PanelActionbar } from "#components/panel/PanelActionbar";
 import { AwaitPlayers } from "/src/loaders/loadPlayers.jsx";
 import { TablePlayers } from "#components/tables/TablePlayers.jsx";
 import { Center } from "#components/Center.jsx";
-import { Page } from "#components/Page.jsx";
 import styled from "styled-components";
 
 function Component() {
   return (
-    <Page>
-      <Center>
-        <AwaitPlayers>
-          {({ players }) => {
-            debug(players, "players");
-            return <TablePlayers players={players} />;
-          }}
-        </AwaitPlayers>
-      </Center>
-    </Page>
+    <AwaitPlayers>
+      {({ players }) => {
+        return (
+          <Page className="page">
+            <TablePlayers players={players} />
+          </Page>
+        );
+      }}
+    </AwaitPlayers>
   );
 }
+
+const Page = styled("div")`
+  padding-top: 80px;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 85%;
+  grid-template-rows: 1fr;
+  justify-content: center;
+`;
 
 export { Component };

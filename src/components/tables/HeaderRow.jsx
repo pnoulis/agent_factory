@@ -35,6 +35,7 @@ function HeaderRow({ showCheckbox, showIndex }) {
         <HeaderCell
           key={i}
           name={k}
+          label={ctx.fields[k]?.label}
           order={ctx.order}
           active={ctx.orderBy === k}
           onSort={ctx.handleChangeOrderBy}

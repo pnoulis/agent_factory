@@ -6,13 +6,14 @@ function Form({
   id,
   fields,
   ctx,
+  submitting,
   onSubmit,
   onChange,
   className,
   style,
   children,
 }) {
-  const [form, setForm] = ctx ?? useForm({ submitting: false, fields });
+  const [form, setForm] = ctx ?? useForm({ submitting, fields });
 
   React.useEffect(() => {
     if (!form.submitting) return;

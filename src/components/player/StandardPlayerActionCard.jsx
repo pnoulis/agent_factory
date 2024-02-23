@@ -14,6 +14,7 @@ const StandardPlayerActionCard = styled(PlayerActionCard)`
   .value {
     text-align: center;
     font-weight: 550;
+    overflow-wrap: anywhere;
   }
 
   .widget-wristband {

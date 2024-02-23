@@ -20,8 +20,8 @@ function DialogConfirmStandard({
     <StyledDialogConfirm id={id} initialOpen={initialOpen} onClose={onClose}>
       <Heading>{heading}</Heading>
       <Description>{children || msg}</Description>
-      <No autoFocus>{no}</No>
-      <Yes>{yes}</Yes>
+      <No>{no}</No>
+      <Yes autoFocus>{yes}</Yes>
     </StyledDialogConfirm>
   );
 }

@@ -7,8 +7,15 @@ import { RegistrationQueue } from "#components/registration-queue/RegistrationQu
 import { useRegistrationQueue } from "#components/registration-queue/useRegistrationQueue.jsx";
 import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
 import { Center } from "#components/Center.jsx";
+import { useContextApp } from "../../contexts/ContextApp.jsx";
+import { PlayerCommander } from "#afm/player/PlayerCommander.js";
+import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
+
+const createPlayer = (player, wristband) =>
+  new PlayerCommander(player, new WristbandCommander(wristband));
 
 function Component() {
+  const { createPlayerCommander } = useContextApp();
   const { queue, enqueue, dequeue, pairWristband, unpairWristband } =
     useRegistrationQueue();
 
@@ -24,7 +31,9 @@ function Component() {
                 </Label>
                 <ComboboxSearchPlayer
                   labelledBy="combobox-label"
-                  onSelect={enqueue}
+                  onSelect={(player) =>
+                    enqueue(createPlayer(player, player.wristband))
+                  }
                 />
               </>
             </AwaitCommand>

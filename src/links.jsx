@@ -72,6 +72,11 @@ const grouparty = {
   label: "group party",
 };
 
+const groupartySize = {
+  path: "/grouparty/size",
+  label: "group party",
+};
+
 //////////////////////////////////////////////////
 // Cashiers
 //////////////////////////////////////////////////
@@ -128,6 +133,7 @@ export {
 
   // Group Party
   grouparty,
+  groupartySize,
 
   // Cashiers
   cashiers,

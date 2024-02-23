@@ -8,7 +8,7 @@ import { Team } from "../team/Team.js";
 new Task("registerTeam", Command);
 
 function Command(team, opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {

@@ -1,14 +1,20 @@
 import * as React from "react";
 import { Spinner } from "#components/misc/Spinner.jsx";
 import styled from "styled-components";
+import { mergec } from "/src/misc/misc.js";
 
 const Pending = React.forwardRef((props, ref) => (
-  <div ref={ref} style={props.style} className={props.className}>
+  <div
+    ref={ref}
+    style={props.style}
+    className={mergec("pending", props.className)}
+  >
     <Spinner color="var(--info-strong)" size={props.size || "75px"} />
   </div>
 ));
 
 const StyledPending = styled(Pending)`
+  z-index: 200;
   position: absolute;
   width: 150px;
   height: 150px;

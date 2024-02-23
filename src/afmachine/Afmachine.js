@@ -4,13 +4,19 @@ import { DEVICE_TYPES } from "../constants.js";
 
 // Entities
 import { Wristband } from "./wristband/Wristband.js";
+import { WristbandCommander } from "./wristband/WristbandCommander.js";
 import { Player } from "./player/Player.js";
+import { PlayerCommander } from "./player/PlayerCommander.js";
 import { Package } from "./package/Package.js";
 import { Team } from "./team/Team.js";
+import { TeamCommander } from "./team/TeamCommander.js";
 import { Device } from "./device/Device.js";
 import { DeviceAdminScreen } from "./device/admin-screen/DeviceAdminScreen.js";
 import { DeviceRPIReader } from "./device/rpi-reader/DeviceRPIReader.js";
 import { Cashier } from "./cashier/Cashier.js";
+import { GrouPartyTeam } from "./grouparty/GrouPartyTeam.js";
+import { GrouPartyPlayer } from "./grouparty/GrouPartyPlayer.js";
+import { GrouPartyWristband } from "./grouparty/GrouPartyWristband.js";
 
 // RPI Reader tasks
 import { readWristband } from "./tasks/readWristband.js";
@@ -272,14 +278,25 @@ Object.assign(Afmachine.prototype, {
   // Creates
   createWristbandFactory(type) {
     switch (type) {
+      case "grouparty":
+        return (wristband) => new GrouPartyWristband(wristband);
+      case "commander":
+        return (wristband) => new WristbandCommander(wristband);
       default:
         return (wristband) => new Wristband(wristband);
     }
   },
   createPlayerFactory(type) {
     switch (type) {
+      case "grouparty":
+        return (player, wristband) =>
+          new GrouPartyPlayer(player, new GrouPartyWristband(wristband));
+      case "commander":
+        return (player, wristband) =>
+          new PlayerCommander(player, new WristbandCommander(wristband));
       default:
-        return (player, wristband) => new Player(player, wristband);
+        return (player, wristband) =>
+          new Player(player, new Wristband(wristband));
     }
   },
   createPackageFactory(type) {
@@ -290,6 +307,22 @@ Object.assign(Afmachine.prototype, {
   },
   createTeamFactory(type, playerType, wristbandType, pkgType) {
     switch (type) {
+      case "grouparty":
+        return (team) =>
+          new GrouPartyTeam(
+            team,
+            this.createPlayerFactory("grouparty"),
+            this.createWristbandFactory("grouparty"),
+            this.createPackageFactory(pkgType),
+          );
+      case "commander":
+        return (team) =>
+          new TeamCommander(
+            team,
+            this.createPlayerFactory(playerType || type),
+            this.createWristbandFactory(wristbandType || type),
+            this.createPackageFactory(pkgType),
+          );
       default:
         return (team) =>
           new Team(

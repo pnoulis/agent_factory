@@ -71,7 +71,19 @@ const router = createBrowserRouter(
             //////////////////////////////////////////////////
             {
               path: links.grouparty.path,
-              lazy: async () => import("./pages/grouparty/PageGrouparty.jsx"),
+              lazy: async () => import("./pages/grouparty/PageIndex.jsx"),
+              children: [
+                {
+                  index: true,
+                  lazy: async () =>
+                    import("./pages/grouparty/PageGrouparty.jsx"),
+                },
+                {
+                  path: links.groupartySize.path,
+                  lazy: async () =>
+                    import("./pages/grouparty/PageGrouPartySize.jsx"),
+                },
+              ],
             },
 
             //////////////////////////////////////////////////

@@ -1,5 +1,6 @@
 import { Tooltip, TooltipTrigger, TooltipContent } from "react_utils/tooltips";
 import { Svg } from "react_utils/svgs";
+import { mergec } from "/src/misc/misc.js";
 
 function Widget({
   onClick: handleClick,
@@ -16,7 +17,7 @@ function Widget({
       <TooltipTrigger
         size={size}
         onClick={!$disabled && handleClick}
-        className={className + " trigger"}
+        className={mergec("trigger", "widget", className)}
       >
         <Svg>{children}</Svg>
       </TooltipTrigger>

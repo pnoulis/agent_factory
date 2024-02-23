@@ -1,6 +1,9 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** page group party
+cannot re-distribute of if there is a merged team
+
 ** TODO Await command
 needs to be placed at the center of the container.
 

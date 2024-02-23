@@ -15,4 +15,16 @@ class Registered {
   }
 }
 
+Registered.prototype.register = function () {
+  throw globalThis.craterr(({ ETEAM }) =>
+    ETEAM("Trying to register a team in registered state"),
+  );
+};
+
+Registered.prototype.registered = function (team) {
+  throw globalThis.craterr(({ ETEAM }) =>
+    ETEAM("Registered a team in registered state"),
+  );
+};
+
 export { Registered };

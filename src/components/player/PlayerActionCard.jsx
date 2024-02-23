@@ -5,6 +5,7 @@ import { DataTuple } from "../tuple/DataTuple.jsx";
 import { useContextPlayer } from "../../contexts/ContextPlayer.jsx";
 import { useContextWristband } from "../../contexts/ContextWristband.jsx";
 import { mergec } from "../../misc/misc.js";
+import { useEntityState } from "../../hooks/useEntityState.jsx";
 
 function PlayerActionCard({
   ctx,
@@ -15,18 +16,7 @@ function PlayerActionCard({
   style,
 }) {
   ctx ??= useContextPlayer();
-  const [state, setState] = React.useState(ctx.wristband.state?.name);
-
-  React.useEffect(() => {
-    const followState = (s) => setState(s);
-    ctx.wristband.on("stateChange", followState);
-    return () => {
-      if (ctx.wristband.inState("pairing")) {
-        ctx.wristband.cancelPairing();
-      }
-      ctx.wristband.removeListener("stateChange", followState);
-    };
-  }, [ctx.wristband]);
+  const { state } = useEntityState(ctx.wristband);
 
   return (
     <article className={mergec(className, "player-action-card")} style={style}>

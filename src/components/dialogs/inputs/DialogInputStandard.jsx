@@ -1,3 +1,4 @@
+import * as React from "react";
 import styled from "styled-components";
 import { DialogInput } from "./DialogInput.jsx";
 import { Heading } from "./Heading.jsx";
@@ -12,16 +13,18 @@ function DialogInputStandard({
   form,
   initialOpen,
   onClose,
+  cancellable = true,
   heading,
   cancel = "cancel",
   submit = "submit",
   children,
 }) {
   const [open, setOpen] = React.useState(initialOpen);
+  const ref = React.useRef();
 
-  const closeDialog = () => {
+  const closeDialog = (...args) => {
     setOpen(false);
-    onClose?.();
+    onClose?.(...args);
   };
 
   return (
@@ -35,7 +38,7 @@ function DialogInputStandard({
       <Description>
         {isFunction(children) ? children(closeDialog) : null}
       </Description>
-      <Cancel autoFocus>{cancel}</Cancel>
+      {cancellable && <Cancel>{cancel}</Cancel>}
       <Submit form={form}>{submit}</Submit>
     </StyledDialogInput>
   );

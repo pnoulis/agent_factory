@@ -59,7 +59,7 @@ class WristbandCommander extends createEventful(Wristband) {
     return Promise.resolve().then(() => this.state.unpaired(this));
   }
 
-  pair(player) {
+  async pair(player) {
     this.pairing = {};
     return new Promise(async (resolve, reject) => {
       this.pairing.resolve = resolve;
@@ -70,6 +70,7 @@ class WristbandCommander extends createEventful(Wristband) {
         this.state.paired(registered);
         resolve(this);
       } catch (err) {
+        this.state.unpaired(this);
         reject(err);
       } finally {
         this.pairing = null;
@@ -83,10 +84,10 @@ class WristbandCommander extends createEventful(Wristband) {
       const deregistered = await this.deregister(player, this);
       this.state.unpaired(deregistered);
     } catch (err) {
-      this.state.unpaired(this);
     } finally {
       return this;
     }
+    return this;
   }
 }
 extendProto(WristbandCommander, stateventful);

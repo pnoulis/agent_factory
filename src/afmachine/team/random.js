@@ -34,8 +34,8 @@ function random(sources, options) {
     case "unregistered":
       target.roster = target.roster.map((player) =>
         Player.random(player, {
+          state: "unregistered",
           ...options.player,
-          state: "registered",
           wristband: {
             state: ["unpaired", "pairing", "unpairing", "paired"].at(
               randomInteger(0, 3),

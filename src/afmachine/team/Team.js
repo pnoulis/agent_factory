@@ -57,6 +57,16 @@ class Team extends createStateful([Unregistered, Registered, Playing]) {
       this.create.player(player, this.create.wristband(player?.wristband)),
     );
   }
+
+  removePlayer(player) {
+    const newRoster = [];
+    for (let i = 0; i < this._roster.length; i++) {
+      if (player.username === this._roster[i].username) continue;
+      newRoster.push(this._roster[i]);
+    }
+    this._roster = newRoster;
+  }
+
   addPackage(pkg) {
     this._packages.push(this.create.package(pkg));
   }

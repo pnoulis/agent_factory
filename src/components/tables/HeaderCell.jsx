@@ -47,6 +47,7 @@ function HeaderCell({
   className,
   style,
   name,
+  label,
 }) {
   return (
     <MuiTableCell
@@ -63,7 +64,7 @@ function HeaderCell({
         onClick={() => onSort?.(orderBy || name)}
       >
         <TableDataTuple>
-          <DataTuple nov name={name} />
+          <DataTuple nov name={name} label={label} />
         </TableDataTuple>
         {active ? (
           <StyledSortButtonIcon order={active ? order : "asc"}>

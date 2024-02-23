@@ -15,4 +15,12 @@ class Unregistered {
   }
 }
 
+Unregistered.prototype.register = function () {
+  return this.team;
+};
+
+Unregistered.prototype.registered = function (team) {
+  return this.team.normalize(team, { state: "registered" });
+};
+
 export { Unregistered };

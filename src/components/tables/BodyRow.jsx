@@ -36,7 +36,7 @@ function BodyRow({
       )}
       {showIndex && <BodyCell name="index" src={data} />}
       {Object.keys(fields).map((k, i) => (
-        <BodyCell key={i} name={k} src={data} />
+        <BodyCell key={i} name={k} src={data} gval={fields[k]?.gval} />
       ))}
     </MuiTableRow>
   );

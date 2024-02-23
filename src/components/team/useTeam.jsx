@@ -3,11 +3,33 @@ import { useRegistrationQueue } from "../registration-queue/useRegistrationQueue
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { AlertRegisterTeamUnpairedWristbands } from "#components/dialogs/alerts/AlertRegisterTeamUnpairedWrisbands.jsx";
-import { MIN_ROSTER_SIZE } from "../../constants.js";
+import { MAX_ROSTER_SIZE, MIN_ROSTER_SIZE } from "../../constants.js";
 import { areMembersUniqueCb } from "js_utils/misc";
 import { Team } from "#afm/team/Team.js";
+import { TeamCommander } from "#afm/team/TeamCommander.js";
+import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
+import { PlayerCommander } from "#afm/player/PlayerCommander.js";
+import { generateRandomName } from "js_utils";
+import { teamReact } from "#afm/team/TeamReact.jsx";
 
-function useTeam(initialTeam) {
+const createPlayer = (player, wristband) =>
+  new PlayerCommander(player, new WristbandCommander(wristband));
+
+const createTeam = (team) =>
+  new TeamCommander(
+    team,
+    (player, wristband) => new PlayerCommander(player, wristband),
+    (wristband) => new WristbandCommander(wristband),
+  );
+
+function useTeam(initialTeam, { ctx } = {}) {
+  const [commander, setCommander] = React.useState(
+    initialTeam instanceof Team ? initialTeam : createTeam(initialTeam),
+  );
+  const [randomTeamName, setRandom] = React.useState(() =>
+    generateRandomName(),
+  );
+
   const {
     queue: roster,
     setQueue,
@@ -15,98 +37,45 @@ function useTeam(initialTeam) {
     dequeue,
     pairWristband,
     unpairWristband,
-  } = useRegistrationQueue(initialTeam?.roster);
-  const [team, setTeam] = React.useState(Team.normalize(initialTeam));
+  } = ctx || useRegistrationQueue(commander.roster, createPlayer);
+
+  const isThisTeamRegistering = (cmd) => cmd.args.team.name === commander.name;
 
   function reset() {
     setQueue([]);
-    setTeam(Team.normalize());
+    setCommander(createTeam());
   }
 
   function setName(name) {
-    setTeam({ name });
+    commander.name = name;
   }
 
   function addPlayer(player) {
-    for (let i = 0; i < roster.length; i++) {
-      if (roster[i].username === player.username) {
-        return renderDialog(
-          <DialogAlertStandard
-            initialOpen
-            heading="add team player"
-            msg="Player is already part of the team!"
-          />,
-        );
-      }
-    }
-    enqueue(player);
+    teamReact.addPlayer(commander, player, (team, player) => {
+      enqueue(createPlayer(player, player.wristband));
+    });
   }
   function removePlayer(player) {
     dequeue(player);
   }
   function register() {
-    if (!team.name) {
-      return renderDialog(
-        <DialogAlertStandard
-          initialOpen
-          heading="register team"
-          msg="Team missing name!"
-        />,
-      );
-    }
-    if (roster.length < MIN_ROSTER_SIZE) {
-      return renderDialog(
-        <DialogAlertStandard
-          initialOpen
-          heading="register team"
-          msg={`Team needs at least ${MIN_ROSTER_SIZE} players!`}
-        />,
-      );
-    }
-
-    let unpaired = [];
-    for (let i = 0; i < roster.length; i++) {
-      if (!roster[i].wristband.inState("paired")) {
-        unpaired.push(roster[i]);
-      }
-    }
-    if (unpaired.length) {
-      return renderDialog(
-        <AlertRegisterTeamUnpairedWristbands unpairedPlayers={unpaired} />,
-      );
-    }
-
-    if (
-      !areMembersUniqueCb(
-        roster,
-        (a, b) => a.wristband.colorCode === b.wristband.colorCode,
-      )
-    ) {
-      return renderDialog(
-        <DialogAlertStandard
-          initialOpen
-          heading="register team"
-          msg="Duplicate wristband colors"
-        />,
-      );
-    }
-
-    afm.registerTeam({
-      ...team,
-      roster,
-    });
+    commander.name ||= randomTeamName;
+    commander.roster = roster;
+    teamReact.register(commander, (team) => team.register());
   }
 
   return {
-    team,
+    commander,
     roster,
     reset,
+    isThisTeamRegistering,
     pairWristband,
     unpairWristband,
     setName,
     addPlayer,
     removePlayer,
     register,
+    randomTeamName,
   };
 }
 

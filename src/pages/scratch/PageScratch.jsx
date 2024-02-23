@@ -24,55 +24,20 @@ import { WidgetRemove } from "../../components/widgets/WidgetRemove";
 import { FormTeamName } from "#components/forms/FormTeamName.jsx";
 import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
 import { AwaitCommand2 } from "../../components/await-command/AwaitCommand2";
+import { FormGrouPartySize } from "../../components/forms/FormGrouPartySize.jsx";
+import { getGrouPartyDistribution } from "../../components/dialogs/inputs/getGrouPartyDistribution.jsx";
+import { getGrouPartySize } from "../../components/dialogs/inputs/getGrouPartySize";
+import { useTeam } from "#components/team/useTeam.jsx";
 
 function PageScratch() {
+  const t = useTeam();
+  debug(t);
   return (
     <>
       <h1>page scratch</h1>
       <AwaitAfmachine>
         {() => (
           <Div>
-            <section>
-              <AwaitCommand2
-                overlay
-                onFulfilled={(cmd) => {
-                  debug(`ON FULFILLED: ${cmd.taskname}`);
-                }}
-                delayPending={1000}
-                cmd={afm.listPlayers}
-              >
-                {({ idle, pending, fulfilled }) => {
-                  if (idle) {
-                    return (
-                      <>
-                        <p>idle</p>
-                        <button onClick={() => afm.listPlayers()}>
-                          list players{" "}
-                        </button>
-                      </>
-                    );
-                  } else if (pending) {
-                    return (
-                      <>
-                        <p>pending</p>
-                      </>
-                    );
-                  } else if (fulfilled) {
-                    return (
-                      <>
-                        <p>fulfilled</p>
-                      </>
-                    );
-                  } else {
-                    return (
-                      <>
-                        <p>rejected</p>
-                      </>
-                    );
-                  }
-                }}
-              </AwaitCommand2>
-            </section>
             <section></section>
           </Div>
         )}

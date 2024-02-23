@@ -9,7 +9,6 @@ import { useContextApp } from "/src/contexts/ContextApp";
 import { MAX_ROSTER_SIZE } from "../../constants.js";
 import { RegistrationQueue } from "#components/registration-queue/RegistrationQueue.jsx";
 import { AwaitPlayersWithWristband } from "../../loaders/loadPlayersWithWristband.jsx";
-import { Team } from "#afm/team/Team.js";
 import { StandardPlayerActionCard } from "#components/player/StandardPlayerActionCard.jsx";
 import { StandardPlayerFiller } from "#components/player/StandardPlayerFiller.jsx";
 import { FormTeamName } from "#components/forms/FormTeamName.jsx";
@@ -19,16 +18,63 @@ import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStand
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { useTeam } from "#components/team/useTeam.jsx";
 import { AwaitCommand2 } from "#components/await-command/AwaitCommand2.jsx";
+import { TeamCommander } from "#afm/team/TeamCommander.js";
+import { PlayerCommander } from "#afm/player/PlayerCommander.js";
+import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
+import { teamReact } from "#afm/team/TeamReact.jsx";
+import { generateRandomName } from "js_utils/misc";
+import { useRegistrationQueue } from "#components/registration-queue/useRegistrationQueue.jsx";
+
+const createTeam = (team) =>
+  new TeamCommander(
+    team,
+    (player, wristband) => new PlayerCommander(player, wristband),
+    (wristband) => new WristbandCommander(wristband),
+  );
+
+const createPlayer = (player, wristband) =>
+  new PlayerCommander(player, new WristbandCommander(wristband));
 
 function Component() {
   const { t } = useContextApp();
-  const team = useTeam();
+  const [randomTeamName, setRandom] = React.useState(generateRandomName());
+  const {
+    queue: roster,
+    setQueue,
+    enqueue,
+    dequeue,
+    pairWristband,
+    unpairWristband,
+  } = useRegistrationQueue();
+  const teamRef = React.useRef(createTeam());
+
+  function reset() {
+    setQueue([]);
+    setRandom(generateRandomName());
+  }
+
+  function setName(name) {
+    teamRef.current.name = name;
+  }
+
+  function addPlayer(player) {
+    teamReact.addPlayer(teamRef.current, player, (team, player) => {
+      enqueue(createPlayer(player, player.wristband));
+    });
+  }
+  function removePlayer(player) {
+    dequeue(player);
+  }
+  function register() {
+    teamRef.current._roster = roster;
+    teamReact.register(teamRef.current, (team) => team.register());
+  }
 
   return (
     <Panel>
       <PanelActionbar>
         <PanelNavbar as="section">
-          <PanelButton.Button onClick={team.register}>
+          <PanelButton.Button onClick={register}>
             <PanelButton.Icon>
               <IconRegister />
             </PanelButton.Icon>
@@ -47,7 +93,7 @@ function Component() {
               msg={cmd.msg}
             />,
           );
-          team.reset();
+          reset();
         }}
         onFulfilled={(cmd) => {
           renderDialog(
@@ -57,7 +103,7 @@ function Component() {
               msg={cmd.msg}
             />,
           );
-          team.reset();
+          reset();
         }}
       >
         <Center>
@@ -76,7 +122,7 @@ function Component() {
                         </Label>
                         <ComboboxSelectPlayer
                           players={players}
-                          onSelect={team.addPlayer}
+                          onSelect={addPlayer}
                         />
                       </>
                     )}
@@ -89,32 +135,33 @@ function Component() {
                 team name
               </Label>
               <FormTeamName
+                randomTeamName={randomTeamName}
                 onChange={({ form: { fields } }) => {
-                  team.setName(fields.teamName || fields.randomTeamName);
+                  setName(fields.teamName || fields.randomTeamName);
                 }}
               />
             </section>
             <section>
               <RegistrationQueue style={{ alignContent: "center" }}>
-                {team.roster.map((p, i) => {
+                {roster.map((p, i) => {
                   return (
                     <StandardPlayerActionCard
                       key={p.username + i}
                       value={`player #${i + 1}`}
                       ctx={p}
-                      onPlayerRemove={team.removePlayer}
-                      onWristbandPair={team.pairWristband}
-                      onWristbandUnpair={team.unpairWristband}
+                      onPlayerRemove={removePlayer}
+                      onWristbandPair={pairWristband}
+                      onWristbandUnpair={unpairWristband}
                     />
                   );
                 })}
-                {team.roster.length < MAX_ROSTER_SIZE &&
-                  new Array(MAX_ROSTER_SIZE - team.roster.length)
+                {roster.length < MAX_ROSTER_SIZE &&
+                  new Array(MAX_ROSTER_SIZE - roster.length)
                     .fill(null)
                     .map((_, i) => (
                       <StandardPlayerFiller
                         key={i}
-                        value={`player #${team.roster.length + i + 1}`}
+                        value={`player #${roster.length + i + 1}`}
                       />
                     ))}
               </RegistrationQueue>

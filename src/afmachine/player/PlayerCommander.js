@@ -17,15 +17,15 @@ class PlayerCommander extends createEventful(Player) {
     return this;
   }
 
-  async pairWristband() {
+  async pairWristband(queue) {
     return await parsecmd(
-      afm.pairWristband(this, this.wristband, { queue: false }),
+      afm.pairWristband(this, this.wristband, { queue: queue || false }),
     );
   }
 
-  async unpairWristband() {
+  async unpairWristband(queue) {
     return await parsecmd(
-      afm.unpairWristband(this, this.wristband, { queue: false }),
+      afm.unpairWristband(this, this.wristband, { queue: queue || false }),
     );
   }
 }

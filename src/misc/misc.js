@@ -1,6 +1,7 @@
 import { isString } from "js_utils/misc";
 import { random as randomPlayer } from "../afmachine/player/random.js";
 import { smallid, uuid } from "js_utils/uuid";
+import { MIN_ROSTER_SIZE } from "../constants.js";
 
 function mergec(...classes) {
   let _class = "";
@@ -111,6 +112,17 @@ function randomCashier() {
 }
 
 function removeIndex(arr, index) {
+  // if (splice) {
+  //   if (!index) {
+  //     return arr.splice(1);
+  //   } else if (index === arr.length - 1) {
+  //     return arr.splice(0, -1);
+  //   } else {
+  //     return arr.splice(0, index).concat(arr.splice(index + 1));
+  //   }
+  // } else {
+
+  // }
   if (!index) {
     return arr.slice(1);
   } else if (index === arr.length - 1) {
@@ -118,6 +130,57 @@ function removeIndex(arr, index) {
   } else {
     return arr.slice(0, index).concat(arr.slice(index + 1));
   }
+}
+
+function distributePlayers(players = 0, ratio = MIN_ROSTER_SIZE) {
+  // How many teams of _ratio_ can be made out of _players_
+  let teamsOfRatio = Math.floor(Math.abs(players / ratio));
+  // When ratio > players, then _teamsOfRatio_ is 0.
+  // If that is the case then figure out if players can be split in teams
+  // of MIN_TEAM_SIZE else place them all in one team.
+  if (!teamsOfRatio || (teamsOfRatio === 1 && players % ratio >= 2)) {
+    if (players >= MIN_ROSTER_SIZE * 2) {
+      ratio = Math.floor(Math.abs(players / 2));
+      teamsOfRatio = 2;
+    } else {
+      ratio = players;
+      teamsOfRatio = 1;
+    }
+  }
+  // Remaining players
+  let remainder =
+    players > MIN_ROSTER_SIZE ? Math.floor(Math.abs(players % ratio)) : 0;
+
+  const teams = new Array(teamsOfRatio);
+  if (teamsOfRatio === 1) {
+    teams[0] = new Array(players).fill(null);
+    return teams;
+  }
+  for (let i = 0; i < teams.length; i++) {
+    teams[i] = new Array(ratio).fill(null);
+    if (remainder-- > 0) teams[i].push(null);
+  }
+  return teams;
+}
+
+function formatTime(time, { locale = "en-US" } = {}) {
+  time ??= Date.now();
+
+  return new Intl.DateTimeFormat(locale, {
+    year: "2-digit",
+    month: "2-digit",
+    weekday: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    second: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h24",
+  })
+    .formatToParts(time ?? Date.now())
+    .reduce((car, cdr) => {
+      car[cdr.type] = cdr.value;
+      return car;
+    }, {});
 }
 
 export {
@@ -132,4 +195,6 @@ export {
   t_timetolocal,
   randomCashier,
   removeIndex,
+  distributePlayers,
+  formatTime,
 };

@@ -161,7 +161,9 @@ function logent(entity, format = false) {
 
 function logstate(stateventful) {
   stateventful.on("stateChange", (newState, oldState, staeventful) => {
-    debug(`state change '${oldState}' -> '${newState}'`);
+    debug(
+      `state change '${stateventful.constructor.name}' ${oldState}' -> '${newState}'`,
+    );
   });
 }
 

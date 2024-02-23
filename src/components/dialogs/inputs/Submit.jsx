@@ -1,16 +1,18 @@
+import * as React from "react";
 import { InputDialog } from "react_utils/dialogs";
 
-function Submit({ className, style, form, children, props }) {
-  return (
+const Submit = React.forwardRef((props, ref) => (
+  <>
     <InputDialog.Confirm
-      className={className}
-      style={style}
-      form={form}
+      ref={ref}
+      className={props.className}
+      style={props.style}
+      form={props.form}
       {...props}
     >
-      {children}
+      {props.children}
     </InputDialog.Confirm>
-  );
-}
+  </>
+));
 
 export { Submit };

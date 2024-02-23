@@ -8,7 +8,7 @@ function normalize(sources, options) {
     targetState: options.state || null,
     defaultState: options.defaultState || "unpaired",
     nullSupersede: options.nullSupersede || false,
-    stage2: options.stage2 ?? true,
+    stage2: options.stage2 ?? false,
   };
   trace(_options, "wristband.normalize() _options");
 
