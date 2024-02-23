@@ -24,6 +24,7 @@ function Component() {
       <Center>
         <AwaitCommand cmd={afm.registerCashier}>
           <FormRegisterCashier
+            style={{ maxWidth: "350px" }}
             onSubmit={({ fields }, onError) =>
               parsecmd(afm.registerCashier(fields, fields.password))
                 .then(() => navigate(cashiers.path))

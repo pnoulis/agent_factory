@@ -12,11 +12,15 @@ import { loadCashiers } from "./loaders/loadCashiers.jsx";
 import { loadPlayers } from "./loaders/loadPlayers.jsx";
 import { loadPlayersWithWristband } from "./loaders/loadPlayersWithWristband.jsx";
 import { loadDevices } from "./loaders/loadDevices.jsx";
+import { loadTeams } from "./loaders/loadTeams.jsx";
+import { loadTeam } from "./loaders/loadTeam.jsx";
 import { PageLanding } from "./pages/PageLanding.jsx";
 
 function Router() {
   return <RouterProvider router={router} />;
 }
+
+debug(links.team().path, "team path");
 
 const router = createBrowserRouter(
   [
@@ -40,6 +44,12 @@ const router = createBrowserRouter(
               path: links.registerTeam.path,
               loader: loadPlayersWithWristband,
               lazy: async () => import("./pages/teams/PageRegister.jsx"),
+            },
+
+            {
+              path: links.team().path,
+              loader: loadTeam,
+              lazy: async () => import("./pages/team/PageTeam.jsx"),
             },
 
             //////////////////////////////////////////////////
@@ -91,6 +101,7 @@ const router = createBrowserRouter(
             //////////////////////////////////////////////////
             {
               path: links.liveView.path,
+              loader: loadTeams,
               lazy: async () => import("./pages/PageLiveView.jsx"),
             },
 
@@ -161,7 +172,7 @@ const router = createBrowserRouter(
       ],
     },
     {
-      loader: loadAfmachine,
+      loader: loadTeams,
       path: "/scratch",
       element: <PageScratch />,
     },

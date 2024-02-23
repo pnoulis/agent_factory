@@ -23,6 +23,7 @@ function Table({
   className,
   style,
   onSelectionChange,
+  onRowClick,
   ...props
 }) {
   ctx ??= useTable({
@@ -60,7 +61,8 @@ function Table({
                   data={row}
                   fields={ctx.fields}
                   isSelected={row.selected}
-                  handleRowSelect={ctx.handleRowSelect}
+                  handleRowSelect={onSelectionChange}
+                  handleRowClick={onRowClick}
                   showCheckbox={showCheckbox}
                   showIndex={showIndex}
                 />

@@ -28,20 +28,25 @@ import { FormGrouPartySize } from "../../components/forms/FormGrouPartySize.jsx"
 import { getGrouPartyDistribution } from "../../components/dialogs/inputs/getGrouPartyDistribution.jsx";
 import { getGrouPartySize } from "../../components/dialogs/inputs/getGrouPartySize";
 import { useTeam } from "#components/team/useTeam.jsx";
+import { AwaitTeams } from "/src/loaders/loadTeams.jsx";
 
 function PageScratch() {
-  const t = useTeam();
-  debug(t);
   return (
     <>
       <h1>page scratch</h1>
-      <AwaitAfmachine>
-        {() => (
-          <Div>
-            <section></section>
-          </Div>
-        )}
-      </AwaitAfmachine>
+      <AwaitTeams>
+        {({ teams }) => {
+          debug(teams);
+          return (
+            <ul>
+              {teams.map((team) => (
+                <li key={team.name}>{team.name}</li>
+              ))}
+            </ul>
+          );
+        }}
+      </AwaitTeams>
+      );
     </>
   );
 }

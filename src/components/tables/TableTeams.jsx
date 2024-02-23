@@ -1,11 +1,13 @@
 import { Table } from "./Table.jsx";
 import { t_stomls, t_stomin, formatTime } from "/src/misc/misc.js";
+import styled from "styled-components";
 
-function TableTeams({ teams, onSelectionChange }) {
+function TableTeams({ teams, onSelectionChange, onRowClick }) {
   return (
-    <Table
+    <ThisTable
       showIndex
-      showCheckbox
+      onRowClick={onRowClick}
+      onSelectionChange={onSelectionChange}
       data={teams}
       fields={{
         name: {
@@ -15,9 +17,6 @@ function TableTeams({ teams, onSelectionChange }) {
         state: {
           name: "state",
           label: "status",
-          gval: function (src) {
-            return src?.state.name || src.state;
-          },
         },
         roster: {
           name: "roster",
@@ -114,5 +113,11 @@ function TableTeams({ teams, onSelectionChange }) {
     />
   );
 }
+
+const ThisTable = styled(Table)`
+  .MuiTableRow-root {
+    cursor: pointer;
+  }
+`;
 
 export { TableTeams };

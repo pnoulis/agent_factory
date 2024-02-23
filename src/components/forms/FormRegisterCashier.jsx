@@ -4,7 +4,7 @@ import { TextInput_0, useForm } from "react_utils/inputs";
 import { Form } from "./Form.jsx";
 import { ComboboxCashierPrivilege } from "#components/comboboxes/ComboboxCashierPrivilege.jsx";
 
-function FormRegisterCashier({ onSubmit }) {
+function FormRegisterCashier({ onSubmit, style }) {
   const [form, setForm] = useForm({
     submitting: false,
     fields: {
@@ -17,7 +17,7 @@ function FormRegisterCashier({ onSubmit }) {
 
   return (
     <Form
-      style={{ rowGap: "20px" }}
+      style={{ rowGap: "20px", ...style }}
       id="registerCashier"
       ctx={[form, setForm]}
       onSubmit={onSubmit}

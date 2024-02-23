@@ -3,12 +3,12 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeTeam } from "../team/normalize.js";
+import { Team } from "../team/Team.js";
 
 new Task("listTeams", Command);
 
 function Command(opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(afm, { opts }, (cmd) => {
     afm.runCommand(cmd);
   });
@@ -19,15 +19,13 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.listTeams();
+    ctx.raw = await ctx.afm.adminScreen.listTeams();
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.teams = ctx.raw.teams.map((team) =>
-      normalizeTeam(team, { depth: 2 }),
-    );
+    ctx.res.teams = ctx.raw.teams.map((team) => Team.normalize(team));
     return next();
   },
 ];
@@ -35,13 +33,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve teams";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved teams";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as listTeams };

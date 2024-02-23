@@ -6,15 +6,17 @@ import styled from "styled-components";
 
 function Component() {
   return (
-    <AwaitPlayers>
-      {({ players }) => {
-        return (
-          <Page className="page">
-            <TablePlayers players={players} />
-          </Page>
-        );
-      }}
-    </AwaitPlayers>
+    <Center>
+      <AwaitPlayers>
+        {({ players }) => {
+          return (
+            <Page className="page">
+              <TablePlayers players={players} />
+            </Page>
+          );
+        }}
+      </AwaitPlayers>
+    </Center>
   );
 }
 

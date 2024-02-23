@@ -7,7 +7,7 @@ import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 new Task("listScoreboard", Command);
 
 function Command(opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(afm, { opts }, (cmd) => {
     afm.runCommand(cmd);
   });
@@ -22,7 +22,7 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.listScoreboard();
+    ctx.raw = await ctx.afm.adminScreen.listScoreboard();
     return next();
   },
   parseBackendResponse,
@@ -43,13 +43,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve Scoreboard";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved Scoreboard";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as listScoreboard };

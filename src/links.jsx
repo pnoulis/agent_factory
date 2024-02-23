@@ -64,6 +64,11 @@ const registerTeam = {
   label: "merge",
 };
 
+const team = (teamname) => ({
+  path: `/team/${teamname || ":teamname"}`,
+  label: "team",
+});
+
 //////////////////////////////////////////////////
 // Group Party
 //////////////////////////////////////////////////
@@ -129,6 +134,7 @@ export {
 
   // Teams
   teams,
+  team,
   registerTeam,
 
   // Group Party
