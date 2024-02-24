@@ -39,7 +39,7 @@ function loadPackages() {
 
 function AwaitPackages({ children }) {
   const pending = useLoaderData();
-  debug(pending.packages, 'pending');
+  debug(pending.packages, "pending");
   return (
     <Suspense fallback={<Pending />}>
       <Await resolve={pending.packages}>{children}</Await>

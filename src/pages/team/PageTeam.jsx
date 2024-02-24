@@ -17,6 +17,10 @@ import { Overflow } from "#components/Overflow.jsx";
 import { DataTuple } from "#components/tuple/DataTuple.jsx";
 import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";
 import { PairWristbands } from "./PairWristbands.jsx";
+import { PageListPackages } from "./PageListPackages.jsx";
+
+const isPackageRoute = (location) =>
+  new RegExp(teamPackage.path).test(location.pathname);
 
 function Component() {
   const navigate = useNavigate();
@@ -39,10 +43,7 @@ function Component() {
                     onClose={() => navigate(liveView.path)}
                   />
                 );
-              } else if (
-                !team.packages.length &&
-                !new RegExp(teamPackage.path).test(location.pathname)
-              ) {
+              } else if (!team.packages.length && !isPackageRoute(location)) {
                 return <Navigate relative to={teamPackage.path} />;
               } else {
                 return (
@@ -86,7 +87,13 @@ function Component() {
                         </Overflow>
                       </section>
                       <section className="team-subpages">
-                        <Outlet context={{ team }} />
+                        {isPackageRoute(location) ? (
+                          <Outlet context={{ team }} />
+                        ) : (
+                          <Overflow className="overflow">
+                            <PageListPackages team={team} />
+                          </Overflow>
+                        )}
                       </section>
                     </Content>
                   </>

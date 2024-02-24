@@ -5,7 +5,7 @@ import { parsecmd } from "#afm/parsecmd.js";
 import { Pending } from "#components/await-command/Pending2.jsx";
 
 const loadTeam = ({ params }) => {
-  const team = getafm(false)
+  const team = getafm()
     .then((afm) => parsecmd(afm.listTeams({ queue: false })))
     .then((response) => {
       const t = response.teams.find((team) => team.name === params.teamname);

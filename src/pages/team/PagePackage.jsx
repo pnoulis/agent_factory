@@ -9,19 +9,22 @@ import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { confirmAddTeamPackage } from "#components/dialogs/confirms/confirmAddTeamPackage.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { WidgetRegister } from "#components/widgets/WidgetRegister.jsx";
+import { WidgetBack } from "#components/widgets/WidgetBack.jsx";
 import { DataTuple } from "../../components/tuple/DataTuple.jsx";
 import { AwaitPackages } from "../../loaders/loadPackages.jsx";
 import { ComboboxSelectPackage } from "#components/comboboxes/ComboboxSelectPackage.jsx";
+import { WidgetPackage } from "#components/widgets/WidgetPackage.jsx";
 
 function Component() {
-  const [pkg, setPkg] = React.useState({});
+  const [selectedPkg, setSelectedPkg] = React.useState({});
   const { team } = useOutletContext();
   const navigate = useNavigate();
 
   async function handleRegisterClick() {
-    const yes = await confirmAddTeamPackage(pkg.name);
-    if (!yes) return;
-    afm.addTeamPackage(team, pkg).then(() => navigate(-1));
+    debug(afm);
+    if (await confirmAddTeamPackage(selectedPkg.name)) {
+      afm.addTeamPackage(team, selectedPkg).then(() => navigate(-1));
+    }
   }
 
   return (
@@ -54,6 +57,23 @@ function Component() {
               <Panel className="panel">
                 <PanelActionbar>
                   <PanelNavbar style={{ gap: "40px" }}>
+                    <WidgetPackage
+                      color="var(--primary-base)"
+                      fill="white"
+                      content="packages"
+                      onClick={() => {
+                        if (team.packages.length) {
+                          return navigate(-1);
+                        }
+                        renderDialog(
+                          <DialogAlertStandard
+                            initialOpen
+                            heading="List team packages"
+                            msg="Team does not have any packages!"
+                          />,
+                        );
+                      }}
+                    />
                     <WidgetRegister
                       color="var(--primary-base)"
                       fill="white"
@@ -61,43 +81,29 @@ function Component() {
                       onClick={handleRegisterClick}
                     />
                     <Cost>
-                      <DataTuple src={pkg} name="cost" dval="0" />
+                      <DataTuple src={selectedPkg} name="cost" dval="0" />
                     </Cost>
                   </PanelNavbar>
                 </PanelActionbar>
                 <Content className="content">
-                  <Package $selected={pkg.type === packages[0].type}>
-                    <Label
-                      id={`select-${packages[0]?.type}-label`}
-                      htmlFor={`select-${packages[0]?.type}-package-trigger`}
-                    >
-                      {`Select ${packages[0].type} package`}
-                    </Label>
-                    <Heading>{packages[0].description}</Heading>
-                    <ComboboxSelectPackage
-                      labelledBy={`select-${packages[0]?.type}-label`}
-                      pkg={packages[0]}
-                      onSelect={(pkg) => {
-                        setPkg({ ...pkg });
-                      }}
-                    />
-                  </Package>
-                  <Package $selected={pkg.type === packages[1].type}>
-                    <Label
-                      id={`select-${packages[1]?.type}-label`}
-                      htmlFor={`select-${packages[1]?.type}-package-trigger`}
-                    >
-                      {`Select ${packages[1].type} package`}
-                    </Label>
-                    <Heading>{packages[1].description}</Heading>
-                    <ComboboxSelectPackage
-                      labelledBy={`select-${packages[1]?.type}-label`}
-                      pkg={packages[1]}
-                      onSelect={(pkg) => {
-                        setPkg({ ...pkg });
-                      }}
-                    />
-                  </Package>
+                  {packages.map((pkg, i) => (
+                    <Package key={i} $selected={pkg.type === selectedPkg.type}>
+                      <Label
+                        id={`select-${pkg.type}-label`}
+                        htmlFor={`select-${pkg.type}-package-trigger`}
+                      >
+                        {`Select ${pkg.type} package`}
+                      </Label>
+                      <Heading>{pkg.description}</Heading>
+                      <ComboboxSelectPackage
+                        labelledBy={`select-${pkg?.type}-label`}
+                        pkg={pkg}
+                        onSelect={(pkg) => {
+                          setSelectedPkg({ ...pkg });
+                        }}
+                      />
+                    </Package>
+                  ))}
                 </Content>
               </Panel>
             </FollowState>
@@ -142,6 +148,7 @@ const Page = styled("div")`
 
   .panel {
     padding: 0;
+    gap: 100px;
   }
 `;
 
@@ -182,7 +189,6 @@ const Content = styled("div")`
   grid-template-columns: 300px 300px;
   grid-template-rows: 200px;
   justify-content: space-around;
-  align-content: center;
 `;
 
 export { Component };

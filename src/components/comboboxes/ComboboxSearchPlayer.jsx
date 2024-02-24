@@ -124,6 +124,9 @@ const Option = styled(Combobox.Option)`
     css`
       background-color: var(--secondary-light);
       .player-info-card .value.state {
+        color: white;
+      }
+      .wristband-info-card .value.state {
         color: black;
       }
     `}

@@ -10,7 +10,7 @@ function loadAfmachine() {
     : defer({
         afm: delay(100).then(() =>
           getafm(false).then((afm) => {
-            return afm.boot().then(() => afm);
+            return afm.boot({ queue: false }).then(() => afm);
           }),
         ),
       });

@@ -33,17 +33,19 @@ function FollowState({
         ? entityCb(cmd) && handleFullfilled?.(cmd)
         : handleFullfilled?.(cmd);
 
-    cmd.on?.("pending", async () => {
+    const onPending = async (cmd) => {
       await waitForUi(() => ref.current);
       await delay(timePending);
-    });
+    };
+
+    cmd.on?.("pending", onPending);
     cmd.on?.("fulfilled", onFulfilled);
     cmd.on?.("rejected", onRejected);
 
     return () => {
-      cmd.removeListener?.("pretask", delayPending);
       cmd.removeListener?.("fulfilled", onFulfilled);
       cmd.removeListener?.("rejected", onRejected);
+      cmd.removeListener?.("pending", onPending);
     };
   }, [cmd]);
 
