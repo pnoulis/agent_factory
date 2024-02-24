@@ -29,7 +29,7 @@ function Form({
   }, [form.submitting]);
 
   React.useEffect(() => {
-    onChange?.({ form, setForm });
+    onChange?.({ ...form, setForm });
   }, [form.fields]);
 
   return (

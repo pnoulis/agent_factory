@@ -2797,6 +2797,27 @@ Try pairing a players wristband under normal circumstances.
   }
 #+end_src
 
+** Implement Session List
+*** Document the req/res payload
+**** Backend request
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1708773525572,
+    result: 'OK',
+    message: 'No active session'
+  }
+    #+end_src
+** Implement Session stop force
+**** Backend request
+**** Backend response
+#+begin_src js
+  {
+    timestamp: 1708773569466,
+    result: 'OK',
+    message: 'False'
+  }
+#+end_src
 ** DONE Implement Session start
 *** DONE Normalize
 *** DONE Object schema for req/res backend topic payload

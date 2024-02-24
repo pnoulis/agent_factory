@@ -7,12 +7,12 @@ import { normalize as normalizeCashier } from "../cashier/normalize.js";
 
 new Task("startSession", Command);
 
-function Command(cashier, jwt, opts) {
-  const afm = this;
+function Command(cashier, opts) {
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {
-      args: { cashier, jwt },
+      args: { cashier },
       opts,
     },
     (cmd) => {
@@ -24,29 +24,19 @@ function Command(cashier, jwt, opts) {
 Command.verb = "start session";
 Command.middleware = [
   async (ctx, next) => {
-    ctx.req.jwt = ctx.args.jwt;
+    ctx.req.jwt = ctx.args.cashier.jwt;
     return next();
   },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.startSession(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.startSession(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    const { cashiers } = await ctx.afm.backend.listCashiers({
-      timestamp: ctx.t_start,
-    });
-    const thisCashier = cashiers.find(
-      (cashier) => cashier.username === ctx.args.cashier.username,
-    );
-    if (thisCashier === undefined) {
-      throw new Error(`Could not locate cashier: ${ctx.args.cashier.username}`);
-    }
-    ctx.res.cashier = normalizeCashier(thisCashier);
-    ctx.res.jwt = ctx.args.jwt;
+    ctx.res.cashier = ctx.args.cashier;
     return next();
   },
 ];
@@ -54,13 +44,13 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to start Session";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully started Session";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as startSession };

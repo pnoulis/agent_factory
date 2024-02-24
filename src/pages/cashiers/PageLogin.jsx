@@ -3,9 +3,11 @@ import { FormLoginCashier } from "#components/forms/FormLoginCashier.jsx";
 import BrandText from "/assets/brand/logo-white.png";
 import BrandFigure from "/assets/brand/logo-agent-white.png";
 import BackgroundFactory from "/assets/backgrounds/homepage-background-1920x1080px.png";
-// import { getSession } from "../../mysqldb/getSession.js";
+import { useSession } from "/src/hooks/useSession.jsx";
 
 function Component() {
+  const { login } = useSession();
+
   return (
     <Wrapper>
       <header>
@@ -13,20 +15,11 @@ function Component() {
       </header>
       <section>
         <FormLoginCashier
+          style={{ width: "350px" }}
           onSubmit={async ({ fields, setForm }, onError) => {
-            const res = await parsecmd(
-              afm.loginCashier(fields, fields.password),
-            ).catch(onError);
-            if (!res.ok) return setForm("reset");
-            // // get previously logged in cashiers
-            // const cashiers =
-            //   JSON.parse(window.localStorage.getItem("cashiers")) || [];
-            // cashiers.push(res.cashier);
-            // const session = await getSession();
-            // debug(session);
-            // window.localStorage.setItem("cashiers", JSON.stringify(cashiers));
-            // check if there is an already active session
-            // check if the session is expired
+            login(fields)
+              .catch(onError)
+              .catch((err) => setForm("reset"));
           }}
         />
       </section>

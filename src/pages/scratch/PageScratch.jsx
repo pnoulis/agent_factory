@@ -29,24 +29,19 @@ import { getGrouPartyDistribution } from "../../components/dialogs/inputs/getGro
 import { getGrouPartySize } from "../../components/dialogs/inputs/getGrouPartySize";
 import { useTeam } from "#components/team/useTeam.jsx";
 import { AwaitTeams } from "/src/loaders/loadTeams.jsx";
+import { promisifyDialog } from "../../components/dialogs/alerts/waitDialogAlertStandard";
 
 function PageScratch() {
+  promisifyDialog(
+    <DialogAlertStandard
+      heading="test"
+      msg="test mesg"
+      onClose={() => "yolo"}
+    />,
+  );
   return (
     <>
       <h1>page scratch</h1>
-      <AwaitTeams>
-        {({ teams }) => {
-          debug(teams);
-          return (
-            <ul>
-              {teams.map((team) => (
-                <li key={team.name}>{team.name}</li>
-              ))}
-            </ul>
-          );
-        }}
-      </AwaitTeams>
-      );
     </>
   );
 }

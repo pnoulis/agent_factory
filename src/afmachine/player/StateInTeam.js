@@ -26,14 +26,10 @@ InTeam.prototype.registered = function (player) {
   );
 };
 InTeam.prototype.pairWristband = function () {
-  throw globalThis.craterr(({ EPLAYER }) =>
-    EPLAYER("Trying to unpair a players wristband in inTeam state"),
-  );
+  return this.player;
 };
 InTeam.prototype.unpairWristband = function () {
-  throw globalThis.craterr(({ EPLAYER }) =>
-    EPLAYER("Trying to unpair a players wristband in inTeam state"),
-  );
+  return this.player;
 };
 
 export { InTeam };

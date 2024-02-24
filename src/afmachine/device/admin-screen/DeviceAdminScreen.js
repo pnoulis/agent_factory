@@ -24,8 +24,10 @@ import { deregisterCashier } from "./deregisterCashier.js";
 import { loginCashier } from "./loginCashier.js";
 
 // Session topics
+import { listSession } from "./listSession.js";
 import { startSession } from "./startSession.js";
 import { stopSession } from "./stopSession.js";
+import { stopSessionForce } from "./stopSessionForce.js";
 
 // Device topics
 import { updateDevice } from "./updateDevice.js";
@@ -74,8 +76,10 @@ Object.assign(DeviceAdminScreen.prototype, {
   loginCashier,
 
   // Session topics
+  listSession,
   startSession,
   stopSession,
+  stopSessionForce,
 
   // Device topics
   updateDevice,

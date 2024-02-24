@@ -3,16 +3,16 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeCashier } from "../cashier/normalize.js";
+import { Cashier } from "../cashier/Cashier.js";
 
 new Task("stopSession", Command);
 
-function Command(cashier, jwt, comment, opts) {
-  const afm = this;
+function Command(cashier, comment, opts) {
+  const afm = this || Command.verb;
   const promise = Command.createCommand(
     afm,
     {
-      args: { cashier, comment: comment ?? "", jwt },
+      args: { cashier, comment },
       opts,
     },
     (cmd) => {
@@ -25,44 +25,35 @@ Command.verb = "stop session";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
-      jwt: ctx.args.jwt,
-      comment: ctx.args.comment,
+      jwt: ctx.args.cashier.jwt,
+      comment: ctx.args.comment || "",
     };
     return next();
   },
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.stopSession(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.stopSession(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    const { cashiers } = await ctx.afm.backend.listCashiers({
-      timestamp: ctx.t_start,
-    });
-    const thisCashier = cashiers.find(
-      (cashier) => cashier.username === ctx.args.cashier.username,
-    );
-    if (thisCashier === undefined) {
-      throw new Error(`Could not locate cashier: ${ctx.args.cashier.username}`);
-    }
-    ctx.res.cashier = normalizeCashier(thisCashier);
+    ctx.res.cashier = ctx.args.cashier;
     return next();
   },
 ];
 Command.onFailure = function () {
   const cmd = this;
-  cmd.res.ok = true;
+  cmd.res.ok = false;
   cmd.msg = "Failed to stop Session";
-  cmd.reject(cmd.errs.at(-1));
+  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully stopped Session";
-  cmd.resolve(cmd.res);
+  cmd.resolve(cmd);
 };
 
 export { Command as stopSession };

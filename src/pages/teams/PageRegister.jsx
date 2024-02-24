@@ -135,7 +135,7 @@ function Component() {
               </Label>
               <FormTeamName
                 randomTeamName={randomTeamName}
-                onChange={({ form: { fields } }) => {
+                onChange={({ fields }) => {
                   setName(fields.teamName || fields.randomTeamName);
                 }}
               />

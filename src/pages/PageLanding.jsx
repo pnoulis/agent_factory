@@ -33,14 +33,8 @@ function PageLanding() {
               <TrackCommands />,
               document.getElementById("flash-messages-react-root"),
             )}
-            <Authorize as="cashier">
-              {(authorized) =>
-                authorized || location === loginCashier.path ? (
-                  <Outlet />
-                ) : (
-                  <Navigate replace to={loginCashier.path} />
-                )
-              }
+            <Authorize>
+              <Outlet />
             </Authorize>
           </>
         )}

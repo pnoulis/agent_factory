@@ -3,7 +3,6 @@ import { defer, Await, useLoaderData } from "react-router-dom";
 import { getafm } from "/src/getafm.js";
 import { parsecmd } from "#afm/parsecmd.js";
 import { Pending } from "#components/await-command/Pending2.jsx";
-import { unique } from "js_utils/misc";
 
 const loadTeams = () => {
   const teams = getafm()

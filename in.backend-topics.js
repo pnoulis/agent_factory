@@ -791,6 +791,16 @@ const registrationTopics = {
     pub: prefix("users/cashiers/delete"),
     sub: prefix("users/cashiers/delete/response"),
   },
+  listSession: {
+    alias: "session",
+    pub: basename("getSession"),
+    sub: basename("getSession/response"),
+  },
+  stopSessionForce: {
+    alias: "session/stop/force",
+    pub: basename("stopSession"),
+    sub: basename("stopSession/response"),
+  },
   startSession: {
     schema: {
       req: ajv.compile({

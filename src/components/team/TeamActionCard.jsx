@@ -31,7 +31,7 @@ function TeamActionCard({
             teamName={team.name}
             submitting={pending}
             randomTeamName={randomTeamName}
-            onChange={({ form: { fields } }) => {
+            onChange={({ fields }) => {
               team.name = fields.teamName || randomTeamName;
             }}
           />

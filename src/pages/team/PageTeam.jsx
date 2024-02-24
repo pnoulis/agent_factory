@@ -16,10 +16,12 @@ import { SquizzedPlayerInfoCard } from "#components/player/SquizzedPlayerInfoCar
 import { Overflow } from "#components/Overflow.jsx";
 import { DataTuple } from "#components/tuple/DataTuple.jsx";
 import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";
+import { PairWristbands } from "./PairWristbands.jsx";
 
 function Component() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [showRoster, setShowRoster] = React.useState(false);
 
   return (
     <>
@@ -61,19 +63,26 @@ function Component() {
                           <WidgetRoster
                             color="var(--primary-base)"
                             fill="white"
-                            content="pair wristbands"
-                            onClick={() => navigate(teamRoster.path)}
+                            content={showRoster ? "players" : "pair wristbands"}
+                            onClick={() => setShowRoster((prev) => !prev)}
                           />
                         </header>
-                        <Overflow>
-                          <ul className="list-roster">
-                            {team.roster.map((player, i) => (
-                              <SquizzedPlayerInfoCard
-                                ctx={player}
-                                key={player + i}
-                              />
-                            ))}
-                          </ul>
+                        <Overflow className="overflow">
+                          {showRoster ? (
+                            <PairWristbands
+                              className="pair-wristbands"
+                              team={team}
+                            />
+                          ) : (
+                            <ul className="list-roster">
+                              {team.roster.map((player, i) => (
+                                <SquizzedPlayerInfoCard
+                                  ctx={player}
+                                  key={player + i}
+                                />
+                              ))}
+                            </ul>
+                          )}
                         </Overflow>
                       </section>
                       <section className="team-subpages">
@@ -94,7 +103,7 @@ function Component() {
 const Page = styled("div")`
   width: 100%;
   height: 100%;
-  padding: 0 20px;
+  padding: 0 20px 40px 0;
 
   > .panel {
     gap: 60px;
@@ -114,6 +123,13 @@ const Content = styled("div")`
     display: flex;
     flex-flow: column nowrap;
     height: 100%;
+    gap: 100px;
+  }
+
+  .overflow {
+    // display: flex;
+    // flex-flow: column nowrap;
+    // justify-content: end;
   }
 
   .team-subpages {

@@ -50,8 +50,10 @@ import { deregisterCashier } from "./tasks/deregisterCashier.js";
 import { loginCashier } from "./tasks/loginCashier.js";
 
 // Session tasks
+import { listSession } from "./tasks/listSession.js";
 import { startSession } from "./tasks/startSession.js";
 import { stopSession } from "./tasks/stopSession.js";
+import { stopSessionForce } from "./tasks/stopSessionForce.js";
 
 // Device tasks
 import { boot } from "./tasks/boot.js";
@@ -249,8 +251,10 @@ Object.assign(Afmachine.prototype, {
   startTeam,
 
   // Session tasks
+  listSession,
   startSession,
   stopSession,
+  stopSessionForce,
 
   // Cashier tasks
   registerCashier,
