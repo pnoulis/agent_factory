@@ -18,6 +18,7 @@ function tobject(team, options) {
     name: team.name || null,
     t_created: team.t_created || null,
     points: team.points || null,
+    isTemporary: !!team.isTemporary,
     state: team.state?.name || team.state || _options.defaultState,
     roster: _options.depth
       ? [team.roster].flat().map((player) =>

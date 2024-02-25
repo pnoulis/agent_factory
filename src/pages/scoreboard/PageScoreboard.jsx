@@ -15,13 +15,13 @@ function Component() {
     <Panel>
       <PanelActionbar>
         <PanelNavbar>
-          <PanelNavLink.Anchor end to={t(scoreboard.path)}>
+          <PanelNavLink.Anchor end to={scoreboard.path}>
             <PanelNavLink.Icon>
               <IconScoreboard />
             </PanelNavLink.Icon>
-            <PanelNavLink.Text>{t(scoreboard.label)}</PanelNavLink.Text>
+            <PanelNavLink.Text>live</PanelNavLink.Text>
           </PanelNavLink.Anchor>
-          <PanelNavLink.Anchor end to={t(scoreboardTop10.path)}>
+          <PanelNavLink.Anchor end to={scoreboardTop10.path}>
             <PanelNavLink.Icon>
               <IconTop10 />
             </PanelNavLink.Icon>

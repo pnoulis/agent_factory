@@ -28,14 +28,16 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.roomElementAssociations = ctx.raw.roomElementAssociations;
-    ctx.res.live = ctx.raw.live;
-    ctx.res.teamAllTime = ctx.raw.teamAllTime;
-    ctx.res.teamMonthly = ctx.raw.teamMonthly;
-    ctx.res.teamWeekly = ctx.raw.teamWeekly;
-    ctx.res.teamDaily = ctx.raw.teamDaily;
-    ctx.res.perRoom = ctx.raw.perRoom;
-    ctx.res.perElement = ctx.raw.perElement;
+    ctx.res.scoreboard = {
+      roomElementAssociations: ctx.raw.roomElementAssociations,
+      live: ctx.raw.live,
+      teamAllTime: ctx.raw.teamAllTime,
+      teamMonthly: ctx.raw.teamMonthly,
+      teamWeekly: ctx.raw.teamWeekly,
+      teamDaily: ctx.raw.teamDaily,
+      perRoom: ctx.raw.perRoom,
+      perElement: ctx.raw.perElement,
+    };
     return next();
   },
 ];
@@ -43,13 +45,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve Scoreboard";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved Scoreboard";
-  cmd.resolve(cmd);
 };
 
 export { Command as listScoreboard };

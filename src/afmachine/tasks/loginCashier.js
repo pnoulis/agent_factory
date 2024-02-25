@@ -57,13 +57,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to login Cashier";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully logged in Cashier";
-  cmd.resolve(cmd);
 };
 
 export { Command as loginCashier };

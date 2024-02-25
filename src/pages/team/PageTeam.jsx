@@ -18,6 +18,7 @@ import { DataTuple } from "#components/tuple/DataTuple.jsx";
 import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";
 import { PairWristbands } from "./PairWristbands.jsx";
 import { PageListPackages } from "./PageListPackages.jsx";
+import { FollowState } from "#components/await-command/FollowState.jsx";
 
 const isPackageRoute = (location) =>
   new RegExp(teamPackage.path).test(location.pathname);
@@ -33,8 +34,9 @@ function Component() {
         <Panel className="panel">
           <AwaitTeam>
             {({ team }) => {
+              debug(team, "_team");
               if (!team) {
-                debug(team, "team");
+                debug(team, "_team");
                 return (
                   <DialogAlertStandard
                     initialOpen
@@ -90,9 +92,7 @@ function Component() {
                         {isPackageRoute(location) ? (
                           <Outlet context={{ team }} />
                         ) : (
-                          <Overflow className="overflow">
-                            <PageListPackages team={team} />
-                          </Overflow>
+                          <PageListPackages team={team} />
                         )}
                       </section>
                     </Content>

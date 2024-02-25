@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Widget } from "./Widget.jsx";
 
-const StandardWidget = styled(Widget)`
+const ElementWidget = styled(Widget)`
   &.trigger {
     cursor: ${({ $disable }) => !$disable && "pointer"};
     display: flex;
@@ -11,8 +11,8 @@ const StandardWidget = styled(Widget)`
     width: ${({ size }) => size || "50px"};
     height: ${({ size }) => size || "50px"};
     border: 3px solid transparent;
-    padding: 8px;
-    border-radius: 50%;
+    border-radius: var(--br-sm);
+    padding: 4px;
     background-color: ${({ color }) => color || "var(--grey-base)"};
   }
 
@@ -39,4 +39,4 @@ const StandardWidget = styled(Widget)`
   }
 `;
 
-export { StandardWidget };
+export { ElementWidget };

@@ -35,13 +35,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve Session";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved Session";
-  cmd.resolve(cmd);
 };
 
 export { Command as listSession };

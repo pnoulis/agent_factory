@@ -47,7 +47,6 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = `Failed to restart ${cmd.req.deviceId ? "device" : "all devices"}`;
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
@@ -55,7 +54,6 @@ Command.onSuccess = function () {
   cmd.msg = `Successfully restarted ${
     cmd.req.deviceId ? "device" : "all devices"
   }`;
-  cmd.resolve(cmd);
 };
 
 export { Command as restartDevice };

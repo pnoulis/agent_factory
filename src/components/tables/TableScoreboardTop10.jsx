@@ -1,6 +1,6 @@
 import { Table } from "./Table.jsx";
 
-function TableScoreboardLive({ scoreboard }) {
+function TableScoreboardTop10({ scoreboard }) {
   return (
     <Table
       showIndex
@@ -9,18 +9,16 @@ function TableScoreboardLive({ scoreboard }) {
         teamName: {
           label: "name",
         },
-        numberOfPlayers: {
-          label: "players",
-        },
-        played: null,
-        won: null,
-        lost: null,
         totalPoints: {
           label: "points",
         },
+        numberOfPlayers: {
+          label: "players",
+        },
+        created: null,
       }}
     />
   );
 }
 
-export { TableScoreboardLive };
+export { TableScoreboardTop10 };

@@ -43,6 +43,7 @@ import { registerGroupTeam } from "./tasks/registerGroupTeam.js";
 import { addTeamPackage } from "./tasks/addTeamPackage.js";
 import { removeTeamPackage } from "./tasks/removeTeamPackage.js";
 import { startTeam } from "./tasks/startTeam.js";
+import { findTeam } from "./tasks/findTeam.js";
 
 // Cashier tasks
 import { registerCashier } from "./tasks/registerCashier.js";
@@ -148,10 +149,12 @@ Afmachine.prototype.runCommand = async function (cmd) {
 
     await cmd.run();
   } catch (err) {
-    trace("catch 2");
+    debug(err);
+    debug(cmd);
+    debug("catch 2");
     cmd.errs.push(err);
   } finally {
-    trace("finally 3");
+    debug("finally 3");
     this.commands = this.commands - 1;
     this.onCmdEnd(cmd);
   }
@@ -249,6 +252,7 @@ Object.assign(Afmachine.prototype, {
   addTeamPackage,
   removeTeamPackage,
   startTeam,
+  findTeam,
 
   // Session tasks
   listSession,

@@ -28,6 +28,7 @@ Command.middleware = [
     ctx.res.teams = ctx.raw.teams.map((team) =>
       Team.normalize(team, {
         defaultState: "registered",
+        package: { defaultState: "registered" },
         player: { defaultState: "inTeam" },
         wristband: { defaultState: "paired", stage2: true },
       }),
@@ -39,13 +40,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve teams";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved teams";
-  cmd.resolve(cmd);
 };
 
 export { Command as listTeams };

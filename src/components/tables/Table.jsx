@@ -12,6 +12,7 @@ import { Pagination } from "./Pagination.jsx";
 import { ContextTable } from "/src/contexts/ContextTable.jsx";
 import { sort, getComparator } from "/src/misc/sort.js";
 import { mergec } from "/src/misc/misc.js";
+import { Overflow } from "#components/Overflow.jsx";
 
 function Table({
   ctx,
@@ -30,7 +31,7 @@ function Table({
     data,
     fields,
     orderBy,
-    rowsPerPage: 10,
+    rowsPerPage: 25,
     sort,
     getComparator,
     onSelectionChange,
@@ -43,7 +44,7 @@ function Table({
         style={style}
         {...props}
       >
-        <section className="table-bounds">
+        <Overflow className="overflow">
           <MuiTable stickyHeader>
             <MuiTableHead>
               <HeaderRow showCheckbox={showCheckbox} showIndex={showIndex} />
@@ -69,7 +70,7 @@ function Table({
               ))}
             </MuiTableBody>
           </MuiTable>
-        </section>
+        </Overflow>
         <Pagination className="table-pagination" />
       </Wrapper>
     </ContextTable>
@@ -89,16 +90,13 @@ const Wrapper = styled("div")`
   padding: 5px 5px 0 5px;
   overflow: none;
 
-  .table-bounds {
-    position: relative;
-    scrollbar-color: black var(--primary-base);
-    scrollbar-gutter: stable both-edges;
-    height: 100%;
+  .overflow {
+    max-height: 92%;
   }
 
   .table-pagination {
     margin-top: auto;
-overflow: hidden;
+    overflow: hidden;
   }
 `;
 

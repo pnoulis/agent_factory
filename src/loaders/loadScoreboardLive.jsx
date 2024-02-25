@@ -4,21 +4,22 @@ import { getafm } from "/src/getafm.js";
 import { parsecmd } from "#afm/parsecmd.js";
 import { Pending } from "#components/await-command/Pending2.jsx";
 
-const loadTeam = ({ params }) => {
-  return defer({
-    team: getafm().then((afm) =>
-      parsecmd(afm.findTeam({ name: params.teamname }, { queue: false })),
+const loadScoreboardLive = () =>
+  defer({
+    scoreboard: getafm().then((afm) =>
+      parsecmd(afm.listScoreboard({ queue: false })).then(({ live }) => ({
+        scoreboard: live,
+      })),
     ),
   });
-};
 
-function AwaitTeam({ children }) {
+function AwaitScoreboardLive({ children }) {
   const pending = useLoaderData();
   return (
     <Suspense fallback={<Pending />}>
-      <Await resolve={pending.team}>{children}</Await>
+      <Await resolve={pending.scoreboard}>{children}</Await>
     </Suspense>
   );
 }
 
-export { loadTeam, AwaitTeam };
+export { loadScoreboardLive, AwaitScoreboardLive };

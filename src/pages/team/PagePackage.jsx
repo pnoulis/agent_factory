@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { FollowState } from "#components/await-command/FollowState.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { renderDialogPromise } from "#components/dialogs/renderDialogPromise.jsx";
 import { confirmAddTeamPackage } from "#components/dialogs/confirms/confirmAddTeamPackage.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { WidgetRegister } from "#components/widgets/WidgetRegister.jsx";
@@ -14,16 +15,19 @@ import { DataTuple } from "../../components/tuple/DataTuple.jsx";
 import { AwaitPackages } from "../../loaders/loadPackages.jsx";
 import { ComboboxSelectPackage } from "#components/comboboxes/ComboboxSelectPackage.jsx";
 import { WidgetPackage } from "#components/widgets/WidgetPackage.jsx";
+import { team as linkTeam } from "/src/links.jsx";
 
 function Component() {
+  const navigate = useNavigate();
   const [selectedPkg, setSelectedPkg] = React.useState({});
   const { team } = useOutletContext();
-  const navigate = useNavigate();
 
   async function handleRegisterClick() {
-    debug(afm);
     if (await confirmAddTeamPackage(selectedPkg.name)) {
-      afm.addTeamPackage(team, selectedPkg).then(() => navigate(-1));
+      afm.addTeamPackage(team, selectedPkg).then(() => {
+        debug("team package resolved");
+        navigate(linkTeam(team.name).path, { replace: true });
+      });
     }
   }
 
@@ -35,24 +39,15 @@ function Component() {
             <FollowState
               cmd={afm.addTeamPackage}
               delayPending={200}
-              onFulfilled={(cmd) =>
-                renderDialog(
+              onSettled={(cmd) => {
+                return renderDialogPromise(
                   <DialogAlertStandard
                     initialOpen
                     heading="new team package"
                     msg={cmd.msg}
                   />,
-                )
-              }
-              onRejected={(cmd) =>
-                renderDialog(
-                  <DialogAlertStandard
-                    initialOpen
-                    heading="new team package"
-                    msg={cmd.msg}
-                  />,
-                )
-              }
+                );
+              }}
             >
               <Panel className="panel">
                 <PanelActionbar>

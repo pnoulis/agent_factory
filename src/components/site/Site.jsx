@@ -77,7 +77,7 @@ const Div = styled("div")`
   height: 100%;
   display: grid;
   grid-template-rows: minmax(40px, max-content) 1fr;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: minmax(200px, auto) 1fr;
   grid-template-areas: "sidebar header" "sidebar main";
 `;
 

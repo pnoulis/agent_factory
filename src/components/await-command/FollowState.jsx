@@ -16,6 +16,7 @@ function FollowState({
   delayPending: timePending,
   onFulfilled: handleFullfilled,
   onRejected: handleRejected,
+  onSettled: handleSettled,
   children,
 }) {
   const ref = React.useRef();
@@ -38,14 +39,20 @@ function FollowState({
       await delay(timePending);
     };
 
+    const onSettled = (cmd) => {
+      return handleSettled?.(cmd);
+    };
+
     cmd.on?.("pending", onPending);
     cmd.on?.("fulfilled", onFulfilled);
     cmd.on?.("rejected", onRejected);
+    cmd.on?.("settled", onSettled);
 
     return () => {
       cmd.removeListener?.("fulfilled", onFulfilled);
       cmd.removeListener?.("rejected", onRejected);
       cmd.removeListener?.("pending", onPending);
+      cmd.removeListener?.("settled", onSettled);
     };
   }, [cmd]);
 

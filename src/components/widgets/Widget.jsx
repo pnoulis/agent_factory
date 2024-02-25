@@ -11,6 +11,7 @@ function Widget({
   size,
   className,
   children,
+  ...props
 } = {}) {
   return (
     <Tooltip placement={placement} offset={offset}>
@@ -18,6 +19,7 @@ function Widget({
         size={size}
         onClick={!$disabled && handleClick}
         className={mergec("trigger", "widget", className)}
+        {...props}
       >
         <Svg>{children}</Svg>
       </TooltipTrigger>

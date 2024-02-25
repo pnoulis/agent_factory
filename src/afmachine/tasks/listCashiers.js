@@ -39,13 +39,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to retrieve Cashiers";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully retrieved Cashiers";
-  cmd.resolve(cmd);
 };
 
 export { Command as listCashiers };

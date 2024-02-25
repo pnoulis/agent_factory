@@ -53,13 +53,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to activate Team";
-  cmd.reject(cmd.errs.at(-1));
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully activated Team";
-  cmd.resolve(cmd.res);
 };
 
 export { Command as startTeam };

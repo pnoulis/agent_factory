@@ -22,6 +22,7 @@ function normalize(sources, options) {
     t_created: null,
     points: null,
     state: null,
+    isTemporary: false,
     roster: flatRosters(sources).map((src) =>
       Player.normalize(src, {
         ...options.player,
@@ -38,6 +39,7 @@ function normalize(sources, options) {
       target.name = _sources[i].name || null;
       target.t_created = _sources[i].t_created || _sources[i].created || null;
       target.points = _sources[i].points ?? _sources[i].totalPoints ?? null;
+      target.isTemporary = _sources[i].isTemporary ?? null;
       target.state = _sources[i].state?.name || _sources[i].state || null;
     }
   } else {
@@ -47,6 +49,7 @@ function normalize(sources, options) {
         _sources[i].created || _sources[i].t_created || target.t_created;
       target.points =
         _sources[i].totalPoints ?? _sources[i].points ?? target.points;
+      target.isTemporary = _sources[i].isTemporary ?? target.isTemporary;
       target.state =
         _sources[i].state?.name || _sources[i].state || target.state;
     }

@@ -1440,7 +1440,16 @@ Try pairing a players wristband under normal circumstances.
       GOAL: 'WATER',
       LETTERFLOOR: 'AIR'
     }
-    live: [],
+    live: [
+      {
+        teamName: "",
+        numberOfPlayers: "",
+        timeUsed: "",
+        played: "",
+        won: "",
+        lost: "",
+        totalPoints: ""
+      }],
     teamAllTime: [],
     teamMonthly: [],
     teamWeekly: [],

@@ -49,7 +49,6 @@ Command.onFailure = function () {
   cmd.msg = `Failed to switch off ${
     cmd.req.deviceId ? "device" : "all devices"
   }`;
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
@@ -57,7 +56,6 @@ Command.onSuccess = function () {
   cmd.msg = `Successfully switched off ${
     cmd.req.deviceId ? "device" : "all devices"
   }`;
-  cmd.resolve(cmd);
 };
 
 export { Command as shutdownDevice };

@@ -33,6 +33,7 @@ const ERR_CODES = {
   EPACKAGE_STATE: 12,
   EUNKNOWN: 13,
   EGENERIC: 14,
+  ETEAM: 15,
 };
 
 function _createError(msg, defaults) {
@@ -83,6 +84,12 @@ const craterr = (cb) =>
         severity: "error",
         msg: "Package Error",
         errCode: ERR_CODES.EPLAYER_STATE,
+      }),
+    ETEAM: (msg) =>
+      _createError(msg, {
+        severity: "error",
+        msg: "Team Error",
+        errCode: ERR_CODES.ETEAM,
       }),
     EVALIDATION: (msg) =>
       _createError(msg, {

@@ -48,13 +48,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to deregister Cashier";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully deregistered Cashier";
-  cmd.resolve(cmd);
 };
 
 export { Command as deregisterCashier };

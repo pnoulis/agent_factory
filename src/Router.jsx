@@ -15,6 +15,8 @@ import { loadDevices } from "./loaders/loadDevices.jsx";
 import { loadTeams } from "./loaders/loadTeams.jsx";
 import { loadTeam } from "./loaders/loadTeam.jsx";
 import { loadPackages } from "./loaders/loadPackages.jsx";
+import { loadScoreboardLive } from "./loaders/loadScoreboardLive.jsx";
+import { loadScoreboardTop10 } from "./loaders/loadScoreboardTop10.jsx";
 import { PageLanding } from "./pages/PageLanding.jsx";
 
 function Router() {
@@ -167,10 +169,12 @@ const router = createBrowserRouter(
               children: [
                 {
                   index: true,
+                  loader: loadScoreboardLive,
                   lazy: async () => import("./pages/scoreboard/PageLive.jsx"),
                 },
                 {
                   path: links.scoreboardTop10.path,
+                  loader: loadScoreboardTop10,
                   lazy: async () => import("./pages/scoreboard/PageTop10.jsx"),
                 },
               ],

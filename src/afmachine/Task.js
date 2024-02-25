@@ -18,6 +18,7 @@ class Task extends createEventful() {
       pending: [],
       fulfilled: [],
       rejected: [],
+      settled: [],
       stateChange: [],
     });
   }
@@ -86,30 +87,32 @@ class Task extends createEventful() {
             .then(async () => await cmd.emit("task", cmd))
             .then(async () => {
               ostate = cmd.state;
+              cmd.onSuccess?.();
               cmd.state = "fulfilled";
               await cmd.emit("stateChange", cmd.state, ostate, cmd);
-              cmd.onSuccess?.();
+              await cmd.emit("settled", cmd);
               await cmd.emit("fulfilled", cmd);
+              return cmd;
             })
             .catch(async (err) => {
-              trace("catch 1");
+              debug(err);
+              debug("catch 1");
+              cmd.onFailure?.();
               cmd.errs.push(err);
               cmd.state = "rejected";
-              trace("calling state change");
+              debug("calling state change");
               await cmd.emit("stateChange", cmd.state, ostate, cmd);
-              trace("after state change");
-              cmd.onFailure?.();
+              debug("after state change");
+              await cmd.emit("settled", cmd);
               cmd.emit("rejected", cmd);
               throw err;
             })
-            .finally(() => {
-              trace("finally 1");
-              return cmd.emit("postask", cmd);
-            });
+            .finally(() => cmd.emit("postask", cmd));
         } finally {
-          if (cmd.errs) {
-            trace("finally 2");
+          debug(cmd, "finally 2");
+          if (cmd.errs.length) {
             cmd.reject(cmd);
+            throw cmd.errs.at(-1);
           } else {
             cmd.resolve(cmd);
           }

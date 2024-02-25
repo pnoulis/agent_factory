@@ -61,13 +61,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to scan Wristband";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully scanned Wristband";
-  cmd.resolve(cmd);
 };
 
 export { Command as scanWristband };

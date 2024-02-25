@@ -61,13 +61,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to register new Player";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully registered new Player";
-  cmd.resolve(cmd);
 };
 
 export { Command as registerPlayer };

@@ -51,13 +51,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to remove Package from Team";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully removed Package from Team";
-  cmd.resolve(cmd);
 };
 
 export { Command as removeTeamPackage };
