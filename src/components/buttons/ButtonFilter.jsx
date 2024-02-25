@@ -1,7 +1,7 @@
 import { Button } from "./Button.jsx";
 import styled from "styled-components";
 
-const ButtonFilterTime = styled(Button)`
+const ButtonFilter = styled(Button)`
   box-sizing: border-box;
   text-align: center;
   width: 130px;
@@ -9,7 +9,7 @@ const ButtonFilterTime = styled(Button)`
   cursor: pointer;
   border-radius: var(--br-sm);
   background-color: var(--grey-base);
-  color: ${({ $isActive }) => ($isActive ? "white" : "black")};
+  color: black;
   letter-spacing: 1px;
   font-size: var(--tx-xxs);
   font-weight: 550;
@@ -19,4 +19,4 @@ const ButtonFilterTime = styled(Button)`
   }
 `;
 
-export { ButtonFilterTime };
+export { ButtonFilter };

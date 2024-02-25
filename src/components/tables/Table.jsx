@@ -13,6 +13,7 @@ import { ContextTable } from "/src/contexts/ContextTable.jsx";
 import { sort, getComparator } from "/src/misc/sort.js";
 import { mergec } from "/src/misc/misc.js";
 import { Overflow } from "#components/Overflow.jsx";
+import { Empty } from "./Empty.jsx";
 
 function Table({
   ctx,
@@ -68,6 +69,7 @@ function Table({
                   showIndex={showIndex}
                 />
               ))}
+              {!ctx.data.length && <Empty />}
             </MuiTableBody>
           </MuiTable>
         </Overflow>
@@ -89,6 +91,7 @@ const Wrapper = styled("div")`
   border-radius: var(--br-xl);
   padding: 5px 5px 0 5px;
   overflow: none;
+  position: relative;
 
   .overflow {
     max-height: 92%;

@@ -56,6 +56,12 @@ class Task extends createEventful() {
 
     promise.cmd = cmd;
     cmd.promise = promise;
+    promise.parse = () =>
+      promise
+        .then((_cmd) => _cmd.res)
+        .catch((_cmd) => {
+          throw _cmd.errs.at(-1);
+        });
 
     setTimeout(() => {
       cmd.queued = function () {

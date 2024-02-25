@@ -27,7 +27,6 @@ import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStand
  */
 
 const loadScoreboardTop10 = (props) => {
-  debug(props, "loader props");
   const { searchParams } = new window.URL(props.request.url);
 
   const type = searchParams.get("type");
@@ -59,6 +58,7 @@ const loadScoreboardTop10 = (props) => {
         scoreboard: scoreboard.perElement.AIR,
         rooms: Object.keys(scoreboard.roomElementAssociations),
       });
+      break;
   }
 
   return defer({
