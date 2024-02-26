@@ -45,8 +45,6 @@ const Wrapper = styled("div")`
   grid-template-areas: "panel-header" "panel-main";
   grid-template-rows: max-content 1fr;
   grid-template-columns: 1fr;
-  row-gap: 20px;
-  padding: 20px;
   position: relative;
 
   .panel-main {

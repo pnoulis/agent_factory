@@ -26,22 +26,20 @@ function Component() {
   }, []);
 
   return (
-    <>
-      <Page className="page">
-        <Content>
-          <StyledFormCashout
-            onSubmit={({ fields }, onError) =>
-              cashout(fields.comment).catch(onError)
-            }
-            cashier={cashier.username}
-            comment={commentRef.current}
-            onChange={({ fields }) => {
-              commentRef.current = fields.comment;
-            }}
-          />
-        </Content>
-      </Page>
-    </>
+    <Page className="page">
+      <Content>
+        <StyledFormCashout
+          onSubmit={({ fields }, onError) =>
+            cashout(fields.comment).catch(onError)
+          }
+          cashier={cashier.username}
+          comment={commentRef.current}
+          onChange={({ fields }) => {
+            commentRef.current = fields.comment;
+          }}
+        />
+      </Content>
+    </Page>
   );
 }
 

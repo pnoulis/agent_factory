@@ -23,18 +23,31 @@ function nextPlayer(queue) {
   return next;
 }
 
+async function stopPairing(queue, cb) {
+  for (let i = 0; i < queue.length; i++) {
+    if (queue[i].wristband.inState("pairing")) {
+      await queue[i].unpairWristband();
+      cb();
+    }
+  }
+}
+
 function useRegistrationQueue(players) {
   const [queue, setQueue] = React.useState(() =>
     [].concat(players).filter((p) => !!p),
   );
   const queueRef = React.useRef();
+  const pairingRef = React.useRef();
+  queueRef.current = queue;
 
-  function pairWristband(player) {
-    nextPlayer(queue) && player.pairWristband();
+  async function pairWristband(player) {
+    const _player = nextPlayer(queueRef.current);
+    if (!_player) return Promise.resolve();
+    await _player.pairWristband();
   }
 
   async function unpairWristband(player) {
-    player.unpairWristband();
+    await player.unpairWristband();
   }
 
   function enqueue(...players) {
@@ -51,12 +64,10 @@ function useRegistrationQueue(players) {
         }
       }
     }
-    debug(players, "enqueue");
     setQueue(queue.concat(players));
   }
 
   function dequeue(...players) {
-    debug("playres", "dequeue");
     const newQueue = [];
     for (let i = 0; i < queue.length; i++) {
       let y = 0;
@@ -68,26 +79,34 @@ function useRegistrationQueue(players) {
       if (y === players.length) newQueue.push(queue[i]);
     }
     for (let i = 0; i < players.length; i++) {
-      players[i].wristband.cancelPairing();
+      if (pairingRef.current === players[i]) {
+        stopPairing(queueRef.current, () => {
+          pairingRef.current = null;
+        });
+      }
     }
     setQueue(newQueue);
   }
 
   React.useEffect(() => {
-    debug("QUEUE CHANGE");
-    const onIdle = () => nextPlayer(queue)?.pairWristband?.();
-    queueRef.current = queue;
-    afm.on("idle", onIdle);
-    return () => afm.removeListener("idle", onIdle);
+    function onidle() {
+      setTimeout(() => {
+        const player = nextPlayer(queueRef.current);
+        if (player && !pairingRef.current) {
+          pairingRef.current = player;
+          player.pairWristband().then(() => {
+            pairingRef.current = null;
+          });
+        }
+      }, 500);
+    }
+    afm.on("idle", onidle);
+    return () => afm.removeListener("idle", onidle);
   }, [queue, setQueue]);
 
   React.useEffect(() => {
     return () => {
-      for (let i = 0; i < queueRef.current.length; i++) {
-        if (queueRef.current[i]?.wristband?.inState?.("pairing")) {
-          queueRef.current[i].wristband.cancelPairing();
-        }
-      }
+      stopPairing(queueRef.current);
     };
   }, []);
 

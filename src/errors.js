@@ -34,6 +34,7 @@ const ERR_CODES = {
   EUNKNOWN: 13,
   EGENERIC: 14,
   ETEAM: 15,
+  EWRISTBAND_UNSUB: 16,
 };
 
 function _createError(msg, defaults) {
@@ -53,7 +54,7 @@ function _createError(msg, defaults) {
   } else if (typeof msg === "string") {
     err.message = msg;
   } else if (isObject(msg)) {
-    const { msg: _msg, severity, ...cause } = msg;
+    const { msg: _msg, severity, errCode, ...cause } = msg;
     err.message = _msg;
     err.severity = severity;
     err.cause = cause;
@@ -67,11 +68,12 @@ function _createError(msg, defaults) {
 
 const craterr = (cb) =>
   cb({
+    ERR_CODES,
     EWRISTBAND: (msg) =>
       _createError(msg, {
         severity: "error",
         msg: "Wristband Error",
-        errCode: ERR_CODES.EWRISTBAND_STATE,
+        errCode: msg.errCode || ERR_CODES.EWRISTBAND_STATE,
       }),
     EPLAYER: (msg) =>
       _createError(msg, {

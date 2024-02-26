@@ -11,7 +11,6 @@ function BodyRow({
   fields,
   isSelected,
   handleRowSelect,
-  handleRowClick,
   showCheckbox,
   showIndex,
 }) {
@@ -21,7 +20,6 @@ function BodyRow({
       aria-checked={isSelected}
       selected={isSelected}
       onClick={() => {
-        handleRowClick?.(data);
         handleRowSelect?.(data);
       }}
       sx={{

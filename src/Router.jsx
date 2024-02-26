@@ -23,8 +23,6 @@ function Router() {
   return <RouterProvider router={router} />;
 }
 
-debug(links.team().path, "team path");
-
 const router = createBrowserRouter(
   [
     {
@@ -95,19 +93,7 @@ const router = createBrowserRouter(
             //////////////////////////////////////////////////
             {
               path: links.grouparty.path,
-              lazy: async () => import("./pages/grouparty/PageIndex.jsx"),
-              children: [
-                {
-                  index: true,
-                  lazy: async () =>
-                    import("./pages/grouparty/PageGrouparty.jsx"),
-                },
-                {
-                  path: links.groupartySize.path,
-                  lazy: async () =>
-                    import("./pages/grouparty/PageGrouPartySize.jsx"),
-                },
-              ],
+              lazy: async () => import("./pages/grouparty/PageGrouParty2.jsx"),
             },
 
             //////////////////////////////////////////////////
@@ -127,6 +113,7 @@ const router = createBrowserRouter(
               lazy: async () => import("./pages/PageAdministration.jsx"),
               children: [
                 {
+                  index: true,
                   path: links.cashoutCashier.path,
                   lazy: async () => import("./pages/cashiers/PageCashout.jsx"),
                 },

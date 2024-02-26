@@ -34,6 +34,33 @@ function PageScratch() {
   return (
     <>
       <h1>page scratch</h1>
+      <div>
+        <button
+          onClick={() => {
+            const body = document.getElementsByTagName("body");
+            debug(body[0]);
+            debug(body[0].style.pointerEvents);
+            body[0].style.pointerEvents = "none";
+            setTimeout(() => {
+              debug(body[0].style.pointerEvents);
+            }, 1000);
+          }}
+        >
+          disable pointer events
+        </button>
+        <br />
+        <button
+          onClick={() => {
+            const body = document.getElementsByTagName("body");
+            debug(body[0]);
+            body[0].style.pointerEvents = "auto";
+          }}
+        >
+          enable pointer events
+        </button>
+        <br />
+        <button onClick={() => alert("works")}>check button</button>
+      </div>
     </>
   );
 }

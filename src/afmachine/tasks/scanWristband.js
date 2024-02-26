@@ -42,8 +42,12 @@ Command.middleware = [
   async (ctx, next) => {
     ctx.raw = await ctx.afm.adminScreen.scanWristband(ctx.args.unsubcb);
     if (ctx.raw.unsubed) {
-      throw craterr(({ EWRISTBAND }) =>
-        EWRISTBAND({ msg: "Unsubscribed", severity: "info" }),
+      throw craterr(({ ERR_CODES, EWRISTBAND }) =>
+        EWRISTBAND({
+          msg: "Unsubscribed",
+          errCode: ERR_CODES.EWRISTBAND_UNSUB,
+          severity: "info",
+        }),
       );
     }
     ctx.raw = ctx.raw.wristband;

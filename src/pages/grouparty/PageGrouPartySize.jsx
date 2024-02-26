@@ -1,27 +1,24 @@
 import * as React from "react";
-import { Center } from "#components/Center.jsx";
 import styled from "styled-components";
 import { FormGrouPartySize } from "#components/forms/FormGrouPartySize";
 
-function Component() {
+function GrouPartySize({ onSubmit }) {
   return (
-    <Center>
-      <Page>
-        <Label id="form-groupartySize-label" htmlFor="partysize">
-          Group party size
-        </Label>
-        <FormGrouPartySize />
-      </Page>
-    </Center>
+    <Page>
+      <FormGrouPartySize onSubmit={onSubmit} />
+    </Page>
   );
 }
 
 const Page = styled("div")`
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  gap: 30px;
-  width: 400px;
   align-items: center;
+  justify-content: center;
+  max-width: 350px;
+  margin: auto;
 `;
 
 const Label = styled("label")`
@@ -32,4 +29,4 @@ const Label = styled("label")`
   letter-spacing: 2px;
 `;
 
-export { Component };
+export { GrouPartySize };

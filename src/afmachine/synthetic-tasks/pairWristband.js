@@ -27,6 +27,7 @@ Command.middleware = [
     ctx.args.player.state.pairWristband();
     ctx.args.wristband.state.pair();
     await ctx.args.wristband.pair(ctx.args.player);
+    debug("after wrisband pair");
     ctx.res.player = ctx.args.player.tobject(null, { depth: 1 });
     return next();
   },
@@ -36,13 +37,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to pair Wristband to Player";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully paired Wristband to Player";
-  cmd.resolve(cmd);
 };
 
 export { Command as pairWristband };

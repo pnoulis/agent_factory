@@ -2,6 +2,7 @@ import { TextInput_0 } from "react_utils/inputs";
 import { Form } from "./Form.jsx";
 import { MAX_ROSTER_SIZE } from "../../constants.js";
 import styled from "styled-components";
+import { Submit } from "./Submit.jsx";
 
 function FormGrouPartySize({
   className,
@@ -34,6 +35,7 @@ function FormGrouPartySize({
         placeholder={MAX_ROSTER_SIZE}
       />
       <TextInput name="distribution" placeholder={3} />
+      <Submit>new group party</Submit>
     </Form>
   );
 }

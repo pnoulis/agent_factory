@@ -36,13 +36,11 @@ Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
   cmd.msg = "Failed to unpair wristband from player";
-  cmd.reject(cmd);
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
   cmd.msg = "Successfully unpaired wristband from player";
-  cmd.resolve(cmd);
 };
 
 export { Command as unpairWristband };

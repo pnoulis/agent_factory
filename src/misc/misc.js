@@ -132,7 +132,9 @@ function removeIndex(arr, index) {
   }
 }
 
-function distributePlayers(players = 0, ratio = MIN_ROSTER_SIZE) {
+function distributePlayers(players, ratio) {
+  players ||= 0;
+  ratio ||= MIN_ROSTER_SIZE;
   // How many teams of _ratio_ can be made out of _players_
   let teamsOfRatio = Math.floor(Math.abs(players / ratio));
   // When ratio > players, then _teamsOfRatio_ is 0.

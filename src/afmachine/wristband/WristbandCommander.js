@@ -11,23 +11,17 @@ class WristbandCommander extends createEventful(Wristband) {
   }
 
   async scan() {
-    let _unsub;
-    try {
-      const { wristband } = await parsecmd(
-        afm.scanWristband(
-          (unsub) => {
-            this.pairing.unsub = unsub;
-          },
-          { queue: false },
-        ),
-      );
-      _unsub = null;
-      return wristband;
-    } finally {
-      if (typeof _unsub === "function") {
-        _unsub();
-      }
-    }
+    const { wristband } = await parsecmd(
+      afm.scanWristband(
+        (unsub) => {
+          this.pairing.unsub = unsub;
+        },
+        { queue: false },
+      ),
+    );
+    this.pairing.scanned = true;
+    this.pairing.unsub = null;
+    return wristband;
   }
   async register(player, wristband) {
     const response = await parsecmd(
@@ -35,6 +29,7 @@ class WristbandCommander extends createEventful(Wristband) {
         queue: false,
       }),
     );
+    this.pairing.registered = true;
     return response.player.wristband;
   }
 
@@ -45,49 +40,36 @@ class WristbandCommander extends createEventful(Wristband) {
     return response.player.wristband;
   }
 
-  async cancelPairing() {
-    if (!this.pairing) return Promise.resolve(false);
-    if (this.pairing?.unsub) {
-      await this.pairing.unsub();
-    }
-    this.pairing.reject(
-      craterr(({ EWRISTBAND }) =>
-        EWRISTBAND({ msg: "Unsubscribed", severity: "info" }),
-      ),
-    );
-    this.pairing = null;
-    return Promise.resolve().then(() => this.state.unpaired(this));
+  cancelPairing() {
+    this.pairing?.unsub?.();
   }
 
   async pair(player) {
     this.pairing = {};
-    return new Promise(async (resolve, reject) => {
-      this.pairing.resolve = resolve;
-      this.pairing.reject = reject;
-      try {
-        const wristband = await this.scan();
-        const registered = await this.register(player, wristband);
-        this.state.paired(registered);
-        resolve(this);
-      } catch (err) {
-        this.state.unpaired(this);
-        reject(err);
-      } finally {
-        this.pairing = null;
-      }
-    });
+    try {
+      const wristband = await this.scan();
+      const registered = await this.register(player, wristband);
+      this.state.paired(registered);
+    } catch (err) {
+      this.state.unpair(player);
+      throw err;
+    } finally {
+      this.pairing = null;
+    }
   }
   async unpair(player) {
     try {
-      const cancelled = await this.cancelPairing();
-      if (cancelled) return cancelled;
-      const deregistered = await this.deregister(player, this);
-      this.state.unpaired(deregistered);
-    } catch (err) {
+      this.cancelPairing();
+      this.state.unpair();
+      if (this.pairing?.registered) {
+        const deregistered = await this.deregister(player, this);
+        this.state.unpaired(deregistered);
+      } else {
+        return Promise.resolve().then(() => this.state.unpaired());
+      }
     } finally {
       return this;
     }
-    return this;
   }
 }
 extendProto(WristbandCommander, stateventful);

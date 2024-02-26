@@ -24,11 +24,11 @@ function Component() {
   });
 
   return (
-    <Page className="page">
+    <Page className="page-liveview">
       <AwaitTeams>
         {({ teams, id }) => (
           <>
-            <Panel className="panel">
+            <Panel className="panel-liveview">
               <PanelActionbar>
                 <ThisPanelNavbar>
                   <section className="links">
@@ -76,7 +76,7 @@ function Component() {
                   </Filterbar>
                 </ThisPanelNavbar>
               </PanelActionbar>
-              <Content>
+              <Content className="content-liveview">
                 <TableTeams
                   key={id}
                   teams={teams}
@@ -96,6 +96,11 @@ function Component() {
 const Page = styled("div")`
   width: 100%;
   height: 100%;
+  padding: 20px;
+
+  .panel-liveview {
+    gap: 20px;
+  }
 `;
 
 const Content = styled("div")`

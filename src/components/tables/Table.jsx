@@ -63,8 +63,9 @@ function Table({
                   data={row}
                   fields={ctx.fields}
                   isSelected={row.selected}
-                  handleRowSelect={onSelectionChange}
-                  handleRowClick={onRowClick}
+                  handleRowSelect={
+                    onRowClick || (showCheckbox && ctx.handleRowSelect)
+                  }
                   showCheckbox={showCheckbox}
                   showIndex={showIndex}
                 />
