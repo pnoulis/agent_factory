@@ -32,7 +32,7 @@ function Component() {
           onSubmit={({ fields }, onError) =>
             cashout(fields.comment).catch(onError)
           }
-          cashier={cashier.username}
+          cashier={cashier?.username}
           comment={commentRef.current}
           onChange={({ fields }) => {
             commentRef.current = fields.comment;

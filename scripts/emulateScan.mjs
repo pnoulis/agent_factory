@@ -26,7 +26,9 @@ if (color == null) {
 
 let err;
 try {
-  await getafm(false).then((afm) => afm.readWristband({ id, colorCode: color }));
+  await getafm(false).then(async (afm) => {
+    return afm.readWristband({ id, colorCode: color }, { queue: false });
+  })
   console.log(`id: ${id}`);
   console.log(`colorCode: ${color}`)
   console.log(`color: ${CONSTANTS.WRISTBAND_COLORS[color]}`)

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Submit } from "./Submit.jsx";
 import { LabelessTextInput } from "./LabelessTextInput.jsx";
 import { Form } from "./Form.jsx";
 
 function FormTeamName({
+  disabled,
   className,
   style,
   onSubmit,
@@ -22,7 +22,11 @@ function FormTeamName({
       onSubmit={onSubmit}
       onChange={onChange}
     >
-      <LabelessTextInput name="teamName" placeholder={randomTeamName} />
+      <LabelessTextInput
+        disabled={disabled}
+        name="teamName"
+        placeholder={randomTeamName}
+      />
     </Form>
   );
 }

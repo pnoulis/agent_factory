@@ -2,15 +2,15 @@ import styled from "styled-components";
 import { Heading } from "./Heading.jsx";
 import { DialogAlertStandard } from "./DialogAlertStandard.jsx";
 
-function AlertRegisterTeamUnpairedWristbands({ id, onClose, unpairedPlayers }) {
+function AlertSuccessfullGrouPartyMerge({ id, onClose, teams }) {
   return (
     <ThisDialog initialOpen id={id} onClose={onClose}>
-      <Heading>register team</Heading>
+      <Heading>merge group party</Heading>
       <div className="description">
-        <h4 className="subheading">Players missing wristbands</h4>
+        <h4 className="subheading">Successfully registered group teams</h4>
         <ul className="content">
-          {unpairedPlayers.map((player, i) => (
-            <li key={player.username + i}>{player.username}</li>
+          {teams.map((team, i) => (
+            <li key={team.name + i}>{team.name}</li>
           ))}
         </ul>
       </div>
@@ -32,4 +32,4 @@ const ThisDialog = styled(DialogAlertStandard)`
   }
 `;
 
-export { AlertRegisterTeamUnpairedWristbands };
+export { AlertSuccessfullGrouPartyMerge };

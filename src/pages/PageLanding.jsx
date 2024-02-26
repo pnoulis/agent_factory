@@ -3,20 +3,12 @@ import styled, { css, keyframes } from "styled-components";
 import * as ReactDOM from "react-dom";
 import { Center } from "#components/Center.jsx";
 import BrandFigure from "/assets/brand/logo-agent-white.png";
-import {
-  Await,
-  useLoaderData,
-  Outlet,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
+import { Await, useLoaderData, Outlet } from "react-router-dom";
 import { Authorize } from "#components/Authorize.jsx";
-import { loginCashier } from "/src/links.jsx";
 import { TrackCommands } from "#components/track-commands/TrackCommands.jsx";
 
 function PageLanding() {
   const pending = useLoaderData();
-  const { pathname: location } = useLocation();
 
   return (
     <Suspense

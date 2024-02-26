@@ -93,7 +93,7 @@ async function getafm(waitBoot = true) {
     afm = new Afmachine(adminScreen, rpiReader);
     afm.registerListener = registerListener;
     afm.deregisterListener = deregisterListener;
-    logafm(afm);
+    // logafm(afm);
 
     afm.on("error", (cmd) => {
       const { msg } = cmd;

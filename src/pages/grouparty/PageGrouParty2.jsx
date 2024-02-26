@@ -2,26 +2,26 @@ import * as React from "react";
 import { Panel } from "#components/panel/Panel.jsx";
 import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { Navigate } from "react-router-dom";
 import styled from "styled-components";
-import { groupartySize } from "/src/links.jsx";
 import { GrouPartySize } from "./PageGrouPartySize.jsx";
-import IconGrouparty from "/assets/icons/players-three.svg?react";
-import IconAddTeam from "/assets/icons/add-team.svg?react";
-import IconRegister from "/assets/icons/merge.svg?react";
-import IconDistribute from "/assets/icons/distribute.svg?react";
 import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
 import { WidgetMerge } from "#components/widgets/WidgetMerge.jsx";
 import { WidgetDistribute } from "#components/widgets/WidgetDistribute.jsx";
 import { WidgetGrouParty } from "#components/widgets/WidgetGrouParty.jsx";
 import { useRegistrationQueue } from "#components/registration-queue/useRegistrationQueue.jsx";
 import { distributePlayers } from "../../misc/misc.js";
-import { Player } from "#afm/player/Player.js";
 import { GrouPartyTeam } from "#afm/grouparty/GrouPartyTeam.js";
 import { GrouPartyPlayer } from "#afm/grouparty/GrouPartyPlayer.js";
 import { GrouPartyWristband } from "#afm/grouparty/GrouPartyWristband.js";
 import { TeamActionCard } from "#components/team/TeamActionCard.jsx";
 import { teamReact } from "#afm/team/TeamReact.jsx";
+import { MAX_ROSTER_SIZE } from "../../constants.js";
+import { getGrouPartyDistribution } from "#components/dialogs/inputs/getGrouPartyDistribution.jsx";
+import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
+import { AlertSuccessfullGrouPartyMerge } from "../../components/dialogs/alerts/AlertSuccessfullGrouPartyMerge.jsx";
+import { Overflow } from "#components/Overflow.jsx";
+import { confirmRegisterGrouParty } from "#components/dialogs/confirms/confirmRegisterGrouParty.jsx";
 
 const createTeam = (team) =>
   new GrouPartyTeam(
@@ -37,6 +37,15 @@ function Component() {
   const { queue, setQueue, enqueue, dequeue, pairWristband, unpairWristband } =
     useRegistrationQueue();
   const gpRef = React.useRef([]);
+
+  const addTeam = () => {
+    const team = createTeam().fill(null, {
+      players: MAX_ROSTER_SIZE,
+      wristband: { state: "unpaired" },
+    });
+    gpRef.current.push(team);
+    enqueue(...team.roster);
+  };
 
   const removeTeam = (team) => {
     const newgp = [];
@@ -71,26 +80,77 @@ function Component() {
   function distribute(size, ratio) {
     debug(`size: ${size}`);
     debug(`ratio: ${ratio}`);
-    const distribution = distributePlayers(parseInt(size), parseInt(ratio));
-    const oldPlayers = gpRef.current.map((team) => team.roster).flat();
+    const registeredTeams = [];
+    const unregisteredTeams = [];
+    for (let i = 0; i < gpRef.current.length; i++) {
+      if (gpRef.current[i].inState("registered")) {
+        registeredTeams.push(gpRef.current[i]);
+      } else {
+        unregisteredTeams.push(gpRef.current[i]);
+      }
+    }
+    const unregisteredPlayers = unregisteredTeams
+      .map((team) => team.roster)
+      .flat();
+    const sizeToDistribute = size - (queue.length - unregisteredPlayers.length);
+    const distribution = distributePlayers(
+      parseInt(sizeToDistribute),
+      parseInt(ratio),
+    );
+    debug(registeredTeams, "registered teams");
+    debug(unregisteredTeams, "unregistered teams");
+    debug(unregisteredPlayers, "unregistered players");
+    debug(sizeToDistribute, "size to distribute");
     debug(distribution, "distribution");
     const newPlayers = [];
     gpRef.current = distribution.map((players, i) => {
-      const team = createTeam({ name: gpRef.current[i]?.name });
+      const team = createTeam({ name: unregisteredTeams[i]?.name });
+      let player;
       for (let y = 0; y < players.length; y++) {
-        const player = oldPlayers.shift() || createPlayer().fill();
+        player = unregisteredPlayers.shift();
+        if (!player) {
+          player = createPlayer().fill();
+          newPlayers.push(player);
+        }
         team._roster[y] = player;
-        newPlayers.push(player);
       }
       return team;
     });
-    debug(oldPlayers, "old players");
+    gpRef.current = gpRef.current.concat(registeredTeams);
     debug(newPlayers, "enqueue new players");
+    debug(gpRef.current, " new gp ref current");
     enqueue(...newPlayers);
   }
 
+  async function onDistributionClick() {
+    const distribution = await getGrouPartyDistribution();
+    distribute(queue.length, distribution);
+  }
+
+  async function merge() {
+    const notReady = [];
+    const ready = [];
+    for (const team of gpRef.current) {
+      try {
+        teamReact.register(team);
+        ready.push(team);
+      } catch (err) {
+        notReady.push({ team, err });
+      }
+    }
+    if (!(await confirmRegisterGrouParty(ready, notReady))) {
+      return;
+    }
+    // try {
+    //   registered = await Promise.all(ready.map((team) => team.register()));
+    // } catch (err) {
+    // } finally {
+    //   renderDialog(<AlertSuccessfullGrouPartyMerge teams={registered} />);
+    // }
+  }
+
   return (
-    <Page>
+    <Page className="page-grouparty">
       {!queue.length ? (
         <Content>
           <GrouPartySize
@@ -101,45 +161,51 @@ function Component() {
           />
         </Content>
       ) : (
-        <Panel>
+        <Panel className="panel-grouparty">
           <PanelActionbar>
-            <PanelNavbar>
+            <ThisPanelNavbar>
               <WidgetAdd
                 color="var(--primary-base)"
                 fill="white"
                 content="add team"
+                onClick={addTeam}
               />
               <WidgetMerge
                 color="var(--primary-base)"
                 fill="white"
                 content="merge group party"
+                onClick={merge}
               />
               <WidgetDistribute
                 color="var(--primary-base)"
                 fill="white"
                 content="distribute players"
+                onClick={onDistributionClick}
               />
               <WidgetGrouParty
                 color="var(--primary-base)"
                 fill="white"
                 content="new group party"
               />
-            </PanelNavbar>
+            </ThisPanelNavbar>
           </PanelActionbar>
           <Content>
-            <List>
-              {gpRef.current.map((team, i) => (
-                <TeamActionCard
-                  key={team.name + i}
-                  team={team}
-                  onTeamRemove={removeTeam}
-                  onPlayerAdd={addPlayer}
-                  onPlayerRemove={removePlayer}
-                  onWristbandPair={pairWristband}
-                  onWristbandUnpair={unpairWristband}
-                />
-              ))}
-            </List>
+            <Overflow>
+              <List>
+                {gpRef.current.map((team, i) => (
+                  <ListItem key={team.name + i}>
+                    <TeamActionCard
+                      team={team}
+                      onTeamRemove={removeTeam}
+                      onPlayerAdd={addPlayer}
+                      onPlayerRemove={removePlayer}
+                      onWristbandPair={pairWristband}
+                      onWristbandUnpair={unpairWristband}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </Overflow>
           </Content>
         </Panel>
       )}
@@ -152,6 +218,7 @@ const Page = styled("div")`
   height: 100%;
   padding: 40px 20px 20px 20px;
   .panel-grouparty {
+    padding-top: 20px;
     gap: 20px;
   }
 `;
@@ -161,6 +228,27 @@ const Content = styled("div")`
   padding: 40px 40px 20px 40px;
 `;
 
-const List = styled("div")``;
+const List = styled("ul")`
+  padding: 30px 20px 20px 0;
+  display: flex;
+  flex-flow: column-reverse nowrap;
+  align-items: center;
+  gap: 60px;
+`;
+
+const ListItem = styled("li")`
+  flex: 1 0 200px;
+  width: 100%;
+  max-width: 1350px;
+`;
+
+const ThisPanelNavbar = styled(PanelNavbar)`
+  justify-content: center;
+  gap: 40px;
+  .widget {
+    height: 60px;
+    width: 60px;
+  }
+`;
 
 export { Component };

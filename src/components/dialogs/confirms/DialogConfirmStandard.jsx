@@ -14,10 +14,18 @@ function DialogConfirmStandard({
   msg,
   yes = "yes",
   no = "no",
+  style,
+  className,
   children,
 }) {
   return (
-    <StyledDialogConfirm id={id} initialOpen={initialOpen} onClose={onClose}>
+    <StyledDialogConfirm
+      style={style}
+      className={className}
+      id={id}
+      initialOpen={initialOpen}
+      onClose={onClose}
+    >
       <Heading>{heading}</Heading>
       <Description>{children || msg}</Description>
       <No>{no}</No>

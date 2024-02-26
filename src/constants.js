@@ -115,7 +115,7 @@ const DEFAULT_CASHIER = Object.freeze({
   username: "DEFAULT_CASHIER",
   email: "default_cashier@gmail.com",
   password: "mindtr@p",
-  role: ["ROLE_CASHIER"],
+  role: "cashier",
 });
 export { PRIVILEGE_TYPES, DEFAULT_CASHIER };
 

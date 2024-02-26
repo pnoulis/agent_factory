@@ -36,10 +36,12 @@ class GrouPartyWristband extends WristbandCommander {
     });
   }
   async unpair() {
-    const cancelled = await this.cancelPairing();
-    if (cancelled) return cancelled;
-    Promise.resolve().then(() => this.state.unpaired(this));
-    return this;
+    try {
+      this.cancelPairing();
+      await Promise.resolve().then(() => this.state.unpaired(this));
+    } finally {
+      return this;
+    }
   }
 }
 

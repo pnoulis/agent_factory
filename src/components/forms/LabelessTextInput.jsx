@@ -3,6 +3,9 @@ import { TextInput_0 } from "react_utils/inputs";
 
 const LabelessTextInput = styled(TextInput_0)`
   text-transform: uppercase !important;
+  max-height: 55px !important;
+  min-height: 55px !important;
+  height: 55px !important;
   & > * {
     font-size: var(--tx-sm) !important;
   }

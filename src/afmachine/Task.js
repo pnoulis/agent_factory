@@ -84,6 +84,8 @@ class Task extends createEventful() {
           debug("after state change emit");
           cmd.onPending?.();
           debug(cmd);
+          debug('wil await pending')
+          debug(cmd.events);
           await cmd.emit("pending", cmd);
           debug("after pending");
 

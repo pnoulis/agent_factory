@@ -8,6 +8,7 @@ import { StandardPlayerActionCard } from "../player/StandardPlayerActionCard.jsx
 import { useEntityState } from "../../hooks/useEntityState.jsx";
 import { FollowState } from "../await-command/FollowState.jsx";
 import { generateRandomName } from "js_utils";
+import { DataTuple } from "#components/tuple/DataTuple.jsx";
 
 function TeamActionCard({
   team,
@@ -17,19 +18,29 @@ function TeamActionCard({
   onWristbandPair,
   onWristbandUnpair,
 }) {
-  const [randomTeamName, setRandom] = React.useState(generateRandomName());
-  const { state, idle, pending, fulfilled } = useEntityState(
-    afm.listPlayers,
-    team.isThisTeamRegistering,
+  const [randomTeamName, setRandom] = React.useState(
+    generateRandomName().toLowerCase(),
   );
+  const state = useEntityState(afm.registerGroupTeam, (cmd) => {
+    debug("LISTEN ON THIS TEAM");
+    return cmd.args?.team?.name === team.name;
+  });
 
   return (
-    <FollowState overlay={false} state={state} cmd={afm.listPlayers}>
-      <Card $pending={pending} $fulfilled={fulfilled}>
+    <FollowState overlay state={state} cmd={afm.listPlayers} delayPending={500}>
+      <Card
+        $state={team.state.name}
+        $pending={state.pending}
+        $fulfilled={state.fulfilled}
+      >
+        <div className="state">
+          <DataTuple nok value={team?.state?.name} />
+        </div>
         <section>
           <FormTeamName
+            disabled={team?.state?.name === "registered"}
             teamName={team.name}
-            submitting={pending}
+            submitting={state.pending}
             randomTeamName={randomTeamName}
             onChange={({ fields }) => {
               team.name = fields.teamName || randomTeamName;
@@ -66,10 +77,27 @@ const Card = styled("article")`
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 300px 1fr;
   background-color: var(--grey-light);
-  border-radius: var(--br-lg);
+  border-radius: var(--br-lg) 0 var(--br-lg) var(--br-lg);
   padding: 20px;
   align-items: center;
   column-gap: 40px;
+  position: relative;
+  pointer-events: ${({ $state }) =>
+    $state === "registered" ? "none" : "auto"};
+
+  .state {
+    font-size: var(--tx-xl);
+    color: var(--info-base);
+    position: absolute;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 550;
+    right: 0;
+    top: -30px;
+    background-color: var(--grey-light);
+    border-radius: var(--br-sm) var(--br-sm) 0 var(--br-lg);
+    padding: 7px 15px;
+  }
 
   section:nth-of-type(1) {
     margin-top: 5px;
@@ -99,10 +127,23 @@ const Card = styled("article")`
     height: 100%;
   }
 
-  #teamName {
-    background-color: white;
-    border-color: white;
+  #form-teamName > div {
+    height: 50px !important;
+    background-color: ${({ $state }) =>
+      $state === "registered" ? "var(--primary-base)" : "white"};
+    border-radius: var(--br-nl);
   }
+  #teamName {
+    background-color: ${({ $state }) =>
+      $state === "registered" ? "var(--primary-base)" : "white"};
+    border: none;
+    color: ${({ $state }) => ($state === "registered" ? "white" : "black")};
+  }
+`;
+
+const Container = styled("div")`
+  width: 100%;
+  height: 100%;
 `;
 
 export { TeamActionCard };

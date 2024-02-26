@@ -1,9 +1,7 @@
 import * as React from "react";
-import { PlayerCommander } from "#afm/player/PlayerCommander.js";
-import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { Player } from "#afm/player/Player.js";
+import { confirmUnpairWristband } from "../dialogs/confirms/confirmUnpairWristband";
 
 function nextPlayer(queue) {
   let next;
@@ -23,15 +21,6 @@ function nextPlayer(queue) {
   return next;
 }
 
-async function stopPairing(queue, cb) {
-  for (let i = 0; i < queue.length; i++) {
-    if (queue[i].wristband.inState("pairing")) {
-      await queue[i].unpairWristband();
-      cb();
-    }
-  }
-}
-
 function useRegistrationQueue(players) {
   const [queue, setQueue] = React.useState(() =>
     [].concat(players).filter((p) => !!p),
@@ -40,14 +29,44 @@ function useRegistrationQueue(players) {
   const pairingRef = React.useRef();
   queueRef.current = queue;
 
+  async function stopPairing() {
+    try {
+      for (let i = 0; i < queueRef.current.length; i++) {
+        if (queueRef.current[i].wristband.inState("pairing")) {
+          debug("stopPairing() unpair wristband");
+          await queueRef.current[i].unpairWristband();
+        }
+      }
+    } catch (err) {
+    } finally {
+      debug("stopPairing() null pairingref");
+      pairingRef.current = null;
+      return Promise.resolve();
+    }
+  }
+
   async function pairWristband(player) {
-    const _player = nextPlayer(queueRef.current);
-    if (!_player) return Promise.resolve();
-    await _player.pairWristband();
+    await stopPairing();
+    debug("pairWristband() will pair wristband");
+    pairingRef.current = player;
+    await player.pairWristband();
+    pairingRef.current = null;
+    debug("pairWristband, paired");
   }
 
   async function unpairWristband(player) {
-    await player.unpairWristband();
+    try {
+      if (player.wristband.inState("paired")) {
+        if (!(await confirmUnpairWristband(player))) {
+          return;
+        }
+      }
+      debug("unpair wristband");
+      await player.unpairWristband();
+    } catch (err) {
+    } finally {
+      debug("stop pairing");
+    }
   }
 
   function enqueue(...players) {
@@ -78,11 +97,13 @@ function useRegistrationQueue(players) {
       }
       if (y === players.length) newQueue.push(queue[i]);
     }
+    debug("DEQUE SEARCHING FOR pairing player");
+    debug(pairingRef.current);
     for (let i = 0; i < players.length; i++) {
+      debug(players[i], `player: ${i}`);
       if (pairingRef.current === players[i]) {
-        stopPairing(queueRef.current, () => {
-          pairingRef.current = null;
-        });
+        debug("DEQUE stop pairing");
+        stopPairing();
       }
     }
     setQueue(newQueue);
@@ -92,11 +113,14 @@ function useRegistrationQueue(players) {
     function onidle() {
       setTimeout(() => {
         const player = nextPlayer(queueRef.current);
+        debug("IDLE");
         if (player && !pairingRef.current) {
-          pairingRef.current = player;
-          player.pairWristband().then(() => {
-            pairingRef.current = null;
-          });
+          debug("WILL PAIR");
+          // pairingRef.current = player;
+          pairWristband(player);
+          // player.pairWristband().then(() => {
+          //   pairingRef.current = null;
+          // });
         }
       }, 500);
     }
@@ -106,7 +130,7 @@ function useRegistrationQueue(players) {
 
   React.useEffect(() => {
     return () => {
-      stopPairing(queueRef.current);
+      stopPairing();
     };
   }, []);
 

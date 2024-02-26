@@ -21,7 +21,9 @@ function Command(opts) {
 Command.verb = "boot agent factory";
 Command.middleware = [
   async (ctx, next) => {
-    ctx.args.device = ctx.afm.adminScreen;
+    ctx.args.device = ctx.opts.rpiReader
+      ? ctx.afm.rpiReader
+      : ctx.afm.adminScreen;
     ctx.req = {
       timestamp: ctx.t_start,
       deviceId: ctx.args.device.id,

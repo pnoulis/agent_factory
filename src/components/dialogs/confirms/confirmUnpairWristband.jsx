@@ -1,20 +1,16 @@
 import { DialogConfirmStandard } from "./DialogConfirmStandard.jsx";
 import { renderDialog } from "../renderDialog.jsx";
 
-function confirmRegisterGroupTeam(teams) {
+function confirmUnpairWristband(player) {
   return new Promise((resolve, reject) => {
     try {
       renderDialog(
         <DialogConfirmStandard
           initialOpen
-          heading={`merge group party ${teams.length > 1 ? "teams" : "team"}?`}
+          heading="unpair wristband?"
           onClose={resolve}
         >
-          <ul style={{ textAlign: "left" }}>
-            {teams.map((team, i) => (
-              <li key={i}>{team.name}</li>
-            ))}
-          </ul>
+          <p>Unpair wristband of {player?.username}</p>
         </DialogConfirmStandard>,
       );
     } catch (err) {
@@ -23,4 +19,4 @@ function confirmRegisterGroupTeam(teams) {
   });
 }
 
-export { confirmRegisterGroupTeam };
+export { confirmUnpairWristband };

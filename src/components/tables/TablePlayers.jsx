@@ -5,6 +5,7 @@ function TablePlayers({ players, onSelectionChange }) {
     <Table
       showIndex
       showCheckbox
+      showCheckbox={false}
       data={players}
       fields={{
         username: null,

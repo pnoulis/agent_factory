@@ -1,6 +1,26 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** Group party
+*** On merge
+I should run the pre-register tests on each team.
+I should gather all errors.
+And then I should display them on an alert.
+
+If there are teams that pass the tests, they should be registered.
+The results of each pending registration should be kept so that
+at the end of the process i can show the results in an Alert list.
+
+*** On distribution
+**** DONE The teams that have been registered should remain intact
+CLOSED: [2024-02-26 Mon 13:54]
+*** TODO TeamActionCard
+should be declared as either a grouparty team or normal team
+*** DONE On pair wristband
+CLOSED: [2024-02-26 Mon 14:49]
+If the cashier initiates a pair wristband event for a player other than the one
+currently being paired the registration queue should switch pairing from the old
+player to the new player.
 ** TODO Cover the case where a user navigates to a non existent team page
 notify using an alert
 then navigate to live view

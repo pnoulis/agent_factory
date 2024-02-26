@@ -29,37 +29,75 @@ import { getGrouPartyDistribution } from "../../components/dialogs/inputs/getGro
 import { getGrouPartySize } from "../../components/dialogs/inputs/getGrouPartySize";
 import { useTeam } from "#components/team/useTeam.jsx";
 import { AwaitTeams } from "/src/loaders/loadTeams.jsx";
+import { confirmRegisterGrouParty } from "../../components/dialogs/confirms/confirmRegisterGrouParty";
+import { teamReact } from "../../afmachine/team/TeamReact";
+import { GrouPartyTeam } from "#afm/grouparty/GrouPartyTeam.js";
+import { GrouPartyPlayer } from "#afm/grouparty/GrouPartyPlayer.js";
+import { GrouPartyWristband } from "#afm/grouparty/GrouPartyWristband.js";
+
+const createTeam = (team) =>
+  new GrouPartyTeam(
+    team,
+    (player, wristband) => new GrouPartyPlayer(player, wristband),
+    (wristband) => new GrouPartyWristband(wristband),
+  );
 
 function PageScratch() {
+  const gpRef = React.useRef();
   return (
     <>
       <h1>page scratch</h1>
       <div>
         <button
           onClick={() => {
-            const body = document.getElementsByTagName("body");
-            debug(body[0]);
-            debug(body[0].style.pointerEvents);
-            body[0].style.pointerEvents = "none";
-            setTimeout(() => {
-              debug(body[0].style.pointerEvents);
-            }, 1000);
+            gpRef.current = [
+              createTeam().fill(null, { players: 1 }),
+              createTeam().fill(null, {
+                players: 2,
+                wristband: { state: "paired" },
+              }),
+              createTeam().fill(null, {
+                players: 3,
+                wristband: { state: "paired" },
+              }),
+
+              createTeam().fill(null, {
+                players: 3,
+                wristband: { state: "unpaired" },
+              }),
+              createTeam().fill(
+                {
+                  packages: [],
+                  roster: [
+                    {
+                      wristband: { colorCode: 3 },
+                    },
+                    {
+                      wristband: { colorCode: 3 },
+                    },
+                  ],
+                },
+                { players: 2, wristband: { state: "paired" } },
+              ),
+            ];
+            const notReady = [];
+            const ready = [];
+            for (const team of gpRef.current) {
+              try {
+                teamReact.register(team);
+                ready.push(team);
+              } catch (err) {
+                notReady.push({ team, err });
+              }
+            }
+            debug(ready);
+            debug(notReady);
+            confirmRegisterGrouParty(ready, notReady);
           }}
         >
           disable pointer events
         </button>
         <br />
-        <button
-          onClick={() => {
-            const body = document.getElementsByTagName("body");
-            debug(body[0]);
-            body[0].style.pointerEvents = "auto";
-          }}
-        >
-          enable pointer events
-        </button>
-        <br />
-        <button onClick={() => alert("works")}>check button</button>
       </div>
     </>
   );

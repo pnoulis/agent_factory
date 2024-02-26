@@ -2,10 +2,14 @@ import { Suspense } from "react";
 import { defer, Await, useLoaderData } from "react-router-dom";
 import { getafm } from "/src/getafm.js";
 import { parsecmd } from "#afm/parsecmd.js";
-import { Pending } from "#components/await-command/Pending.jsx";
+import { Pending } from "#components/await-command/Pending2.jsx";
 
 const loadPlayers = () =>
-  defer({ players: getafm().then((afm) => parsecmd(afm.listPlayers())) });
+  defer({
+    players: getafm(false).then((afm) =>
+      parsecmd(afm.listPlayers({ queue: false })),
+    ),
+  });
 
 function AwaitPlayers({ children }) {
   const pending = useLoaderData();

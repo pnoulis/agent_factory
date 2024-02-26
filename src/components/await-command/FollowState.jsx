@@ -26,6 +26,7 @@ function FollowState({
   onSettled: handleSettled,
   children,
 }) {
+  entityCb ??= followedState.entityCb;
   const ref = React.useRef();
   const { state, idle, pending, fulfilled } =
     followedState || useEntityState(cmd);
@@ -43,6 +44,7 @@ function FollowState({
         : handleFullfilled?.(cmd);
     const onPending = async (cmd) => {
       togglePointerEvents(true);
+      if (entityCb && !entityCb?.(cmd)) return;
       await waitForUi(() => ref.current);
       await delay(timePending);
     };

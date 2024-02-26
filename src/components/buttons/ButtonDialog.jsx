@@ -1,6 +1,8 @@
 import { css } from "styled-components";
 
 const ButtonDialog = css`
+  box-sizing: border-box;
+  padding: 0 10px;
   font-size: var(--tx-nl);
   text-transform: uppercase;
   border-radius: var(--br-xs);
@@ -9,7 +11,6 @@ const ButtonDialog = css`
   height: 40px;
   min-width: 120px;
   width: max-content;
-  box-sizing: border-box;
   cursor: pointer;
 
   &:hover {
