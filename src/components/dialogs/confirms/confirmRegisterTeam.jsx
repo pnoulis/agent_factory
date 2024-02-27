@@ -1,16 +1,16 @@
 import { DialogConfirmStandard } from "./DialogConfirmStandard.jsx";
 import { renderDialog } from "../renderDialog.jsx";
 
-function confirmAddTeamPackage(pkgname) {
+function confirmRegisterTeam(team) {
   return new Promise((resolve, reject) => {
     try {
       renderDialog(
         <DialogConfirmStandard
           initialOpen
-          heading="Registered package"
+          heading="merge team"
           onClose={resolve}
         >
-          {`Register new package for team?`}
+          <p>Merge team {team.name} ?</p>
         </DialogConfirmStandard>,
       );
     } catch (err) {
@@ -19,4 +19,4 @@ function confirmAddTeamPackage(pkgname) {
   });
 }
 
-export { confirmAddTeamPackage };
+export { confirmRegisterTeam };

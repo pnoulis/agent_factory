@@ -10,7 +10,7 @@ function ComboboxSelectPackage({ pkg, onSelect, labelledBy }) {
       labelledBy={labelledBy}
       name={`select-${pkg.type}-package`}
       onSelect={(label) =>
-        onSelect?.(pkg.catalogue.find((p) => (p.label === label)))
+        onSelect?.(pkg.catalogue.find((p) => p.label === label))
       }
     >
       <Trigger placeholder={pkg.catalogue[0].label} />

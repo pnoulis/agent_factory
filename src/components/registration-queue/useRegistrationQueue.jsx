@@ -63,6 +63,7 @@ function useRegistrationQueue(players) {
       }
       debug("unpair wristband");
       await player.unpairWristband();
+      pairingRef.current = null;
     } catch (err) {
     } finally {
       debug("stop pairing");

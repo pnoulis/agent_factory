@@ -6,6 +6,7 @@ import { DialogInputStandard } from "../../components/dialogs/inputs/DialogInput
 // import { BasicDialog } from "react_utils/dialogs";
 import { FormLoginCashier } from "#components/forms/FormLoginCashier.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { renderDialogPromise } from "../../components/dialogs/renderDialogPromise";
 import { ComboboxDeviceView } from "../../components/comboboxes/ComboboxDeviceView";
 import { Pending } from "#components/await-command/Pending.jsx";
 import { ProvidePlayer } from "#components/player/ProvidePlayer.jsx";
@@ -34,6 +35,7 @@ import { teamReact } from "../../afmachine/team/TeamReact";
 import { GrouPartyTeam } from "#afm/grouparty/GrouPartyTeam.js";
 import { GrouPartyPlayer } from "#afm/grouparty/GrouPartyPlayer.js";
 import { GrouPartyWristband } from "#afm/grouparty/GrouPartyWristband.js";
+import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
 
 const createTeam = (team) =>
   new GrouPartyTeam(
@@ -48,56 +50,75 @@ function PageScratch() {
     <>
       <h1>page scratch</h1>
       <div>
-        <button
-          onClick={() => {
-            gpRef.current = [
-              createTeam().fill(null, { players: 1 }),
-              createTeam().fill(null, {
-                players: 2,
-                wristband: { state: "paired" },
-              }),
-              createTeam().fill(null, {
-                players: 3,
-                wristband: { state: "paired" },
-              }),
-
-              createTeam().fill(null, {
-                players: 3,
-                wristband: { state: "unpaired" },
-              }),
-              createTeam().fill(
-                {
-                  packages: [],
-                  roster: [
-                    {
-                      wristband: { colorCode: 3 },
-                    },
-                    {
-                      wristband: { colorCode: 3 },
-                    },
-                  ],
-                },
-                { players: 2, wristband: { state: "paired" } },
-              ),
-            ];
-            const notReady = [];
-            const ready = [];
-            for (const team of gpRef.current) {
-              try {
-                teamReact.register(team);
-                ready.push(team);
-              } catch (err) {
-                notReady.push({ team, err });
-              }
-            }
-            debug(ready);
-            debug(notReady);
-            confirmRegisterGrouParty(ready, notReady);
-          }}
-        >
-          disable pointer events
-        </button>
-        <br />
+        <AwaitAfmachine>
+          {() => (
+            <>
+              <ViewCommand
+                cmd={afm.test}
+                delay={2000}
+                onPending={(cmd) => {
+                  return renderDialogPromise(
+                    <DialogAlertStandard
+                      initialOpen
+                      heading={cmd.taskname}
+                      msg={cmd.msg}
+                    />,
+                  );
+                }}
+                onFulfilled={(cmd) => {
+                  return renderDialogPromise(
+                    <DialogAlertStandard
+                      initialOpen
+                      heading={cmd.taskname}
+                      msg={cmd.msg}
+                    />,
+                  );
+                }}
+                onRejected={(cmd) => {
+                  return renderDialogPromise(
+                    <DialogAlertStandard
+                      initialOpen
+                      heading={cmd.taskname}
+                      msg={cmd.msg}
+                    />,
+                  );
+                }}
+                onSettled={(cmd) => {
+                  return renderDialogPromise(
+                    <DialogAlertStandard
+                      initialOpen
+                      heading={cmd.taskname}
+                      msg={"settled"}
+                    />,
+                  );
+                }}
+              >
+                <br />
+                <button
+                  onClick={() => {
+                    afm
+                      .test({ fail: true })
+                      .then(() => {
+                        alert("resolved");
+                      })
+                      .catch(() => {
+                        alert("rejected");
+                      })
+                      .finally(() => {
+                        alert("finally");
+                      });
+                  }}
+                >
+                  test
+                </button>
+                <br />
+                <button onClick={() => alert("yolo")}>
+                  check pointer events
+                </button>
+              </ViewCommand>
+            </>
+          )}
+        </AwaitAfmachine>
       </div>
     </>
   );

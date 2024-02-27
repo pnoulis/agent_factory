@@ -21,8 +21,8 @@ const List = styled("ul")`
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 170px);
-  grid-auto-rows: minmax(190px, max-content);
+  grid-template-columns: repeat(3, 180px);
+  grid-auto-rows: minmax(200px, max-content);
   overflow-y: auto;
   gap: 40px 30px;
   padding: 30px 20px;

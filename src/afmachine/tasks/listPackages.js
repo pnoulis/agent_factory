@@ -26,7 +26,7 @@ Command.middleware = [
   validateBackendResponse,
   (ctx, next) => {
     ctx.res.packages = ctx.raw.packages.map((pkg) =>
-      Package.normalize(pkg, { state: "registered" }),
+      Package.normalize(pkg, { state: "unregistered" }),
     );
     return next();
   },

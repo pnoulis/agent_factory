@@ -7,25 +7,6 @@ import { smallid } from "js_utils/uuid";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
 
-/*
-  filters types:
-
-  - element
-     - air
-     - fire
-     - earth
-     - water
-
-  - time
-     - all time
-     - monthly
-     - weekly
-     - daily
-
-  - room
-     - room...
- */
-
 const loadScoreboardTop10 = (props) => {
   const { searchParams } = new window.URL(props.request.url);
 
@@ -62,7 +43,7 @@ const loadScoreboardTop10 = (props) => {
   }
 
   return defer({
-    scoreboard: getafm()
+    scoreboard: getafm(false)
       .then((afm) => parsecmd(afm.listScoreboard({ queue: false })))
       .then((res) => {
         const filtered = filter(res);

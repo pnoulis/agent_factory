@@ -44,7 +44,7 @@ const router = createBrowserRouter(
             {
               path: links.registerTeam.path,
               loader: loadPlayersWithWristband,
-              lazy: async () => import("./pages/teams/PageRegister.jsx"),
+              lazy: async () => import("./pages/teams/PageRegister2.jsx"),
             },
 
             {
@@ -55,11 +55,8 @@ const router = createBrowserRouter(
                 {
                   loader: loadPackages,
                   path: links.teamPackage.path,
-                  lazy: async () => import("./pages/team/PagePackage.jsx"),
-                },
-                {
-                  path: links.teamRoster.path,
-                  lazy: async () => import("./pages/team/PageRoster.jsx"),
+                  lazy: async () =>
+                    import("./pages/team/PageRegisterPackage.jsx"),
                 },
               ],
             },
@@ -175,7 +172,7 @@ const router = createBrowserRouter(
       ],
     },
     {
-      loader: loadTeams,
+      loader: loadAfmachine,
       path: "/scratch",
       element: <PageScratch />,
     },

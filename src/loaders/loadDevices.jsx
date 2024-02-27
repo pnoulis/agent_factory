@@ -8,12 +8,14 @@ import { smallid } from "js_utils/uuid";
 import { Center } from "#components/Center.jsx";
 
 const loadDevices = () => {
-  const devices = getafm().then((afm) => parsecmd(afm.listDevices()));
-  const scoreboardDevices = getafm().then((afm) =>
-    parsecmd(afm.listScoreboardDevices()),
+  const devices = getafm(false).then((afm) =>
+    parsecmd(afm.listDevices({ queue: false })),
   );
-  const scoreboardViews = getafm().then((afm) =>
-    parsecmd(afm.listScoreboardViews()),
+  const scoreboardDevices = getafm(false).then((afm) =>
+    parsecmd(afm.listScoreboardDevices({ queue: false })),
+  );
+  const scoreboardViews = getafm(false).then((afm) =>
+    parsecmd(afm.listScoreboardViews({ queue: false })),
   );
 
   const id = smallid();

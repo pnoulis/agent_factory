@@ -1,6 +1,41 @@
 #+TODO: TODO DOING | DONE
 
 * Task Board
+** TODO Optional Label in forms should move when error
+** Production optimizations
+*** Remove unused imports
+https://www.npmjs.com/package/eslint-plugin-unused-imports
+*** No debug statements
+*** Generally eliminate uneccessary code
+*** Remove unusude files
+** Per page final touches
+*** Login Cashier
+**** Page and Content?
+**** ViewCommand
+**** Command messages?
+**** parsecmd to parse()?
+*** Register player
+**** DONE Page and Content?
+**** DONE View command
+**** DONE Command messages?
+**** DONE parsecmd to parse()?
+*** Pair wristband
+**** DONE Page and Content?
+**** DONE View command
+**** DONE Command messages?
+**** DONE parsecmd to parse()?
+*** Registration players table
+** Show the result of commands
+
+_AwaitCommand_
+Every time a new Command is initiated I must display to the User its progress
+and the message comunicating the result of the Command. Specifically, The
+Command should not produce any change in the component tree.
+
+_ViewCommand_
+Other times I do want to have a descendant component tree tied to the Command
+States and Result.
+
 ** Group party
 *** On merge
 I should run the pre-register tests on each team.

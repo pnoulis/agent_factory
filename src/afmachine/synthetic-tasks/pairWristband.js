@@ -27,7 +27,6 @@ Command.middleware = [
     ctx.args.player.state.pairWristband();
     ctx.args.wristband.state.pair();
     await ctx.args.wristband.pair(ctx.args.player);
-    debug("after wrisband pair");
     ctx.res.player = ctx.args.player.tobject(null, { depth: 1 });
     return next();
   },

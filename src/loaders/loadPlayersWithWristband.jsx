@@ -6,7 +6,9 @@ import { Pending } from "#components/await-command/Pending2.jsx";
 
 const loadPlayersWithWristband = () =>
   defer({
-    players: getafm().then((afm) => parsecmd(afm.listPlayersWithWristband())),
+    players: getafm(false).then((afm) =>
+      parsecmd(afm.listPlayersWithWristband({ queue: false })),
+    ),
   });
 
 function AwaitPlayersWithWristband({ children }) {

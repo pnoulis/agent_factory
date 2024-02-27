@@ -93,10 +93,10 @@ const Card = styled("article")`
     text-transform: uppercase;
     font-weight: 550;
     right: 0;
-    top: -30px;
+    top: -25px;
     background-color: var(--grey-light);
     border-radius: var(--br-sm) var(--br-sm) 0 var(--br-lg);
-    padding: 7px 15px;
+    padding: 3px 15px;
   }
 
   section:nth-of-type(1) {

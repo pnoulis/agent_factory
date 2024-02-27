@@ -39,7 +39,7 @@ const StyledDialogAlert = styled(DialogAlert)`
   box-sizing: border-box;
   z-index: 4;
   gap: 15px 20px;
-  padding: 15px 15px;
+  padding: 15px 25px;
   border: none;
   box-shadow: var(--sd-9);
   text-align: center;

@@ -6,7 +6,7 @@ import { Pending } from "#components/await-command/Pending2.jsx";
 import { smallid } from "js_utils/uuid";
 
 const loadCashiers = () => {
-  const res = getafm().then((afm) =>
+  const res = getafm(false).then((afm) =>
     afm.listCashiers({ queue: false }).parse(),
   );
   return defer({

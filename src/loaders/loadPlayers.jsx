@@ -7,7 +7,7 @@ import { Pending } from "#components/await-command/Pending2.jsx";
 const loadPlayers = () =>
   defer({
     players: getafm(false).then((afm) =>
-      parsecmd(afm.listPlayers({ queue: false })),
+      afm.listPlayers({ queue: false }).parse(),
     ),
   });
 

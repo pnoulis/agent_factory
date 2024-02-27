@@ -61,7 +61,7 @@ class WristbandCommander extends createEventful(Wristband) {
     try {
       this.cancelPairing();
       this.state.unpair();
-      if (this.pairing?.registered) {
+      if (this.id > 0) {
         const deregistered = await this.deregister(player, this);
         this.state.unpaired(deregistered);
       } else {

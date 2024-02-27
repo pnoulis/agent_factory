@@ -36,72 +36,58 @@ function Component() {
       <AwaitPackages>
         {({ packages }) => (
           <>
-            <FollowState
-              cmd={afm.addTeamPackage}
-              delayPending={200}
-              onSettled={(cmd) => {
-                return renderDialogPromise(
-                  <DialogAlertStandard
-                    initialOpen
-                    heading="new team package"
-                    msg={cmd.msg}
-                  />,
-                );
-              }}
-            >
-              <Panel className="panel">
-                <PanelActionbar>
-                  <PanelNavbar style={{ gap: "40px" }}>
-                    <WidgetPackage
-                      color="var(--primary-base)"
-                      fill="white"
-                      content="packages"
-                      onClick={() => {
-                        if (team.packages.length) {
-                          return navigate(-1);
-                        }
-                        renderDialog(
-                          <DialogAlertStandard
-                            initialOpen
-                            heading="List team packages"
-                            msg="Team does not have any packages!"
-                          />,
-                        );
+            <Panel className="panel">
+              <PanelActionbar>
+                <PanelNavbar style={{ gap: "40px" }}>
+                  <WidgetPackage
+                    color="var(--primary-base)"
+                    fill="white"
+                    content="packages"
+                    onClick={() => {
+                      if (team.packages.length) {
+                        return navigate(-1);
+                      }
+                      renderDialog(
+                        <DialogAlertStandard
+                          initialOpen
+                          heading="List team packages"
+                          msg="Team does not have any packages!"
+                        />,
+                      );
+                    }}
+                  />
+                  <WidgetRegister
+                    color="var(--primary-base)"
+                    fill="white"
+                    content="add package"
+                    onClick={handleRegisterClick}
+                  />
+                  <Cost>
+                    <DataTuple src={selectedPkg} name="cost" dval="0" />
+                  </Cost>
+                </PanelNavbar>
+              </PanelActionbar>
+              <Content className="content">
+                {packages.map((pkg, i) => (
+                  <Package key={i} $selected={pkg.type === selectedPkg.type}>
+                    <Label
+                      id={`select-${pkg.type}-label`}
+                      htmlFor={`select-${pkg.type}-package-trigger`}
+                    >
+                      {`Select ${pkg.type} package`}
+                    </Label>
+                    <Heading>{pkg.description}</Heading>
+                    <ComboboxSelectPackage
+                      labelledBy={`select-${pkg?.type}-label`}
+                      pkg={pkg}
+                      onSelect={(pkg) => {
+                        setSelectedPkg({ ...pkg });
                       }}
                     />
-                    <WidgetRegister
-                      color="var(--primary-base)"
-                      fill="white"
-                      content="add package"
-                      onClick={handleRegisterClick}
-                    />
-                    <Cost>
-                      <DataTuple src={selectedPkg} name="cost" dval="0" />
-                    </Cost>
-                  </PanelNavbar>
-                </PanelActionbar>
-                <Content className="content">
-                  {packages.map((pkg, i) => (
-                    <Package key={i} $selected={pkg.type === selectedPkg.type}>
-                      <Label
-                        id={`select-${pkg.type}-label`}
-                        htmlFor={`select-${pkg.type}-package-trigger`}
-                      >
-                        {`Select ${pkg.type} package`}
-                      </Label>
-                      <Heading>{pkg.description}</Heading>
-                      <ComboboxSelectPackage
-                        labelledBy={`select-${pkg?.type}-label`}
-                        pkg={pkg}
-                        onSelect={(pkg) => {
-                          setSelectedPkg({ ...pkg });
-                        }}
-                      />
-                    </Package>
-                  ))}
-                </Content>
-              </Panel>
-            </FollowState>
+                  </Package>
+                ))}
+              </Content>
+            </Panel>
           </>
         )}
       </AwaitPackages>

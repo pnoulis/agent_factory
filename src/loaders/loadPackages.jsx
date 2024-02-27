@@ -6,7 +6,7 @@ import { Pending } from "#components/await-command/Pending2.jsx";
 
 function loadPackages() {
   return defer({
-    packages: getafm().then((afm) =>
+    packages: getafm(false).then((afm) =>
       parsecmd(afm.listPackages({ queue: false })).then((res) => ({
         packages: [
           {

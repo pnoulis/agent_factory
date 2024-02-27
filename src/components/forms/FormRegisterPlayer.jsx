@@ -75,7 +75,7 @@ const TextInput = styled(TextInput_0)`
 
   &.error p {
     position: initial;
-    background-color: white;
+    background-color: inherit;
     border-radius: var(--br-nl);
     margin-top: 5px;
     padding-bottom: 5px;

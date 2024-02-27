@@ -1,12 +1,16 @@
+import * as React from "react";
 import { PlayerCommander } from "#afm/player/PlayerCommander.js";
 import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
-import { Center } from "#components/Center.jsx";
-import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
 import { StandardPlayerActionCard } from "#components/player/StandardPlayerActionCard.jsx";
 import { RegistrationQueue } from "#components/registration-queue/RegistrationQueue.jsx";
 import { useRegistrationQueue } from "#components/registration-queue/useRegistrationQueue.jsx";
 import styled from "styled-components";
-import { ComboboxSearchPlayer } from "../../components/comboboxes/ComboboxSearchPlayer.jsx";
+import { ComboboxSearchPlayer } from "#components/comboboxes/ComboboxSearchPlayer.jsx";
+import { ViewCommand } from "#components/await-command/ViewCommand";
+import { renderDialog } from "#components/dialogs/renderDialog";
+import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
+import { isObject } from "js_utils/misc";
+import { smallid } from "js_utils/uuid";
 
 const createPlayer = (player, wristband) =>
   new PlayerCommander(player, new WristbandCommander(wristband));
@@ -14,58 +18,99 @@ const createPlayer = (player, wristband) =>
 function Component() {
   const { queue, enqueue, dequeue, pairWristband, unpairWristband } =
     useRegistrationQueue();
+  const [id, setId] = React.useState(() => smallid());
+
+  const searchPlayer = React.useCallback(
+    (searchTerm) => afm.searchPlayer(searchTerm),
+    [id],
+  );
 
   return (
-    <Center>
-      <Page>
-        <section>
-          <AwaitCommand cmd={afm.deregisterWristband}>
-            <AwaitCommand cmd={afm.registerWristband}>
-              <>
-                <Label id="combobox-label" htmlFor="search-player-trigger">
-                  Add Players
-                </Label>
-                <ComboboxSearchPlayer
-                  labelledBy="combobox-label"
-                  onSelect={(player) =>
-                    enqueue(createPlayer(player, player.wristband))
-                  }
-                />
-              </>
-            </AwaitCommand>
-          </AwaitCommand>
-        </section>
-        <section>
-          <RegistrationQueue>
-            {queue.map((p, i) => {
-              return (
-                <StandardPlayerActionCard
-                  key={p.username + i}
-                  ctx={p}
-                  onPlayerRemove={dequeue}
-                  onWristbandPair={pairWristband}
-                  onWristbandUnpair={unpairWristband}
-                />
-              );
-            })}
-          </RegistrationQueue>
-        </section>
-      </Page>
-    </Center>
+    <ViewCommand
+      onFulfilled={() => {
+        setId(smallid());
+      }}
+      onSettled={(cmd) => {
+        renderDialog(
+          <DialogAlertStandard initialOpen heading={cmd.verb} msg={cmd.msg} />,
+        );
+      }}
+      noRejected
+      noFulfilled
+      cmd={afm.deregisterWristband}
+    >
+      <ViewCommand
+        onFulfilled={() => {
+          setId(smallid());
+        }}
+        onSettled={(cmd) => {
+          renderDialog(
+            <DialogAlertStandard
+              initialOpen
+              heading={cmd.verb}
+              msg={cmd.msg}
+            />,
+          );
+        }}
+        noRejected
+        noFulfilled
+        cmd={afm.registerWristband}
+      >
+        <Page>
+          <Content>
+            <section>
+              <Label id="combobox-label" htmlFor="search-player-trigger">
+                Add Players
+              </Label>
+              <ComboboxSearchPlayer
+                searchPlayer={searchPlayer}
+                labelledBy="combobox-label"
+                onSelect={(player) =>
+                  isObject(player) &&
+                  enqueue(createPlayer(player, player.wristband))
+                }
+              />
+            </section>
+            <section>
+              <RegistrationQueue>
+                {queue.map((p, i) => (
+                  <StandardPlayerActionCard
+                    key={p.username + i}
+                    ctx={p}
+                    onPlayerRemove={dequeue}
+                    onWristbandPair={pairWristband}
+                    onWristbandUnpair={unpairWristband}
+                  />
+                ))}
+              </RegistrationQueue>
+            </section>
+          </Content>
+        </Page>
+      </ViewCommand>
+    </ViewCommand>
   );
 }
 
 const Page = styled("div")`
+  width: 100%;
+  height: 100%;
+`;
+
+const Content = styled("div")`
   display: grid;
   grid-template-columns: 1fr 650px;
   grid-template-rows: 1fr;
-  width: 90%;
   height: 100%;
-  padding: 20px;
   gap: 80px;
 
   section:nth-of-type(1) {
     width: 550px;
+    margin-top: -20px;
+  }
+
+  #search-player-listbox {
+    margin-top: 15px;
+    max-height: 600px;
   }
 
   section:nth-of-type(2) {

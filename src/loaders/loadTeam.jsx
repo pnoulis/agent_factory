@@ -6,7 +6,7 @@ import { Pending } from "#components/await-command/Pending2.jsx";
 
 const loadTeam = ({ params }) => {
   return defer({
-    team: getafm().then((afm) =>
+    team: getafm(false).then((afm) =>
       parsecmd(afm.findTeam({ name: params.teamname }, { queue: false })),
     ),
   });

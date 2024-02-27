@@ -141,6 +141,16 @@ function Component() {
     if (!(await confirmRegisterGrouParty(ready, notReady))) {
       return;
     }
+    if (!ready.length) {
+      return renderDialog(
+        <DialogAlertStandard
+          initialOpen
+          heading="merge group party"
+          msg="No ready teams!"
+        />,
+      );
+    }
+    alert("i will register");
     // try {
     //   registered = await Promise.all(ready.map((team) => team.register()));
     // } catch (err) {
@@ -216,9 +226,8 @@ function Component() {
 const Page = styled("div")`
   width: 100%;
   height: 100%;
-  padding: 40px 20px 20px 20px;
+  padding: 60px 20px 20px 20px;
   .panel-grouparty {
-    padding-top: 20px;
     gap: 20px;
   }
 `;

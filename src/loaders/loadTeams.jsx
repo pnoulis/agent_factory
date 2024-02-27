@@ -58,8 +58,8 @@ const loadTeams = (props) => {
       break;
   }
 
-  const teams = getafm()
-    .then((afm) => parsecmd(afm.listTeams()))
+  const teams = getafm(false)
+    .then((afm) => parsecmd(afm.listTeams({ queue: false })))
     .then((res) => {
       const filtered = filter(res);
       if (!filtered.teams) {

@@ -67,7 +67,9 @@ const eventful = {
     }
     const nextevents = [];
     for (let i = 0; i < this.events[event].length; i++) {
-      if (listener === this.events[event][i].listener) continue;
+      if (listener === this.events[event][i].listener) {
+        continue;
+      }
       nextevents.push(this.events[event][i]);
     }
     this.events[event] = nextevents;

@@ -36,7 +36,9 @@ const createPlayer = (player, wristband) =>
 
 function Component() {
   const { t } = useContextApp();
-  const [randomTeamName, setRandom] = React.useState(generateRandomName());
+  const [randomTeamName, setRandom] = React.useState(
+    generateRandomName().toLowerCase(),
+  );
   const {
     queue: roster,
     setQueue,

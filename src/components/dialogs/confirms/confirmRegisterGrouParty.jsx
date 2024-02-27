@@ -1,20 +1,21 @@
+import { DialogConfirm } from "./DialogConfirm.jsx";
 import { DialogConfirmStandard } from "./DialogConfirmStandard.jsx";
+import { Yes } from "./Yes.jsx";
+import { No } from "./No.jsx";
+import { ButtonDialog } from "#components/buttons/ButtonDialog.jsx";
 import { renderDialog } from "../renderDialog.jsx";
 import styled from "styled-components";
+import { Heading } from "./Heading.jsx";
 
 function confirmRegisterGrouParty(ready, notReady) {
   return new Promise((resolve, reject) => {
     try {
       renderDialog(
-        <DialogConfirmStandard
-          initialOpen
-          heading="Merge group party?"
-          onClose={resolve}
-          yes="Merge ready teams"
-        >
+        <ThisDialogConfirm initialOpen onClose={resolve}>
+          <Heading>Merge group party</Heading>
           <Content>
             <ReadyTeams>
-              <Heading>Ready teams</Heading>
+              <ContentHeading>Ready teams</ContentHeading>
               <List>
                 {ready.length ? (
                   ready.map((team, i) => <li key={i}>{team.name}</li>)
@@ -25,7 +26,7 @@ function confirmRegisterGrouParty(ready, notReady) {
             </ReadyTeams>
             {notReady.length && (
               <NotReadyTeams>
-                <Heading>Not ready teams</Heading>
+                <ContentHeading>Not ready teams</ContentHeading>
                 <List>
                   {notReady.map(({ team, err }, i) => (
                     <li key={i}>
@@ -37,13 +38,52 @@ function confirmRegisterGrouParty(ready, notReady) {
               </NotReadyTeams>
             )}
           </Content>
-        </DialogConfirmStandard>,
+          <div className="actions">
+            <No>cancel</No>
+            <Yes>merge ready teams</Yes>
+          </div>
+        </ThisDialogConfirm>,
       );
     } catch (err) {
       reject(err);
     }
   });
 }
+
+const ThisDialogConfirm = styled(DialogConfirm)`
+  box-sizing: content-box;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 20px 35px;
+  z-index: 4;
+  gap: 15px 20px;
+  padding: 20px 35px;
+  border: none;
+  box-shadow: var(--sd-9);
+  text-align: center;
+
+  .heading {
+    text-transform: uppercase;
+    color: var(--primary-base);
+    letter-spacing: 1px;
+    font-weight: 550;
+  }
+
+  .actions {
+    margin-top: 20px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    gap: 30px;
+  }
+  .confirm {
+    ${ButtonDialog}
+  }
+
+  .close {
+    ${ButtonDialog}
+  }
+`;
 
 const Content = styled("div")`
   display: flex;
@@ -52,19 +92,18 @@ const Content = styled("div")`
 
   section {
     flex: 1;
-    width: 400px;
     display: flex;
     flex-flow: column nowrap;
     gap: 20px;
   }
 `;
 
-const Heading = styled("h1")`
+const ContentHeading = styled("h1")`
   font-size: var(--tx-md);
   letter-spacing: 1.5px;
   text-transform: capitalize;
   letter-spacing: 2px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid var(--grey-medium);
   padding-bottom: 2px;
 `;
 

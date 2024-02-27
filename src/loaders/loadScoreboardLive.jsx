@@ -6,7 +6,7 @@ import { Pending } from "#components/await-command/Pending2.jsx";
 
 const loadScoreboardLive = () =>
   defer({
-    scoreboard: getafm().then((afm) =>
+    scoreboard: getafm(false).then((afm) =>
       parsecmd(afm.listScoreboard({ queue: false })).then(({ live }) => ({
         scoreboard: live,
       })),

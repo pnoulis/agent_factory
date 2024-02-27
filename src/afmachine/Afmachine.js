@@ -18,6 +18,9 @@ import { GrouPartyTeam } from "./grouparty/GrouPartyTeam.js";
 import { GrouPartyPlayer } from "./grouparty/GrouPartyPlayer.js";
 import { GrouPartyWristband } from "./grouparty/GrouPartyWristband.js";
 
+// Test
+import { test } from "./tasks/test.js";
+
 // RPI Reader tasks
 import { readWristband } from "./tasks/readWristband.js";
 
@@ -91,11 +94,6 @@ class Afmachine extends createEventful([
     this.adminScreen = adminScreen;
     this.rpiReader = rpiReader;
     this.commandQueue = [];
-    this.players = new Map();
-    this.wristbands = new Map();
-    this.teams = new Map();
-    this.devices = new Map();
-    this.cashiers = new Map();
     this.commands = 0;
     this.history = [];
 
@@ -138,42 +136,14 @@ Afmachine.prototype.runCommand = async function (cmd) {
   if (queue && cmd.state !== "queued") {
     return this.enqueueCommand(cmd);
   }
-
   try {
-    await this.onCmdStart(cmd);
-
-    // This registered error handler ensures
-    // that an error will not result
-    // in an unhandled exception.
-    cmd.promise.catch(() => {});
-
     await cmd.run();
   } catch (err) {
-    debug(err);
-    debug(cmd);
-    debug("catch 2");
-    cmd.errs.push(err);
+    debug("do nthing");
   } finally {
-    debug("finally 3");
     this.commands = this.commands - 1;
     this.onCmdEnd(cmd);
   }
-};
-Afmachine.prototype.getCache = function (cache, key, strict = true) {
-  // if (!Object.hasOwn(this, cache)) {
-  //   throw createCacheErr({ cache, msg: `Unknown cache: ${cache}` });
-  // }
-  const value = this[cache].get(key);
-  // if (strict && value === undefined) {
-  //   throw createCacheErr({ cache, key });
-  // }
-  return value;
-};
-Afmachine.prototype.setCache = function (cache, key, value) {
-  // if (!Object.hasOwn(this, cache)) {
-  //   throw createCacheErr({ cache, msg: `Unknown cache: ${cache}` });
-  // }
-  return this[cache].set(key, value);
 };
 Afmachine.prototype.onCmdCreate = function (cmd) {
   this.history.push({
@@ -216,9 +186,6 @@ Afmachine.prototype.onCmdEnd = function (cmd) {
   }
 
   if (this.commands <= 0) {
-    this.players.clear();
-    this.wristbands.clear();
-    this.teams.clear();
     this.emit("idle", this);
   }
 };
@@ -229,6 +196,9 @@ Afmachine.prototype.stop = function () {
 };
 
 Object.assign(Afmachine.prototype, {
+  // test
+  test,
+
   // RPI Reader tasks
   readWristband,
 

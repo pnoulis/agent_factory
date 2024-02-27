@@ -14,6 +14,7 @@ function ComboboxSelectPlayer({ labelledBy, players, onSelect }) {
   return (
     <Combobox.Provider
       initialOpen
+      labelledBy={labelledBy}
       asTable
       onSelect={onSelect}
       name="select-player"
@@ -67,9 +68,6 @@ const ListOptions = styled(Combobox.Listbox)`
   overflow-x: none;
   display: flex;
   flex-flow: column nowrap;
-  box-shadow: var(--sd-2);
-  height: max-content;
-  max-height: 600px;
   width: 700px;
   font-size: var(--tx-nl);
   gap: 15px;

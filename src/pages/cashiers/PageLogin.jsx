@@ -4,34 +4,37 @@ import BrandText from "/assets/brand/logo-white.png";
 import BrandFigure from "/assets/brand/logo-agent-white.png";
 import BackgroundFactory from "/assets/backgrounds/homepage-background-1920x1080px.png";
 import { useSession } from "/src/hooks/useSession.jsx";
+import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
 
 function Component() {
   const { login } = useSession();
 
   return (
-    <Wrapper>
-      <header>
-        <img src={BrandText} alt="agent factory logo" />
-      </header>
-      <section>
-        <FormLoginCashier
-          style={{ width: "350px" }}
-          onSubmit={async ({ fields, setForm }, onError) => {
-            login(fields)
-              .catch(onError)
-              .catch((err) => setForm("reset"));
-          }}
-        />
-      </section>
-      <VerticalRule />
-      <footer>
-        <img src={BrandFigure} alt="agent factory logo" />
-      </footer>
-    </Wrapper>
+    <ViewCommand cmd={afm.loginCashier}>
+      <Page className="page-login">
+        <header>
+          <img src={BrandText} alt="agent factory logo" />
+        </header>
+        <section>
+          <FormLoginCashier
+            style={{ width: "350px" }}
+            onSubmit={async ({ fields, setForm }, onError) => {
+              login(fields)
+                .catch(onError)
+                .catch((err) => setForm("reset"));
+            }}
+          />
+        </section>
+        <VerticalRule />
+        <footer>
+          <img src={BrandFigure} alt="agent factory logo" />
+        </footer>
+      </Page>
+    </ViewCommand>
   );
 }
 
-const Wrapper = styled("div")`
+const Page = styled("div")`
   background-image: url(${BackgroundFactory});
   background-size: auto;
   width: 100%;

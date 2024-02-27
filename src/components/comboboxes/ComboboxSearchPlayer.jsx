@@ -2,15 +2,18 @@ import styled, { css } from "styled-components";
 import { AsyncSearchableCombobox as Combobox } from "react_utils/comboboxes";
 import { useRemoteData, RemoteDataStates } from "react_utils";
 import { parsecmd } from "#afm/parsecmd.js";
-import { StandardPlayerInfoCard } from "../player/StandardPlayerInfoCard.jsx";
+import { SquizzedPlayerInfoCard } from "../player/SquizzedPlayerInfoCard.jsx";
 import { AwaitCommand } from "../await-command/AwaitCommand.jsx";
 import { Pending } from "../track-commands/Pending.jsx";
 import { Rejected } from "../track-commands/Rejected.jsx";
 import { Fulfilled } from "../track-commands/Fulfilled.jsx";
 
-function ComboboxSearchPlayer({ labelledBy, onSelect }) {
+function ComboboxSearchPlayer({ labelledBy, onSelect, searchPlayer }) {
   const remoteData = useRemoteData({
-    getRemoteData: afm.searchPlayer,
+    getRemoteData: searchPlayer,
+    fetchDelay: 500,
+    successDelay: 200,
+    errorDelay: 200,
     parseRes(cmd) {
       const { players } = cmd.res;
       const options = new Map();
@@ -47,7 +50,7 @@ function ComboboxSearchPlayer({ labelledBy, onSelect }) {
         renderOption={({ option, ...props }) => {
           return (
             <Option {...props}>
-              <StandardPlayerInfoCard ctx={option} />
+              <SquizzedPlayerInfoCard ctx={option} />
             </Option>
           );
         }}
@@ -86,10 +89,8 @@ const ListOptions = styled(Combobox.Listbox)`
   overflow-x: none;
   display: flex;
   flex-flow: column nowrap;
-  box-shadow: var(--sd-2);
-  height: max-content;
   max-height: 600px;
-  width: 700px;
+  max-width: 700px;
   font-size: var(--tx-nl);
   gap: 15px;
   scrollbar-gutter: stable both-edges;
