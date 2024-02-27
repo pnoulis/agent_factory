@@ -44,7 +44,9 @@ function PairWristbands({ team }) {
   };
 
   return (
-    <RegistrationQueue style={{ alignContent: "center" }}>
+    <RegistrationQueue
+      style={{ alignContent: queue.length > 3 ? "center" : "start" }}
+    >
       {queue.map((player, i) => (
         <StandardPlayerActionCard
           key={player.username + i}

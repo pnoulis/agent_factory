@@ -42,7 +42,13 @@ const loadDevices = () => {
 function AwaitDevices({ children }) {
   const pending = useLoaderData();
   return (
-    <Suspense fallback={<Pending />}>
+    <Suspense
+      fallback={
+        <Center>
+          <Pending />
+        </Center>
+      }
+    >
       <Await resolve={pending.devices}>{children}</Await>
     </Suspense>
   );

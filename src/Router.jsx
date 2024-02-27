@@ -171,11 +171,11 @@ const router = createBrowserRouter(
         },
       ],
     },
-    {
-      loader: loadAfmachine,
-      path: "/scratch",
-      element: <PageScratch />,
-    },
+    // {
+    //   loader: loadAfmachine,
+    //   path: "/scratch",
+    //   element: <PageScratch />,
+    // },
   ],
   { basename: ENV.BASENAME },
 );

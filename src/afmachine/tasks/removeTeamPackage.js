@@ -4,7 +4,6 @@ import { validateBackendRequest } from "../middleware/validateBackendRequest.js"
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { Team } from "../team/Team.js";
-import { Package } from "../package/Package.js";
 
 new Task("removeTeamPackage", Command);
 
@@ -33,7 +32,7 @@ Command.middleware = [
     ctx.req = {
       timestamp: ctx.t_start,
       teamName: ctx.args.team.name,
-      packageId: ctx.args.package.id,
+      packageId: ctx.args.pkg.id,
     };
     return next();
   },
@@ -45,6 +44,14 @@ Command.middleware = [
   },
   parseBackendResponse,
   validateBackendResponse,
+  (ctx, next) => {
+    ctx.res.team = Team.normalize(ctx.raw.team, {
+      state: "registered",
+      package: { defaultState: "registered" },
+      player: { defaultState: "inTeam" },
+    });
+    return next();
+  },
 ];
 
 Command.onFailure = function () {

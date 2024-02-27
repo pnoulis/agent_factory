@@ -18,26 +18,26 @@ function confirmRegisterGrouParty(ready, notReady) {
               <ContentHeading>Ready teams</ContentHeading>
               <List>
                 {ready.length ? (
-                  ready.map((team, i) => <li key={i}>{team.name}</li>)
+                  ready.map((team, i) => team && <li key={i}>{team.name}</li>)
                 ) : (
                   <li>-</li>
                 )}
               </List>
             </ReadyTeams>
-            {notReady.length && (
-              <NotReadyTeams>
-                <ContentHeading>Not ready teams</ContentHeading>
-                <List>
-                  {notReady.map(({ team, err }, i) => (
-                    <li key={i}>
-                      <span>{team.name}</span>
-                      <span>{err.message}</span>
-                    </li>
-                  ))}
-                </List>
-              </NotReadyTeams>
-            )}
           </Content>
+          {notReady.length >= 1 ? (
+            <NotReadyTeams>
+              <ContentHeading>Not ready teams</ContentHeading>
+              <List>
+                {notReady.map(({ team, err }, i) => (
+                  <li key={i}>
+                    <span>{team.name}</span>
+                    <span>{err.message}</span>
+                  </li>
+                ))}
+              </List>
+            </NotReadyTeams>
+          ) : null}
           <div className="actions">
             <No>cancel</No>
             <Yes>merge ready teams</Yes>

@@ -1,7 +1,5 @@
-import { PanelActionbar } from "#components/panel/PanelActionbar";
 import { AwaitPlayers } from "/src/loaders/loadPlayers.jsx";
 import { TablePlayers } from "#components/tables/TablePlayers.jsx";
-import { Center } from "#components/Center.jsx";
 import styled from "styled-components";
 
 function Component() {

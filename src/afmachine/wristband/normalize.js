@@ -44,6 +44,14 @@ function normalize(sources, options) {
 
   target.color = WRISTBAND_COLORS[target.colorCode] || null;
 
+  if (_options.stage2) {
+    if (target.id) {
+      target.state = 'paired';
+    } else {
+      target.staet = 'unpaired';
+    }
+  }
+
   // stage 1
   if (_options.targetState) {
     target.state = _options.targetState;
@@ -57,11 +65,13 @@ function normalize(sources, options) {
     trace(target, "wristband.normalize() target");
     return target;
   }
-
-  // stage 2
-  if (!target.id && target.state !== "pairing") {
-    target.state = "unpaired";
-  }
+  // if (target.id && target.state !== 'pairing') {
+  //   target.state = 'paired';
+  // }
+  // // stage 2
+  // if (!target.id && target.state !== "pairing") {
+  //   target.state = "unpaired";
+  // }
   // let misaligned = "";
   // switch (target.state) {
   //   case "paired":

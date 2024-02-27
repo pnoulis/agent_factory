@@ -11,6 +11,7 @@ const StandardPackageInfoCard = styled(PackageInfoCard)`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-auto-rows: max-content;
   justify-content: space-between;
+  align-content: space-between;
   column-gap: 20px;
 
   .key {

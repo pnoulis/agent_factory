@@ -3,18 +3,17 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { normalize as normalizeTeam } from "../team/normalize.js";
-import { normalize as normalizePackage } from "../package/normalize.js";
+import { Team } from "../team/Team.js";
 
 new Task("startTeam", Command);
 
 function Command(team, opts) {
-  const afm = this;
+  const afm = this || Command.afm;
   const promise = Command.createCommand(
     afm,
     {
       args: {
-        team: "tobject" in team ? team.tobject(2) : team,
+        team,
       },
       opts,
     },
@@ -38,13 +37,13 @@ Command.middleware = [
   attachBackendRegistrationRouteInfo,
   validateBackendRequest,
   async (ctx, next) => {
-    ctx.raw = await ctx.afm.backend.startTeam(ctx.req);
+    ctx.raw = await ctx.afm.adminScreen.startTeam(ctx.req);
     return next();
   },
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.team = normalizeTeam(ctx.raw.team);
+    ctx.res.team = Team.normalize(ctx.raw.team);
     return next();
   },
 ];

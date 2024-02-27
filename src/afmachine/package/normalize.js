@@ -54,7 +54,7 @@ function normalize(sources, options) {
         amount = t_stomin(_sources[i].duration);
         remainder =
           Date.now() - (target.t_start + t_stomls(_sources[i].duration));
-        remainder = remainder < 0 ? Math.floor(Math.abs(remainder)) : 0;
+        remainder = remainder < 0 ? Math.ceil(Math.abs(remainder)) : 0;
       } else {
         target.type = _sources[i].type;
         amount = _sources[i].amount;
@@ -87,7 +87,7 @@ function normalize(sources, options) {
         amount = t_stomin(_sources[i].duration);
         remainder =
           Date.now() - (target.t_start + t_stomls(_sources[i].duration));
-        remainder = remainder < 0 ? Math.floor(Math.abs(remainder)) : 0;
+        remainder = remainder < 0 ? Math.ceil(Math.abs(remainder)) : 0;
       } else {
         target.type = _sources[i].type || target.type;
         amount = _sources[i].amount;
@@ -100,6 +100,14 @@ function normalize(sources, options) {
     }
   }
 
+  if (options.stage2) {
+    if (target.t_end) {
+      target.state = "completed";
+    } else if (target.id) {
+      target.state = "registered";
+    }
+  }
+
   // stage 1
   if (_options.targetState) {
     target.state = _options.targetState;
@@ -109,67 +117,67 @@ function normalize(sources, options) {
     target.state ||= _options.defaultState;
   }
 
-  if (!_options.stage2) {
-    trace(target, "package.normalize() target");
-    return target;
-  }
+  // if (!_options.stage2) {
+  //   trace(target, "package.normalize() target");
+  //   return target;
+  // }
 
-  // stage 2
-  let misaligned = "";
-  switch (target.state) {
-    case "completed":
-      if (!target.t_end) {
-        misaligned = "Must have ended";
-      } else if (!target.t_start) {
-        misaligned = "Must have started";
-      } else if (!target.id) {
-        misaligned = "Must have been registered";
-      } else if (
-        !(target.amount && target.name && target.cost && target.type)
-      ) {
-        misaligned = "Missing properties";
-      }
-      break;
-    case "playing":
-      if (!target.t_start) {
-        misaligned = "Must have started";
-      } else if (target.t_end) {
-        misaligned = "Must not have ended";
-      }
-    // fall through
-    case "registered":
-      // remainder is not being checked on purpose.
-      if (!target.id) {
-        misaligned = "Must have been registered";
-      } else if (
-        !(target.amount && target.name && target.cost && target.type)
-      ) {
-        misaligned = "Missing properties";
-      }
-      break;
-    case "unregistered":
-      if (target.id) {
-        misaligned = "Must not have been registered";
-      }
-      break;
-    default:
-      throw globalThis.craterr(({ EPLAYER }) =>
-        EPLAYER({
-          msg: `Unrecognized package state: '${target.state}'`,
-          target,
-        }),
-      );
-  }
+  // // stage 2
+  // let misaligned = "";
+  // switch (target.state) {
+  //   case "completed":
+  //     if (!target.t_end) {
+  //       misaligned = "Must have ended";
+  //     } else if (!target.t_start) {
+  //       misaligned = "Must have started";
+  //     } else if (!target.id) {
+  //       misaligned = "Must have been registered";
+  //     } else if (
+  //       !(target.amount && target.name && target.cost && target.type)
+  //     ) {
+  //       misaligned = "Missing properties";
+  //     }
+  //     break;
+  //   case "playing":
+  //     if (!target.t_start) {
+  //       misaligned = "Must have started";
+  //     } else if (target.t_end) {
+  //       misaligned = "Must not have ended";
+  //     }
+  //   // fall through
+  //   case "registered":
+  //     // remainder is not being checked on purpose.
+  //     if (!target.id) {
+  //       misaligned = "Must have been registered";
+  //     } else if (
+  //       !(target.amount && target.name && target.cost && target.type)
+  //     ) {
+  //       misaligned = "Missing properties";
+  //     }
+  //     break;
+  //   case "unregistered":
+  //     if (target.id) {
+  //       misaligned = "Must not have been registered";
+  //     }
+  //     break;
+  //   default:
+  //     throw globalThis.craterr(({ EPLAYER }) =>
+  //       EPLAYER({
+  //         msg: `Unrecognized package state: '${target.state}'`,
+  //         target,
+  //       }),
+  //     );
+  // }
 
-  trace(target, "package.normalize() target");
-  if (misaligned) {
-    throw globalThis.craterr(({ EPACKAGE }) =>
-      EPACKAGE({
-        msg: `Misaligned package in '${target.state}' state: '${misaligned}'`,
-        target,
-      }),
-    );
-  }
+  // trace(target, "package.normalize() target");
+  // if (misaligned) {
+  //   throw globalThis.craterr(({ EPACKAGE }) =>
+  //     EPACKAGE({
+  //       msg: `Misaligned package in '${target.state}' state: '${misaligned}'`,
+  //       target,
+  //     }),
+  //   );
+  // }
   return target;
 }
 

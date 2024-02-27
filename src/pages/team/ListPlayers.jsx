@@ -1,6 +1,5 @@
 import { Overflow } from "#components/Overflow.jsx";
 import styled from "styled-components";
-import { Panel } from "#components/panel/Panel.jsx";
 import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
 import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";

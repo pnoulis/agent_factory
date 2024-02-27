@@ -56,7 +56,7 @@ const Page = styled("div")`
 const Content = styled("div")`
   width: 100%;
   height: 100%;
-  padding: 20px 40px 20px 40px;
+  padding: 20px 40px 0 40px;
 `;
 
 export { Component };

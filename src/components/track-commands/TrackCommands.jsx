@@ -36,7 +36,7 @@ function TrackCommands({ cmds: initial = [] }) {
   };
 
   return (
-    <ListCommands $topLeft>
+    <ListCommands>
       {cmdRefs.current.map((cmd, i) => (
         <Command
           key={i}

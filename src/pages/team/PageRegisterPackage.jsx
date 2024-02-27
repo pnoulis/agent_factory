@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Panel } from "#components/panel/Panel.jsx";
 import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
 import styled from "styled-components";
@@ -11,7 +10,7 @@ import { DataTuple } from "#components/tuple/DataTuple.jsx";
 import { Overflow } from "#components/Overflow.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
-import { team } from "/src/links.jsx";
+import { team as linkTeam } from "/src/links.jsx";
 import { ComboboxSelectPackage } from "#components/comboboxes/ComboboxSelectPackage.jsx";
 
 function Component() {
@@ -36,7 +35,7 @@ function Component() {
                   content="packages"
                   onClick={() =>
                     team.packages.length >= 1
-                      ? navigate(team(team.name).path)
+                      ? navigate(linkTeam(team.name).path)
                       : renderDialog(
                           <DialogAlertStandard
                             initialOpen

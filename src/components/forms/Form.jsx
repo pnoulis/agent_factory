@@ -18,7 +18,6 @@ function Form({
   React.useEffect(() => {
     if (!form.submitting) return;
     onSubmit?.({ ...form, setForm }, (err) => {
-      debug(err.code);
       if (err.code === ERR_CODES.EVALIDATION) {
         setForm("setErrors", err.cause.validationErrors);
       } else {

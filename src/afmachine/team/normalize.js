@@ -23,15 +23,8 @@ function normalize(sources, options) {
     points: null,
     state: null,
     isTemporary: false,
-    roster: flatRosters(sources).map((src) =>
-      Player.normalize(src, {
-        ...options.player,
-        wristband: options.wristband,
-      }),
-    ),
-    packages: flatPackages(sources).map((src) =>
-      Package.normalize(src, options.package),
-    ),
+    roster: [],
+    packages: [],
   };
 
   if (_options.nullSupersede) {
@@ -40,7 +33,11 @@ function normalize(sources, options) {
       target.t_created = _sources[i].t_created || _sources[i].created || null;
       target.points = _sources[i].points ?? _sources[i].totalPoints ?? null;
       target.isTemporary = _sources[i].isTemporary ?? null;
-      target.state = _sources[i].state?.name || _sources[i].state || null;
+      target.state =
+        _sources[i].state?.name ||
+        _sources[i].state ||
+        _sources[i].teamState ||
+        null;
     }
   } else {
     for (let i = 0; i < _sources.length; i++) {
@@ -51,7 +48,10 @@ function normalize(sources, options) {
         _sources[i].totalPoints ?? _sources[i].points ?? target.points;
       target.isTemporary = _sources[i].isTemporary ?? target.isTemporary;
       target.state =
-        _sources[i].state?.name || _sources[i].state || target.state;
+        _sources[i].state?.name ||
+        _sources[i].state ||
+        _sources[i].teamState ||
+        target.state;
     }
   }
 
@@ -71,8 +71,16 @@ function normalize(sources, options) {
   }
 
   // stage 2
-  // stage 2 is too much work for Team.
-
+  target.roster = flatRosters(sources).map((src) =>
+    Player.normalize(src, {
+      state: target.state === "playing" ? "playing" : "inTeam",
+      ...options.player,
+      wristband: options.wristband,
+    }),
+  );
+  target.packages = flatPackages(sources).map((src) =>
+    Package.normalize(src, options.package),
+  );
   trace(target, "team.normalize() target");
   return target;
 }

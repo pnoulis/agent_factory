@@ -18,10 +18,12 @@ import { teamReact } from "#afm/team/TeamReact.jsx";
 import { MAX_ROSTER_SIZE } from "../../constants.js";
 import { getGrouPartyDistribution } from "#components/dialogs/inputs/getGrouPartyDistribution.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { renderDialogPromise } from "#components/dialogs/renderDialogPromise.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { AlertSuccessfullGrouPartyMerge } from "../../components/dialogs/alerts/AlertSuccessfullGrouPartyMerge.jsx";
 import { Overflow } from "#components/Overflow.jsx";
 import { confirmRegisterGrouParty } from "#components/dialogs/confirms/confirmRegisterGrouParty.jsx";
+import { useNavigate } from "react-router-dom";
 
 const createTeam = (team) =>
   new GrouPartyTeam(
@@ -34,9 +36,15 @@ const createPlayer = (player, wristband) =>
   new GrouPartyPlayer(player, new GrouPartyWristband(wristband));
 
 function Component() {
+  const navigate = useNavigate();
   const { queue, setQueue, enqueue, dequeue, pairWristband, unpairWristband } =
     useRegistrationQueue();
   const gpRef = React.useRef([]);
+
+  const newGrouParty = () => {
+    dequeue(...queue);
+    gpRef.current = [];
+  };
 
   const addTeam = () => {
     const team = createTeam().fill(null, {
@@ -146,17 +154,23 @@ function Component() {
         <DialogAlertStandard
           initialOpen
           heading="merge group party"
-          msg="No ready teams!"
+          msg="Group party is not ready!"
         />,
       );
     }
-    alert("i will register");
-    // try {
-    //   registered = await Promise.all(ready.map((team) => team.register()));
-    // } catch (err) {
-    // } finally {
-    //   renderDialog(<AlertSuccessfullGrouPartyMerge teams={registered} />);
-    // }
+
+    let registered;
+    try {
+      registered = await Promise.all(ready.map((team) => team.register()));
+    } catch (err) {
+    } finally {
+      await renderDialogPromise(
+        <AlertSuccessfullGrouPartyMerge teams={registered} />,
+      );
+      if (registered.length === gpRef.current.length) {
+        newGrouParty();
+      }
+    }
   }
 
   return (
@@ -196,6 +210,7 @@ function Component() {
                 color="var(--primary-base)"
                 fill="white"
                 content="new group party"
+                onClick={newGrouParty}
               />
             </ThisPanelNavbar>
           </PanelActionbar>

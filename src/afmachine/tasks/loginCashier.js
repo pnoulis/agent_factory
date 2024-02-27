@@ -25,7 +25,7 @@ Command.verb = "login cashier";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
-      username: ctx.args.cashier.username?.toUpperCase(),
+      username: ctx.args.cashier.username,
       password: ctx.args.password,
     };
     return next();

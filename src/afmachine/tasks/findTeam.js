@@ -1,6 +1,5 @@
 import { Task } from "../Task.js";
 import { Team } from "../team/Team.js";
-import { parsecmd } from "../parsecmd.js";
 
 new Task("findTeam", Command);
 
@@ -18,15 +17,21 @@ function Command(team, opts) {
 Command.verb = "find team";
 Command.middleware = [
   async (ctx, next) => {
-    const { teams } = await parsecmd(ctx.afm.listTeams({ queue: false }));
-    const team =
-      teams.find((team) => team.name === ctx.args.team?.name) || null;
+    const cmd = await ctx.afm.listTeams({ queue: false });
+    ctx.raw =
+      cmd.raw.teams.find((team) => team.name === ctx.args.team?.name) || null;
+    const team = Team.normalize(ctx.raw, {
+      stage2: true,
+      package: { stage2: true },
+      wristband: { stage2: true },
+    });
     ctx.res.team = team;
-    if (!team) {
+    if (!ctx.res.team) {
       throw globalThis.craterr(({ ETEAM }) =>
         ETEAM(`Missing team: '${ctx.args.team?.name}'`),
       );
     }
+
     // Is it temporary?
     if (!team.roster.length) {
       // If the team has no roster it does not matter if
@@ -34,14 +39,13 @@ Command.middleware = [
       team.isTemporary = true;
       return next();
     }
-
-    const { players } = await parsecmd(
-      ctx.afm.searchPlayer(team.roster.at(0).username, { queue: false }),
-    );
+    const { players } = await ctx.afm
+      .searchPlayer(team.roster.at(0).username, { queue: false })
+      .parse();
 
     // A temporary player is not returned by searchPlayer,
-    // therefore the team is a group team.
-    team.isTemporary = !players.length;
+    // therefore the team is temporary
+    team.isTemporary = !players?.length;
     return next();
   },
 ];

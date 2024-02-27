@@ -3,11 +3,17 @@ import { defer, Await, useLoaderData } from "react-router-dom";
 import { getafm } from "/src/getafm.js";
 import { parsecmd } from "#afm/parsecmd.js";
 import { Pending } from "#components/await-command/Pending2.jsx";
+import { smallid } from "js_utils/uuid";
 
 const loadTeam = ({ params }) => {
   return defer({
     team: getafm(false).then((afm) =>
-      parsecmd(afm.findTeam({ name: params.teamname }, { queue: false })),
+      parsecmd(afm.findTeam({ name: params.teamname }, { queue: false })).then(
+        ({ team }) => ({
+          team,
+          id: smallid(),
+        }),
+      ),
     ),
   });
 };

@@ -78,6 +78,7 @@ const loadTeams = (props) => {
       id: smallid(),
       teams: res.teams.map((team) => {
         const activePkg = team.packages.find((pkg) => pkg.state === "playing");
+        debug(activePkg, 'ACTIVE PKG');
         team.activePkg = activePkg;
         return team;
       }),

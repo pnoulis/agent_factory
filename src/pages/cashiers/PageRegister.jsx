@@ -3,36 +3,39 @@ import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
 import { WidgetBack } from "#components/widgets/WidgetBack.jsx";
 import { useNavigate } from "react-router-dom";
-import { AwaitCommand } from "#components/await-command/AwaitCommand.jsx";
-import { cashiers } from "/src/links.jsx";
-import { FollowState } from "#components/await-command/FollowState.jsx";
 import styled from "styled-components";
 import { registerCashier } from "/src/controllers/registerCashier.jsx";
+import { cashiers as linkCashiers } from "/src/links.jsx";
+import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
 
 function Component() {
   const navigate = useNavigate();
 
   return (
-    <Page className="page-cashier-register">
-      <PanelActionbar>
-        <PanelNavbar style={{ justifyContent: "end" }}>
-          <WidgetBack
-            color="var(--primary-base)"
-            fill="white"
-            onClick={() => navigate(-1)}
-          />
-        </PanelNavbar>
-      </PanelActionbar>
-      <FollowState cmd={afm.registerCashier}>
+    <ViewCommand noRejected noFulfilled cmd={afm.registerCashier}>
+      <Page className="page-cashier-register">
+        <PanelActionbar>
+          <PanelNavbar style={{ justifyContent: "end" }}>
+            <WidgetBack
+              color="var(--primary-base)"
+              fill="white"
+              onClick={() => navigate(linkCashiers.path)}
+            />
+          </PanelNavbar>
+        </PanelActionbar>
         <Content className="content-cashier-register">
           <FormRegisterCashier
-            onSubmit={({ fields }, onError) => {
-              registerCashier(navigate, fields).catch(onError);
+            onSubmit={({ fields, setForm }, onError) => {
+              registerCashier(navigate, fields)
+                .catch(onError)
+                .catch(() => {
+                  setForm("reset");
+                });
             }}
           />
         </Content>
-      </FollowState>
-    </Page>
+      </Page>
+    </ViewCommand>
   );
 }
 

@@ -58,6 +58,7 @@ const ListOptions = styled(Combobox.Listbox)`
   margin-top: 15px;
   border-radius: var(--br-lg);
   outline: none;
+  scrollbar-width: none;
   overflow-y: auto;
   overflow-x: none;
   display: flex;
@@ -68,13 +69,11 @@ const ListOptions = styled(Combobox.Listbox)`
   max-height: 300px;
   font-size: var(--tx-sm);
   gap: 15px;
-  scrollbar-gutter: stable both-edges;
   text-align: center;
   background-color: var(--grey-light);
 `;
 
 const Option = styled(Combobox.Option)`
-  padding: 2px 15px;
   cursor: pointer;
   background-color: ${({ active, selected }) =>
     selected && active

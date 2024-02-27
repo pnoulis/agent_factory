@@ -71,7 +71,7 @@ const ListOptions = styled(Combobox.Listbox)`
   width: 700px;
   font-size: var(--tx-nl);
   gap: 15px;
-  scrollbar-gutter: stable both-edges;
+  scrollbar-width: none;
   text-align: center;
   background-color: var(--grey-light);
   border-radius: var(--br-lg);

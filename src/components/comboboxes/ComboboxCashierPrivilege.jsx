@@ -11,7 +11,7 @@ function ComboboxCashierPrivilege({ onSelect }) {
       onSelect={onSelect}
     >
       <Wrapper>
-        <Combobox.Trigger placeholder=''/>
+        <Combobox.Trigger placeholder="" />
         <label id="cashier-role-label" htmlFor="cashier-role-trigger">
           cashier role
         </label>
@@ -26,7 +26,7 @@ const Wrapper = styled("div")`
   all: unset;
   display: block;
   box-sizing: border-box;
-cursor: pointer;
+  cursor: pointer;
 
   // content
   // dimensions
@@ -155,7 +155,7 @@ const ListOptions = styled(Combobox.Listbox)`
   max-height: 300px;
   font-size: var(--tx-nl);
   gap: 15px;
-  scrollbar-gutter: stable both-edges;
+  scrollbar-width: none;
   text-align: center;
   background-color: var(--grey-light);
 `;

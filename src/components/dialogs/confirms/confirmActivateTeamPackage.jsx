@@ -1,7 +1,7 @@
 import { DialogConfirmStandard } from "./DialogConfirmStandard.jsx";
 import { renderDialog } from "../renderDialog.jsx";
 
-function confirmAddTeamPackage(pkgname) {
+function confirmActivateTeamPackage() {
   return new Promise((resolve, reject) => {
     try {
       renderDialog(
@@ -10,7 +10,7 @@ function confirmAddTeamPackage(pkgname) {
           heading="Team package"
           onClose={resolve}
         >
-          Register new team package?
+          Start team package?
         </DialogConfirmStandard>,
       );
     } catch (err) {
@@ -19,4 +19,4 @@ function confirmAddTeamPackage(pkgname) {
   });
 }
 
-export { confirmAddTeamPackage };
+export { confirmActivateTeamPackage };

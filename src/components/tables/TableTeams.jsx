@@ -25,57 +25,50 @@ function TableTeams({ teams, onSelectionChange, onRowClick }) {
             return src.roster?.length;
           },
         },
-        points: {
-          name: "points",
-          label: "points",
-          gval: function (src) {
-            return src.points;
-          },
-        },
         packages: {
           name: "packages",
-          label: "total packages",
+          label: "packages",
           gval: function (src) {
             return src.packages.length;
           },
         },
-        totalPkgsCost: {
-          name: "totalPkgsCost",
-          label: "total packages cost",
-          gval: function (src) {
-            let cost = 0;
-            for (let i = 0; i < src.packages.length; i++) {
-              cost += src.packages[i].cost;
-            }
-            return Math.floor(cost) + " euro";
-          },
-        },
+        /* totalPkgsCost: { */
+        /*   name: "totalPkgsCost", */
+        /*   label: "total cost", */
+        /*   gval: function (src) { */
+        /*     let cost = 0; */
+        /*     for (let i = 0; i < src.packages.length; i++) { */
+        /*       cost += src.packages[i].cost; */
+        /*     } */
+        /*     return Math.floor(cost) + " euro"; */
+        /*   }, */
+        /* }, */
+        /* activePkgCost: { */
+        /*   name: "activePkgCost", */
+        /*   label: "cost", */
+        /*   gval: function (src) { */
+        /*     if (!src.activePkg) return ""; */
+        /*     return Math.floor(src.activePkg?.cost) + " euro"; */
+        /*   }, */
+        /* }, */
         activePkgType: {
           name: "activePkgType",
           label: "active package type",
           gval: function (src) {
-            return src.activePackage?.type;
-          },
-        },
-        activePkgCost: {
-          name: "activePkgCost",
-          label: "active package cost",
-          gval: function (src) {
-            if (!src.activePackage) return "";
-            return Math.floor(src.activePackage?.cost) + " euro";
+            return src.activePkg?.type;
           },
         },
         activePkgAmount: {
           name: "activePkgAmount",
           label: "active package amount",
           gval: function (src) {
-            const apkg = src.activePackage;
+            const apkg = src.activePkg;
             if (!apkg) {
               return "";
             } else if (apkg.type === "mission") {
               return apkg.amount + " missions";
             } else if (apkg.type === "time") {
-              return Math.ceil(t_stomin(t_stomls(apkg.amount, true))) + " min";
+              return apkg.amount + " min";
             } else {
               throw new Error(`Unrecognized package type: ${apkg.type}`);
             }
@@ -85,13 +78,15 @@ function TableTeams({ teams, onSelectionChange, onRowClick }) {
           name: "activePkgRemainder",
           label: "active package remainder",
           gval: function (src) {
-            const apkg = src.activePackage;
+            const apkg = src.activePkg;
             if (!apkg) {
               return "";
             } else if (apkg.type === "mission") {
               return apkg.amount + " missions";
             } else if (apkg.type === "time") {
-              return Math.ceil(t_stomin(t_stomls(apkg.amount, true))) + " min";
+              return (
+                Math.ceil(t_stomin(t_stomls(apkg.remainder, true))) + " min"
+              );
             } else {
               throw new Error(`Unrecognized package type: ${apkg.type}`);
             }
@@ -101,12 +96,19 @@ function TableTeams({ teams, onSelectionChange, onRowClick }) {
           name: "activePkgTimeStart",
           label: "active package start time",
           gval: function (src) {
-            const apkg = src.activePackage;
+            const apkg = src.activePkg;
             if (!apkg) {
               return "";
             }
             const { hour, minute, second, literal } = formatTime(apkg.t_start);
             return `${hour}${literal}${minute}${literal}${second}`;
+          },
+        },
+        points: {
+          name: "points",
+          label: "points",
+          gval: function (src) {
+            return src.points;
           },
         },
       }}

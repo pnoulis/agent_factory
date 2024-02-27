@@ -36,6 +36,7 @@ import { GrouPartyTeam } from "#afm/grouparty/GrouPartyTeam.js";
 import { GrouPartyPlayer } from "#afm/grouparty/GrouPartyPlayer.js";
 import { GrouPartyWristband } from "#afm/grouparty/GrouPartyWristband.js";
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
+import { AlertSuccessfullGrouPartyMerge } from "../../components/dialogs/alerts/AlertSuccessfullGrouPartyMerge";
 
 const createTeam = (team) =>
   new GrouPartyTeam(
@@ -53,69 +54,16 @@ function PageScratch() {
         <AwaitAfmachine>
           {() => (
             <>
-              <ViewCommand
-                cmd={afm.test}
-                delay={2000}
-                onPending={(cmd) => {
-                  return renderDialogPromise(
-                    <DialogAlertStandard
-                      initialOpen
-                      heading={cmd.taskname}
-                      msg={cmd.msg}
-                    />,
-                  );
-                }}
-                onFulfilled={(cmd) => {
-                  return renderDialogPromise(
-                    <DialogAlertStandard
-                      initialOpen
-                      heading={cmd.taskname}
-                      msg={cmd.msg}
-                    />,
-                  );
-                }}
-                onRejected={(cmd) => {
-                  return renderDialogPromise(
-                    <DialogAlertStandard
-                      initialOpen
-                      heading={cmd.taskname}
-                      msg={cmd.msg}
-                    />,
-                  );
-                }}
-                onSettled={(cmd) => {
-                  return renderDialogPromise(
-                    <DialogAlertStandard
-                      initialOpen
-                      heading={cmd.taskname}
-                      msg={"settled"}
-                    />,
+              <button
+                onClick={() => {
+                  alert("click");
+                  renderDialog(
+                    <AlertSuccessfullGrouPartyMerge teams={[{ name: "on" }]} />,
                   );
                 }}
               >
-                <br />
-                <button
-                  onClick={() => {
-                    afm
-                      .test({ fail: true })
-                      .then(() => {
-                        alert("resolved");
-                      })
-                      .catch(() => {
-                        alert("rejected");
-                      })
-                      .finally(() => {
-                        alert("finally");
-                      });
-                  }}
-                >
-                  test
-                </button>
-                <br />
-                <button onClick={() => alert("yolo")}>
-                  check pointer events
-                </button>
-              </ViewCommand>
+                show grou party
+              </button>
             </>
           )}
         </AwaitAfmachine>

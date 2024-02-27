@@ -1,63 +1,79 @@
-import { confirmDeregisterCashier } from "#components/dialogs/confirms/confirmDeregisterCashier.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { Panel } from "#components/panel/Panel.jsx";
 import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
 import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
 import { WidgetRemove } from "#components/widgets/WidgetRemove.jsx";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useRevalidator } from "react-router-dom";
 import styled from "styled-components";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { deregisterCashiers } from "/src/controllers/deregisterCashiers.jsx";
-import { FollowState } from "#components/await-command/FollowState.jsx";
 import { AwaitCashiers } from "/src/loaders/loadCashiers.jsx";
 import { TableCashiers } from "#components/tables/TableCashiers.jsx";
+import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
 
 function Component() {
   const navigate = useNavigate();
   const selectedCashiersRef = React.useRef([]);
+  const revalidator = useRevalidator();
 
   return (
-    <Page className="page">
-      <PanelActionbar>
-        <ThisPanelNavbar>
-          <WidgetRemove
-            color="var(--primary-base)"
-            fill="white"
-            content="remove cashier"
-            onClick={() => deregisterCashiers(selectedCashiersRef.current)}
-          />
-          <WidgetAdd
-            onClick={(e) => navigate("register")}
-            color="var(--primary-base)"
-            fill="white"
-            content="new cashier"
-          />
-        </ThisPanelNavbar>
-      </PanelActionbar>
-      <Content className="content">
-        <FollowState revalidate cmd={afm.deregisterCashier}>
-          <AwaitCashiers>
-            {({ cashiers, id }) => (
-              <TableCashiers
-                key={id}
-                cashiers={cashiers}
-                onSelectionChange={(selection) => {
-                  selectedCashiersRef.current = selection;
-                }}
-              />
-            )}
-          </AwaitCashiers>
-        </FollowState>
-      </Content>
-    </Page>
+    <ViewCommand
+      onFulfilled={() => {
+        revalidator.revalidate();
+      }}
+      onSettled={(cmd) => {
+        renderDialog(
+          <DialogAlertStandard initialOpen heading={cmd.verb} msg={cmd.msg} />,
+        );
+      }}
+      noRejected
+      noFulfilled
+      cmd={afm.deregisterCashier}
+    >
+      <Page className="page-cashiers">
+        <AwaitCashiers>
+          {({ cashiers, id }) => (
+            <>
+              <PanelActionbar>
+                <ThisPanelNavbar>
+                  <WidgetRemove
+                    color="var(--primary-base)"
+                    fill="white"
+                    content="remove cashier"
+                    onClick={() =>
+                      deregisterCashiers(selectedCashiersRef.current)
+                    }
+                  />
+                  <WidgetAdd
+                    onClick={(e) => navigate("register")}
+                    color="var(--primary-base)"
+                    fill="white"
+                    content="new cashier"
+                  />
+                </ThisPanelNavbar>
+              </PanelActionbar>
+              <Content>
+                <TableCashiers
+                  key={id}
+                  cashiers={cashiers}
+                  onSelectionChange={(selection) => {
+                    selectedCashiersRef.current = selection;
+                  }}
+                />
+              </Content>
+            </>
+          )}
+        </AwaitCashiers>
+      </Page>
+    </ViewCommand>
   );
 }
 
 const Page = styled("div")`
   width: 100%;
   height: 100%;
+  padding: 20px;
 `;
 const Content = styled("div")`
   width: 100%;
