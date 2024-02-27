@@ -251,7 +251,7 @@ resolve_afadmin_client_url() {
   echo "AFADMIN_CLIENT_URL_PUBLIC...|$AFADMIN_CLIENT_URL_PUBLIC"
 
   # local
-  read -r scheme user pass hostname port < <(parseUrl "$AFADMIN_CLIENT_URL_LOCAL")
+  read -r scheme user pass hostname port basename < <(parseUrl "$AFADMIN_CLIENT_URL_LOCAL")
   if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
     error 'afadmin client local url missing either scheme, hostname or port'
   fi

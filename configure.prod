@@ -2,5 +2,32 @@
 
 ./configure --mode=production
 
+mode=production
+node_env=production
+skip_npm_install=true
+installdirs_preset=gnu_prefix
+buildir_stem=build
+loglevel=debug
+client_url='http://afserver.local:80/administration'
+server_url='mqtt://afserver.local:9001/themaze'
+mysqldb_url='mysql://root:root@localhost:3308/agent_factory'
+device_admin_screen_id='001'
+device_rpi_reader_id='ADMINISTRATION1Reader'
 
-            
+args="--mode=$mode \
+--node-env=$node_env \
+--with-installdirs-preset=$installdirs_preset \
+--buildir-stem=$buildir_stem \
+--loglevel=$loglevel \
+--afadmin-client-url-local=$client_url \
+--afadmin-server-url=$server_url \
+--afadmin-mysqldb-url=$mysqldb_url \
+--device-admin-screen-id=$device_admin_screen_id
+--device-rpi-reader-id=$device_rpi_reader_id
+"
+
+if [ "${1:-}" != '--dont-skip-npm-install' ]; then
+  args+=" --skip-npm-install"
+fi
+
+./configure $args

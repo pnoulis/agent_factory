@@ -94,6 +94,8 @@ buildclean: | $(buildir_abs)
 # Deploy
 ##################################################
 deploy:
+# -ssh Mindtrap@afserver.local 'rmdir /s /q C:\laragon\www\administration'
+# @scp -C -r ./build Mindtrap@afserver.local:C:/laragon/www/administration
 	rsync -r $(buildir) /mnt/c/laragon/www
 
 ##################################################

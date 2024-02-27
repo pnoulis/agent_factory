@@ -177,7 +177,7 @@ const router = createBrowserRouter(
     //   element: <PageScratch />,
     // },
   ],
-  { basename: ENV.BASENAME },
+  { basename: "/" + ENV.BASENAME },
 );
 
 export { Router };
