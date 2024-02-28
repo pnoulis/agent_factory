@@ -237,17 +237,18 @@ resolve_afadmin_client_url() {
   if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
     error 'afadmin client public url missing either scheme, hostname or port'
   fi
+  echo 'basename:' $basename
   declare -gx AFADMIN_CLIENT_URL_PUBLIC_SCHEME="$scheme"
   echo "AFADMIN_CLIENT_URL_PUBLIC_SCHEME...|$AFADMIN_CLIENT_URL_PUBLIC_SCHEME"
   declare -gx AFADMIN_CLIENT_URL_PUBLIC_PORT="$port"
   echo "AFADMIN_CLIENT_URL_PUBLIC_PORT...|$AFADMIN_CLIENT_URL_PUBLIC_PORT"
   declare -gx AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME="$hostname"
   echo "AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME...|$AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME"
-  declare -gx AFADMIN_CLIENT_URL_PUBLIC_BASENAME="$basename"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_BASENAME="${basename:+/$basename}"
   echo "AFADMIN_CLIENT_URL_PUBLIC_BASENAME...|$AFADMIN_CLIENT_URL_PUBLIC_BASENAME"
   declare -gx AFADMIN_CLIENT_URL_PUBLIC_ORIGIN="${scheme}"://"${hostname}":"${port}"
   echo "AFADMIN_CLIENT_URL_PUBLIC_ORIGIN...|$AFADMIN_CLIENT_URL_PUBLIC_ORIGIN"
-  declare -gx AFADMIN_CLIENT_URL_PUBLIC="${scheme}"://"${hostname}":"${port}/${basename}"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC="${scheme}"://"${hostname}":"${port}""${basename:+/$basename}"
   echo "AFADMIN_CLIENT_URL_PUBLIC...|$AFADMIN_CLIENT_URL_PUBLIC"
 
   # local
@@ -280,13 +281,13 @@ resolve_afadmin_server_url() {
   echo "AFADMIN_SERVER_URL_PORT...|$AFADMIN_SERVER_URL_PORT"
   declare -gx AFADMIN_SERVER_URL_HOSTNAME="$hostname"
   echo "AFADMIN_SERVER_URL_HOSTNAME...|$AFADMIN_SERVER_URL_HOSTNAME"
-  declare -gx AFADMIN_SERVER_URL_BASENAME="$basename"
+  declare -gx AFADMIN_SERVER_URL_BASENAME="${basename:+/$basename}"
   echo "AFADMIN_SERVER_URL_BASENAME...|$AFADMIN_SERVER_URL_BASENAME"
   declare -gx AFADMIN_SERVER_URL_ORIGIN="${scheme}"://"${hostname}":"${port}"
   echo "AFADMIN_SERVER_URL_ORIGIN...|$AFADMIN_SERVER_URL_ORIGIN"
   declare -gx AFADMIN_SERVER_URL_ORIGIN_WS="ws://${hostname}:${port}"
   echo "AFADMIN_SERVER_URL_ORIGIN_WS...|$AFADMIN_SERVER_URL_ORIGIN_WS"
-  declare -gx AFADMIN_SERVER_URL="${scheme}"://"${hostname}":"${port}/${basename}"
+  declare -gx AFADMIN_SERVER_URL="${scheme}"://"${hostname}":"${port}""${basename:+/$basename}"
   echo "AFADMIN_SERVER_URL...|$AFADMIN_SERVER_URL"
 }
 
@@ -307,7 +308,7 @@ resolve_afadmin_mysqldb_url() {
   echo "AFADMIN_MYSQLDB_URL_PORT...|$AFADMIN_MYSQLDB_URL_PORT"
   declare -gx AFADMIN_MYSQLDB_URL_HOSTNAME="$hostname"
   echo "AFADMIN_MYSQLDB_URL_HOSTNAME...|$AFADMIN_MYSQLDB_URL_HOSTNAME"
-  declare -gx AFADMIN_MYSQLDB_URL_BASENAME="$basename"
+  declare -gx AFADMIN_MYSQLDB_URL_BASENAME="/$basename"
   echo "AFADMIN_MYSQLDB_URL_BASENAME...|$AFADMIN_MYSQLDB_URL_BASENAME"
   declare -gx AFADMIN_MYSQLDB_URL_ORIGIN="${scheme}"://"${user}:${pass}@${hostname}":"${port}"
   echo "AFADMIN_MYSQLDB_URL_ORIGIN...|$AFADMIN_MYSQLDB_URL_ORIGIN"
