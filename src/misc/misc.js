@@ -1,7 +1,7 @@
 import { isString } from "js_utils/misc";
 import { random as randomPlayer } from "../afmachine/player/random.js";
-import { smallid, uuid } from "js_utils/uuid";
-import { MIN_ROSTER_SIZE } from "../constants.js";
+import { smallid } from "js_utils/uuid";
+import { MAX_ROSTER_SIZE, MIN_ROSTER_SIZE } from "../constants.js";
 
 function mergec(...classes) {
   let _class = "";
@@ -135,6 +135,10 @@ function removeIndex(arr, index) {
 function distributePlayers(players, ratio) {
   players ||= 0;
   ratio ||= MIN_ROSTER_SIZE;
+
+  if (ratio > MAX_ROSTER_SIZE) {
+    ratio = MAX_ROSTER_SIZE;
+  }
   // How many teams of _ratio_ can be made out of _players_
   let teamsOfRatio = Math.floor(Math.abs(players / ratio));
   // When ratio > players, then _teamsOfRatio_ is 0.
