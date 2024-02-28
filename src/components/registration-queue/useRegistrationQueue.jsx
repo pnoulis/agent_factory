@@ -4,21 +4,24 @@ import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { confirmUnpairWristband } from "../dialogs/confirms/confirmUnpairWristband";
 
 function nextPlayer(queue) {
-  let next;
   debug(queue, "NEXT PLAYER");
   for (let i = 0; i < queue.length; i++) {
-    if (
-      queue[i].wristband.inState("pairing") ||
-      queue[i].wristband.inState("unpairing")
-    ) {
-      debug("noet found");
-      return null;
-    }
-    debug(queue[i]);
-    debug("found");
-    next ||= queue[i].wristband.inState("unpaired") && queue[i];
+    if (queue[i].wristband.inState("unpaired")) return queue[i];
   }
-  return next;
+  return null;
+  // for (let i = 0; i < queue.length; i++) {
+  //   if (
+  //     queue[i].wristband.inState("pairing") ||
+  //     queue[i].wristband.inState("unpairing")
+  //   ) {
+  //     debug("noet found");
+  //     return null;
+  //   }
+  //   debug(queue[i]);
+  //   debug("found");
+  //   next ||= queue[i].wristband.inState("unpaired") && queue[i];
+  // }
+  // return next;
 }
 
 function useRegistrationQueue(players) {
@@ -135,7 +138,15 @@ function useRegistrationQueue(players) {
     };
   }, []);
 
-  return { queue, setQueue, enqueue, dequeue, pairWristband, unpairWristband };
+  return {
+    queue,
+    setQueue,
+    nextPlayer,
+    enqueue,
+    dequeue,
+    pairWristband,
+    unpairWristband,
+  };
 }
 
 export { useRegistrationQueue };

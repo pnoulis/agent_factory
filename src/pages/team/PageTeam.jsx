@@ -18,6 +18,7 @@ import { PairWristbands } from "./PairWristbands.jsx";
 import { AwaitTeam } from "/src/loaders/loadTeam.jsx";
 import { DataTuple } from "#components/tuple/DataTuple.jsx";
 import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";
+import { WidgetLock } from "#components/widgets/WidgetLock.jsx";
 import { SquizzedPlayerInfoCard } from "#components/player/SquizzedPlayerInfoCard.jsx";
 import { Overflow } from "#components/Overflow.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
@@ -26,9 +27,25 @@ import { confirmAddTeamPackage } from "#components/dialogs/confirms/confirmAddTe
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
 import { confirmRemoveteamPackage } from "#components/dialogs/confirms/confirmRemoveTeamPackage.jsx";
 import { confirmActivateTeamPackage } from "#components/dialogs/confirms/confirmActivateTeamPackage.jsx";
+import dayjs from "dayjs";
 
 const isPackageRoute = (location) =>
   new RegExp(teamPackage.path).test(location.pathname);
+
+const today = dayjs().startOf("day");
+
+const isTodaysTeam = (team) => team.t_created > today;
+
+const blockInactiveTeam = (team, action) =>
+  isTodaysTeam(team)
+    ? Promise.resolve(false)
+    : renderDialogPromise(
+        <DialogAlertStandard
+          initialOpen
+          heading={action}
+          msg="Cannot update inactive teams"
+        />,
+      ).then(() => true);
 
 function Component() {
   const navigate = useNavigate();
@@ -42,7 +59,9 @@ function Component() {
   const getTeam = () => tt.team.then(({ team }) => team);
   const registerPackage = async () => {
     const team = await getTeam();
-    if (!selectedPkg.name) {
+    if (await blockInactiveTeam(team, "register package")) {
+      return;
+    } else if (!selectedPkg.name) {
       return renderDialogPromise(
         <DialogAlertStandard
           initialOpen
@@ -75,6 +94,20 @@ function Component() {
           msg="Registered package exists already"
         />,
       );
+    } else if (
+      team.roster.filter(
+        (player) =>
+          player.wristband.inState?.("paired") ||
+          player.wristband.state === "paired",
+      ).length !== team.roster.length
+    ) {
+      return renderDialogPromise(
+        <DialogAlertStandard
+          initialOpen
+          heading="register package"
+          msg="Team players missing wristbands"
+        />,
+      );
     }
     if (await confirmAddTeamPackage()) {
       await afm.addTeamPackage(team, selectedPkg);
@@ -84,7 +117,12 @@ function Component() {
     }
   };
   const activatePackage = async () => {
-    if (!teamRef.current.packages.find((pkg) => pkg.state === "registered")) {
+    const team = await getTeam();
+    if (await blockInactiveTeam(team, "start team")) {
+      return;
+    } else if (
+      !teamRef.current.packages.find((pkg) => pkg.state === "registered")
+    ) {
       return renderDialog(
         <DialogAlertStandard
           initialOpen
@@ -95,11 +133,13 @@ function Component() {
     }
     if (await confirmActivateTeamPackage()) {
       afm.startTeam(teamRef.current);
-      // navigate(linkTeam(teamRef.current.name).path, { replace: true });
     }
   };
   const removePackage = async () => {
-    if (!selectedPkg.name) {
+    const team = await getTeam();
+    if (await blockInactiveTeam(team, "remove package")) {
+      return;
+    } else if (!selectedPkg.name) {
       return renderDialogPromise(
         <DialogAlertStandard
           initialOpen
@@ -121,9 +161,16 @@ function Component() {
       navigate(linkTeam(teamRef.current.name).path, { replace: true });
     }
   };
-  const addPackage = () => {
-    setSelectedPkg({});
-    navigate(teamPackage.path, { relative: true });
+  const addPackage = async () => {
+    const team = await getTeam();
+    if (await blockInactiveTeam(team, "add package")) {
+      return;
+    } else {
+      {
+        setSelectedPkg({});
+        navigate(teamPackage.path, { relative: true });
+      }
+    }
   };
 
   return (
@@ -185,6 +232,16 @@ function Component() {
                     <Panel className="panel-team">
                       <PanelActionbar>
                         <ThisPanelNavbar>
+                          <WidgetLock
+                            locked={!isTodaysTeam(team)}
+                            content={
+                              isTodaysTeam(team)
+                                ? "todays team"
+                                : "inactive team"
+                            }
+                            fill="black"
+                            style={{ marginRight: "auto" }}
+                          />
                           <TeamName>
                             <DataTuple nok src={team} name="name" />
                           </TeamName>
@@ -210,8 +267,15 @@ function Component() {
                                       ? "roster"
                                       : "pair wristbands"
                                   }
-                                  onClick={() => {
-                                    if (team.isTemporary) {
+                                  onClick={async () => {
+                                    if (
+                                      await blockInactiveTeam(
+                                        team,
+                                        "pair wristbands",
+                                      )
+                                    ) {
+                                      return;
+                                    } else if (team.isTemporary) {
                                       return renderDialog(
                                         <DialogAlertStandard
                                           initialOpen
@@ -219,8 +283,9 @@ function Component() {
                                           msg="Group party teams cannot change their roster"
                                         />,
                                       );
+                                    } else {
+                                      setPairWristbands((prev) => !prev);
                                     }
-                                    setPairWristbands((prev) => !prev);
                                   }}
                                 />
                               </PanelNavbar>

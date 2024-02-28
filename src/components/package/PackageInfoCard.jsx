@@ -15,7 +15,7 @@ const parseTime = (src, v, name) => {
 
 const parseRemainder = (src, v, name) => {
   if (src.type === "mission") {
-    return src.amount + " missions";
+    return src.remainder + " missions";
   } else if (src.type === "time") {
     return Math.ceil(t_stomin(t_stomls(src.remainder, true))) + " min";
   } else {

@@ -19,6 +19,7 @@ const time = {
     : dayjs().startOf("week"),
   month: dayjs().startOf("M"),
   year: dayjs().startOf("y"),
+  all: 0,
 };
 
 const loadTeams = (props) => {
@@ -78,7 +79,7 @@ const loadTeams = (props) => {
       id: smallid(),
       teams: res.teams.map((team) => {
         const activePkg = team.packages.find((pkg) => pkg.state === "playing");
-        debug(activePkg, 'ACTIVE PKG');
+        debug(activePkg, "ACTIVE PKG");
         team.activePkg = activePkg;
         return team;
       }),

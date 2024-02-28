@@ -82,7 +82,7 @@ function TableTeams({ teams, onSelectionChange, onRowClick }) {
             if (!apkg) {
               return "";
             } else if (apkg.type === "mission") {
-              return apkg.amount + " missions";
+              return apkg.remainder + " missions";
             } else if (apkg.type === "time") {
               return (
                 Math.ceil(t_stomin(t_stomls(apkg.remainder, true))) + " min"

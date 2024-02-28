@@ -23,7 +23,7 @@ import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStand
 import { AlertSuccessfullGrouPartyMerge } from "../../components/dialogs/alerts/AlertSuccessfullGrouPartyMerge.jsx";
 import { Overflow } from "#components/Overflow.jsx";
 import { confirmRegisterGrouParty } from "#components/dialogs/confirms/confirmRegisterGrouParty.jsx";
-import { useNavigate } from "react-router-dom";
+import { team as teamController } from "/src/controllers/team.js";
 
 const createTeam = (team) =>
   new GrouPartyTeam(
@@ -36,9 +36,15 @@ const createPlayer = (player, wristband) =>
   new GrouPartyPlayer(player, new GrouPartyWristband(wristband));
 
 function Component() {
-  const navigate = useNavigate();
-  const { queue, setQueue, enqueue, dequeue, pairWristband, unpairWristband } =
-    useRegistrationQueue();
+  const {
+    queue,
+    setQueue,
+    nextPlayer,
+    enqueue,
+    dequeue,
+    pairWristband,
+    unpairWristband,
+  } = useRegistrationQueue();
   const gpRef = React.useRef([]);
 
   const newGrouParty = () => {
@@ -51,8 +57,10 @@ function Component() {
       players: MAX_ROSTER_SIZE,
       wristband: { state: "unpaired" },
     });
+    team.order = -gpRef.current.length;
     gpRef.current.push(team);
     enqueue(...team.roster);
+    pairWristband(team.roster.at(0));
   };
 
   const removeTeam = (team) => {
@@ -79,10 +87,19 @@ function Component() {
     dequeue(player);
   };
   const addPlayer = (team) => {
-    teamReact.addPlayer(team, createPlayer().fill(), (team, player) => {
+    try {
+      const player = teamController.addPlayer(team, createPlayer().fill());
       team._roster.push(player);
       enqueue(player);
-    });
+    } catch (err) {
+      renderDialog(
+        <DialogAlertStandard
+          initialOpen
+          heading="add player"
+          msg={err.message}
+        />,
+      );
+    }
   };
 
   function distribute(size, ratio) {
@@ -128,6 +145,19 @@ function Component() {
     debug(newPlayers, "enqueue new players");
     debug(gpRef.current, " new gp ref current");
     enqueue(...newPlayers);
+
+    // let i = gpRef.current.length;
+    // let next;
+    // while (!next && i--) {
+    //   next = nextPlayer(gpRef.current[i].roster);
+    // }
+    // if (next) pairWristband(next);
+    // do {
+    //   next = nextPlayer(gpRef.current[i].roster);
+    // } while (!next && i--)
+    // for (let i = gpRef.current.length - 1; i > -1; --i) {
+    //   const next = nextPlayer(gpRef.current[i].roster);
+    // }
   }
 
   async function onDistributionClick() {
@@ -218,7 +248,10 @@ function Component() {
             <Overflow>
               <List>
                 {gpRef.current.map((team, i) => (
-                  <ListItem key={team.name + i}>
+                  <ListItem
+                    key={team.name + i}
+                    style={{ order: team.order || gpRef.current.length }}
+                  >
                     <TeamActionCard
                       team={team}
                       onTeamRemove={removeTeam}
@@ -255,7 +288,7 @@ const Content = styled("div")`
 const List = styled("ul")`
   padding: 30px 20px 20px 0;
   display: flex;
-  flex-flow: column-reverse nowrap;
+  flex-flow: column nowrap;
   align-items: center;
   gap: 60px;
 `;
