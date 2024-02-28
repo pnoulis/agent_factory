@@ -51,7 +51,7 @@ class WristbandCommander extends createEventful(Wristband) {
       const registered = await this.register(player, wristband);
       this.state.paired(registered);
     } catch (err) {
-      this.state.unpair(player);
+      this.setState("unpaired");
       throw err;
     } finally {
       this.pairing = null;

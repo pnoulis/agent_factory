@@ -1,4 +1,4 @@
-import { isObject, isFunction } from "js_utils/misc";
+import { isObject} from "js_utils/misc";
 /*
   Errors severity:
 

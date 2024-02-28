@@ -9,19 +9,6 @@ function nextPlayer(queue) {
     if (queue[i].wristband.inState("unpaired")) return queue[i];
   }
   return null;
-  // for (let i = 0; i < queue.length; i++) {
-  //   if (
-  //     queue[i].wristband.inState("pairing") ||
-  //     queue[i].wristband.inState("unpairing")
-  //   ) {
-  //     debug("noet found");
-  //     return null;
-  //   }
-  //   debug(queue[i]);
-  //   debug("found");
-  //   next ||= queue[i].wristband.inState("unpaired") && queue[i];
-  // }
-  // return next;
 }
 
 function useRegistrationQueue(players) {
@@ -52,8 +39,15 @@ function useRegistrationQueue(players) {
     await stopPairing();
     debug("pairWristband() will pair wristband");
     pairingRef.current = player;
-    await player.pairWristband();
-    pairingRef.current = null;
+    try {
+      await player.pairWristband();
+      pairingRef.current = null;
+    } catch (err) {
+      if (err.code !== ERR_CODES.EWRISTBAND_UNSUB) {
+        pairingRef.current = null;
+      }
+      throw err;
+    }
     debug("pairWristband, paired");
   }
 

@@ -164,7 +164,20 @@ function distributePlayers(players, ratio) {
   }
   for (let i = 0; i < teams.length; i++) {
     teams[i] = new Array(ratio).fill(null);
-    if (remainder-- > 0) teams[i].push(null);
+  }
+
+  let i = 0;
+  while (remainder) {
+    if (i < teams.length) {
+      if (teams[i].length < MAX_ROSTER_SIZE) {
+        teams[i].push(null);
+        --remainder;
+        continue;
+      }
+      ++i;
+    } else {
+      teams.push(new Array());
+    }
   }
   return teams;
 }

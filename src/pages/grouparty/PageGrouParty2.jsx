@@ -14,11 +14,9 @@ import { GrouPartyTeam } from "#afm/grouparty/GrouPartyTeam.js";
 import { GrouPartyPlayer } from "#afm/grouparty/GrouPartyPlayer.js";
 import { GrouPartyWristband } from "#afm/grouparty/GrouPartyWristband.js";
 import { TeamActionCard } from "#components/team/TeamActionCard.jsx";
-import { teamReact } from "#afm/team/TeamReact.jsx";
 import { MAX_ROSTER_SIZE } from "../../constants.js";
 import { getGrouPartyDistribution } from "#components/dialogs/inputs/getGrouPartyDistribution.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { renderDialogPromise } from "#components/dialogs/renderDialogPromise.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
 import { AlertSuccessfullGrouPartyMerge } from "../../components/dialogs/alerts/AlertSuccessfullGrouPartyMerge.jsx";
 import { Overflow } from "#components/Overflow.jsx";
@@ -36,15 +34,8 @@ const createPlayer = (player, wristband) =>
   new GrouPartyPlayer(player, new GrouPartyWristband(wristband));
 
 function Component() {
-  const {
-    queue,
-    setQueue,
-    nextPlayer,
-    enqueue,
-    dequeue,
-    pairWristband,
-    unpairWristband,
-  } = useRegistrationQueue();
+  const { queue, enqueue, dequeue, pairWristband, unpairWristband } =
+    useRegistrationQueue();
   const gpRef = React.useRef([]);
 
   const newGrouParty = () => {
@@ -74,17 +65,28 @@ function Component() {
   };
 
   const removePlayer = (team, player) => {
-    team.removePlayer(player);
-    if (!team.roster.length) {
-      const newgp = [];
-      for (let i = 0; i < gpRef.current.length; i++) {
-        if (gpRef.current[i] !== team) {
-          newgp.push(gpRef.current[i]);
+    try {
+      teamController.removePlayer(team, player);
+      team.removePlayer(player);
+      if (!team.roster.length) {
+        const newgp = [];
+        for (let i = 0; i < gpRef.current.length; i++) {
+          if (gpRef.current[i] !== team) {
+            newgp.push(gpRef.current[i]);
+          }
         }
+        gpRef.current = newgp;
       }
-      gpRef.current = newgp;
+      dequeue(player);
+    } catch (err) {
+      renderDialog(
+        <DialogAlertStandard
+          initialOpen
+          heading="add player"
+          msg={err.message}
+        />,
+      );
     }
-    dequeue(player);
   };
   const addPlayer = (team) => {
     try {
@@ -157,7 +159,7 @@ function Component() {
     const ready = [];
     for (const team of gpRef.current) {
       try {
-        teamReact.register(team);
+        teamController.register(team);
         ready.push(team);
       } catch (err) {
         notReady.push({ team, err });
@@ -181,9 +183,7 @@ function Component() {
       registered = await Promise.all(ready.map((team) => team.register()));
     } catch (err) {
     } finally {
-      await renderDialogPromise(
-        <AlertSuccessfullGrouPartyMerge teams={registered} />,
-      );
+      renderDialog(<AlertSuccessfullGrouPartyMerge teams={registered} />);
       if (registered.length === gpRef.current.length) {
         newGrouParty();
       }

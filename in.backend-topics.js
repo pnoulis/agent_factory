@@ -1229,8 +1229,6 @@ const registrationTopics = {
                 "deviceType",
                 "roomType",
                 "deviceId",
-                "macAddress",
-                "ipAddress",
                 "bootedTimestamp",
               ],
               properties: {

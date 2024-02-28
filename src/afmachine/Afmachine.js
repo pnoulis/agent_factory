@@ -139,6 +139,7 @@ Afmachine.prototype.runCommand = async function (cmd) {
   try {
     await cmd.run();
   } catch (err) {
+    debug(err);
     debug("do nthing");
   } finally {
     this.commands = this.commands - 1;
