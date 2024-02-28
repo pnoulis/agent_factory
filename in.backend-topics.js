@@ -1224,19 +1224,12 @@ const registrationTopics = {
             type: "array",
             items: {
               type: "object",
-              additionalProperties: false,
-              required: [
-                "deviceType",
-                "roomType",
-                "deviceId",
-                "bootedTimestamp",
-              ],
+              additionalProperties: true,
+              required: ["deviceType", "roomType", "deviceId"],
               properties: {
                 deviceType: schemas.device.deviceType,
                 roomType: schemas.device.roomType,
                 deviceId: schemas.device.deviceId,
-                macAddress: schemas.device.macAddress,
-                ipAddress: schemas.device.ipAddress,
                 bootedTimestamp: schemas.commons.timestamp,
               },
             },

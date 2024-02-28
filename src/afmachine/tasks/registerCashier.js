@@ -41,16 +41,7 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   async (ctx, next) => {
-    const { cashiers } = await ctx.afm.adminScreen.listCashiers({
-      timestamp: ctx.t_start,
-    });
-    const thisCashier = cashiers.find(
-      (cashier) => cashier.username === ctx.req.username,
-    );
-    if (thisCashier === undefined) {
-      throw new Error(`Could not locate cashier: ${ctx.req.username}`);
-    }
-    ctx.res.cashier = Cashier.normalize([{ role: "cashier" }, thisCashier]);
+    ctx.res.cashier = Cashier.normalize(ctx.req);
     ctx.res.password = ctx.args.password;
     return next();
   },

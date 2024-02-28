@@ -25,7 +25,7 @@ Command.verb = "login cashier";
 Command.middleware = [
   async (ctx, next) => {
     ctx.req = {
-      username: ctx.args.cashier.username,
+      username: ctx.args.cashier.username.toUpperCase(),
       password: ctx.args.password,
     };
     return next();
@@ -42,11 +42,12 @@ Command.middleware = [
     const { cashiers } = await ctx.afm.adminScreen.listCashiers({
       timestamp: ctx.t_start,
     });
+    debug(cashiers, 'cashiers');
     const thisCashier = cashiers.find(
       (cashier) => cashier.username === ctx.req.username,
     );
     if (!thisCashier) {
-      throw new Error(`Could not locate cashier: ${ctx.args.cashier.username}`);
+      throw new Error(`Could not locate cashier: ${ctx.req.username}`);
     }
     ctx.res.cashier = Cashier.normalize([{ role: "cashier" }, thisCashier]);
     ctx.res.cashier.jwt = ctx.raw.jwtResponse.jwt;
