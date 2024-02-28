@@ -26,9 +26,9 @@ function createComparatorPackageState(states) {
     completed: 3,
   };
   return (a, b) =>
-    states[a.state] < states[b.state]
+    states[a.state.name || a.state] < states[b.state.name || a.state]
       ? 1
-      : states[a.state] > states[b.state]
+      : states[a.state.name || a.state] > states[b.state.name || b.state]
         ? -1
         : 0;
 }
