@@ -1,6 +1,4 @@
 import { Task } from "../Task.js";
-import { PlayerCommander } from "../player/PlayerCommander.js";
-import { WristbandCommander } from "../wristband/WristbandCommander.js";
 
 new Task("pairWristband", Command);
 

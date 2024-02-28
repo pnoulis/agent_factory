@@ -4,7 +4,7 @@ function readWristband({
   wristbandColor,
 } = {}) {
   return this.mqtt.publish("read", {
-    timestamp: Date.now(),
+    timestamp,
     wristbandNumber,
     wristbandColor,
   });

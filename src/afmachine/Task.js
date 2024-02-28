@@ -86,8 +86,8 @@ class Task extends createEventful() {
 
           await cmd
             .emit("pretask", cmd)
-            .then(async () => await thetask(cmd))
-            .then(async () => await cmd.emit("task", cmd))
+            .then(() => thetask(cmd))
+            .then(() => cmd.emit("task", cmd))
             .then(async () => {
               ostate = cmd.state;
               cmd.onSuccess?.();

@@ -157,7 +157,6 @@ Afmachine.prototype.onCmdCreate = function (cmd) {
 Afmachine.prototype.onCmdQueue = function (cmd) {
   this.history.push({
     task: cmd.taskname,
-    state: "queue",
     state: cmd.state,
     queue: this.commandQueue.length,
     commands: this.commands,

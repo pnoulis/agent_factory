@@ -28,6 +28,12 @@
     "dayjs": "1.11.10",
     "deepmerge": "4.3.1",
     "depcheck": "^1.4.7",
+    "eslint": "8.57.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-unused-imports": "3.1.0",
     "js_utils": "github:pnoulis/js_utils",
     "mqtt": "5.3.3",
     "mqtt_proxy": "github:pnoulis/mqtt_proxy",
@@ -44,5 +50,34 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "es2022": true
+    },
+    "extends": ["airbnb", "airbnb/hooks", "prettier"],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": ["unused-imports"],
+    "rules": {
+      "eslint-plugin-import/prefer-default-export": "off",
+      "import/prefer-default-export": "off",
+      "import/extensions": ["error", "ignorePackages"],
+      "no-unused-vars": "off",
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "error",
+        {
+          "vars": "all",
+          "varsIgnorePattern": "^_",
+          "args": "after-used",
+          "argsIgnorePattern": "^_"
+        }
+      ]
+    }
   }
 }

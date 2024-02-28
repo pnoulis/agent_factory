@@ -1,5 +1,5 @@
 import { isEventful } from "./Eventful.js";
-import { isNumber, isObject } from "js_utils/misc";
+import { isObject } from "js_utils/misc";
 
 const stateful = {
   getState(state) {
@@ -27,7 +27,6 @@ const stateful = {
     return null;
   },
   setState(state) {
-    trace("state_change", state);
     const nstate = this.getState(state);
     if (!nstate) {
       throw new Error(`Missing state: ${state}`);

@@ -1,5 +1,4 @@
 import { Task } from "../Task.js";
-import { Wristband } from "../wristband/Wristband.js";
 
 new Task("readWristband", Command);
 
@@ -30,6 +29,7 @@ Command.middleware = [
   },
   async (ctx, next) => {
     ctx.raw = await ctx.afm.rpiReader.readWristband(ctx.req);
+    return next();
   },
   (ctx, next) => {
     ctx.res.wristband = ctx.raw;
