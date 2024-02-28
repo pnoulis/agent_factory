@@ -1,0 +1,9 @@
+@font-face {
+  font-family: Saira;
+  src: url("./fonts/saira/variable/Saira-VariableFont.ttf");
+}
+
+@font-face {
+  font-family: Saira-Italic;
+  src: url("./fonts/saira/variable/Saira-VariableFont-Italic.ttf");
+}

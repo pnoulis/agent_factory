@@ -1,0 +1,879 @@
+#!/usr/bin/env bash
+
+rm -f config.log
+exec > >(tee config.log)
+pre_config_env=$(mktemp)
+printenv > $pre_config_env
+post_config_env=$(mktemp)
+
+# App description
+export PKG_NAME=afadmin-client
+export PKG_NAME_PRETTY='Agent Factory'
+export PKG_VERSION=2.0.0
+export PKG_VVERSION=v${PKG_VERSION}
+export PKG_DISTNAME=${PKG_NAME}-${PKG_VVERSION}
+
+# OPTIONS
+export MODE=$MODE
+export NODE_ENV=$NODE_ENV
+WITH_DEPLOY_TARGET=
+WITH_GCLOUD_TARGET=
+SKIP_NPM_INSTALL=false
+BUILDIR_STEM=
+WITH_INSTALLDIRS_PRESET=
+export AFADMIN_SERVER_URL=
+export AFADMIN_CLIENT_URL_PUBLIC=
+export AFADMIN_CLIENT_URL_LOCAL=
+export DEVICE_ADMIN_SCREEN_ID=
+export DEVICE_RPI_READER_ID=
+export LOGLEVEL=
+
+# CONSTANTS
+export PREFIX=
+export EXEC_PREFIX=
+export BINDIR=
+export SBINDIR=
+export LIBEXECDIR=
+export DATAROOTDIR=
+export DATADIR=
+export SYSCONFDIR=
+export LOCALSTATEDIR=
+export RUNSTATEDIR=
+export INCLUDEDIR=
+export LIBDIR=
+
+main() {
+  parse_args "$@"
+  set -- "${POSARGS[@]}"
+  echo "Configuring..."
+
+  resolve_buildir
+  resolve_system
+  resolve_mode
+  resolve_node_env
+  resolve_options
+  resolve_dependencies
+  install_npm_packages
+  resolve_afadmin_client_url
+  resolve_afadmin_server_url
+  resolve_afadmin_mysqldb_url
+  resolve_deploy_target
+  resolve_xdgdirs
+  print_chapter "Resolving installation dirs..."
+  exit_if_empty WITH_INSTALLDIRS_PRESET 'Missing --with-installdirs-preset'
+  define_installdirs_$WITH_INSTALLDIRS_PRESET
+  show_installdirs
+  define_derivedirs
+  create_envfile
+  create_macrosfile
+  create_vitefile
+  create_indexfile
+  create_backend_topicsfile
+  create_makefile
+  cleanup
+}
+
+resolve_deploy_target() {
+ print_chapter "Resolving deploy target..."
+ declare -gx DEPLOY_TARGET="${WITH_DEPLOY_TARGET}"
+ echo "DEPLOY_TARGET...|$DEPLOY_TARGET"
+}
+resolve_buildir() {
+  print_chapter "Resolving buildir..."
+  declare -gx CONFIGUREDIR_ABS="$(pwd)"
+  echo "CONFIGUREDIR_ABS...|$CONFIGUREDIR_ABS"
+
+  declare -gx SRCDIR_ABS="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)"
+  echo "SRCDIR_ABS...|$SRCDIR_ABS"
+
+  declare -gx CONFIGUREDIR="$(realpath -e --relative-to="$SRCDIR_ABS" "$CONFIGUREDIR_ABS")"
+  echo "CONFIGUREDIR...|$CONFIGUREDIR"
+
+  declare -gx SRCDIR="$(realpath -e --relative-to="$CONFIGUREDIR_ABS" "$SRCDIR_ABS")"
+  echo "SRCDIR...|$SRCDIR"
+
+  echo "BUILDIR_STEM...|$BUILDIR_STEM"
+  declare -gx BUILDIR_ABS="${CONFIGUREDIR_ABS}${BUILDIR_STEM:+/$BUILDIR_STEM}"
+  echo "BUILDIR_ABS...|$BUILDIR_ABS"
+
+  declare -gx BUILDIR="$(realpath -m --relative-to="$SRCDIR_ABS" "$BUILDIR_ABS")"
+  echo "BUILDIR...|$BUILDIR"
+}
+
+resolve_system() {
+  print_chapter "Resolving system..."
+
+  declare -gx BUILD_ARCH_SPECIFIER=$(systemd-path user-library-arch)
+  BUILD_ARCH_SPECIFIER="${BUILD_ARCH_SPECIFIER##*/}"
+  if [ -z "$BUILD_ARCH_SPECIFIER" ]; then
+    BUILD_ARCH_SPECIFIER=$(gcc -dumpmachine)
+  fi
+  IFS='-' read -r cpu kernel system <<<"$BUILD_ARCH_SPECIFIER"
+  declare -gx BUILD_CPU=$cpu
+  declare -gx BUILD_KERNEL=${vendor:-$kernel}
+  declare -gx BUILD_SYSTEM=$system
+  declare -gx BUILD_OS="$(uname -o)"
+  declare -gx BUILD_DISTRO=
+  declare -gx BUILD_DISTRO_NAME=
+  declare -gx BUILD_DISTRO_VERSION=
+  declare -gx BUILD_DISTRO_CODENAME=
+
+  if [ -f "/etc/os-release" ]; then
+    BUILD_DISTRO="$(strip_quotes $(awk 'BEGIN { FS = "=" }; $1 ~ /^PRETTY_NAME$/ { print $2 }' /etc/os-release))"
+    BUILD_DISTRO_NAME="$(awk 'BEGIN { FS = "=" }; $1 ~ /^ID$/ { print $2 }' /etc/os-release)"
+    BUILD_DISTRO_VERSION="$(awk 'BEGIN { FS = "=" }; $1 ~ /^VERSION_ID$/ { print $2 }' /etc/os-release)"
+    BUILD_DISTRO_CODENAME="$(awk 'BEGIN { FS = "=" }; $1 ~ /^VERSION_CODENAME$/ { print $2 }' /etc/os-release)"
+  elif [ -f "/usr/lib/os-release" ]; then
+    BUILD_DISTRO="$(awk 'BEGIN { FS = "=" }; $1 ~ /^PRETTY_NAME$/ { print $2 }' /usr/lib/os-release)"
+    BUILD_DISTRO_NAME="$(awk 'BEGIN { FS = "=" }; $1 ~ /^ID$/ { print $2 }' /usr/lib/os-release)"
+    BUILD_DISTRO_VERSION="$(awk 'BEGIN { FS = "=" }; $1 ~ /^VERSION_ID$/ { print $2 }' /usr/lib/os-release)"
+    BUILD_DISTRO_CODENAME="$(awk 'BEGIN { FS = "=" }; $1 ~ /^VERSION_CODENAME$/ { print $2 }' /usr/lib/os-release)"
+  elif command -v lsb_release &>/dev/null; then
+    BUILD_DISTRO="$(lsb_release -d | cut -f2)"
+    BUILD_DISTRO_NAME="$(lsb_release -i | cut -f2)"
+    BUILD_DISTRO_VERSION="$(lsb_release -v | cut -f2)"
+    BUILD_DISTRO_CODENAME="$(lsb_release -c | cut -f2)"
+  else
+    error "Could not resolve system information"
+  fi
+  echo "BUILD_ARCH_SPECIFIER...|$BUILD_ARCH_SPECIFIER"
+  echo "BUILD_CPU...|$BUILD_CPU"
+  echo "BUILD_KERNEL...|$BUILD_KERNEL"
+  echo "BUILD_SYSTEM...|$BUILD_SYSTEM"
+  echo "BUILD_OS...|$BUILD_OS"
+  echo "BUILD_DISTRO...|$BUILD_DISTRO"
+  echo "BUILD_DISTRO_NAME...|$BUILD_DISTRO_NAME"
+  echo "BUILD_DISTRO_VERSION...|$BUILD_DISTRO_VERSION"
+  echo "BUILD_DISTRO_CODENAME...|$BUILD_DISTRO_CODENAME"
+
+  declare -gx HOST_ARCH_SPECIFIER="$BUILD_ARCH_SPECIFIER"
+  declare -gx HOST_CPU="$BUILD_CPU"
+  declare -gx HOST_KERNEL="$BUILD_KERNEL"
+  declare -gx HOST_SYSTEM="$BUILD_SYSTEM"
+  declare -gx HOST_OS="$BUILD_OS"
+  declare -gx HOST_DISTRO="$BUILD_DISTRO"
+  declare -gx HOST_DISTRO_NAME="$BUILD_DISTRO_NAME"
+  declare -gx HOST_DISTRO_VERSION="$BUILD_DISTRO_VERSION"
+  declare -gx HOST_DISTRO_CODENAME="$BUILD_DISTRO_CODENAME"
+
+  echo "HOST_ARCH_SPECIFIER...|$HOST_ARCH_SPECIFIER"
+  echo "HOST_CPU...|$HOST_CPU"
+  echo "HOST_KERNEL...|$HOST_KERNEL"
+  echo "HOST_SYSTEM...|$HOST_SYSTEM"
+  echo "HOST_OS...|$HOST_OS"
+  echo "HOST_DISTRO...|$HOST_DISTRO"
+  echo "HOST_DISTRO_NAME...|$HOST_DISTRO_NAME"
+  echo "HOST_DISTRO_VERSION...|$HOST_DISTRO_VERSION"
+  echo "HOST_DISTRO_CODENAME...|$HOST_DISTRO_CODENAME"
+}
+
+resolve_mode() {
+  print_chapter "Resolving MODE..."
+  exit_if_empty MODE 'Missing MODE'
+  echo "MODE...|$MODE"
+}
+
+resolve_node_env() {
+  print_chapter "Resolving NODE_ENV..."
+  exit_if_empty NODE_ENV 'Missing NODE_ENV'
+  echo "NODE_ENV...|$NODE_ENV"
+}
+
+resolve_options() {
+  print_chapter "Resolving options..."
+  exit_if_empty DEVICE_ADMIN_SCREEN_ID
+  echo "DEVICE_ADMIN_SCREEN_ID...|$DEVICE_ADMIN_SCREEN_ID"
+  exit_if_empty DEVICE_RPI_READER_ID
+  echo "DEVICE_RPI_READER_ID...|$DEVICE_RPI_READER_ID"
+  exit_if_empty LOGLEVEL
+  echo "LOGLEVEL...|$LOGLEVEL"
+}
+
+resolve_dependencies() {
+  print_chapter "Resolving dependencies..."
+  printf "Checking dependency...|node-v21.0.0...|"
+  declare -gx NODE="$(command -v node)"
+  [[ -z "$NODE" ]] && {
+    error MISSING
+  }
+  __node_version="$(node --version)"
+  [[ "$__node_version" != "v21.0.0" ]] && {
+    error MISSING
+  }
+  echo "$NODE"
+
+  printf "Checking dependency...|make...|"
+  if ! command -v make; then
+    error MISSING
+  fi
+
+  printf "Checking dependency...|dotenv...|"
+  declare -gx DOTENV="$(command -v dotenv)"
+  [[ -z "$DOTENV" ]] && {
+    error MISSING
+  }
+  echo "$DOTENV"
+
+  printf "Checking dependency...|jq...|"
+  declare -gx JQ="$(command -v jq)"
+  [[ -z "$JQ" ]] && {
+    error MISSING
+  }
+  echo "$JQ"
+}
+
+install_npm_packages() {
+  print_chapter "Installing npm packages..."
+  if flag SKIP_NPM_INSTALL; then
+    echo SKIP
+  else
+    if ! npm install; then
+      error 'Failed to install packages'
+    fi
+  fi
+}
+
+resolve_afadmin_client_url() {
+  print_chapter "Resolving afadmin client url..."
+  exit_if_empty AFADMIN_CLIENT_URL_LOCAL
+  AFADMIN_CLIENT_URL_PUBLIC="${AFADMIN_CLIENT_URL_PUBLIC:-$AFADMIN_CLIENT_URL_LOCAL}"
+
+  # public
+  read -r scheme user pass hostname port basename < <(parseUrl "$AFADMIN_CLIENT_URL_PUBLIC")
+  if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+    error 'afadmin client public url missing either scheme, hostname or port'
+  fi
+  echo 'basename:' $basename
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_SCHEME="$scheme"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_SCHEME...|$AFADMIN_CLIENT_URL_PUBLIC_SCHEME"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_PORT="$port"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_PORT...|$AFADMIN_CLIENT_URL_PUBLIC_PORT"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME="$hostname"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME...|$AFADMIN_CLIENT_URL_PUBLIC_HOSTNAME"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_BASENAME="${basename:+/$basename}"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_BASENAME...|$AFADMIN_CLIENT_URL_PUBLIC_BASENAME"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC_ORIGIN="${scheme}"://"${hostname}":"${port}"
+  echo "AFADMIN_CLIENT_URL_PUBLIC_ORIGIN...|$AFADMIN_CLIENT_URL_PUBLIC_ORIGIN"
+  declare -gx AFADMIN_CLIENT_URL_PUBLIC="${scheme}"://"${hostname}":"${port}""${basename:+/$basename}"
+  echo "AFADMIN_CLIENT_URL_PUBLIC...|$AFADMIN_CLIENT_URL_PUBLIC"
+
+  # local
+  read -r scheme user pass hostname port basename < <(parseUrl "$AFADMIN_CLIENT_URL_LOCAL")
+  if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+    error 'afadmin client local url missing either scheme, hostname or port'
+  fi
+  declare -gx AFADMIN_CLIENT_URL_LOCAL_SCHEME="$scheme"
+  echo "AFADMIN_CLIENT_URL_LOCAL_SCHEME...|$AFADMIN_CLIENT_URL_LOCAL_SCHEME"
+  declare -gx AFADMIN_CLIENT_URL_LOCAL_PORT="$port"
+  echo "AFADMIN_CLIENT_URL_LOCAL_PORT...|$AFADMIN_CLIENT_URL_LOCAL_PORT"
+  declare -gx AFADMIN_CLIENT_URL_LOCAL_HOSTNAME="$hostname"
+  echo "AFADMIN_CLIENT_URL_LOCAL_HOSTNAME...|$AFADMIN_CLIENT_URL_LOCAL_HOSTNAME"
+  declare -gx AFADMIN_CLIENT_URL_LOCAL="${scheme}"://"${hostname}":"${port}"
+  echo "AFADMIN_CLIENT_URL_LOCAL...|$AFADMIN_CLIENT_URL_LOCAL"
+}
+
+resolve_afadmin_server_url() {
+  print_chapter "Resolving afadmin server url..."
+  exit_if_empty AFADMIN_SERVER_URL
+
+  # local
+  read -r scheme user pass hostname port basename < <(parseUrl "$AFADMIN_SERVER_URL")
+  if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+    error 'afadmin server url missing either scheme, hostname or port'
+  fi
+  declare -gx AFADMIN_SERVER_URL_SCHEME="$scheme"
+  echo "AFADMIN_SERVER_URL_SCHEME...|$AFADMIN_SERVER_URL_SCHEME"
+  declare -gx AFADMIN_SERVER_URL_PORT="$port"
+  echo "AFADMIN_SERVER_URL_PORT...|$AFADMIN_SERVER_URL_PORT"
+  declare -gx AFADMIN_SERVER_URL_HOSTNAME="$hostname"
+  echo "AFADMIN_SERVER_URL_HOSTNAME...|$AFADMIN_SERVER_URL_HOSTNAME"
+  declare -gx AFADMIN_SERVER_URL_BASENAME="${basename:+/$basename}"
+  echo "AFADMIN_SERVER_URL_BASENAME...|$AFADMIN_SERVER_URL_BASENAME"
+  declare -gx AFADMIN_SERVER_URL_ORIGIN="${scheme}"://"${hostname}":"${port}"
+  echo "AFADMIN_SERVER_URL_ORIGIN...|$AFADMIN_SERVER_URL_ORIGIN"
+  declare -gx AFADMIN_SERVER_URL_ORIGIN_WS="ws://${hostname}:${port}"
+  echo "AFADMIN_SERVER_URL_ORIGIN_WS...|$AFADMIN_SERVER_URL_ORIGIN_WS"
+  declare -gx AFADMIN_SERVER_URL="${scheme}"://"${hostname}":"${port}""${basename:+/$basename}"
+  echo "AFADMIN_SERVER_URL...|$AFADMIN_SERVER_URL"
+}
+
+resolve_afadmin_mysqldb_url() {
+  print_chapter "Resolving afadmin mysqldb url..."
+  exit_if_empty AFADMIN_MYSQLDB_URL
+  read -r scheme user pass hostname port basename < <(parseUrl "$AFADMIN_MYSQLDB_URL")
+  if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
+    error 'afadmin mysqldb url missing either scheme, hostname or port'
+  fi
+  declare -gx AFADMIN_MYSQLDB_URL_SCHEME="$scheme"
+  echo "AFADMIN_MYSQLDB_URL_SCHEME...|$AFADMIN_MYSQLDB_URL_SCHEME"
+  declare -gx AFADMIN_MYSQLDB_URL_USER="$user"
+  echo "AFADMIN_MYSQLDB_URL_USER...|$AFADMIN_MYSQLDB_URL_USER"
+  declare -gx AFADMIN_MYSQLDB_URL_PASS="$pass"
+  echo "AFADMIN_MYSQLDB_URL_PASS...|$AFADMIN_MYSQLDB_URL_PASS"
+  declare -gx AFADMIN_MYSQLDB_URL_PORT="$port"
+  echo "AFADMIN_MYSQLDB_URL_PORT...|$AFADMIN_MYSQLDB_URL_PORT"
+  declare -gx AFADMIN_MYSQLDB_URL_HOSTNAME="$hostname"
+  echo "AFADMIN_MYSQLDB_URL_HOSTNAME...|$AFADMIN_MYSQLDB_URL_HOSTNAME"
+  declare -gx AFADMIN_MYSQLDB_URL_BASENAME="/$basename"
+  echo "AFADMIN_MYSQLDB_URL_BASENAME...|$AFADMIN_MYSQLDB_URL_BASENAME"
+  declare -gx AFADMIN_MYSQLDB_URL_ORIGIN="${scheme}"://"${user}:${pass}@${hostname}":"${port}"
+  echo "AFADMIN_MYSQLDB_URL_ORIGIN...|$AFADMIN_MYSQLDB_URL_ORIGIN"
+  declare -gx AFADMIN_MYSQLDB_URL="${scheme}"://"${user}:${pass}@${hostname}":"${port}/${basename}"
+  echo "AFADMIN_MYSQLDB_URL...|$AFADMIN_MYSQLDB_URL"
+}
+
+
+resolve_xdgdirs() {
+  print_chapter "Resolving XDG dirs..."
+  # XDG Base directories
+  # https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.8.html
+
+  # user-specific data files prefix
+  declare -gx XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+  echo "XDG_DATA_HOME...|$XDG_DATA_HOME"
+  # user-specific configuration files prefix
+  declare -gx XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+  echo "XDG_CONFIG_HOME...|$XDG_CONFIG_HOME"
+  # user-specific state data files prefix
+  declare -gx XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+  echo "XDG_STATE_HOME...|$XDG_STATE_HOME"
+  # user-specific cache data files prefix
+  declare -gx XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+  echo "XDG_CACHE_HOME...|$XDG_CACHE_HOME"
+  # user-specific runtime files prefix
+  declare -gx XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR"
+  echo "XDG_RUNTIME_DIR...|$XDG_RUNTIME_DIR"
+  # user-specific data files SEARCH path
+  declare -gx XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share/:/usr/share/}"
+  echo "XDG_DATA_DIRS...|$XDG_DATA_DIRS"
+  # user-specific configuration files SEARCH path
+  declare -gx XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
+  echo "XDG_CONFIG_DIRS...|$XDG_CONFIG_DIRS"
+
+  # XDG User directories
+  # https://www.freedesktop.org/wiki/Software/xdg-user-dirs/
+  declare -gx XDG_DESKTOP_DIR="$(xdg-user-dir DESKTOP)"
+  echo "XDG_DESKTOP_DIR...|$XDG_DESKTOP_DIR"
+  declare -gx XDG_DOWNLOAD_DIR="$(xdg-user-dir DOWNLOAD)"
+  echo "XDG_DOWNLOAD_DIR...|$XDG_DOWNLOAD_DIR"
+  declare -gx XDG_PUBLICSHARE_DIR="$(xdg-user-dir PUBLICSHARE)"
+  echo "XDG_PUBLICSHARE_DIR...|$XDG_PUBLICSHARE_DIR"
+  declare -gx XDG_TEMPLATES_DIR="$(xdg-user-dir TEMPLATES)"
+  echo "XDG_TEMPLATES_DIR...|$XDG_TEMPLATES_DIR"
+  declare -gx XDG_DOCUMENTS_DIR="$(xdg-user-dir DOCUMENTS)"
+  echo "XDG_DOCUMENTS_DIR...|$XDG_DOCUMENTS_DIR"
+  declare -gx XDG_MUSIC_DIR="$(xdg-user-dir MUSIC)"
+  echo "XDG_MUSIC_DIR...|$XDG_MUSIC_DIR"
+  declare -gx XDG_PICTURES_DIR="$(xdg-user-dir PICTURES)"
+  echo "XDG_PICTURES_DIR...|$XDG_PICTURES_DIR"
+  declare -gx XDG_VIDEOS_DIR="$(xdg-user-dir VIDEOS)"
+  echo "XDG_VIDEOS_DIR...|$XDG_VIDEOS_DIR"
+}
+
+define_installdirs_vendor() {
+  PREFIX=/usr
+  EXEC_PREFIX=$PREFIX
+  BINDIR=${EXEC_PREFIX}/bin
+  SBINDIR=${EXEC_PREFIX}/sbin
+  LIBEXECDIR=${EXEC_PREFIX}/libexec
+  DATAROOTDIR=${PREFIX}/share
+  DATADIR=${DATAROOTDIR}
+  SYSCONFDIR=/etc
+  LOCALSTATEDIR=/var
+  RUNSTATEDIR=/run
+  INCLUDEDIR=${PREFIX}/include
+  LIBDIR=${EXEC_PREFIX}/lib
+}
+define_installdirs_host() {
+  PREFIX=/usr/local
+  EXEC_PREFIX=$PREFIX
+  BINDIR=${EXEC_PREFIX}/bin
+  SBINDIR=${EXEC_PREFIX}/sbin
+  LIBEXECDIR=${EXEC_PREFIX}/libexec
+  DATAROOTDIR=${PREFIX}/share
+  DATADIR=${DATAROOTDIR}
+  SYSCONFDIR=/etc
+  LOCALSTATEDIR=/var
+  RUNSTATEDIR=/run
+  INCLUDEDIR=${PREFIX}/include
+  LIBDIR=${EXEC_PREFIX}/lib
+}
+define_installdirs_user() {
+  PREFIX=${HOME}/.local
+  EXEC_PREFIX=$PREFIX
+  BINDIR=${EXEC_PREFX}/bin
+  SBINDIR=${EXEC_PREFIX}/sbin
+  LIBDIR=${EXEC_PREFIX}/lib
+  LIBEXECDIR=${EXEC_PREFIX}/libexec
+  INCLUDEDIR=${PREFIX}/include
+  LOCALSTATEDIR=${PREFIX}/var
+  RUNSTATEDIR=${PREFIX}/run
+  SYSCONFDIR=${PREFIX}/etc
+  DATAROOTDIR=${PREFIX}/share
+  DATADIR=${DATAROOTDIR}
+}
+define_installdirs_opt() {
+  PREFIX=/opt/$PKG_NAME
+  EXEC_PREFIX=$PREFIX
+  BINDIR=${EXEC_PREFIX}/bin
+  SBINDIR=${EXEC_PREFIX}/sbin
+  LIBDIR=${EXEC_PREFIX}/lib
+  LIBEXECDIR=${EXEC_PREFIX}/libexec
+  INCLUDEDIR=${PREFIX}/include
+  LOCALSTATEDIR=/var/opt
+  RUNSTATEDIR=/run
+  SYSCONFDIR=/etc/opt
+  DATAROOTDIR=${PREFIX}/share
+  DATADIR=${DATAROOTDIR}
+}
+define_installdirs_srv() {
+  PREFIX=/srv/${PKG_NAME}
+  EXEC_PREFIX=${PREFIX}
+  BINDIR=${EXEC_PREFIX}/bin
+  SBINDIR=${EXEC_PREFIX}/sbin
+  LIBDIR=${EXEC_PREFIX}/lib
+  LIBEXECDIR=${EXEC_PREFIX}/libexec
+  INCLUDEDIR=${PREFIX}/include
+  LOCALSTATEDIR=/var
+  RUNSTATEDIR=/run
+  SYSCONFDIR=/srv/etc
+  DATAROOTDIR=${PREFIX}/share
+  DATADIR=${DATAROOTDIR}
+}
+define_installdirs_gnu_prefix() {
+  PREFIX="${PREFIX:-/usr/local}"
+  EXEC_PREFIX=$PREFIX
+  BINDIR=${EXEC_PREFIX}/bin
+  SBINDIR=${EXEC_PREFIX}/sbin
+  LIBDIR=${EXEC_PREFIX}/lib
+  LIBEXECDIR=${EXEC_PREFIX}/libexec
+  INCLUDEDIR=${PREFIX}/include
+  LOCALSTATEDIR=${PREFIX}/var
+  RUNSTATEDIR=${LOCALSTATEDIR}/run
+  SYSCONFDIR=${PREFIX}/etc
+  DATAROOTDIR=${PREFIX}/share
+  DATADIR=${DATAROOTDIR}
+}
+
+show_installdirs() {
+  echo "WITH_INSTALLDIRS_PRESET...|$WITH_INSTALLDIRS_PRESET"
+  echo "PREFIX...|$PREFIX"
+  echo "EXEC_PREFIX...|$EXEC_PREFIX"
+  echo "BINDIR...|$BINDIR"
+  echo "SBINDIR...|$SBINDIR"
+  echo "LIBDIR...|$LIBDIR"
+  echo "LIBEXECDIR...|$LIBEXECDIR"
+  echo "INCLUDEDIR...|$INCLUDEDIR"
+  echo "LOCALSTATEDIR...|$LOCALSTATEDIR"
+  echo "RUNSTATEDIR...|$RUNSTATEDIR"
+  echo "SYSCONFDIR...|$SYSCONFDIR"
+  echo "DATAROOTDIR...|$DATAROOTDIR"
+  echo "DATADIR...|$DATADIR"
+}
+
+define_derivedirs() {
+  # Persistent state and private data directories
+  # Derived from $LOCALSTATEDIR
+  print_chapter "Defining derived dirs..."
+  declare -gx LOCALSTATEDIR_PKG="${LOCALSTATEDIR}/lib/${PKG_NAME}"
+  echo "LOCALSTATEDIR_PKG...|$LOCALSTATEDIR_PKG"
+  declare -gx LOCALSTATEDIR_USR="${XDG_STATE_HOME}"
+  echo "LOCALSTATEDIR_USR...|$LOCALSTATEDIR_USR"
+  declare -gx LOCALSTATEDIR_USR_PKG="${LOCALSTATEDIR_USR}/${PKG_NAME}"
+  echo "LOCALSTATEDIR_USR_PKG...|$LOCALSTATEDIR_USR_PKG"
+
+  # Runtime data directories
+  # Derived from $RUNSTATEDIR
+  declare -gx RUNSTATEDIR_PKG="${RUNSTATEDIR}/${PKG_NAME}"
+  echo "RUNSTATEDIR_PKG...|$RUNSTATEDIR_PKG"
+  declare -gx RUNSTATEDIR_USR=
+  echo "RUNSTATEDIR_USR...|$RUNSTATEDIR_USR"
+  declare -gx RUNSTATEDIR_USR_PKG=
+  echo "RUNSTATEDIR_USR_PKG...|$RUNSTATEDIR_USR_PKG"
+
+  # Libraries and read-only data directories
+  # Derived from LIBDIR=
+  declare -gx LIBDIR_PKG="${LIBDIR}/${PKG_NAME}"
+  echo "LIBDIR_PKG...|$LIBDIR_PKG"
+
+  # Architecture-dependent libraries and read-only data directories
+  declare -gx LIBDIR_ARCH="${LIBDIR}/${HOST_ARCH_SPECIFIER}"
+  echo "LIBDIR_ARCH...|$LIBDIR_ARCH"
+  declare -gx LIBDIR_ARCH_PKG="${LIBDIR_ARCH}/${PKG_NAME}"
+  echo "LIBDIR_ARCH_PKG...|$LIBDIR_ARCH_PKG"
+
+  # Header files directories
+  # Derived from $INCLUDEDIR
+  declare -gx INCLUDEDIR_PKG="${INCLUDEDIR}/${PKG_NAME}"
+  echo "INCLUDEDIR_PKG...|$INCLUDEDIR_PKG"
+
+  # Architecture-dependent header files directories
+  # Derived from $INCLUDEDIR
+  declare -gx INCLUDEDIR_ARCH="${INCLUDEDIR}/${HOST_ARCH_SPECIFIER}"
+  echo "INCLUDEDIR_ARCH...|$INCLUDEDIR_ARCH"
+  declare -gx INCLUDEDIR_ARCH_PKG="${INCLUDEDIR_ARCH}/${PKG_NAME}"
+  echo "INCLUDEDIR_ARCH_PKG...|$INCLUDEDIR_ARCH_PKG"
+
+  # Package-run executables directories
+  # Derived from $LIBEXECDIR
+  declare -gx LIBEXECDIR_PKG="${LIBEXECDIR}/${PKG_NAME}"
+  echo "LIBEXECDIR_PKG...|$LIBEXECDIR_PKG"
+
+  # Configurations
+  # Derived from $SYSCONFDIR
+  declare -gx SYSCONFDIR_PKG="${SYSCONFDIR}/${PKG_NAME}"
+  echo "SYSCONFDIR_PKG...|$SYSCONFDIR_PKG"
+  declare -gx SYSCONFDIR_USR="${XDG_CONFIG_HOME}"
+  echo "SYSCONFDIR_USR...|$SYSCONFDIR_USR"
+  declare -gx SYSCONFDIR_USR_PKG="${SYSCONFDIR_USR}/${PKG_NAME}"
+  echo "SYSCONFDIR_USR_PKG...|$SYSCONFDIR_USR_PKG"
+
+  # Application executables
+  # BINDIR = Defined elsewhere
+  declare -gx BINDIR_USR="${HOME}/.local/bin"
+  echo "BINDIR_USR...|$BINDIR_USR"
+
+  # System executables
+  # SBINDIR = Defined elsewhere
+  declare -gx SBINDIR_USR="${HOME}/.local/sbin"
+  echo "SBINDIR_USR...|$SBINDIR_USR"
+
+  # Logs
+  # Derived from $LOCALSTATEDIR
+  declare -gx LOGDIR="${LOCALSTATEDIR}/log"
+  echo "LOGDIR...|$LOGDIR"
+  declare -gx LOGDIR_PKG="${LOGDIR}/${PKG_NAME}"
+  echo "LOGDIR_PKG...|$LOGDIR_PKG"
+
+  # Persistent system cache data
+  # Derived from $LOCALSTATEDIR
+  declare -gx CACHEDIR="${LOCALSTATEDIR}/cache"
+  echo "CACHEDIR...|$CACHEDIR"
+  declare -xg CACHEDIR_PKG="${CACHEDIR}/${PKG_NAME}"
+  echo "CACHEDIR_PKG...|$CACHEDIR_PKG"
+  declare -gx CACHEDIR_USR="${XDG_CACHE_HOME}"
+  echo "CACHEDIR_USR...|$CACHEDIR_USR"
+  declare -gx CACHEDIR_USR_PKG="${CACHEDIR_USR}/${PKG_NAME}"
+  echo "CACHEDIR_USR_PKG...|$CACHEDIR_USR_PKG"
+
+  # Persistent system spool data
+  # Derived from $LOCALSTATEDIR
+  declare -gx SPOOLDIR="${LOCALSTATEDIR}/spool"
+  echo "SPOOLDIR...|$SPOOLDIR"
+  declare -gx SPOOLDIR_PKG="${SPOOLDIR}/${PKG_NAME}"
+  echo "SPOOLDIR_PKG...|$SPOOLDIR_PKG"
+
+  # Lock directories
+  # Derived from $RUNSTATEDIR
+  declare -gx LOCKDIR="${RUNSTATEDIR}/lock"
+  echo "LOCKDIR...|$LOCKDIR"
+  declare -gx LOCKDIR_PKG="${LOCKDIR}/${PKG_NAME}"
+  echo "LOCKDIR_PKG...|$LOCKDIR_PKG"
+
+  # Temporary files
+  declare -gx TMPDIR_ENV=$TMPDIR
+  echo "TMPDIR_ENV...|$TMPDIR_ENV"
+  declare -gx TMPDIR_PERSISTENT=/var/tmp
+  echo "TMPDIR_PERSISTENT...|$TMPDIR_PERSISTENT"
+  declare -gx TMPDIR_FALLBACK=/tmp
+  echo "TMPDIR_FALLBACK...|$TMPDIR_FALLBACK"
+  declare -gx TMPDIR=$TMPDIR_ENV
+  TMPDIR=${TMPDIR:-$TMPDIR_FALLBACK}
+  echo "TMPDIR...|$TMPDIR"
+}
+
+create_envfile() {
+  print_chapter "Creating envfile..."
+  declare -gx OUT_CONFIG_ENVFILE=${CONFIGUREDIR}/config.env
+  OUT_CONFIG_ENVFILE_abs=${CONFIGUREDIR_ABS}/config.env
+  rm -f $OUT_CONFIG_ENVFILE
+
+  printenv > $post_config_env
+  rm -f $OUT_CONFIG_ENVFILE
+  local unquoted_envars=$(mktemp)
+  diff --normal $pre_config_env $post_config_env | grep '^>' | cut -c3- | sort > $unquoted_envars
+  while IFS='=' read -r k v; do
+    # Quote values
+    if [[ "$v" =~ \' ]]; then
+      printf "%s=\"%s\"\n" "$k" "$v" >> $OUT_CONFIG_ENVFILE
+    else
+      printf "%s='%s'\n" "$k" "$v" >> $OUT_CONFIG_ENVFILE
+    fi
+  done < $unquoted_envars
+
+  rm -f $unquoted_envars
+  echo "OUT_CONFIG_ENVFILE...|$OUT_CONFIG_ENVFILE"
+  echo "OUT_CONFIG_ENVFILE_ABS...|$OUT_CONFIG_ENVFILE_abs"
+}
+
+create_macrosfile() {
+  print_chapter "Creating macrosfile..."
+  declare -gx OUT_CONFIG_MACROSFILE=${CONFIGUREDIR}/config.macros.m4
+  OUT_CONFIG_MACROSFILE_abs=${CONFIGUREDIR_ABS}/config.macros.m4
+  rm -f $OUT_CONFIG_MACROSFILE
+
+  local unquoted_envars=$(mktemp)
+  diff --normal $pre_config_env $post_config_env | grep '^>' | cut -c3- | sort > $unquoted_envars
+  rm -f $OUT_CONFIG_MACROSFILE
+  while IFS='=' read -r key value; do
+    cat <<EOF >> $OUT_CONFIG_MACROSFILE
+define(\`IN_$key', \`$value')dnl
+EOF
+  done < $unquoted_envars
+  echo "changequote(\`[[[', \`]]]')dnl" >> $OUT_CONFIG_MACROSFILE
+
+  rm -f $unquoted_envars
+  echo "OUT_CONFIG_MACROSFILE...|$OUT_CONFIG_MACROSFILE"
+  echo "OUT_CONFIG_MACROSFILE_ABS...|$OUT_CONFIG_MACROSFILE_abs"
+}
+
+create_vitefile() {
+  print_chapter "Creating vitefile..."
+  declare -gx OUT_CONFIG_VITEFILE=${CONFIGUREDIR}/vite.config.js
+  OUT_CONFIG_VITEFILE_abs=${CONFIGUREDIR_ABS}/vite.config.js
+  in_vitefile=${SRCDIR}/in.vite.config.js
+  rm -f $OUT_CONFIG_VITEFILE
+
+  m4 $OUT_CONFIG_MACROSFILE $in_vitefile > $OUT_CONFIG_VITEFILE
+  echo "OUT_CONFIG_VITEFILE...|$OUT_CONFIG_VITEFILE"
+  echo "OUT_CONFIG_VITEFILE_abs...|$OUT_CONFIG_VITEFILE_abs"
+}
+
+create_indexfile() {
+  print_chapter "Creating index.html..."
+  declare -gx OUT_CONFIG_INDEXFILE=${CONFIGUREDIR}/index.html
+  OUT_CONFIG_INDEXFILE_abs=${CONFIGUREDIR_ABS}/index.html
+  in_INDEXFILE=${SRCDIR}/in.index.html
+  rm -f $OUT_CONFIG_INDEXFILE
+
+  m4 $OUT_CONFIG_MACROSFILE $in_INDEXFILE > $OUT_CONFIG_INDEXFILE
+  echo "OUT_CONFIG_INDEXFILE...|$OUT_CONFIG_INDEXFILE"
+  echo "OUT_CONFIG_INDEXFILE_abs...|$OUT_CONFIG_INDEXFILE_abs"
+}
+
+create_backend_topicsfile() {
+  print_chapter "Creating index.html..."
+  declare -gx OUT_CONFIG_BACKEND_TOPICSFILE=${CONFIGUREDIR}/backend-topics.js
+  OUT_CONFIG_BACKEND_TOPICSFILE_abs=${CONFIGUREDIR_ABS}/backend-topics.js
+  in_BACKEND_TOPICSFILE=${SRCDIR}/in.backend-topics.js
+  rm -f $OUT_CONFIG_BACKEND_TOPICSFILE
+
+  m4 $OUT_CONFIG_MACROSFILE $in_BACKEND_TOPICSFILE > $OUT_CONFIG_BACKEND_TOPICSFILE
+  echo "OUT_CONFIG_BACKEND_TOPICSFILE...|$OUT_CONFIG_BACKEND_TOPICSFILE"
+  echo "OUT_CONFIG_BACKEND_TOPICSFILE_abs...|$OUT_CONFIG_BACKEND_TOPICSFILE_abs"
+}
+
+create_makefile() {
+  print_chapter "Creating makefile..."
+  declare -gx OUT_CONFIG_MAKEFILE=${CONFIGUREDIR}/Makefile
+  OUT_CONFIG_MAKEFILE_abs=${CONFIGUREDIR_ABS}/Makefile
+  in_makefile=${SRCDIR}/Makefile.in
+  rm -f $OUT_CONFIG_MAKEFILE
+
+  m4 -DIN_CONFIG_MAKEFILE=$OUT_CONFIG_MAKEFILE \
+     -DIN_CONFIG_ENVFILE=$OUT_CONFIG_ENVFILE \
+     -DIN_CONFIG_MACROSFILE=$OUT_CONFIG_MACROSFILE \
+     -DIN_CONFIG_VITEFILE=$OUT_CONFIG_VITEFILE \
+     -DIN_CONFIG_INDEXFILE=$OUT_CONFIG_INDEXFILE \
+     -DIN_CONFIG_BACKEND_TOPICSFILE=$OUT_CONFIG_BACKEND_TOPICSFILE \
+     $OUT_CONFIG_MACROSFILE $in_makefile > $OUT_CONFIG_MAKEFILE
+
+  echo "OUT_CONFIG_MAKEFILE...|$OUT_CONFIG_MAKEFILE"
+  echo "OUT_CONFIG_MAKEFILE_abs...|$OUT_CONFIG_MAKEFILE_abs"
+}
+
+cleanup() {
+  rm -f $pre_config_env
+  rm -f $post_config_env
+}
+
+parseUrl() {
+  url=$1
+  scheme="$(echo "$url" | grep -Eo "^.*://" -)"
+  scheme="${scheme%%:*}"
+  # extract the user (if any)
+  url="${url#*//}"
+  userpass="$(echo $url | grep @ | cut -d@ -f1)"
+  pass="$(echo $userpass | grep : | cut -d: -f2)"
+  if [ -n "$pass" ]; then
+    user="$(echo $userpass | grep : | cut -d: -f1)"
+  else
+    user=$userpass
+  fi
+  hostname="$(echo "$url" | grep -Eo "((://)?[a-zA-Z0-9._-]+(:[0-9]+|/|$)|@[a-zA-Z0-9._-]+(:|/|$))")"
+  hostname="${hostname##/*}"
+  hostname="${hostname#*@}"
+  hostname="${hostname%:*}"
+  port="$(echo "$url" | grep -Eo ":[0-9]+")"
+  port="${port#*:}"
+  path="$(echo "$url" | grep -Eo "/[^.:]*$")"
+  path="${path#*/}"
+  echo "$scheme" "${user:-''}" "${pass:-''}" "$hostname" "$port" "$path"
+}
+
+expand() {
+  echo ${!1}
+}
+
+exit_if_empty() {
+  isempty $1 && error "${2:-Missing $1}"
+}
+
+isempty() {
+  local v="${!1:-}"
+  if [ "$v" == "" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+flag() {
+  [ ! -v "${1}" ] && error "Undefined flag: $1"
+  f="${!1:-}"
+  if [ "$f" == "" ]; then
+    error "Empty flag: $f"
+  elif [ "$f" == true ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+strip_quotes() {
+  echo "${1//\"/}"
+}
+print_chapter() {
+  echo "##################################################"
+  echo "$@"
+  echo "##################################################"
+}
+
+parse_args(){
+  declare -ga POSARGS=()
+  while (($# > 0)); do
+    case "${1:-}" in
+      -r* | -r=* | --run=* | --run*)
+        command=$(parse_param "$@") || shift $?
+        $command "${@:2}"
+        exit 0
+        ;;
+      --mode=* | --mode* | -m)
+        MODE="$(parse_param "$@")" || shift $?
+        ;;
+      --node-env=* | --node-env*)
+        NODE_ENV="$(parse_param "$@")" || shift $?
+        ;;
+      --with-installdirs-preset=* | --with-installdirs-preset*)
+        WITH_INSTALLDIRS_PRESET="$(parse_param "$@")" || shift $?
+        ;;
+      --prefix=* | --prefix*)
+        PREFIX="$(parse_param "$@")" || shift $?
+        ;;
+      --buildir-stem=* | --buildir-stem)
+        BUILDIR_STEM="$(parse_param "$@")" || shift $?
+        ;;
+      --skip-npm-install)
+        SKIP_NPM_INSTALL=true
+        ;;
+      --afadmin-client-url-public=* | --afadmin-client-url-public*)
+        AFADMIN_CLIENT_URL_PUBLIC="$(parse_param "$@")" || shift $?
+        ;;
+      --afadmin-client-url-local=* | --afadmin-client-url-local*)
+        AFADMIN_CLIENT_URL_LOCAL="$(parse_param "$@")" || shift $?
+        ;;
+      --afadmin-server-url=* | --afadmin-server-url*)
+        AFADMIN_SERVER_URL="$(parse_param "$@")" || shift $?
+        ;;
+      --afadmin-mysqldb-url=* | --afadmin-mysqldb-url*)
+        AFADMIN_MYSQLDB_URL="$(parse_param "$@")" || shift $?
+        ;;
+      --device-admin-screen-id=* | --device-admin-screen-id*)
+        DEVICE_ADMIN_SCREEN_ID="$(parse_param "$@")" || shift $?
+        ;;
+      --device-rpi-reader-id=* | --device-rpi-reader-id*)
+        DEVICE_RPI_READER_ID="$(parse_param "$@")" || shift $?
+        ;;
+      --with-deploy-target=* | --with-deploy-target*)
+        WITH_DEPLOY_TARGET="$(parse_param "$@")" || shift $?
+        ;;
+      --with-gcloud-target=* | --with-gcloud-target*)
+        WITH_GCLOUD_TARGET="$(parse_param "$@")" || shift $?
+        ;;
+      --loglevel=* | --loglevel*)
+        LOGLEVEL="$(parse_param "$@")" || shift $?
+        ;;
+      -d | --debug)
+        DEBUG=0
+        ;;
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      -[a-zA-Z][a-zA-Z]*)
+        local i="${1:-}"
+        shift
+        local rest="$@"
+        set --
+        for i in $(echo "$i" | grep -o '[a-zA-Z]'); do
+          set -- "$@" "-$i"
+        done
+        set -- $@ $rest
+        continue
+        ;;
+      --)
+        shift
+        POSARGS+=("$@")
+        ;;
+      -[a-zA-Z]* | --[a-zA-Z]*)
+        error "Unrecognized argument ${1:-}"
+        ;;
+      *)
+        POSARGS+=("${1:-}")
+        ;;
+    esac
+    shift
+  done
+}
+
+
+parse_param() {
+  local param arg
+  local -i toshift=0
+
+  if (($# == 0)); then
+    return $toshift
+    # param = value
+  elif [[ "$1" =~ .*=.* ]]; then
+    param="${1%%=*}"
+    arg="${1#*=}"
+    # param value
+  elif [[ "${2-}" =~ ^[^-].+ ]]; then
+    param="$1"
+    arg="$2"
+    ((toshift++))
+  fi
+
+  if [[ -z "${arg-}" && ! "${OPTIONAL-}" ]]; then
+    fatal "${param:-$1} requires an argument"
+  fi
+
+  echo "${arg:-}"
+  return $toshift
+}
+
+quote() {
+  echo \'"$@"\'
+}
+
+error() {
+  echo "$@"
+  exit 1
+}
+
+debug() {
+  [ ! $DEBUG ] && return
+  echo debug: "$@" >&2
+}
+
+main "$@"

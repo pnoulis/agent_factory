@@ -1,0 +1,9 @@
+import * as React from "react";
+import { useRegistrationQueue } from "../registration-queue/useRegistrationQueue.jsx";
+import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
+import { AlertRegisterTeamUnpairedWristbands } from "#components/dialogs/alerts/AlertRegisterTeamUnpairedWrisbands.jsx";
+import { MIN_ROSTER_SIZE } from "../../constants.js";
+import { areMembersUniqueCb } from "js_utils/misc";
+import { Team } from "#afm/team/Team.js";
+import { Player } from "#afm/player/Player.js";

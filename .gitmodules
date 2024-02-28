@@ -1,21 +1,3 @@
-[submodule "afmachine"]
-	path = core/afmachine
-	url = git@github.com:pnoulis/afmachine.git
-[submodule "react_utils"]
-	path = ui/react_utils
-	url = git@github.com:pnoulis/react_utils.git
-[submodule "js_utils"]
-	path = lib/js_utils
-	url = git@github.com:pnoulis/js_utils.git
-[submodule "afadmin_client"]
-	path = ui/afadmin_client
-	url = git@github.com:pnoulis/afadmin_client.git
-[submodule "mqtt_proxy"]
-	path = lib/mqtt_proxy
-	url = git@github.com:pnoulis/mqtt_proxy.git
 [submodule "backend"]
-	path = core/backend
+	path = backend
 	url = git@github.com:IsThisRealLife/agent_factory_services.git
-[submodule "ui/react-action-router"]
-	path = ui/react-action-router
-	url = git@github.com:pnoulis/react-action-router

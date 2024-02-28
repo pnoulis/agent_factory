@@ -1,8 +1,14 @@
-node_modules
-package-lock.json
 dist/
 tmp/
+build/
+coverage/
+tmp/
+run/
+log/
 
+# Node
+node_modules/
+package-lock.json
 
 # wsl2
 *:Zone.Identifier
@@ -10,9 +16,9 @@ tmp/
 # emacs
 # cached changes
 \#*\#
-\.#*
-# undo cache
+.#*
 *~
+.pdf-view-restore
 
 # vim
 :w
@@ -23,28 +29,28 @@ tmp/
 # intellij
 .idea
 
-# Ignore refactoring copies
-refactor.*
+# Ignore python script
+*.py[cod]
+__pycache__
 
-# Ignore logs
+# ------- Transient files
 *.log
+*.logs
+*.out
 *.tar.gz
 
-# Ignore python script
-__pycache__/
-*.py[cod]
+# configure output
+Makefile
+/config.*
+/vite.config.js
+/index.html
+/backend-topics.js
 
-ui/newlogic.afadmin_client
-__pycache__
+
+# ------- Environment variables
 .env
-
-ui/af-design-style
-tmp.*
-
-
-# M4 macro expands shared/mqtt/client.js.m4 into shared/mqtt/client.js
-shared/mqtt/client.js
-
-ui/afadmin_new_client.git 
-ui/afadmin_client.* 
-ui/user-router/
+.env.*
+.env.*.local
+.env.local
+env.local
+env.*.local
