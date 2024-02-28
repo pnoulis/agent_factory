@@ -1,343 +1,262 @@
-import * as React from "react";
+import { Overflow } from "#components/Overflow.jsx";
+import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
+import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
+import { confirmActivateTeamPackage } from "#components/dialogs/confirms/confirmActivateTeamPackage.jsx";
+import { confirmAddTeamPackage } from "#components/dialogs/confirms/confirmAddTeamPackage.jsx";
+import { confirmRemoveteamPackage } from "#components/dialogs/confirms/confirmRemoveTeamPackage.jsx";
+import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { Panel } from "#components/panel/Panel.jsx";
 import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import styled from "styled-components";
+import { SquizzedPlayerInfoCard } from "#components/player/SquizzedPlayerInfoCard.jsx";
+import { DataTuple } from "#components/tuple/DataTuple.jsx";
+import { WidgetLock } from "#components/widgets/WidgetLock.jsx";
+import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";
+import * as React from "react";
 import {
-  Outlet,
-  useNavigate,
   Navigate,
-  useLocation,
+  Outlet,
   useLoaderData,
+  useLocation,
+  useNavigate,
   useRevalidator,
 } from "react-router-dom";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
-import { liveView, teamPackage, team as linkTeam } from "/src/links.jsx";
+import styled from "styled-components";
 import { ListPackages } from "./ListPackages.jsx";
 import { PairWristbands } from "./PairWristbands.jsx";
+import { Package as PackageController } from "/src/controllers/Package.js";
+import { liveView, teamPackage } from "/src/links.jsx";
 import { AwaitTeam } from "/src/loaders/loadTeam.jsx";
-import { DataTuple } from "#components/tuple/DataTuple.jsx";
-import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";
-import { WidgetLock } from "#components/widgets/WidgetLock.jsx";
-import { SquizzedPlayerInfoCard } from "#components/player/SquizzedPlayerInfoCard.jsx";
-import { Overflow } from "#components/Overflow.jsx";
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { renderDialogPromise } from "#components/dialogs/renderDialogPromise.jsx";
-import { confirmAddTeamPackage } from "#components/dialogs/confirms/confirmAddTeamPackage.jsx";
-import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
-import { confirmRemoveteamPackage } from "#components/dialogs/confirms/confirmRemoveTeamPackage.jsx";
-import { confirmActivateTeamPackage } from "#components/dialogs/confirms/confirmActivateTeamPackage.jsx";
-import dayjs from "dayjs";
 
 const isPackageRoute = (location) =>
   new RegExp(teamPackage.path).test(location.pathname);
 
-const today = dayjs().startOf("day");
-
-const isTodaysTeam = (team) => team.t_created > today;
-
-const blockInactiveTeam = (team, action) =>
-  isTodaysTeam(team)
-    ? Promise.resolve(false)
-    : renderDialogPromise(
-        <DialogAlertStandard
-          initialOpen
-          heading={action}
-          msg="Cannot update inactive teams"
-        />,
-      ).then(() => true);
-
 function Component() {
   const navigate = useNavigate();
   const location = useLocation();
+  const revalidator = useRevalidator();
   const [pairWristbands, setPairWristbands] = React.useState(false);
   const [selectedPkg, setSelectedPkg] = React.useState({});
-  const tt = useLoaderData();
-  const teamRef = React.useRef();
-  const revalidator = useRevalidator();
+  const loader = useLoaderData();
 
-  const getTeam = () => tt.team.then(({ team }) => team);
+  const getTeam = () => loader.team.then(({ team }) => team);
   const registerPackage = async () => {
-    const team = await getTeam();
-    if (await blockInactiveTeam(team, "register package")) {
-      return;
-    } else if (!selectedPkg.name) {
-      return renderDialogPromise(
-        <DialogAlertStandard
-          initialOpen
-          heading="register package"
-          msg="No package selected"
-        />,
-      );
-    } else if (selectedPkg.state === "registered") {
-      return renderDialogPromise(
-        <DialogAlertStandard
-          heading="register package"
-          msg="Package is already registered"
-        />,
-      );
-    } else if (team.packages.find((pkg) => pkg.state === "playing")) {
-      return renderDialogPromise(
-        <DialogAlertStandard
-          initialOpen
-          heading="register package"
-          msg="Cannot register a new package while playing"
-        />,
-      );
-    } else if (
-      team.packages.filter((pkg) => pkg.state === "registered").length >= 1
-    ) {
-      return renderDialogPromise(
-        <DialogAlertStandard
-          initialOpen
-          heading="register package"
-          msg="Registered package exists already"
-        />,
-      );
-    } else if (
-      team.roster.filter(
-        (player) =>
-          player.wristband.inState?.("paired") ||
-          player.wristband.state === "paired",
-      ).length !== team.roster.length
-    ) {
-      return renderDialogPromise(
-        <DialogAlertStandard
-          initialOpen
-          heading="register package"
-          msg="Team players missing wristbands"
-        />,
-      );
-    }
-    if (await confirmAddTeamPackage()) {
-      await afm.addTeamPackage(team, selectedPkg);
-      setSelectedPkg({});
+    let msg;
+    try {
+      const team = await getTeam();
+      await PackageController.registerPackage(team, selectedPkg);
+      if (!(await confirmAddTeamPackage())) return;
+      const cmd = await afm.addTeamPackage(team, selectedPkg);
+      msg = cmd.msg;
       const url = new URL("..", window.origin + location.pathname + "/");
-      navigate(url.pathname);
+      navigate(url.pathname, { replace: true });
+    } catch (err) {
+      msg = err.message;
+      debug(err);
+    } finally {
+      if (msg) {
+        renderDialog(
+          <DialogAlertStandard
+            initialOpen
+            heading="register package"
+            msg={msg}
+          />,
+        );
+      }
     }
   };
+
   const activatePackage = async () => {
-    const team = await getTeam();
-    if (await blockInactiveTeam(team, "start team")) {
-      return;
-    } else if (
-      !teamRef.current.packages.find((pkg) => pkg.state === "registered")
-    ) {
-      return renderDialog(
-        <DialogAlertStandard
-          initialOpen
-          heading="start team"
-          msg="Missing registered package"
-        />,
-      );
-    }
-    if (await confirmActivateTeamPackage()) {
-      afm.startTeam(teamRef.current);
-    }
-  };
-  const removePackage = async () => {
-    const team = await getTeam();
-    if (await blockInactiveTeam(team, "remove package")) {
-      return;
-    } else if (!selectedPkg.name) {
-      return renderDialogPromise(
-        <DialogAlertStandard
-          initialOpen
-          heading="remove package"
-          msg="No package selected"
-        />,
-      );
-    } else if (selectedPkg.state !== "registered") {
-      return renderDialog(
-        <DialogAlertStandard
-          initialOpen
-          heading="remove package"
-          msg={`Cannot remove a ${selectedPkg.state} package`}
-        />,
-      );
-    } else if (await confirmRemoveteamPackage()) {
-      await afm.removeTeamPackage(teamRef.current, selectedPkg);
+    let msg;
+    try {
+      const team = await getTeam();
+      await PackageController.activatePackage(team);
+      if (!(await confirmActivateTeamPackage())) return;
+      const cmd = await afm.startTeam(team);
+      msg = cmd.msg;
       setSelectedPkg({});
-      navigate(linkTeam(teamRef.current.name).path, { replace: true });
+      revalidator.revalidate();
+    } catch (err) {
+      msg = err.message;
+      debug(err);
+    } finally {
+      if (msg) {
+        renderDialog(
+          <DialogAlertStandard
+            initialOpen
+            heading="activate package"
+            msg={msg}
+          />,
+        );
+      }
     }
   };
+
+  const removePackage = async () => {
+    let msg;
+    try {
+      const team = await getTeam();
+      await PackageController.deregisterPackage(team, selectedPkg);
+      if (!(await confirmRemoveteamPackage())) return;
+      const cmd = await afm.removeTeamPackage(team, selectedPkg);
+      msg = cmd.msg;
+      setSelectedPkg({});
+      revalidator.revalidate();
+    } catch (err) {
+      msg = err.message;
+      debug(err);
+    } finally {
+      if (msg) {
+        renderDialog(
+          <DialogAlertStandard
+            initialOpen
+            heading="remove package"
+            msg={msg}
+          />,
+        );
+      }
+    }
+  };
+
   const addPackage = async () => {
-    const team = await getTeam();
-    if (await blockInactiveTeam(team, "add package")) {
-      return;
-    } else {
-      {
-        setSelectedPkg({});
-        navigate(teamPackage.path, { relative: true });
+    let msg;
+    try {
+      const team = await getTeam();
+      await PackageController.addPackage(team, selectedPkg);
+      setSelectedPkg({});
+      navigate(teamPackage.path, { relative: true });
+    } catch (err) {
+      msg = err.message;
+      debug(err);
+    } finally {
+      if (msg) {
+        renderDialog(
+          <DialogAlertStandard initialOpen heading="add package" msg={msg} />,
+        );
       }
     }
   };
 
   return (
-    <ViewCommand
-      onFulfilled={(cmd) => {
-        revalidator.revalidate();
-      }}
-      onSettled={(cmd) => {
-        renderDialog(
-          <DialogAlertStandard initialOpen heading={cmd.verb} msg={cmd.msg} />,
-        );
-      }}
-      noRejected
-      noFulfilled
-      cmd={afm.startTeam}
-    >
-      <ViewCommand
-        onSettled={(cmd) => {
-          renderDialog(
-            <DialogAlertStandard
-              initialOpen
-              heading={cmd.verb}
-              msg={cmd.msg}
-            />,
-          );
-        }}
-        noRejected
-        noFulfilled
-        cmd={afm.removeTeamPackage}
-      >
-        <ViewCommand
-          onSettled={(cmd) => {
-            renderDialog(
-              <DialogAlertStandard
-                initialOpen
-                heading={cmd.verb}
-                msg={cmd.msg}
-              />,
-            );
-          }}
-          noRejected
-          noFulfilled
-          cmd={afm.addTeamPackage}
-        >
+    <ViewCommand noRejected noFulfilled cmd={afm.startTeam}>
+      <ViewCommand noRejected noFulfilled cmd={afm.removeTeamPackage}>
+        <ViewCommand noRejected noFulfilled cmd={afm.addTeamPackage}>
           <Page className="page-team">
             <AwaitTeam>
-              {({ team, id }) => {
-                teamRef.current = team;
-                return !team ? (
+              {({ team, id }) =>
+                !team ? (
                   <DialogAlertStandard
                     heading="Team page"
                     msg="Missing team"
                     onClose={() => navigate(liveView.path)}
                   />
-                ) : team.packages.length < 1 && !isPackageRoute(location) ? (
-                  <Navigate relative to={teamPackage.path} />
                 ) : (
-                  <>
-                    <Panel className="panel-team">
-                      <PanelActionbar>
-                        <ThisPanelNavbar>
-                          <WidgetLock
-                            locked={!isTodaysTeam(team)}
-                            content={
-                              isTodaysTeam(team)
-                                ? "todays team"
-                                : "inactive team"
-                            }
-                            fill="black"
-                            style={{ marginRight: "auto" }}
-                          />
-                          <TeamName>
-                            <DataTuple nok src={team} name="name" />
-                          </TeamName>
-                          <TeamState>
-                            <DataTuple nok src={team} name="state" />
-                          </TeamState>
-                          {team.isTemporary && (
-                            <TeamState>group party</TeamState>
-                          )}
-                        </ThisPanelNavbar>
-                      </PanelActionbar>
+                  <Panel id={id} className="panel-team">
+                    <PanelActionbar>
+                      <ThisPanelNavbar>
+                        <WidgetLock
+                          locked={!PackageController.isTodaysTeam(team)}
+                          content={
+                            PackageController.isTodaysTeam(team)
+                              ? "todays team"
+                              : "inactive team"
+                          }
+                          fill="black"
+                          style={{ marginRight: "auto" }}
+                        />
+                        <TeamName>
+                          <DataTuple nok src={team} name="name" />
+                        </TeamName>
+                        <TeamState>
+                          <DataTuple nok src={team} name="state" />
+                        </TeamState>
+                        {team.isTemporary && <TeamState>group party</TeamState>}
+                      </ThisPanelNavbar>
+                    </PanelActionbar>
 
-                      <Content key={id} className="content-team">
-                        <section className="roster">
-                          <Panel className="roster-panel">
-                            <PanelActionbar>
-                              <PanelNavbar>
-                                <WidgetRoster
-                                  color="var(--primary-base)"
-                                  fill="white"
-                                  content={
-                                    pairWristbands
-                                      ? "roster"
-                                      : "pair wristbands"
+                    <Content key={id} className="content-team">
+                      <section className="roster">
+                        <Panel className="roster-panel">
+                          <PanelActionbar>
+                            <PanelNavbar>
+                              <WidgetRoster
+                                color="var(--primary-base)"
+                                fill="white"
+                                content={
+                                  pairWristbands ? "roster" : "pair wristbands"
+                                }
+                                onClick={async () => {
+                                  if (
+                                    await blockInactiveTeam(
+                                      team,
+                                      "pair wristbands",
+                                    )
+                                  ) {
+                                    return;
+                                  } else if (team.isTemporary) {
+                                    return renderDialog(
+                                      <DialogAlertStandard
+                                        initialOpen
+                                        heading="pair wristbands"
+                                        msg="Group party teams cannot change their roster"
+                                      />,
+                                    );
+                                  } else {
+                                    setPairWristbands((prev) => !prev);
                                   }
-                                  onClick={async () => {
-                                    if (
-                                      await blockInactiveTeam(
-                                        team,
-                                        "pair wristbands",
-                                      )
-                                    ) {
-                                      return;
-                                    } else if (team.isTemporary) {
-                                      return renderDialog(
-                                        <DialogAlertStandard
-                                          initialOpen
-                                          heading="pair wristbands"
-                                          msg="Group party teams cannot change their roster"
-                                        />,
-                                      );
-                                    } else {
-                                      setPairWristbands((prev) => !prev);
-                                    }
-                                  }}
-                                />
-                              </PanelNavbar>
-                            </PanelActionbar>
-                            <div className="content-roster">
-                              {pairWristbands ? (
-                                <PairWristbands team={team} />
-                              ) : (
-                                <Overflow>
-                                  <List>
-                                    {team.roster.map((player, i) => (
-                                      <SquizzedPlayerInfoCard
-                                        ctx={player}
-                                        key={player + i}
-                                      />
-                                    ))}
-                                  </List>
-                                </Overflow>
-                              )}
-                            </div>
-                          </Panel>
-                        </section>
-
-                        <section className="packages">
-                          <Panel className="packages-panel">
-                            <PanelActionbar />
-                            {isPackageRoute(location) ? (
-                              <Outlet
-                                context={{
-                                  team,
-                                  registerPackage,
-                                  selectedPkg,
-                                  setSelectedPkg,
                                 }}
                               />
+                            </PanelNavbar>
+                          </PanelActionbar>
+                          <div className="content-roster">
+                            {pairWristbands ? (
+                              <PairWristbands team={team} />
                             ) : (
-                              <ListPackages
-                                team={team}
-                                addPackage={addPackage}
-                                selectedPkg={selectedPkg}
-                                setSelectedPkg={setSelectedPkg}
-                                removePackage={removePackage}
-                                activatePackage={activatePackage}
-                              />
+                              <Overflow>
+                                <List>
+                                  {team.roster.map((player, i) => (
+                                    <SquizzedPlayerInfoCard
+                                      ctx={player}
+                                      key={player + i}
+                                    />
+                                  ))}
+                                </List>
+                              </Overflow>
                             )}
-                          </Panel>
-                        </section>
-                      </Content>
-                    </Panel>
-                  </>
-                );
-              }}
+                          </div>
+                        </Panel>
+                      </section>
+
+                      <section className="packages">
+                        <Panel className="packages-panel">
+                          <PanelActionbar />
+                          {isPackageRoute(location) ? (
+                            <Outlet
+                              context={{
+                                team,
+                                registerPackage,
+                                selectedPkg,
+                                setSelectedPkg,
+                              }}
+                            />
+                          ) : team.packages.length === 0 ? (
+                            <Navigate relative to={teamPackage.path} />
+                          ) : (
+                            <ListPackages
+                              team={team}
+                              addPackage={addPackage}
+                              selectedPkg={selectedPkg}
+                              setSelectedPkg={setSelectedPkg}
+                              removePackage={removePackage}
+                              activatePackage={activatePackage}
+                            />
+                          )}
+                        </Panel>
+                      </section>
+                    </Content>
+                  </Panel>
+                )
+              }
             </AwaitTeam>
           </Page>
         </ViewCommand>
@@ -392,11 +311,6 @@ const Content = styled("div")`
   .packages .packages-panel {
     gap: 80px;
   }
-`;
-
-const ContentRightPanel = styled("div")`
-  width: 100%;
-  height: 100%;
 `;
 
 const ThisPanelNavbar = styled(PanelNavbar)`

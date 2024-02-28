@@ -18,4 +18,25 @@ const getComparator = (comparators, order, key) =>
 const comparatorLessThan = (a, b, k) =>
   a[k] < b[k] ? 1 : a[k] > b[k] ? -1 : 0;
 
-export { sort, switchOrder, getComparator, comparatorLessThan };
+function createComparatorPackageState(states) {
+  states ||= {
+    unregistered: 0,
+    registered: 1,
+    playing: 2,
+    completed: 3,
+  };
+  return (a, b) =>
+    states[a.state] < states[b.state]
+      ? 1
+      : states[a.state] > states[b.state]
+        ? -1
+        : 0;
+}
+
+export {
+  sort,
+  switchOrder,
+  getComparator,
+  comparatorLessThan,
+  createComparatorPackageState,
+};

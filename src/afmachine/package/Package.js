@@ -34,6 +34,14 @@ class Package extends createStateful([
     this.state = this.states[pkg.state?.name || pkg.state || "unregistered"];
   }
 
+  get state() {
+    return this._state.name;
+  }
+
+  set state(s) {
+    this._state = s;
+  }
+
   normalize(sources, options = {}) {
     const { state, ...pkg } = Package.normalize([this, sources], options);
     Object.assign(this, pkg);

@@ -7,6 +7,15 @@ import { WidgetPlay } from "#components/widgets/WidgetPlay.jsx";
 import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
 import { WidgetRemove } from "#components/widgets/WidgetRemove.jsx";
 import { StandardPackageInfoCard } from "#components/package/StandardPackageInfoCard.jsx";
+import { createComparatorPackageState } from "../../misc/sort.js";
+
+const comparator = createComparatorPackageState({
+  registered: 2,
+  playing: 1,
+  completed: 0,
+});
+
+const sortPackages = (pkgs) => [...pkgs].sort(comparator);
 
 function ListPackages({
   team,
@@ -43,7 +52,7 @@ function ListPackages({
       <Overflow style={{ maxWidth: "max-content" }}>
         <Content>
           <List>
-            {team.packages.map((pkg, i) => (
+            {sortPackages(team.packages).map((pkg, i) => (
               <Package
                 $selected={pkg.id === selectedPkg?.id}
                 key={i}
@@ -78,11 +87,8 @@ const List = styled("ul")`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-flow: column-reverse nowrap;
+  flex-flow: column nowrap;
   max-width: 600px;
-  // display: grid;
-  // grid-template-columns: minmax(600px, min-content);
-  // grid-auto-rows: min-content;
   gap: 30px;
   align-items: start;
   justify-content: start;

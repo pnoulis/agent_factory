@@ -1,4 +1,3 @@
-import { ButtonFilter } from "#components/buttons/ButtonFilter.jsx";
 import { PanelNavLink } from "#components/links/PanelNavLink";
 import { Panel } from "#components/panel/Panel.jsx";
 import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";

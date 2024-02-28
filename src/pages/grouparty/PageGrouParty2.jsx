@@ -145,19 +145,6 @@ function Component() {
     debug(newPlayers, "enqueue new players");
     debug(gpRef.current, " new gp ref current");
     enqueue(...newPlayers);
-
-    // let i = gpRef.current.length;
-    // let next;
-    // while (!next && i--) {
-    //   next = nextPlayer(gpRef.current[i].roster);
-    // }
-    // if (next) pairWristband(next);
-    // do {
-    //   next = nextPlayer(gpRef.current[i].roster);
-    // } while (!next && i--)
-    // for (let i = gpRef.current.length - 1; i > -1; --i) {
-    //   const next = nextPlayer(gpRef.current[i].roster);
-    // }
   }
 
   async function onDistributionClick() {
