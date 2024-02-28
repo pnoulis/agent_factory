@@ -11,7 +11,7 @@
  */
 
 import { randomInteger } from "js_utils/misc";
-import { getafm } from '../src/getafm.js';
+import { getafmNode } from '../src/getafmNode.js';
 import * as CONSTANTS from '../src/constants.js';
 
 let [id, color] = process.argv.slice(2);
@@ -24,11 +24,12 @@ if (color == null) {
   color = randomInteger(1, CONSTANTS.WRISTBAND_COLORS.max);
 }
 
+const afm = getafmNode();
 let err;
 try {
-  await getafm(false).then(async (afm) => {
-    return afm.readWristband({ id, colorCode: color }, { queue: false });
-  })
+  afm.boot({ queue: false });
+  afm.boot({ rpiReader: true, });
+  await afm.readWristband({ id, colorCode: color, }, { queue: false });
   console.log(`id: ${id}`);
   console.log(`colorCode: ${color}`)
   console.log(`color: ${CONSTANTS.WRISTBAND_COLORS[color]}`)
@@ -36,6 +37,6 @@ try {
   console.log(err);
   err = err;
 } finally {
-  await getafm(false).then((afm) => afm.stop());
+  await afm.stop();
   process.exit(err ? 1 : 0);
 }
