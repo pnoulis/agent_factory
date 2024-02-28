@@ -57,6 +57,7 @@ main() {
   resolve_afadmin_client_url
   resolve_afadmin_server_url
   resolve_afadmin_mysqldb_url
+  resolve_deploy_target
   resolve_xdgdirs
   print_chapter "Resolving installation dirs..."
   exit_if_empty WITH_INSTALLDIRS_PRESET 'Missing --with-installdirs-preset'
@@ -72,6 +73,11 @@ main() {
   cleanup
 }
 
+resolve_deploy_target() {
+ print_chapter "Resolving deploy target..."
+ declare -gx DEPLOY_TARGET="${WITH_DEPLOY_TARGET}"
+ echo "DEPLOY_TARGET...|$DEPLOY_TARGET"
+}
 resolve_buildir() {
   print_chapter "Resolving buildir..."
   declare -gx CONFIGUREDIR_ABS="$(pwd)"
