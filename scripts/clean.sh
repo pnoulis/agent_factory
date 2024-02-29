@@ -9,7 +9,7 @@ echo scriptdir: $scriptdir
 echo srcdir: $srcdir
 
 
-components=$(realpath ${srcdir}/src/afmachine)
+components=$(realpath ${srcdir}/assets)
 echo components:$components
 while IFS= read -r path; do
   echo $path
@@ -18,8 +18,8 @@ while IFS= read -r path; do
     relative_components="./${relative_components}"
   fi
   echo relative_components:$relative_components
-  sed -i "s|#afm|$relative_components|gi" "$path"
-done < <(grep -rin '#afm' ${srcdir}/src | cut -d':' -f1 | uniq)
+  # sed -i "s|#afm|$relative_components|gi" "$path"
+done < <(grep -rin '#assets' ${srcdir}/src | cut -d':' -f1 | uniq)
 
 
 # grep -rin 'components' ${srcdir}/src | cut -d ':' -f1

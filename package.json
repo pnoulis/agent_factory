@@ -12,9 +12,6 @@
     }
   ],
   "type": "module",
-  "imports": {
-    "#assets/*": "./assets/*"
-  },
   "devDependencies": {
     "@mui/material": "5.15.10",
     "@types/react": "^18.2.45",
