@@ -60,12 +60,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to register new Player";
+  cmd.res.msg = "Failed to register new Player";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully registered new Player";
+  cmd.res.msg = "Successfully registered new Player";
 };
 
 export { Command as registerPlayer };

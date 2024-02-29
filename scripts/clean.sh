@@ -9,6 +9,7 @@ echo scriptdir: $scriptdir
 echo srcdir: $srcdir
 
 
-cd $srcdir
+cd $srcdir/src
 
-npx eslint $srcdir/src | grep 'no-unused-vars'
+
+grep -rin 'cmd\.msg =' | cut -d':' -f1 | xargs -I {} sed -i 's/cmd\.msg =/cmd\.res\.msg =/gi' {}

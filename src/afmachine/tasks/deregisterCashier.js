@@ -47,12 +47,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to deregister Cashier";
+  cmd.res.msg = "Failed to deregister Cashier";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully deregistered Cashier";
+  cmd.res.msg = "Successfully deregistered Cashier";
 };
 
 export { Command as deregisterCashier };

@@ -52,12 +52,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to find team";
+  cmd.res.msg = "Failed to find team";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully found team";
+  cmd.res.msg = "Successfully found team";
 };
 
 export { Command as findTeam };

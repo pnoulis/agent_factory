@@ -51,12 +51,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to deregister Wristband from Player";
+  cmd.res.msg = "Failed to deregister Wristband from Player";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully deregistered Wristband from Player";
+  cmd.res.msg = "Successfully deregistered Wristband from Player";
 };
 
 export { Command as deregisterWristband };

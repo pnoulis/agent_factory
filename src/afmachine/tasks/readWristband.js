@@ -40,12 +40,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to read wristband";
+  cmd.res.msg = "Failed to read wristband";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully read wristband";
+  cmd.res.msg = "Successfully read wristband";
 };
 
 export { Command as readWristband };

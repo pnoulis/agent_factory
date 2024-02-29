@@ -46,14 +46,14 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = `Failed to switch off ${
+  cmd.res.msg = `Failed to switch off ${
     cmd.req.deviceId ? "device" : "all devices"
   }`;
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = `Successfully switched off ${
+  cmd.res.msg = `Successfully switched off ${
     cmd.req.deviceId ? "device" : "all devices"
   }`;
 };

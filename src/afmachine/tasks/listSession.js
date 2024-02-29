@@ -34,12 +34,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve Session";
+  cmd.res.msg = "Failed to retrieve Session";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved Session";
+  cmd.res.msg = "Successfully retrieved Session";
 };
 
 export { Command as listSession };

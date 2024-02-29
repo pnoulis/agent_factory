@@ -57,12 +57,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to login Cashier";
+  cmd.res.msg = "Failed to login Cashier";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully logged in Cashier";
+  cmd.res.msg = "Successfully logged in Cashier";
 };
 
 export { Command as loginCashier };

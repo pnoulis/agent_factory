@@ -46,12 +46,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = `Failed to boot ${cmd.req.deviceId ? "device" : "all devices"}`;
+  cmd.res.msg = `Failed to boot ${cmd.req.deviceId ? "device" : "all devices"}`;
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = `Successfully booted ${
+  cmd.res.msg = `Successfully booted ${
     cmd.req.deviceId ? "device" : "all devices"
   }`;
 };

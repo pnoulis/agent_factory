@@ -51,12 +51,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to activate Team";
+  cmd.res.msg = "Failed to activate Team";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully activated Team";
+  cmd.res.msg = "Successfully activated Team";
 };
 
 export { Command as startTeam };

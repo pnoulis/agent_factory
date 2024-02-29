@@ -45,12 +45,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to search for Player";
+  cmd.res.msg = "Failed to search for Player";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully searched Player";
+  cmd.res.msg = "Successfully searched Player";
 };
 
 export { Command as searchPlayer };

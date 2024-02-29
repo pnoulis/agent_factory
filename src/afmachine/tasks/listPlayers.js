@@ -40,12 +40,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve players";
+  cmd.res.msg = "Failed to retrieve players";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved players";
+  cmd.res.msg = "Successfully retrieved players";
 };
 
 export { Command as listPlayers };

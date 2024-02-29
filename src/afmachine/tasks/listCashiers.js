@@ -38,12 +38,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve Cashiers";
+  cmd.res.msg = "Failed to retrieve Cashiers";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved Cashiers";
+  cmd.res.msg = "Successfully retrieved Cashiers";
 };
 
 export { Command as listCashiers };

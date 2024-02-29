@@ -43,12 +43,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to update Scoreboard Device view";
+  cmd.res.msg = "Failed to update Scoreboard Device view";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully updated Scoreboard Device view";
+  cmd.res.msg = "Successfully updated Scoreboard Device view";
 };
 
 export { Command as updateScoreboardDeviceView };

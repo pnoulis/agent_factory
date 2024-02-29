@@ -42,12 +42,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to start Session";
+  cmd.res.msg = "Failed to start Session";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully started Session";
+  cmd.res.msg = "Successfully started Session";
 };
 
 export { Command as startSession };

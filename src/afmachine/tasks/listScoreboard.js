@@ -44,12 +44,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve Scoreboard";
+  cmd.res.msg = "Failed to retrieve Scoreboard";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved Scoreboard";
+  cmd.res.msg = "Successfully retrieved Scoreboard";
 };
 
 export { Command as listScoreboard };

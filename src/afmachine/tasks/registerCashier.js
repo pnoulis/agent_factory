@@ -49,12 +49,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to register new Cashier";
+  cmd.res.msg = "Failed to register new Cashier";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully registered new Cashier";
+  cmd.res.msg = "Successfully registered new Cashier";
 };
 
 export { Command as registerCashier };

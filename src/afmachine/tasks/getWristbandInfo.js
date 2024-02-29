@@ -48,12 +48,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve Wristband information";
+  cmd.res.msg = "Failed to retrieve Wristband information";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved Wristband information";
+  cmd.res.msg = "Successfully retrieved Wristband information";
 };
 
 export { Command as getWristbandInfo };

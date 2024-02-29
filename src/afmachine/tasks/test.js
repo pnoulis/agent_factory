@@ -23,12 +23,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to test";
+  cmd.res.msg = "Failed to test";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully tested";
+  cmd.res.msg = "Successfully tested";
 };
 
 export { Command as test };

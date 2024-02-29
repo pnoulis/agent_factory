@@ -35,12 +35,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve scoreboard views";
+  cmd.res.msg = "Failed to retrieve scoreboard views";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved scoreboard views";
+  cmd.res.msg = "Successfully retrieved scoreboard views";
 };
 
 export { Command as listScoreboardViews };

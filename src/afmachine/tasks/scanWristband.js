@@ -64,12 +64,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to scan Wristband";
+  cmd.res.msg = "Failed to scan Wristband";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully scanned Wristband";
+  cmd.res.msg = "Successfully scanned Wristband";
 };
 
 export { Command as scanWristband };

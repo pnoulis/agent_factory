@@ -45,12 +45,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = `Failed to start Agent Factory`;
+  cmd.res.msg = `Failed to start Agent Factory`;
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = `Successfully started Agent Factory`;
+  cmd.res.msg = `Successfully started Agent Factory`;
 };
 
 export { Command as boot };

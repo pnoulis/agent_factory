@@ -57,12 +57,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to remove Package from Team";
+  cmd.res.msg = "Failed to remove Package from Team";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully removed Package from Team";
+  cmd.res.msg = "Successfully removed Package from Team";
 };
 
 export { Command as removeTeamPackage };

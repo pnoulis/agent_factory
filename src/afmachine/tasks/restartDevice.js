@@ -46,12 +46,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = `Failed to restart ${cmd.req.deviceId ? "device" : "all devices"}`;
+  cmd.res.msg = `Failed to restart ${cmd.req.deviceId ? "device" : "all devices"}`;
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = `Successfully restarted ${
+  cmd.res.msg = `Successfully restarted ${
     cmd.req.deviceId ? "device" : "all devices"
   }`;
 };

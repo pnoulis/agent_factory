@@ -34,12 +34,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve packages";
+  cmd.res.msg = "Failed to retrieve packages";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved packages";
+  cmd.res.msg = "Successfully retrieved packages";
 };
 
 export { Command as listPackages };

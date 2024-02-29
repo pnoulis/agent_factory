@@ -33,12 +33,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to unpair wristband from player";
+  cmd.res.msg = "Failed to unpair wristband from player";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully unpaired wristband from player";
+  cmd.res.msg = "Successfully unpaired wristband from player";
 };
 
 export { Command as unpairWristband };

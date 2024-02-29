@@ -36,12 +36,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve devices";
+  cmd.res.msg = "Failed to retrieve devices";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved devices";
+  cmd.res.msg = "Successfully retrieved devices";
 };
 
 export { Command as listDevices };

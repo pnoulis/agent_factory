@@ -45,12 +45,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to stop Session";
+  cmd.res.msg = "Failed to stop Session";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully stopped Session";
+  cmd.res.msg = "Successfully stopped Session";
 };
 
 export { Command as stopSession };

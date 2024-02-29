@@ -38,12 +38,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve scoreboard devices";
+  cmd.res.msg = "Failed to retrieve scoreboard devices";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved scoreboard devices";
+  cmd.res.msg = "Successfully retrieved scoreboard devices";
 };
 
 export { Command as listScoreboardDevices };

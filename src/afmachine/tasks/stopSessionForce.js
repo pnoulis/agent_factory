@@ -23,12 +23,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to force stop Session";
+  cmd.res.msg = "Failed to force stop Session";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully force stopped Session";
+  cmd.res.msg = "Successfully force stopped Session";
 };
 
 export { Command as stopSessionForce };

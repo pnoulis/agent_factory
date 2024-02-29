@@ -53,12 +53,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to add Package to Team";
+  cmd.res.msg = "Failed to add Package to Team";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully added Package to Team";
+  cmd.res.msg = "Successfully added Package to Team";
 };
 
 export { Command as addTeamPackage };

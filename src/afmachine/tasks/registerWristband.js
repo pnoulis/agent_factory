@@ -60,12 +60,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to register Wristband to Player";
+  cmd.res.msg = "Failed to register Wristband to Player";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully registered Wristband to Player";
+  cmd.res.msg = "Successfully registered Wristband to Player";
 };
 
 export { Command as registerWristband };

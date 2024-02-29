@@ -39,12 +39,12 @@ Command.middleware = [
 Command.onFailure = function () {
   const cmd = this;
   cmd.res.ok = false;
-  cmd.msg = "Failed to retrieve teams";
+  cmd.res.msg = "Failed to retrieve teams";
 };
 Command.onSuccess = function () {
   const cmd = this;
   cmd.res.ok = true;
-  cmd.msg = "Successfully retrieved teams";
+  cmd.res.msg = "Successfully retrieved teams";
 };
 
 export { Command as listTeams };
