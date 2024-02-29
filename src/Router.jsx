@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { ENV } from "./config.js";
 import * as links from "./links.jsx";
-import { PageScratch } from "./pages/scratch/PageScratch.jsx";
+// import { PageScratch } from "./pages/scratch/PageScratch.jsx";
 import { loadAfmachine } from "./loaders/loadAfmachine.jsx";
 import { loadCashiers } from "./loaders/loadCashiers.jsx";
 import { loadPlayers } from "./loaders/loadPlayers.jsx";
