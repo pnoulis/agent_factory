@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { Svg } from "react_utils/svgs";
 import IconArrow from "/assets/icons/filter-pointer.svg?react";
 import { TableDataTuple } from "./TableDataTuple.jsx";
-import { DataTuple } from "#components/tuple/DataTuple.jsx";
+import { DataTuple } from "../tuple/DataTuple.jsx";
 
 /*
   Sorting direction (order)

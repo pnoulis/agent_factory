@@ -1,17 +1,17 @@
 import * as React from "react";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
+import { PanelActionbar } from "../../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../../components/panel/PanelNavbar.jsx";
 import styled from "styled-components";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { AwaitPackages } from "../../loaders/loadPackages.jsx";
-import { WidgetRegister } from "#components/widgets/WidgetRegister.jsx";
-import { WidgetPackage } from "#components/widgets/WidgetPackage.jsx";
-import { DataTuple } from "#components/tuple/DataTuple.jsx";
-import { Overflow } from "#components/Overflow.jsx";
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
+import { WidgetRegister } from "../../components/widgets/WidgetRegister.jsx";
+import { WidgetPackage } from "../../components/widgets/WidgetPackage.jsx";
+import { DataTuple } from "../../components/tuple/DataTuple.jsx";
+import { Overflow } from "../../components/Overflow.jsx";
+import { renderDialog } from "../../components/dialogs/renderDialog.jsx";
+import { DialogAlertStandard } from "../../components/dialogs/alerts/DialogAlertStandard.jsx";
 import { team as linkTeam } from "/src/links.jsx";
-import { ComboboxSelectPackage } from "#components/comboboxes/ComboboxSelectPackage.jsx";
+import { ComboboxSelectPackage } from "../../components/comboboxes/ComboboxSelectPackage.jsx";
 
 function Component() {
   const navigate = useNavigate();

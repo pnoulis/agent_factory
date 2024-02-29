@@ -2,7 +2,7 @@ import { DialogConfirm } from "./DialogConfirm.jsx";
 import { DialogConfirmStandard } from "./DialogConfirmStandard.jsx";
 import { Yes } from "./Yes.jsx";
 import { No } from "./No.jsx";
-import { ButtonDialog } from "#components/buttons/ButtonDialog.jsx";
+import { ButtonDialog } from "../../buttons/ButtonDialog.jsx";
 import { renderDialog } from "../renderDialog.jsx";
 import styled from "styled-components";
 import { Heading } from "./Heading.jsx";

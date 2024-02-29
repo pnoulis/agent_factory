@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { DialogAlertStandard } from "../dialogs/alerts/DialogAlertStandard.jsx";
+import { renderDialog } from "../dialogs/renderDialog.jsx";
 import { confirmUnpairWristband } from "../dialogs/confirms/confirmUnpairWristband";
 
 function nextPlayer(queue) {

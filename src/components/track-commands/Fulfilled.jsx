@@ -1,4 +1,4 @@
-import { Success } from "#components/misc/Success.jsx";
+import { Success } from "../misc/Success.jsx";
 import styled from "styled-components";
 
 const Fulfilled = styled(Success)`

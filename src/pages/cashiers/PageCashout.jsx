@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import BackgroundCashout from "/assets/backgrounds/cashout.png";
-import { FormCashout } from "#components/forms/FormCashout";
+import { FormCashout } from "../../components/forms/FormCashout";
 import { useSession } from "/src/hooks/useSession.jsx";
 
 const saveComment = (comment) =>

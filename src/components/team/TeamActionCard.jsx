@@ -8,7 +8,7 @@ import { StandardPlayerActionCard } from "../player/StandardPlayerActionCard.jsx
 import { useEntityState } from "../../hooks/useEntityState.jsx";
 import { FollowState } from "../await-command/FollowState.jsx";
 import { generateRandomName } from "js_utils";
-import { DataTuple } from "#components/tuple/DataTuple.jsx";
+import { DataTuple } from "../tuple/DataTuple.jsx";
 
 function TeamActionCard({
   team,

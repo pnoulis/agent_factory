@@ -1,12 +1,12 @@
 import * as React from "react";
 import styled, { css } from "styled-components";
-import { Overflow } from "#components/Overflow.jsx";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { WidgetPlay } from "#components/widgets/WidgetPlay.jsx";
-import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
-import { WidgetRemove } from "#components/widgets/WidgetRemove.jsx";
-import { StandardPackageInfoCard } from "#components/package/StandardPackageInfoCard.jsx";
+import { Overflow } from "../../components/Overflow.jsx";
+import { PanelActionbar } from "../../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../../components/panel/PanelNavbar.jsx";
+import { WidgetPlay } from "../../components/widgets/WidgetPlay.jsx";
+import { WidgetAdd } from "../../components/widgets/WidgetAdd.jsx";
+import { WidgetRemove } from "../../components/widgets/WidgetRemove.jsx";
+import { StandardPackageInfoCard } from "../../components/package/StandardPackageInfoCard.jsx";
 import { createComparatorPackageState } from "../../misc/sort.js";
 
 const comparator = createComparatorPackageState({

@@ -12,7 +12,7 @@ import { Pagination } from "./Pagination.jsx";
 import { ContextTable } from "/src/contexts/ContextTable.jsx";
 import { sort, getComparator } from "/src/misc/sort.js";
 import { mergec } from "/src/misc/misc.js";
-import { Overflow } from "#components/Overflow.jsx";
+import { Overflow } from "../Overflow.jsx";
 import { Empty } from "./Empty.jsx";
 
 function Table({

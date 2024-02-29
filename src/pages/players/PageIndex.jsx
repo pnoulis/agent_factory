@@ -1,5 +1,5 @@
 import { AwaitPlayers } from "/src/loaders/loadPlayers.jsx";
-import { TablePlayers } from "#components/tables/TablePlayers.jsx";
+import { TablePlayers } from "../../components/tables/TablePlayers.jsx";
 import styled from "styled-components";
 
 function Component() {

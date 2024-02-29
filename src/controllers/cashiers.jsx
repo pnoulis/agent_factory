@@ -1,4 +1,4 @@
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { renderDialog } from "../components/dialogs/renderDialog.jsx";
 import { DialogAlertStandard } from "../components/dialogs/alerts/DialogAlertStandard.jsx";
 import { confirmRegisterCashier } from "../components/dialogs/confirms/confirmRegisterCashier.jsx";
 import { confirmDeregisterCashier } from "../components/dialogs/confirms/confirmDeregisterCashier.jsx";

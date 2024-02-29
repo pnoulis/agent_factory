@@ -1,8 +1,8 @@
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { confirmStopSession } from "#components/dialogs/confirms/confirmStopSession";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
-import { confirmLogoutSession } from "#components/dialogs/confirms/confirmLogoutSession.jsx";
-import { confirmLogoutCashier } from "#components/dialogs/confirms/confirmLogoutCashier.jsx";
+import { renderDialog } from "../components/dialogs/renderDialog.jsx";
+import { confirmStopSession } from "../components/dialogs/confirms/confirmStopSession";
+import { DialogAlertStandard } from "../components/dialogs/alerts/DialogAlertStandard.jsx";
+import { confirmLogoutSession } from "../components/dialogs/confirms/confirmLogoutSession.jsx";
+import { confirmLogoutCashier } from "../components/dialogs/confirms/confirmLogoutCashier.jsx";
 import { home, cashoutCashier } from "/src/links.jsx";
 
 async function logout(navigate) {

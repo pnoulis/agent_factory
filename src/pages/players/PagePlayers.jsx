@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import { Panel } from "#components/panel/Panel.jsx";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { PanelNavLink } from "#components/links/PanelNavLink";
+import { Panel } from "../../components/panel/Panel.jsx";
+import { PanelActionbar } from "../../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../../components/panel/PanelNavbar.jsx";
+import { PanelNavLink } from "../../components/links/PanelNavLink";
 import IconPlayer from "/assets/icons/add-player.svg?react";
 import IconWristband from "/assets/icons/pair-wristband.svg?react";
 import IconPlayers from "/assets/icons/players-three.svg?react";

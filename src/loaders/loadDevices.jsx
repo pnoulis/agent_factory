@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import { defer, Await, useLoaderData } from "react-router-dom";
 import { getafm } from "/src/getafm.js";
-import { Pending } from "#components/await-command/Pending2.jsx";
+import { Pending } from "../components/await-command/Pending2.jsx";
 import { unique } from "js_utils/misc";
 import { smallid } from "js_utils/uuid";
-import { Center } from "#components/Center.jsx";
+import { Center } from "../components/Center.jsx";
 
 const loadDevices = async () => {
   const afm = await getafm(false);

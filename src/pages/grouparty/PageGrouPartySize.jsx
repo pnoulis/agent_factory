@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { FormGrouPartySize } from "#components/forms/FormGrouPartySize";
+import { FormGrouPartySize } from "../../components/forms/FormGrouPartySize";
 
 function GrouPartySize({ onSubmit }) {
   return (

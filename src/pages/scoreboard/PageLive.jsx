@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { TableScoreboardLive } from "#components/tables/TableScoreboardLive.jsx";
+import { TableScoreboardLive } from "../../components/tables/TableScoreboardLive.jsx";
 import { AwaitScoreboardLive } from "/src/loaders/loadScoreboardLive.jsx";
 import { useSubscription } from "../../hooks/useSubscription.jsx";
 import { useRevalidator } from "react-router-dom";

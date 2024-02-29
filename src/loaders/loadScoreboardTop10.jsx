@@ -2,10 +2,10 @@ import { Suspense } from "react";
 import { defer, Await, useLoaderData } from "react-router-dom";
 import { getafm } from "/src/getafm.js";
 import { parsecmd } from "#afm/parsecmd.js";
-import { Pending } from "#components/await-command/Pending2.jsx";
+import { Pending } from "../components/await-command/Pending2.jsx";
 import { smallid } from "js_utils/uuid";
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
+import { renderDialog } from "../components/dialogs/renderDialog.jsx";
+import { DialogAlertStandard } from "../components/dialogs/alerts/DialogAlertStandard";
 
 const loadScoreboardTop10 = (props) => {
   const { searchParams } = new window.URL(props.request.url);

@@ -5,7 +5,7 @@ import { Heading } from "./Heading.jsx";
 import { Description } from "./Description.jsx";
 import { Submit } from "./Submit.jsx";
 import { Cancel } from "./Cancel.jsx";
-import { ButtonDialog } from "#components/buttons/ButtonDialog.jsx";
+import { ButtonDialog } from "../../buttons/ButtonDialog.jsx";
 import { isFunction } from "js_utils/misc";
 
 function DialogInputStandard({

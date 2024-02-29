@@ -1,6 +1,6 @@
 import IconPerson from "/assets/icons/person-filled.svg?react";
 import { useHover } from "/src/hooks/useHover.jsx";
-import { ButtonLogout } from "#components/buttons/ButtonLogout.jsx";
+import { ButtonLogout } from "../buttons/ButtonLogout.jsx";
 import styled from "styled-components";
 import { Svg } from "react_utils/svgs";
 

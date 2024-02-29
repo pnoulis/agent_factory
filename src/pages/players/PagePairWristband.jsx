@@ -1,14 +1,14 @@
 import * as React from "react";
 import { PlayerCommander } from "#afm/player/PlayerCommander.js";
 import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
-import { StandardPlayerActionCard } from "#components/player/StandardPlayerActionCard.jsx";
-import { RegistrationQueue } from "#components/registration-queue/RegistrationQueue.jsx";
-import { useRegistrationQueue } from "#components/registration-queue/useRegistrationQueue.jsx";
+import { StandardPlayerActionCard } from "../../components/player/StandardPlayerActionCard.jsx";
+import { RegistrationQueue } from "../../components/registration-queue/RegistrationQueue.jsx";
+import { useRegistrationQueue } from "../../components/registration-queue/useRegistrationQueue.jsx";
 import styled from "styled-components";
-import { ComboboxSearchPlayer } from "#components/comboboxes/ComboboxSearchPlayer.jsx";
-import { ViewCommand } from "#components/await-command/ViewCommand";
-import { renderDialog } from "#components/dialogs/renderDialog";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
+import { ComboboxSearchPlayer } from "../../components/comboboxes/ComboboxSearchPlayer.jsx";
+import { ViewCommand } from "../../components/await-command/ViewCommand";
+import { renderDialog } from "../../components/dialogs/renderDialog";
+import { DialogAlertStandard } from "../../components/dialogs/alerts/DialogAlertStandard";
 import { isObject } from "js_utils/misc";
 import { smallid } from "js_utils/uuid";
 

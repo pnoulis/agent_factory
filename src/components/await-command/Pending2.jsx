@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Spinner } from "#components/misc/Spinner.jsx";
+import { Spinner } from "../misc/Spinner.jsx";
 import styled from "styled-components";
 import { mergec } from "/src/misc/misc.js";
 

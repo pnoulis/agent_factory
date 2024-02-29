@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DialogConfirm } from "./DialogConfirm.jsx";
-import { ButtonDialog } from "#components/buttons/ButtonDialog.jsx";
+import { ButtonDialog } from "../../buttons/ButtonDialog.jsx";
 import { Heading } from "./Heading.jsx";
 import { Description } from "./Description.jsx";
 import { Yes } from "./Yes.jsx";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-import { Panel } from "#components/panel/Panel.jsx";
+import { Panel } from "../../components/panel/Panel.jsx";
 import styled from "styled-components";
 
 function Component() {

@@ -1,7 +1,7 @@
-import { PanelNavLink } from "#components/links/PanelNavLink";
-import { Panel } from "#components/panel/Panel.jsx";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
+import { PanelNavLink } from "../components/links/PanelNavLink";
+import { Panel } from "../components/panel/Panel.jsx";
+import { PanelActionbar } from "../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../components/panel/PanelNavbar.jsx";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import IconCashout from "/assets/icons/cash-out.svg?react";

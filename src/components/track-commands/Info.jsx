@@ -1,4 +1,4 @@
-import { Info } from "#components/misc/Info.jsx";
+import { Info } from "../misc/Info.jsx";
 import styled from "styled-components";
 
 const StyledInfo = styled(Info)`

@@ -1,17 +1,17 @@
-import { Overflow } from "#components/Overflow.jsx";
-import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
-import { confirmActivateTeamPackage } from "#components/dialogs/confirms/confirmActivateTeamPackage.jsx";
-import { confirmAddTeamPackage } from "#components/dialogs/confirms/confirmAddTeamPackage.jsx";
-import { confirmRemoveteamPackage } from "#components/dialogs/confirms/confirmRemoveTeamPackage.jsx";
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { Panel } from "#components/panel/Panel.jsx";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { SquizzedPlayerInfoCard } from "#components/player/SquizzedPlayerInfoCard.jsx";
-import { DataTuple } from "#components/tuple/DataTuple.jsx";
-import { WidgetLock } from "#components/widgets/WidgetLock.jsx";
-import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";
+import { Overflow } from "../../components/Overflow.jsx";
+import { ViewCommand } from "../../components/await-command/ViewCommand.jsx";
+import { DialogAlertStandard } from "../../components/dialogs/alerts/DialogAlertStandard";
+import { confirmActivateTeamPackage } from "../../components/dialogs/confirms/confirmActivateTeamPackage.jsx";
+import { confirmAddTeamPackage } from "../../components/dialogs/confirms/confirmAddTeamPackage.jsx";
+import { confirmRemoveteamPackage } from "../../components/dialogs/confirms/confirmRemoveTeamPackage.jsx";
+import { renderDialog } from "../../components/dialogs/renderDialog.jsx";
+import { Panel } from "../../components/panel/Panel.jsx";
+import { PanelActionbar } from "../../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../../components/panel/PanelNavbar.jsx";
+import { SquizzedPlayerInfoCard } from "../../components/player/SquizzedPlayerInfoCard.jsx";
+import { DataTuple } from "../../components/tuple/DataTuple.jsx";
+import { WidgetLock } from "../../components/widgets/WidgetLock.jsx";
+import { WidgetRoster } from "../../components/widgets/WidgetRoster.jsx";
 import * as React from "react";
 import {
   Navigate,

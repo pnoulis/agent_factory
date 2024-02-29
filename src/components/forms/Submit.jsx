@@ -1,5 +1,5 @@
-import { Button } from "#components/buttons/Button.jsx";
-import { ButtonStandard } from "#components/buttons/ButtonStandard.jsx";
+import { Button } from "../buttons/Button.jsx";
+import { ButtonStandard } from "../buttons/ButtonStandard.jsx";
 import { useFormContext } from "react_utils/inputs";
 import styled from "styled-components";
 import { mergec } from "/src/misc/misc.js";

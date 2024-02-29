@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import { FormRegisterPlayer } from "#components/forms/FormRegisterPlayer.jsx";
-import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
+import { FormRegisterPlayer } from "../../components/forms/FormRegisterPlayer.jsx";
+import { ViewCommand } from "../../components/await-command/ViewCommand.jsx";
+import { renderDialog } from "../../components/dialogs/renderDialog.jsx";
 import { DialogAlertStandard } from "../../components/dialogs/alerts/DialogAlertStandard.jsx";
 import { register } from "../../controllers/player.jsx";
 

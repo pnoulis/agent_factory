@@ -1,4 +1,4 @@
-import { Fail } from "#components/misc/Fail.jsx";
+import { Fail } from "../misc/Fail.jsx";
 import styled from "styled-components";
 
 const Rejected = styled(Fail)`

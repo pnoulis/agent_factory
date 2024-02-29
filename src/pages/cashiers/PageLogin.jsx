@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { FormLoginCashier } from "#components/forms/FormLoginCashier.jsx";
+import { FormLoginCashier } from "../../components/forms/FormLoginCashier.jsx";
 import BrandText from "/assets/brand/logo-white.png";
 import BrandFigure from "/assets/brand/logo-agent-white.png";
 import BackgroundFactory from "/assets/backgrounds/homepage-background-1920x1080px.png";
 import { useSession } from "/src/hooks/useSession.jsx";
-import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
+import { ViewCommand } from "../../components/await-command/ViewCommand.jsx";
 
 function Component() {
   const { login } = useSession();

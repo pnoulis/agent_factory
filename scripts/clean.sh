@@ -12,8 +12,14 @@ echo srcdir: $srcdir
 components=$(realpath ${srcdir}/src/components)
 echo components:$components
 while IFS= read -r path; do
-  realpath --relative-to="$path" "$components"
-done < <(grep -rin '#components' ${srcdir}/src | cut -d':' -f1)
+  echo $path
+  relative_components="$(realpath --relative-to="$(dirname "$path")" "$components")"
+  if [[ $relative_components == 'components' ]]; then
+    relative_components="./${relative_components}"
+  fi
+  echo relative_components:$relative_components
+  sed -i "s|#components|$relative_components|gi" "$path"
+done < <(grep -rin '#components' ${srcdir}/src | cut -d':' -f1 | uniq)
 
 
 # grep -rin 'components' ${srcdir}/src | cut -d ':' -f1

@@ -1,16 +1,16 @@
 import * as React from "react";
-import { PanelNavLink } from "#components/links/PanelNavLink";
-import { Panel } from "#components/panel/Panel.jsx";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { TableTeams } from "#components/tables/TableTeams.jsx";
+import { PanelNavLink } from "../components/links/PanelNavLink";
+import { Panel } from "../components/panel/Panel.jsx";
+import { PanelActionbar } from "../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../components/panel/PanelNavbar.jsx";
+import { TableTeams } from "../components/tables/TableTeams.jsx";
 import { useNavigate, useRevalidator } from "react-router-dom";
 import styled from "styled-components";
 import IconLiveView from "/assets/icons/liveView.svg?react";
 import { useContextApp } from "/src/contexts/ContextApp";
 import { liveView, team } from "/src/links.jsx";
 import { AwaitTeams } from "/src/loaders/loadTeams.jsx";
-import { ComboboxSelectStandard } from "#components/comboboxes/ComboboxSelectStandard.jsx";
+import { ComboboxSelectStandard } from "../components/comboboxes/ComboboxSelectStandard.jsx";
 import { useFilter } from "/src/hooks/useFilter.jsx";
 import { useSubscription } from "../hooks/useSubscription.jsx";
 

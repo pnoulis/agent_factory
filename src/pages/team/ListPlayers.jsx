@@ -1,9 +1,9 @@
-import { Overflow } from "#components/Overflow.jsx";
+import { Overflow } from "../../components/Overflow.jsx";
 import styled from "styled-components";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { WidgetRoster } from "#components/widgets/WidgetRoster.jsx";
-import { SquizzedPlayerInfoCard } from "#components/player/SquizzedPlayerInfoCard.jsx";
+import { PanelActionbar } from "../../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../../components/panel/PanelNavbar.jsx";
+import { WidgetRoster } from "../../components/widgets/WidgetRoster.jsx";
+import { SquizzedPlayerInfoCard } from "../../components/player/SquizzedPlayerInfoCard.jsx";
 
 function ListPlayers({ team }) {
   return (

@@ -3,7 +3,7 @@ import MuiTableCell from "@mui/material/TableCell";
 
 // -
 import { TableDataTuple } from "./TableDataTuple.jsx";
-import { DataTuple } from "#components/tuple/DataTuple.jsx";
+import { DataTuple } from "../tuple/DataTuple.jsx";
 
 function BodyCell(props) {
   return (

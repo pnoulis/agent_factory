@@ -1,13 +1,13 @@
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
-import { WidgetRemove } from "#components/widgets/WidgetRemove.jsx";
+import { PanelActionbar } from "../../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../../components/panel/PanelNavbar.jsx";
+import { WidgetAdd } from "../../components/widgets/WidgetAdd.jsx";
+import { WidgetRemove } from "../../components/widgets/WidgetRemove.jsx";
 import * as React from "react";
 import { useNavigate, useRevalidator } from "react-router-dom";
 import styled from "styled-components";
 import { AwaitCashiers } from "/src/loaders/loadCashiers.jsx";
-import { TableCashiers } from "#components/tables/TableCashiers.jsx";
-import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
+import { TableCashiers } from "../../components/tables/TableCashiers.jsx";
+import { ViewCommand } from "../../components/await-command/ViewCommand.jsx";
 import { deregister } from "../../controllers/cashiers.jsx";
 
 function Component() {

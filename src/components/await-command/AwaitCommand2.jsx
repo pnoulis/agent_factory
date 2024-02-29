@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Pending } from "./Pending2.jsx";
 import { delay } from "js_utils/misc";
-import { Center } from "#components/Center.jsx";
+import { Center } from "../Center.jsx";
 import { useRevalidator } from "react-router-dom";
 
 function waitForUi(cb) {

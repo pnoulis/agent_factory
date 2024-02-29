@@ -1,27 +1,27 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Panel } from "#components/panel/Panel.jsx";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { RegistrationQueue } from "#components/registration-queue/RegistrationQueue.jsx";
+import { Panel } from "../../components/panel/Panel.jsx";
+import { PanelActionbar } from "../../components/panel/PanelActionbar.jsx";
+import { PanelNavbar } from "../../components/panel/PanelNavbar.jsx";
+import { RegistrationQueue } from "../../components/registration-queue/RegistrationQueue.jsx";
 import { AwaitPlayersWithWristband } from "../../loaders/loadPlayersWithWristband.jsx";
-import { ComboboxSelectPlayer } from "#components/comboboxes/ComboboxSelectPlayer.jsx";
+import { ComboboxSelectPlayer } from "../../components/comboboxes/ComboboxSelectPlayer.jsx";
 import { generateRandomName } from "js_utils/misc";
-import { useRegistrationQueue } from "#components/registration-queue/useRegistrationQueue.jsx";
-import { FormTeamName } from "#components/forms/FormTeamName.jsx";
+import { useRegistrationQueue } from "../../components/registration-queue/useRegistrationQueue.jsx";
+import { FormTeamName } from "../../components/forms/FormTeamName.jsx";
 import { TeamCommander } from "#afm/team/TeamCommander.js";
 import { PlayerCommander } from "#afm/player/PlayerCommander.js";
 import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
-import { StandardPlayerActionCard } from "#components/player/StandardPlayerActionCard.jsx";
-import { StandardPlayerFiller } from "#components/player/StandardPlayerFiller.jsx";
+import { StandardPlayerActionCard } from "../../components/player/StandardPlayerActionCard.jsx";
+import { StandardPlayerFiller } from "../../components/player/StandardPlayerFiller.jsx";
 import { MAX_ROSTER_SIZE } from "../../constants.js";
-import { WidgetMerge } from "#components/widgets/WidgetMerge.jsx";
+import { WidgetMerge } from "../../components/widgets/WidgetMerge.jsx";
 import { team as teamController } from "/src/controllers/team.js";
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
-import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
+import { renderDialog } from "../../components/dialogs/renderDialog.jsx";
+import { DialogAlertStandard } from "../../components/dialogs/alerts/DialogAlertStandard.jsx";
+import { ViewCommand } from "../../components/await-command/ViewCommand.jsx";
 import { useRevalidator } from "react-router-dom";
-import { confirmRegisterTeam } from "#components/dialogs/confirms/confirmRegisterTeam.jsx";
+import { confirmRegisterTeam } from "../../components/dialogs/confirms/confirmRegisterTeam.jsx";
 
 const createTeam = (team) =>
   new TeamCommander(

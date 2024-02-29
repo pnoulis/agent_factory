@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { Site } from "#components/site/Site.jsx";
+import { Site } from "./components/site/Site.jsx";
 import { ContextApp } from "./contexts/ContextApp.jsx";
 import { translate } from "/src/translate.js";
 import { useSession } from "/src/hooks/useSession.jsx";

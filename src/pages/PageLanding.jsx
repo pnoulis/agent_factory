@@ -1,11 +1,11 @@
 import { Suspense } from "react";
 import styled, { css, keyframes } from "styled-components";
 import * as ReactDOM from "react-dom";
-import { Center } from "#components/Center.jsx";
+import { Center } from "../components/Center.jsx";
 import BrandFigure from "/assets/brand/logo-agent-white.png";
 import { Await, useLoaderData, Outlet } from "react-router-dom";
-import { Authorize } from "#components/Authorize.jsx";
-import { TrackCommands } from "#components/track-commands/TrackCommands.jsx";
+import { Authorize } from "../components/Authorize.jsx";
+import { TrackCommands } from "../components/track-commands/TrackCommands.jsx";
 
 function PageLanding() {
   const pending = useLoaderData();

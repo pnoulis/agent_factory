@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Submit } from "./Submit.jsx";
 import { TextInput_0, useForm } from "react_utils/inputs";
 import { Form } from "./Form.jsx";
-import { ComboboxCashierPrivilege } from "#components/comboboxes/ComboboxCashierPrivilege.jsx";
+import { ComboboxCashierPrivilege } from "../comboboxes/ComboboxCashierPrivilege.jsx";
 
 function FormRegisterCashier({ onSubmit, style }) {
   const [form, setForm] = useForm({

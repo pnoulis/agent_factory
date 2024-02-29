@@ -14,7 +14,6 @@
   "type": "module",
   "imports": {
     "#afm/*": "./src/afmachine/*",
-    "#components/*": "./src/components/*",
     "#assets/*": "./assets/*"
   },
   "devDependencies": {
@@ -58,25 +57,16 @@
       "browser": true,
       "es2022": true
     },
-    "extends": [
-      "airbnb",
-      "airbnb/hooks",
-      "prettier"
-    ],
+    "extends": ["airbnb", "airbnb/hooks", "prettier"],
     "parserOptions": {
       "ecmaVersion": "latest",
       "sourceType": "module"
     },
-    "plugins": [
-      "unused-imports"
-    ],
+    "plugins": ["unused-imports"],
     "rules": {
       "eslint-plugin-import/prefer-default-export": "off",
       "import/prefer-default-export": "off",
-      "import/extensions": [
-        "error",
-        "ignorePackages"
-      ],
+      "import/extensions": ["error", "ignorePackages"],
       "no-unused-vars": "off",
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [
