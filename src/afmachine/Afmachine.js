@@ -30,6 +30,10 @@ import { unpairWristband } from "./synthetic-tasks/unpairWristband.js";
 
 // Synthetic Team tasks
 
+// Subscriptions
+import { subscribeTeams } from "./tasks/subscribeTeams.js";
+import { subscribeScoreboard } from "./tasks/subscribeScoreboard.jsx";
+
 // Player tasks
 import { registerPlayer } from "./tasks/registerPlayer.js";
 import { searchPlayer } from "./tasks/searchPlayer.js";
@@ -101,6 +105,8 @@ class Afmachine extends createEventful([
     this.registerCashier.afm = this;
     this.loginCashier.afm = this;
     this.searchPlayer.afm = this;
+    this.subscribeTeams.afm = this;
+    this.subscribeScoreboard.afm = this;
 
     this.on("newListener", (event) => {
       if (event === "booted" && this.booted) {
@@ -197,6 +203,10 @@ Afmachine.prototype.stop = function () {
 Object.assign(Afmachine.prototype, {
   // test
   test,
+
+  // Subscriptions
+  subscribeTeams,
+  subscribeScoreboard,
 
   // RPI Reader tasks
   readWristband,

@@ -1,4 +1,4 @@
-import { isObject} from "js_utils/misc";
+import { isObject } from "js_utils/misc";
 /*
   Errors severity:
 
@@ -20,21 +20,14 @@ import { isObject} from "js_utils/misc";
 const ERR_CODES = {
   EUNEXPECTED: 0,
   EVALIDATION: 1,
-  ESTATE: 2,
-  ECACHE: 3,
-  ESTATEPAST: 4,
-  EWRISTBAND_STATE: 5,
-  EWRISTBAND_STATE_CANCELS_OUT: 6,
-  EWRISTBAND_STATE_IMPOSSIBLE: 7,
-  EWRISTBAND_SCAN_LOCK: 8,
-  EPLAYER_STATE: 9,
-  EPLAYER_STATE_CANCELS_OUT: 10,
-  EPLAYER_STATE_IMPOSSIBLE: 11,
-  EPACKAGE_STATE: 12,
-  EUNKNOWN: 13,
-  EGENERIC: 14,
-  ETEAM: 15,
-  EWRISTBAND_UNSUB: 16,
+  EPLAYER: 2,
+  EWRISTBAND: 3,
+  EWRISTBAND_SCAN_LOCK: 4,
+  EPACKAGE: 5,
+  ETEAM: 6,
+  EGENERIC: 7,
+  EWRISTBAND_UNSUB: 8,
+  UNSUB: 9,
 };
 
 function _createError(msg, defaults) {
@@ -73,19 +66,19 @@ const craterr = (cb) =>
       _createError(msg, {
         severity: "error",
         msg: "Wristband Error",
-        errCode: msg.errCode || ERR_CODES.EWRISTBAND_STATE,
+        errCode: ERR_CODES.EWRISTBAND,
       }),
     EPLAYER: (msg) =>
       _createError(msg, {
         severity: "error",
         msg: "Player Error",
-        errCode: ERR_CODES.EPLAYER_STATE,
+        errCode: ERR_CODES.EPLAYER,
       }),
     EPACKAGE: (msg) =>
       _createError(msg, {
         severity: "error",
         msg: "Package Error",
-        errCode: ERR_CODES.EPLAYER_STATE,
+        errCode: ERR_CODES.EPACKAGE,
       }),
     ETEAM: (msg) =>
       _createError(msg, {
@@ -104,6 +97,12 @@ const craterr = (cb) =>
         severity: "error",
         msg: "Generic Error",
         errCode: ERR_CODES.EGENERIC,
+      }),
+    UNSUB: (msg) =>
+      _createError(msg, {
+        severity: "info",
+        msg: "Unsubscribed",
+        errCode: ERR_CODES.UNSUB,
       }),
   });
 globalThis.craterr = craterr;

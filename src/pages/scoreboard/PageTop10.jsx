@@ -20,6 +20,8 @@ import {
   scoreboardTop10 as linkScoreboardTop10,
 } from "/src/links.jsx";
 import { AwaitScoreboardTop10 } from "/src/loaders/loadScoreboardTop10.jsx";
+import { useSubscription } from "../../hooks/useSubscription.jsx";
+import { useRevalidator } from "react-router-dom";
 
 function Component() {
   const { t } = useContextApp();
@@ -29,6 +31,18 @@ function Component() {
       value: "air",
     },
   });
+  const revalidator = useRevalidator();
+  useSubscription(
+    afm.subscribeScoreboard,
+    {
+      skip: 3,
+      withMsg: false,
+      revalidator: true,
+    },
+    (err, scoreboard) => {
+      revalidator.revalidate();
+    },
+  );
 
   return (
     <Page className="page">

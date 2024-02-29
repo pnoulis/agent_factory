@@ -39,7 +39,7 @@ function useRegistrationQueue(players) {
       await player.pairWristband();
       pairingRef.current = null;
     } catch (err) {
-      if (err.code !== ERR_CODES.EWRISTBAND_UNSUB) {
+      if (err.code !== ERR_CODES.UNSUB) {
         pairingRef.current = null;
       }
       throw err;

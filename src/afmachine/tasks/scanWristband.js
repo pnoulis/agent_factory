@@ -27,8 +27,11 @@ Command.verb = "scan wristband";
 Command.middleware = [
   async (ctx, next) => {
     if (SCAN_WRISTBAND_LOCK !== ctx.args.scanLock) {
-      throw globalThis.craterr(({ EWRISTBAND }) =>
-        EWRISTBAND("Wristband scan is busy"),
+      throw globalThis.craterr(({ ERR_CODES, EWRISTBAND }) =>
+        EWRISTBAND({
+          msg: "Wristband scan is busy",
+          errCode: ERR_CODES.EWRISTBAND_SCAN_LOCK,
+        }),
       );
     }
     try {
@@ -45,8 +48,7 @@ Command.middleware = [
       throw craterr(({ ERR_CODES, EWRISTBAND }) =>
         EWRISTBAND({
           msg: "Unsubscribed",
-          errCode: ERR_CODES.EWRISTBAND_UNSUB,
-          severity: "info",
+          errCode: ERR_CODES.UNSUB,
         }),
       );
     }
