@@ -19,7 +19,7 @@ function AlertDeregisterCashiers({ cmds, onClose }) {
             ) : (
               <li key={i}>
                 <span>{value.args.cashier.username}</span>
-                <span>{getMsg(value, "cmd")}</span>
+                <span>{getMsg(value)}</span>
               </li>
             );
           })}

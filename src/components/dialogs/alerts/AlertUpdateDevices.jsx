@@ -19,7 +19,7 @@ function AlertUpdateDevices({ cmds, heading, onClose }) {
             ) : (
               <li key={i}>
                 <span>{value.res.device?.id || "ALL DEVICES"}</span>
-                <span>{getMsg(value, "cmd") || value.res.device.view}</span>
+                <span>{getMsg(value) || value.res.device.view}</span>
               </li>
             );
           })}

@@ -61,7 +61,7 @@ function Component() {
         <DialogAlertStandard
           initialOpen
           heading="update device view"
-          msg={getMsg(err).err}
+          msg={getMsg(err, "err")}
         />,
       );
     }
@@ -96,7 +96,7 @@ function Component() {
         <DialogAlertStandard
           initialOpen
           heading={`${action} devices`}
-          msg={getMsg(err)}
+          msg={getMsg(err, "err")}
         />,
       );
     }
