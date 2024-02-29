@@ -42,7 +42,6 @@ Command.middleware = [
     const { cashiers } = await ctx.afm.adminScreen.listCashiers({
       timestamp: ctx.t_start,
     });
-    debug(cashiers, 'cashiers');
     const thisCashier = cashiers.find(
       (cashier) => cashier.username === ctx.req.username,
     );

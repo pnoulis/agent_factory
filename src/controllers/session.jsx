@@ -48,12 +48,11 @@ async function login(navigate, form) {
     const { cashier, ...res } = await afm
       .loginCashier(form, form.password)
       .parse();
-    msg = res.msg;
-    const { session } = await afm.listSession().parse();
+    msg = getMsg(res);
 
+    const { session } = await afm.listSession().parse();
     if (!session.active) {
-      const res = await afm.startSession(cashier).parse();
-      msg = res.msg;
+      msg = getMsg(await afm.startSession(cashier));
       cashier.session = true;
     }
 
@@ -84,8 +83,7 @@ async function cashout(navigate, comment) {
         />,
       );
     } else if (await confirmStopSession(cashier)) {
-      const res = await afm.stopSession(cashier, comment).parse();
-      msg = res.msg;
+      msg = getMsg(await afm.stopSession(cashier, comment));
     }
     window.localStorage.removeItem("cashier");
     navigate(home.path);
