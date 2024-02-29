@@ -1,11 +1,15 @@
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { DialogAlertStandard } from "../components/dialogs/alerts/DialogAlertStandard.jsx";
+import { confirmRegisterCashier } from "../components/dialogs/confirms/confirmRegisterCashier.jsx";
 import { confirmDeregisterCashier } from "../components/dialogs/confirms/confirmDeregisterCashier.jsx";
 import { AlertDeregisterCashiers } from "../components/dialogs/alerts/AlertDeregisteredCashiers.jsx";
 import { cashiers as linkCashiers } from "/src/links.jsx";
 
 const cashiers = {
   async register(navigate, form) {
+    if (!(await confirmRegisterCashier(form))) {
+      return Promise.resolve();
+    }
     let msg;
     try {
       msg = await afm.registerCashier(form, form.password);
@@ -37,7 +41,7 @@ const cashiers = {
     }
 
     try {
-      const cmds = await Promise.allSettle(
+      const cmds = await Promise.allSettled(
         cashiers.map((cashier) => afm.deregisterCashier(cashier)),
       );
       renderDialog(
@@ -52,7 +56,7 @@ const cashiers = {
         <DialogAlertStandard
           initialOpen
           heading="deregister cashiers"
-          msg={getMsg(msg)}
+          msg={getMsg(err)}
         />,
       );
     }

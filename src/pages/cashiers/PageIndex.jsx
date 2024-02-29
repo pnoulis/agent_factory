@@ -9,6 +9,7 @@ import { AwaitCashiers } from "/src/loaders/loadCashiers.jsx";
 import { TableCashiers } from "#components/tables/TableCashiers.jsx";
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
 import { cashiers as cashierControllers } from "../../controllers/cashiers.jsx";
+import { isObject } from "js_utils/misc";
 
 function Component() {
   const navigate = useNavigate();
@@ -21,6 +22,10 @@ function Component() {
     } finally {
       revalidator.revalidate();
     }
+  };
+
+  const handleCashierSelected = (selectedCashiers) => {
+    selectedCashiersRef.current = selectedCashiers;
   };
 
   return (
@@ -49,9 +54,7 @@ function Component() {
                 <TableCashiers
                   key={id}
                   cashiers={cashiers}
-                  onSelectionChange={(selection) => {
-                    selectedCashiersRef.current = selection;
-                  }}
+                  onSelectionChange={handleCashierSelected}
                 />
               </Content>
             </>
