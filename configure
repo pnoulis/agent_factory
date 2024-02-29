@@ -8,7 +8,7 @@ post_config_env=$(mktemp)
 
 # App description
 export PKG_NAME=afadmin-client
-export PKG_NAME_PRETTY='Agent Factory'
+export PKG_NAME_PRETTY='Agent_Factory'
 export PKG_VERSION=2.0.0
 export PKG_VVERSION=v${PKG_VERSION}
 export PKG_DISTNAME=${PKG_NAME}-${PKG_VVERSION}
@@ -243,7 +243,6 @@ resolve_afadmin_client_url() {
   if [[ "$scheme" == '' || "$hostname" == '' || "$port" == '' ]]; then
     error 'afadmin client public url missing either scheme, hostname or port'
   fi
-  echo 'basename:' $basename
   declare -gx AFADMIN_CLIENT_URL_PUBLIC_SCHEME="$scheme"
   echo "AFADMIN_CLIENT_URL_PUBLIC_SCHEME...|$AFADMIN_CLIENT_URL_PUBLIC_SCHEME"
   declare -gx AFADMIN_CLIENT_URL_PUBLIC_PORT="$port"
