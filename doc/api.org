@@ -2,6 +2,234 @@
 Documentation for the Backend API and architecture of the Client.
 
 
+* Device Tasks
+** List Devices
+*** Client request
+#+begin_src js
+  // 1st argument, optional, options
+  {
+    queue: true || false
+  }
+#+end_src
+*** Backend request
+#+begin_src js
+  {
+    timestamp: 1706709130813,
+  }
+#+end_src
+*** Backend response
+#+begin_src js
+  {
+  timestamp: 1706709130813,
+  result: 'OK',
+  devices: [
+    {
+      deviceType: 'SCOREBOARD_SCREEN',
+      roomType: 'SCOREBOARD1',
+      deviceId: 'scor1',
+      macAddress: null,
+      ipAddress: null,
+      bootedTimestamp: 1702243701606
+    },
+    {
+      deviceType: 'SCOREBOARD_SCREEN',
+      roomType: 'SCOREBOARD2',
+      deviceId: 'scor2',
+      macAddress: null,
+      ipAddress: null,
+      bootedTimestamp: 1702243701625
+    },
+    {
+      deviceType: 'REGISTRATION_SCREEN',
+      roomType: 'ADMINISTRATION1',
+      deviceId: '001',
+      macAddress: null,
+      ipAddress: null,
+      bootedTimestamp: 1706707719741
+    },
+    {
+      deviceType: 'RPI_READER',
+      roomType: 'ADMINISTRATION1',
+      deviceId: 'ADMINISTRATION1Reader',
+      macAddress: null,
+      ipAddress: null,
+      bootedTimestamp: 1705889333198
+    }
+  ]
+}
+#+end_src
+*** Client response
+#+begin_src js
+  {
+    ok: true,
+    devices: Device.normalize(backend.response.devices)
+  }
+#+end_src
+
+** List Scoreboard Devices
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** List Scoreboard Device Views
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Update Scoreboard Device View
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Boot Device
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Shutdown Device
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Restart Device
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+
+* Scoreboard Tasks
+** List Scoreboard
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+
+
+* Player Tasks
+** List Registered Players
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** List Players with a Wristband
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Search Player
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Register Player
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+
+* Wristband Tasks
+** Register Wristband
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Deregister Wristband
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Get Wristband Information
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Scan Wristband
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+
+* Cashier Tasks
+** List Cashiers
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Login Cashier
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Register Cashier
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Deregister Cashier
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+
+* Package Tasks
+** List Available Packages
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+
+* Team Tasks
+** Register Team
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Register Team Package
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Deregister Team Package
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Activate Team Package
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+** Find Team
+*** Client request
+*** Backend request
+*** Backend response
+*** Client request
+
+
 * The Command pattern
 
 The *afmachine* or *afm* for short is the control center of the application.
