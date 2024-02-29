@@ -32,7 +32,7 @@ import { unpairWristband } from "./synthetic-tasks/unpairWristband.js";
 
 // Subscriptions
 import { subscribeTeams } from "./tasks/subscribeTeams.js";
-import { subscribeScoreboard } from "./tasks/subscribeScoreboard.jsx";
+import { subscribeScoreboard } from "./tasks/subscribeScoreboard.js";
 
 // Player tasks
 import { registerPlayer } from "./tasks/registerPlayer.js";

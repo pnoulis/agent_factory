@@ -9,7 +9,11 @@ echo scriptdir: $scriptdir
 echo srcdir: $srcdir
 
 
-cd $srcdir/src
+components=$(realpath ${srcdir}/src/components)
+echo components:$components
+while IFS= read -r path; do
+  realpath --relative-to="$path" "$components"
+done < <(grep -rin '#components' ${srcdir}/src | cut -d':' -f1)
 
 
-grep --exclude-dir=afmachine -rin 'afm\.' .
+# grep -rin 'components' ${srcdir}/src | cut -d ':' -f1

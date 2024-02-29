@@ -25,8 +25,12 @@ Command.middleware = [
         active: false,
       };
     } else {
-      ctx.res.session = JSON.parse(ctx.raw.message);
-      ctx.res.session.active = true;
+      const { session, ...user } = JSON.parse(ctx.raw.message);
+      ctx.res.session = {
+        ...session,
+        ...user,
+        active: true,
+      };
     }
     return next();
   },

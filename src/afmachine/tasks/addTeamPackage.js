@@ -3,7 +3,7 @@ import { attachBackendRegistrationRouteInfo } from "../middleware/attachBackendR
 import { validateBackendRequest } from "../middleware/validateBackendRequest.js";
 import { validateBackendResponse } from "../middleware/validateBackendResponse.js";
 import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
-import { Package } from "../package/Package.js";
+import { Team } from "../team/Team.js";
 
 new Task("addTeamPackage", Command);
 
@@ -45,7 +45,11 @@ Command.middleware = [
   parseBackendResponse,
   validateBackendResponse,
   (ctx, next) => {
-    ctx.res.package = Package.normalize(ctx.raw.team.packages.pop());
+    ctx.res.team = Team.normalize(ctx.raw.team, {
+      state: "registered",
+      package: { defaultState: "registered" },
+      player: { defaultState: "inTeam" },
+    });
     return next();
   },
 ];
