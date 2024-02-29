@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { login, logout, cashout } from "../session.jsx";
+import { login, logout, cashout } from "/src/controllers/session.jsx";
 
 function useSession() {
   const navigate = useNavigate();

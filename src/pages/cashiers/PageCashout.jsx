@@ -1,14 +1,5 @@
 import * as React from "react";
-import { Panel } from "#components/panel/Panel.jsx";
-import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
-import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
-import { PanelNavLink } from "#components/links/PanelNavLink";
 import styled from "styled-components";
-import { Form } from "#components/forms/Form.jsx";
-import { Submit } from "#components/forms/Submit.jsx";
-import { Overflow } from "#components/Overflow.jsx";
-import { Button } from "#components/buttons/Button.jsx";
-import { ButtonStandard } from "#components/buttons/ButtonStandard.jsx";
 import BackgroundCashout from "/assets/backgrounds/cashout.png";
 import { FormCashout } from "#components/forms/FormCashout";
 import { useSession } from "/src/hooks/useSession.jsx";
