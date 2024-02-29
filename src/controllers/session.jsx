@@ -14,19 +14,25 @@ async function logout(navigate) {
         <DialogAlertStandard
           initialOpen
           heading="logout cashier"
-          msg="Could not locate cashier in localStorage"
+          msg="Could not locate cashier in storage"
         />,
       );
-      window.localStorage.removeItem("cashier");
-      navigate(home.path);
-    } else if (cashier.session && (await confirmLogoutSession(cashier))) {
-      navigate(cashoutCashier.path);
-    } else if (await confirmLogoutCashier(cashier)) {
-      window.localStorage.removeItem("cashier");
-      navigate(home.path);
+    } else if (cashier.session) {
+      if (await confirmLogoutSession(cashier)) {
+        return navigate(cashoutCashier.path);
+      } else {
+        msg = "Successfully logged out Cashier";
+        window.localStorage.removeItem("cashier");
+        navigate(home.path);
+      }
+    } else if (!(await confirmLogoutCashier(cashier))) {
+      return Promise.resolve();
     }
+    msg = "Successfully logged out Cashier";
+    window.localStorage.removeItem("cashier");
+    navigate(home.path);
   } catch (err) {
-    msg = err.message;
+    msg = getMsg(err);
     throw err;
   } finally {
     msg &&
@@ -38,15 +44,16 @@ async function logout(navigate) {
 
 async function login(navigate, form) {
   let msg;
-  let cmd;
   try {
-    cmd = await afm.loginCashier(form, form.password);
-    msg = cmd.msg;
+    const { cashier, ...res } = await afm
+      .loginCashier(form, form.password)
+      .parse();
+    msg = res.msg;
     const { session } = await afm.listSession().parse();
 
     if (!session.active) {
-      cmd = await afm.startSession(cashier);
-      msg = cmd.msg;
+      const res = await afm.startSession(cashier).parse();
+      msg = res.msg;
       cashier.session = true;
     }
 
@@ -54,50 +61,42 @@ async function login(navigate, form) {
     window.localStorage.setItem("cashier", JSON.stringify(cashier));
     navigate(home.path);
   } catch (err) {
-    msg = err.msg || err.message;
+    msg = getMsg(err);
     throw err;
   } finally {
-
+    msg &&
+      renderDialog(
+        <DialogAlertStandard initialOpen heading="login cashier" msg={msg} />,
+      );
   }
 }
 
 async function cashout(navigate, comment) {
+  let msg;
   try {
     const cashier = JSON.parse(window.localStorage.getItem("cashier"));
     if (!cashier) {
-      return renderDialog(
+      renderDialog(
         <DialogAlertStandard
           initialOpen
-          heading="logout cashier"
-          msg={`Could not locate cashier in localStorage`}
-          onClose={() => {
-            window.localStorage.removeItem("cashier");
-          }}
+          heading="cashout cashier"
+          msg="Could not locate cashier in storage"
         />,
       );
-    } else if (!(await confirmStopSession(cashier))) {
-      return Promise.resolve();
+    } else if (await confirmStopSession(cashier)) {
+      const res = await afm.stopSession(cashier, comment).parse();
+      msg = res.msg;
     }
-
-    const res = await parsecmd(afm.stopSession(cashier, comment));
-    renderDialog(
-      <DialogAlertStandard
-        initialOpen
-        heading="cashout cashier"
-        msg={`${cashier.username} cashed out!`}
-      />,
-    );
     window.localStorage.removeItem("cashier");
     navigate(home.path);
   } catch (err) {
-    renderDialog(
-      <DialogAlertStandard
-        initialOpen
-        heading="cashout cashier"
-        msg={err.cause?.message || err.message}
-      />,
-    );
+    msg = getMsg(err);
     throw err;
+  } finally {
+    msg &&
+      renderDialog(
+        <DialogAlertStandard initialOpen heading="cashout cashier" msg={msg} />,
+      );
   }
 }
 

@@ -1,5 +1,4 @@
 import { Task } from "../Task.js";
-import { parseBackendResponse } from "../middleware/parseBackendResponse.js";
 import { delay } from "js_utils/misc";
 
 new Task("test", Command);

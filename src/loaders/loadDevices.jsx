@@ -1,23 +1,17 @@
 import { Suspense } from "react";
 import { defer, Await, useLoaderData } from "react-router-dom";
 import { getafm } from "/src/getafm.js";
-import { parsecmd } from "#afm/parsecmd.js";
-import { Pending } from "#components/await-command/Pending.jsx";
+import { Pending } from "#components/await-command/Pending2.jsx";
 import { unique } from "js_utils/misc";
 import { smallid } from "js_utils/uuid";
 import { Center } from "#components/Center.jsx";
 
-const loadDevices = () => {
-  const devices = getafm(false).then((afm) =>
-    parsecmd(afm.listDevices({ queue: false })),
-  );
-  const scoreboardDevices = getafm(false).then((afm) =>
-    parsecmd(afm.listScoreboardDevices({ queue: false })),
-  );
-  const scoreboardViews = getafm(false).then((afm) =>
-    parsecmd(afm.listScoreboardViews({ queue: false })),
-  );
+const loadDevices = async () => {
+  const afm = await getafm(false);
 
+  const devices = afm.listDevices({ queue: false }).parse();
+  const scoreboardDevices = afm.listScoreboardDevices({ queue: false }).parse();
+  const scoreboardViews = afm.listScoreboardViews({ queue: false }).parse();
   const id = smallid();
 
   return defer({

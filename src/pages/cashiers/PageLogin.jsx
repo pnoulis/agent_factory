@@ -9,6 +9,18 @@ import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
 function Component() {
   const { login } = useSession();
 
+  const loginCashier = async (form, onError) => {
+    try {
+      await login(form.fields);
+    } catch (err) {
+      try {
+        onError(err);
+      } catch (err) {
+        setForm("reset");
+      }
+    }
+  };
+
   return (
     <ViewCommand cmd={afm.loginCashier}>
       <Page className="page-login">
@@ -18,11 +30,7 @@ function Component() {
         <section>
           <FormLoginCashier
             style={{ width: "350px" }}
-            onSubmit={async ({ fields, setForm }, onError) => {
-              login(fields)
-                .catch(onError)
-                .catch((err) => setForm("reset"));
-            }}
+            onSubmit={loginCashier}
           />
         </section>
         <VerticalRule />

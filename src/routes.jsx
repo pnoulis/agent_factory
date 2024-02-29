@@ -1,5 +1,5 @@
 import * as links from "./links.jsx";
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 import { loadAfmachine } from "./loaders/loadAfmachine.jsx";
 import { loadCashiers } from "./loaders/loadCashiers.jsx";
 import { loadPlayers } from "./loaders/loadPlayers.jsx";
@@ -11,6 +11,7 @@ import { loadPackages } from "./loaders/loadPackages.jsx";
 import { loadScoreboardLive } from "./loaders/loadScoreboardLive.jsx";
 import { loadScoreboardTop10 } from "./loaders/loadScoreboardTop10.jsx";
 import { PageLanding } from "./pages/PageLanding.jsx";
+import { PageScratch } from "./pages/scratch/PageScratch.jsx";
 
 export default [
   {
@@ -32,7 +33,7 @@ export default [
           {
             path: links.registerTeam.path,
             loader: loadPlayersWithWristband,
-            lazy: async () => import("./pages/teams/PageRegister.jsx"),
+            lazy: async () => import("./pages/team/PageRegister.jsx"),
           },
 
           {
@@ -155,6 +156,10 @@ export default [
       {
         path: links.loginCashier.path,
         lazy: async () => import("./pages/cashiers/PageLogin.jsx"),
+      },
+      {
+        path: "/scratch",
+        element: <PageScratch />,
       },
     ],
   },

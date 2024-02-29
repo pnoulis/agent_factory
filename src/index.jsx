@@ -6,6 +6,7 @@ import { parsecmd } from "#afm/parsecmd.js";
 
 import "./debug.js";
 import "./errors.js";
+import "./globals.js";
 globalThis.React = React;
 globalThis.ReactDOM = ReactDOM;
 globalThis.styled = styled;

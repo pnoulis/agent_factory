@@ -139,8 +139,7 @@ Afmachine.prototype.runCommand = async function (cmd) {
   try {
     await cmd.run();
   } catch (err) {
-    debug(err);
-    debug("do nthing");
+    // do nothing
   } finally {
     this.commands = this.commands - 1;
     this.onCmdEnd(cmd);
@@ -252,79 +251,6 @@ Object.assign(Afmachine.prototype, {
   listScoreboardDevices,
   listScoreboardViews,
   listScoreboard,
-
-  // Creates
-  createWristbandFactory(type) {
-    switch (type) {
-      case "grouparty":
-        return (wristband) => new GrouPartyWristband(wristband);
-      case "commander":
-        return (wristband) => new WristbandCommander(wristband);
-      default:
-        return (wristband) => new Wristband(wristband);
-    }
-  },
-  createPlayerFactory(type) {
-    switch (type) {
-      case "grouparty":
-        return (player, wristband) =>
-          new GrouPartyPlayer(player, new GrouPartyWristband(wristband));
-      case "commander":
-        return (player, wristband) =>
-          new PlayerCommander(player, new WristbandCommander(wristband));
-      default:
-        return (player, wristband) =>
-          new Player(player, new Wristband(wristband));
-    }
-  },
-  createPackageFactory(type) {
-    switch (type) {
-      default:
-        return (pkg) => new Package(pkg);
-    }
-  },
-  createTeamFactory(type, playerType, wristbandType, pkgType) {
-    switch (type) {
-      case "grouparty":
-        return (team) =>
-          new GrouPartyTeam(
-            team,
-            this.createPlayerFactory("grouparty"),
-            this.createWristbandFactory("grouparty"),
-            this.createPackageFactory(pkgType),
-          );
-      case "commander":
-        return (team) =>
-          new TeamCommander(
-            team,
-            this.createPlayerFactory(playerType || type),
-            this.createWristbandFactory(wristbandType || type),
-            this.createPackageFactory(pkgType),
-          );
-      default:
-        return (team) =>
-          new Team(
-            team,
-            this.createPlayerFactory(playerType),
-            this.createWristbandFactory(wristbandType),
-            this.createPackageFactory(pkgType),
-          );
-    }
-  },
-  createDeviceFactory(type) {
-    switch (type) {
-      case DEVICE_TYPES.adminScreen:
-        return (device, clientMqtt) =>
-          new DeviceAdminScreen(device, clientMqtt);
-      case DEVICE_TYPES.rpiReader:
-        return (device, clientMqtt) => new DeviceRPIReader(device, clientMqtt);
-      default:
-        return (device) => new Device(device);
-    }
-  },
-  createCashierFactory() {
-    return (cashier) => new Cashier(cashier);
-  },
 });
 
 export { Afmachine };

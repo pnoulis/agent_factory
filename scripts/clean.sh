@@ -12,4 +12,4 @@ echo srcdir: $srcdir
 cd $srcdir/src
 
 
-grep -rin 'cmd\.msg =' | cut -d':' -f1 | xargs -I {} sed -i 's/cmd\.msg =/cmd\.res\.msg =/gi' {}
+grep --exclude-dir=afmachine -rin 'afm\.' .

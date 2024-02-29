@@ -1,4 +1,3 @@
-import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { PanelActionbar } from "#components/panel/PanelActionbar.jsx";
 import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
 import { WidgetAdd } from "#components/widgets/WidgetAdd.jsx";
@@ -6,31 +5,26 @@ import { WidgetRemove } from "#components/widgets/WidgetRemove.jsx";
 import * as React from "react";
 import { useNavigate, useRevalidator } from "react-router-dom";
 import styled from "styled-components";
-import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard.jsx";
-import { deregisterCashiers } from "/src/controllers/deregisterCashiers.jsx";
 import { AwaitCashiers } from "/src/loaders/loadCashiers.jsx";
 import { TableCashiers } from "#components/tables/TableCashiers.jsx";
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
+import { cashiers as cashierControllers } from "../../controllers/cashiers.jsx";
 
 function Component() {
   const navigate = useNavigate();
   const selectedCashiersRef = React.useRef([]);
   const revalidator = useRevalidator();
 
+  const deregisterCashiers = async () => {
+    try {
+      await cashierControllers.deregister(selectedCashiersRef.current);
+    } finally {
+      revalidator.revalidate();
+    }
+  };
+
   return (
-    <ViewCommand
-      onFulfilled={() => {
-        revalidator.revalidate();
-      }}
-      onSettled={(cmd) => {
-        renderDialog(
-          <DialogAlertStandard initialOpen heading={cmd.verb} msg={cmd.msg} />,
-        );
-      }}
-      noRejected
-      noFulfilled
-      cmd={afm.deregisterCashier}
-    >
+    <ViewCommand noRejected noFulfilled cmd={afm.deregisterCashier}>
       <Page className="page-cashiers">
         <AwaitCashiers>
           {({ cashiers, id }) => (
@@ -41,9 +35,7 @@ function Component() {
                     color="var(--primary-base)"
                     fill="white"
                     content="remove cashier"
-                    onClick={() =>
-                      deregisterCashiers(selectedCashiersRef.current)
-                    }
+                    onClick={deregisterCashiers}
                   />
                   <WidgetAdd
                     onClick={(e) => navigate("register")}

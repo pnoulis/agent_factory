@@ -12,68 +12,101 @@ import { ComboboxDeviceView } from "#components/comboboxes/ComboboxDeviceView";
 import { confirmUpdateDevices } from "#components/dialogs/confirms/confirmUpdateDevices.jsx";
 import { confirmUpdateDevicesView } from "#components/dialogs/confirms/confirmUpdateDeviceView";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
-import { renderDialogPromise } from "#components/dialogs/renderDialogPromise.jsx";
 import { DialogAlertStandard } from "#components/dialogs/alerts/DialogAlertStandard";
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
-import { useRevalidator, useNavigate } from "react-router-dom";
+import { useRevalidator, useLoaderData } from "react-router-dom";
+import { AlertUpdateDevices } from "../../components/dialogs/alerts/AlertUpdateDevices.jsx";
 
 function Component() {
   const selectedDevicesRef = React.useRef([]);
-  const navigate = useNavigate();
-  // const revalidator = useRevalidator();
+  const loader = useLoaderData();
+  const revalidator = useRevalidator();
+
+  const getDevices = () => loader.devices.then(({ devices }) => devices);
+
+  const updateDeviceView = async (view) => {
+    const scoreboardDevices = selectedDevicesRef.current.filter(
+      (device) => !!device.view,
+    );
+
+    if (!scoreboardDevices.length) {
+      return renderDialog(
+        <DialogAlertStandard
+          initialOpen
+          heading="set device view"
+          msg="No scoreboard device's selected!"
+        />,
+      );
+    } else if (!(await confirmUpdateDevicesView(view, scoreboardDevices))) {
+      return Promise.resolve();
+    }
+
+    try {
+      const cmds = await Promise.allSettled([
+        ...scoreboardDevices.map((device) =>
+          afm.updateScoreboardDeviceView(device, view),
+        ),
+      ]);
+      renderDialog(
+        <AlertUpdateDevices
+          initialOpen
+          heading="update device view"
+          cmds={cmds}
+        />,
+      );
+      revalidator.revalidate();
+      selectedDevicesRef.current = [];
+    } catch (err) {
+      renderDialog(
+        <DialogAlertStandard
+          initialOpen
+          heading="update device view"
+          msg={getMsg(err).err}
+        />,
+      );
+    }
+  };
+
+  const updateDevices = async (action) => {
+    const devices = await getDevices();
+    const selectedDevices = selectedDevicesRef.current;
+
+    if (!(await confirmUpdateDevices(action, selectedDevices))) {
+      return Promise.resolve();
+    }
+
+    try {
+      const cmds = await Promise.allSettled(
+        selectedDevices.length === 0 ||
+          selectedDevices.length === devices.length
+          ? [afm[`${action}Device`]()]
+          : selectedDevices.map((device) => afm[`${action}Device`](device)),
+      );
+      renderDialog(
+        <AlertUpdateDevices
+          initialOpen
+          heading={`${action} devices`}
+          cmds={cmds}
+        />,
+      );
+      revalidator.revalidate();
+      selectedDevicesRef.current = [];
+    } catch (err) {
+      renderDialog(
+        <DialogAlertStandard
+          initialOpen
+          heading={`${action} devices`}
+          msg={getMsg(err)}
+        />,
+      );
+    }
+  };
 
   return (
-    <ViewCommand
-      onFulfilled={() => {
-        navigate(0);
-      }}
-      onSettled={async (cmd) =>
-        renderDialogPromise(
-          <DialogAlertStandard initialOpen heading={cmd.verb} msg={cmd.msg} />,
-        ).then(() => navigate(0))
-      }
-      noRejected
-      noFulfilled
-      cmd={afm.restartDevice}
-    >
-      <ViewCommand
-        onSettled={async (cmd) =>
-          renderDialogPromise(
-            <DialogAlertStandard
-              initialOpen
-              heading={cmd.verb}
-              msg={cmd.msg}
-            />,
-          ).then(() => navigate(0))
-        }
-        noRejected
-        noFulfilled
-        cmd={afm.shutdownDevice}
-      >
-        <ViewCommand
-          onSettled={async (cmd) =>
-            renderDialogPromise(
-              <DialogAlertStandard
-                initialOpen
-                heading={cmd.verb}
-                msg={cmd.msg}
-              />,
-            ).then(() => navigate(0))
-          }
-          noRejected
-          noFulfilled
-          cmd={afm.bootDevice}
-        >
+    <ViewCommand noRejected noFulfilled cmd={afm.restartDevice}>
+      <ViewCommand noRejected noFulfilled cmd={afm.shutdownDevice}>
+        <ViewCommand noRejected noFulfilled cmd={afm.bootDevice}>
           <ViewCommand
-            onSettled={async (cmd) =>
-              renderDialogPromise(
-                <DialogAlertStandard
-                  initialOpen
-                  heading={cmd.verb}
-                  msg={cmd.msg}
-                />,
-              ).then(() => navigate(0))
-            }
             noRejected
             noFulfilled
             cmd={afm.updateScoreboardDeviceView}
@@ -93,116 +126,25 @@ function Component() {
                         <ComboboxDeviceView
                           key={id}
                           views={scoreboardViews}
-                          onSelect={async (view, setCombobox) => {
-                            const scoreboardDevices =
-                              selectedDevicesRef.current.filter(
-                                (device) => !!device.view,
-                              );
-
-                            if (!scoreboardDevices.length) {
-                              renderDialog(
-                                <DialogAlertStandard
-                                  initialOpen
-                                  heading="set device view"
-                                  msg="No scoreboard device's selected!"
-                                />,
-                              );
-                              setCombobox("");
-                            } else {
-                              const yes = await confirmUpdateDevicesView(
-                                view,
-                                scoreboardDevices,
-                              );
-
-                              if (!yes) return;
-                              for (
-                                let i = 0;
-                                i < scoreboardDevices.length;
-                                i++
-                              ) {
-                                afm.updateScoreboardDeviceView(
-                                  scoreboardDevices[i],
-                                  view,
-                                );
-                              }
-                            }
-                          }}
+                          onSelect={updateDeviceView}
                         />
                         <WidgetRestart
                           color="var(--primary-base)"
                           fill="white"
                           content="restart device"
-                          onClick={async (e) => {
-                            const yes = await confirmUpdateDevices(
-                              "restart",
-                              selectedDevicesRef.current,
-                            );
-                            if (!yes) {
-                              return;
-                            } else if (!selectedDevicesRef.current.length) {
-                              afm.restartDevice();
-                            } else {
-                              for (
-                                let i = 0;
-                                i < selectedDevicesRef.current.length;
-                                i++
-                              ) {
-                                afm.restartDevice(
-                                  selectedDevicesRef.current[i],
-                                );
-                              }
-                            }
-                          }}
+                          onClick={() => updateDevices("restart")}
                         />
                         <WidgetShutdown
                           color="var(--primary-base)"
                           fill="white"
                           content="shutdown device"
-                          onClick={async () => {
-                            const yes = await confirmUpdateDevices(
-                              "shutdown",
-                              selectedDevicesRef.current,
-                            );
-                            if (!yes) {
-                              return;
-                            } else if (!selectedDevicesRef.current.length) {
-                              afm.shutdownDevice();
-                            } else {
-                              for (
-                                let i = 0;
-                                i < selectedDevicesRef.current.length;
-                                i++
-                              ) {
-                                afm.shutdownDevice(
-                                  selectedDevicesRef.current[i],
-                                );
-                              }
-                            }
-                          }}
+                          onClick={() => updateDevices("shutdown")}
                         />
                         <WidgetBoot
                           color="var(--primary-base)"
                           fill="white"
                           content="boot device"
-                          onClick={async () => {
-                            const yes = await confirmUpdateDevices(
-                              "boot",
-                              selectedDevicesRef.current,
-                            );
-                            if (!yes) {
-                              return;
-                            } else if (!selectedDevicesRef.current.length) {
-                              afm.bootDevice();
-                            } else {
-                              for (
-                                let i = 0;
-                                i < selectedDevicesRef.current.length;
-                                i++
-                              ) {
-                                afm.bootDevice(selectedDevicesRef.current[i]);
-                              }
-                            }
-                          }}
+                          onClick={() => updateDevices("boot")}
                         />
                       </PanelNavbar>
                     )}

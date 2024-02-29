@@ -7,7 +7,7 @@ function confirmUpdateDevicesView(view, devices) {
       renderDialog(
         <DialogConfirmStandard
           initialOpen
-          heading={`Update devices view to ${view}?`}
+          heading={`Update devices view to ${view}`}
           onClose={resolve}
         >
           <ul style={{ textAlign: "left" }}>

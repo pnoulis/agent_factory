@@ -4,12 +4,24 @@ import { PanelNavbar } from "#components/panel/PanelNavbar.jsx";
 import { WidgetBack } from "#components/widgets/WidgetBack.jsx";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { registerCashier } from "/src/controllers/registerCashier.jsx";
 import { cashiers as linkCashiers } from "/src/links.jsx";
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
+import { cashiers as cashierControllers } from "../../controllers/cashiers.jsx";
 
 function Component() {
   const navigate = useNavigate();
+
+  const registerCashier = async (form, onError) => {
+    try {
+      await cashierControllers.register(navigate, form.fields);
+    } catch (err) {
+      try {
+        onError(err);
+      } catch (err) {
+        setForm("reset");
+      }
+    }
+  };
 
   return (
     <ViewCommand noRejected noFulfilled cmd={afm.registerCashier}>
@@ -24,15 +36,7 @@ function Component() {
           </PanelNavbar>
         </PanelActionbar>
         <Content className="content-cashier-register">
-          <FormRegisterCashier
-            onSubmit={({ fields, setForm }, onError) => {
-              registerCashier(navigate, fields)
-                .catch(onError)
-                .catch(() => {
-                  setForm("reset");
-                });
-            }}
-          />
+          <FormRegisterCashier onSubmit={registerCashier} />
         </Content>
       </Page>
     </ViewCommand>
