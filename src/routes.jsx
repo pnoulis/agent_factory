@@ -32,7 +32,7 @@ export default [
           {
             path: links.registerTeam.path,
             loader: loadPlayersWithWristband,
-            lazy: async () => import("./pages/teams/PageRegister2.jsx"),
+            lazy: async () => import("./pages/teams/PageRegister.jsx"),
           },
 
           {
@@ -78,7 +78,7 @@ export default [
           //////////////////////////////////////////////////
           {
             path: links.grouparty.path,
-            lazy: async () => import("./pages/grouparty/PageGrouParty2.jsx"),
+            lazy: async () => import("./pages/grouparty/PageGrouParty.jsx"),
           },
 
           //////////////////////////////////////////////////
