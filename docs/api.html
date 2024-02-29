@@ -1,0 +1,3984 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-03-01 Fri 01:26 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgf7f4057">1. About</a></li>
+<li><a href="#orgc1d06fa">2. Device Tasks</a>
+<ul>
+<li><a href="#orgc676f9d">2.1. List Devices</a>
+<ul>
+<li><a href="#orgea5097c">2.1.1. Client request</a></li>
+<li><a href="#org46a4076">2.1.2. Backend request</a></li>
+<li><a href="#org14d3eda">2.1.3. Backend response</a></li>
+<li><a href="#org1e92ede">2.1.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#orgc16ba40">2.2. List Scoreboard Devices</a>
+<ul>
+<li><a href="#org7810110">2.2.1. Client request</a></li>
+<li><a href="#orgbef4801">2.2.2. Backend request</a></li>
+<li><a href="#org0645f69">2.2.3. Backend response</a></li>
+<li><a href="#org6c5d1da">2.2.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#orga64f645">2.3. List Scoreboard Device Views</a>
+<ul>
+<li><a href="#org669faaf">2.3.1. Client request</a></li>
+<li><a href="#org536f4fb">2.3.2. Backend request</a></li>
+<li><a href="#org494e478">2.3.3. Backend response</a></li>
+<li><a href="#orgd2f5f43">2.3.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org0632711">2.4. Update Scoreboard Device View</a>
+<ul>
+<li><a href="#org30562de">2.4.1. Client request</a></li>
+<li><a href="#org37862f5">2.4.2. Backend request</a></li>
+<li><a href="#org10cda86">2.4.3. Backend response</a></li>
+<li><a href="#org992df7d">2.4.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org11cd796">2.5. Boot Device</a>
+<ul>
+<li><a href="#org1d7a9e2">2.5.1. Client request</a></li>
+<li><a href="#org1694b86">2.5.2. Backend request</a></li>
+<li><a href="#org972be22">2.5.3. Backend response</a></li>
+<li><a href="#org419cadf">2.5.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org32d9945">2.6. Shutdown Device</a>
+<ul>
+<li><a href="#orgdb71b66">2.6.1. Client request</a></li>
+<li><a href="#org54472b4">2.6.2. Backend request</a></li>
+<li><a href="#orge65038e">2.6.3. Backend response</a></li>
+<li><a href="#orgf145106">2.6.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org4b08c6e">2.7. Restart Device</a>
+<ul>
+<li><a href="#org33110d8">2.7.1. Client request</a></li>
+<li><a href="#orge1e9c65">2.7.2. Backend request</a></li>
+<li><a href="#org76cc8e5">2.7.3. Backend response</a></li>
+<li><a href="#orga528075">2.7.4. Client response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org04b9cf8">3. Scoreboard Tasks</a>
+<ul>
+<li><a href="#org7425a0f">3.1. List Scoreboard</a>
+<ul>
+<li><a href="#orgaaf39c9">3.1.1. Client request</a></li>
+<li><a href="#orge2d053b">3.1.2. Backend request</a></li>
+<li><a href="#org9d7afe4">3.1.3. Backend response</a></li>
+<li><a href="#org8cdd62f">3.1.4. Client response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6558f3c">4. Player Tasks</a>
+<ul>
+<li><a href="#org9e5b8d2">4.1. List Registered Players</a>
+<ul>
+<li><a href="#org1487eca">4.1.1. Client request</a></li>
+<li><a href="#org452aa0d">4.1.2. Backend request</a></li>
+<li><a href="#orgd1cbd78">4.1.3. Backend response</a></li>
+<li><a href="#orge70c4fd">4.1.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org7663d77">4.2. List Players with a Wristband</a>
+<ul>
+<li><a href="#orgb758f4f">4.2.1. Client request</a></li>
+<li><a href="#org77faf66">4.2.2. Backend request</a></li>
+<li><a href="#orgfd338a9">4.2.3. Backend response</a></li>
+<li><a href="#org2269e25">4.2.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#orgc8bd2b8">4.3. Search Player</a>
+<ul>
+<li><a href="#org1f17f42">4.3.1. Client request</a></li>
+<li><a href="#org174bc0a">4.3.2. Backend request</a></li>
+<li><a href="#org318b105">4.3.3. Backend response</a></li>
+<li><a href="#org8abb9bb">4.3.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#orgea06395">4.4. Register Player</a>
+<ul>
+<li><a href="#org85d9df8">4.4.1. Client request</a></li>
+<li><a href="#org0902fdb">4.4.2. Backend request</a></li>
+<li><a href="#orgc9160c5">4.4.3. Backend response</a></li>
+<li><a href="#orgd79b7e0">4.4.4. Client response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgfcaf99e">5. Wristband Tasks</a>
+<ul>
+<li><a href="#org1618f55">5.1. Register Wristband</a>
+<ul>
+<li><a href="#org41b3623">5.1.1. Client request</a></li>
+<li><a href="#org7e5be67">5.1.2. Backend request</a></li>
+<li><a href="#org50dd7b8">5.1.3. Backend response</a></li>
+<li><a href="#org92bc080">5.1.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org3b74967">5.2. Deregister Wristband</a>
+<ul>
+<li><a href="#orgd90bdbb">5.2.1. Client request</a></li>
+<li><a href="#org1d3e116">5.2.2. Backend request</a></li>
+<li><a href="#orgba2bbce">5.2.3. Backend response</a></li>
+<li><a href="#org0c886dd">5.2.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org0b4cba4">5.3. Get Wristband Information</a>
+<ul>
+<li><a href="#orgb53fea7">5.3.1. Client request</a></li>
+<li><a href="#org264332b">5.3.2. Backend request</a></li>
+<li><a href="#org6d53f91">5.3.3. Backend response</a></li>
+<li><a href="#orgc6f21e9">5.3.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org4fe1edf">5.4. Scan Wristband</a>
+<ul>
+<li><a href="#org5b8388b">5.4.1. Client request</a></li>
+<li><a href="#orgf3471fe">5.4.2. Backend request</a></li>
+<li><a href="#org12b4eb9">5.4.3. Backend response</a></li>
+<li><a href="#orga4a2d5b">5.4.4. Client request</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge235f88">6. Cashier Tasks</a>
+<ul>
+<li><a href="#org6ee483f">6.1. List Cashiers</a>
+<ul>
+<li><a href="#org046538b">6.1.1. Client request</a></li>
+<li><a href="#org1af8034">6.1.2. Backend request</a></li>
+<li><a href="#orgf41dc21">6.1.3. Backend response</a></li>
+<li><a href="#org8a90f05">6.1.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#orgca73a8c">6.2. Login Cashier</a>
+<ul>
+<li><a href="#org5bc4e09">6.2.1. Client request</a></li>
+<li><a href="#orgd96253a">6.2.2. Backend request</a></li>
+<li><a href="#orgd4de203">6.2.3. Backend response</a></li>
+<li><a href="#org161f4cb">6.2.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org4326e9a">6.3. Register Cashier</a>
+<ul>
+<li><a href="#org4c404bb">6.3.1. Client request</a></li>
+<li><a href="#org11200dd">6.3.2. Backend request</a></li>
+<li><a href="#org517b4f4">6.3.3. Backend response</a></li>
+<li><a href="#org671d13b">6.3.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org69c389e">6.4. Deregister Cashier</a>
+<ul>
+<li><a href="#org3d5207a">6.4.1. Client request</a></li>
+<li><a href="#org09d1bc5">6.4.2. Backend request</a></li>
+<li><a href="#org8cf89c0">6.4.3. Backend response</a></li>
+<li><a href="#orgce1e050">6.4.4. Client response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org51f5d2e">7. Package Tasks</a>
+<ul>
+<li><a href="#orge669d80">7.1. List Packages</a>
+<ul>
+<li><a href="#orgd9c59eb">7.1.1. Client request</a></li>
+<li><a href="#org53b8b72">7.1.2. Backend request</a></li>
+<li><a href="#org721c9ad">7.1.3. Backend response</a></li>
+<li><a href="#org36ad254">7.1.4. Client response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org036a671">8. Team Tasks</a>
+<ul>
+<li><a href="#orge8f8080">8.1. Register Team</a>
+<ul>
+<li><a href="#orge868166">8.1.1. Client request</a></li>
+<li><a href="#org4b423ca">8.1.2. Backend request</a></li>
+<li><a href="#orgddf9b3a">8.1.3. Backend response</a></li>
+<li><a href="#org9d58f1a">8.1.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org3d14772">8.2. Register Team Package</a>
+<ul>
+<li><a href="#org6f5e81d">8.2.1. Client request</a></li>
+<li><a href="#org89c699c">8.2.2. Backend request</a></li>
+<li><a href="#org3683c9c">8.2.3. Backend response</a></li>
+<li><a href="#orgc922d12">8.2.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#orgd1bce40">8.3. Deregister Team Package</a>
+<ul>
+<li><a href="#orgf9786b6">8.3.1. Client request</a></li>
+<li><a href="#orge61d963">8.3.2. Backend request</a></li>
+<li><a href="#orgb5aedba">8.3.3. Backend response</a></li>
+<li><a href="#orgf3984a4">8.3.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org3119b1b">8.4. Start team</a>
+<ul>
+<li><a href="#org81b1520">8.4.1. Client request</a></li>
+<li><a href="#orgb5c4b2d">8.4.2. Backend request</a></li>
+<li><a href="#org51bb6d1">8.4.3. Backend response</a></li>
+<li><a href="#org135c228">8.4.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org82104d6">8.5. Find Team</a>
+<ul>
+<li><a href="#org35cfe4a">8.5.1. Client request</a></li>
+<li><a href="#orgb83d524">8.5.2. Client response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org34e942b">9. Session Tasks</a>
+<ul>
+<li><a href="#orgff91850">9.1. List Session</a>
+<ul>
+<li><a href="#orgae9a498">9.1.1. Backend response</a></li>
+<li><a href="#orgbc3db77">9.1.2. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org9745dbf">9.2. Start Session</a>
+<ul>
+<li><a href="#org9bf0e9e">9.2.1. Client request</a></li>
+<li><a href="#org1bac223">9.2.2. Backend request</a></li>
+<li><a href="#orga6274e7">9.2.3. Backend response</a></li>
+<li><a href="#orgb42d96f">9.2.4. Client request</a></li>
+</ul>
+</li>
+<li><a href="#orge0cafbe">9.3. Stop Session</a>
+<ul>
+<li><a href="#orgf75417f">9.3.1. Client request</a></li>
+<li><a href="#orgd1a85c6">9.3.2. Backend request</a></li>
+<li><a href="#org89f98b3">9.3.3. Backend response</a></li>
+<li><a href="#org02dc536">9.3.4. Client response</a></li>
+</ul>
+</li>
+<li><a href="#org7be7d03">9.4. Stop Sesson force</a></li>
+</ul>
+</li>
+<li><a href="#orgec173e7">10. The Command pattern</a></li>
+<li><a href="#orga2d8376">11. Conventions</a>
+<ul>
+<li><a href="#org546a091">11.1. Command inputs and outputs</a></li>
+<li><a href="#org90f361c">11.2. Commands wrap their return value within an object</a></li>
+</ul>
+</li>
+<li><a href="#org3b73337">12. Normalization functions</a>
+<ul>
+<li><a href="#orgfb36496">12.1. Inputs</a></li>
+<li><a href="#orga2a7e22">12.2. Deducing state</a></li>
+</ul>
+</li>
+<li><a href="#orgc8831e6">13. Schemas</a>
+<ul>
+<li><a href="#org3f6d35d">13.1. Package</a>
+<ul>
+<li><a href="#orgaefa1a9">13.1.1. AFM Time</a></li>
+<li><a href="#orgb41b58b">13.1.2. AFM Missions</a></li>
+<li><a href="#org76eed2b">13.1.3. Backend Time</a></li>
+<li><a href="#org865619b">13.1.4. Backend Missions</a></li>
+<li><a href="#org2dca677">13.1.5. Available Backend packages</a></li>
+</ul>
+</li>
+<li><a href="#orgd96f68f">13.2. Device</a>
+<ul>
+<li><a href="#orgc387d02">13.2.1. AFM rpi reader</a></li>
+<li><a href="#org33e7c99">13.2.2. AFM admin screen</a></li>
+<li><a href="#orgd3722b7">13.2.3. Backend</a></li>
+</ul>
+</li>
+<li><a href="#org4037363">13.3. Cashier</a>
+<ul>
+<li><a href="#org96a6d58">13.3.1. AFM</a></li>
+</ul>
+</li>
+<li><a href="#orge0a8a15">13.4. Player</a>
+<ul>
+<li><a href="#orgeb3be3f">13.4.1. AFM</a></li>
+<li><a href="#orgf900f7c">13.4.2. Backend</a></li>
+</ul>
+</li>
+<li><a href="#org8affc75">13.5. Team</a></li>
+<li><a href="#org265e2ce">13.6. Wristband</a>
+<ul>
+<li><a href="#org3e9c380">13.6.1. AFM</a></li>
+<li><a href="#org50bfd99">13.6.2. Backend</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf7f4057" class="outline-2">
+<h2 id="orgf7f4057"><span class="section-number-2">1.</span> About</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Documentation for the Backend API and architecture of the Client.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgc1d06fa" class="outline-2">
+<h2 id="orgc1d06fa"><span class="section-number-2">2.</span> Device Tasks</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgc676f9d" class="outline-3">
+<h3 id="orgc676f9d"><span class="section-number-3">2.1.</span> List Devices</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-orgea5097c" class="outline-4">
+<h4 id="orgea5097c"><span class="section-number-4">2.1.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org46a4076" class="outline-4">
+<h4 id="org46a4076"><span class="section-number-4">2.1.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706709130813</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org14d3eda" class="outline-4">
+<h4 id="org14d3eda"><span class="section-number-4">2.1.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<div class="org-src-container">
+<pre class="src src-js">  <span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706709130813</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  devices: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      deviceType: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+      roomType: <span style="color: #2d9574;">'SCOREBOARD1'</span>,
+      deviceId: <span style="color: #2d9574;">'scor1'</span>,
+      macAddress: <span style="color: #a45bad;">null</span>,
+      ipAddress: <span style="color: #a45bad;">null</span>,
+      bootedTimestamp: <span style="color: #a45bad;">1702243701606</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      deviceType: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+      roomType: <span style="color: #2d9574;">'SCOREBOARD2'</span>,
+      deviceId: <span style="color: #2d9574;">'scor2'</span>,
+      macAddress: <span style="color: #a45bad;">null</span>,
+      ipAddress: <span style="color: #a45bad;">null</span>,
+      bootedTimestamp: <span style="color: #a45bad;">1702243701625</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      deviceType: <span style="color: #2d9574;">'REGISTRATION_SCREEN'</span>,
+      roomType: <span style="color: #2d9574;">'ADMINISTRATION1'</span>,
+      deviceId: <span style="color: #2d9574;">'001'</span>,
+      macAddress: <span style="color: #a45bad;">null</span>,
+      ipAddress: <span style="color: #a45bad;">null</span>,
+      bootedTimestamp: <span style="color: #a45bad;">1706707719741</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      deviceType: <span style="color: #2d9574;">'RPI_READER'</span>,
+      roomType: <span style="color: #2d9574;">'ADMINISTRATION1'</span>,
+      deviceId: <span style="color: #2d9574;">'ADMINISTRATION1Reader'</span>,
+      macAddress: <span style="color: #a45bad;">null</span>,
+      ipAddress: <span style="color: #a45bad;">null</span>,
+      bootedTimestamp: <span style="color: #a45bad;">1705889333198</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1e92ede" class="outline-4">
+<h4 id="org1e92ede"><span class="section-number-4">2.1.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  devices: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #2d9574;">'scor1'</span>,
+      type: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+      room: <span style="color: #2d9574;">'SCOREBOARD1'</span>,
+      view: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #2d9574;">'scor2'</span>,
+      type: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+      room: <span style="color: #2d9574;">'SCOREBOARD2'</span>,
+      view: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #2d9574;">'001'</span>,
+      type: <span style="color: #2d9574;">'REGISTRATION_SCREEN'</span>,
+      room: <span style="color: #2d9574;">'ADMINISTRATION1'</span>,
+      view: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #2d9574;">'ADMINISTRATION1Reader'</span>,
+      type: <span style="color: #2d9574;">'RPI_READER'</span>,
+      room: <span style="color: #2d9574;">'ADMINISTRATION1'</span>,
+      view: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc16ba40" class="outline-3">
+<h3 id="orgc16ba40"><span class="section-number-3">2.2.</span> List Scoreboard Devices</h3>
+<div class="outline-text-3" id="text-2-2">
+</div>
+<div id="outline-container-org7810110" class="outline-4">
+<h4 id="org7810110"><span class="section-number-4">2.2.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbef4801" class="outline-4">
+<h4 id="orgbef4801"><span class="section-number-4">2.2.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706711522546</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0645f69" class="outline-4">
+<h4 id="org0645f69"><span class="section-number-4">2.2.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706711522546</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  scoreboardDevices: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      deviceId: <span style="color: #2d9574;">'scor1'</span>,
+      deviceType: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+      roomType: <span style="color: #2d9574;">'SCOREBOARD1'</span>,
+      status: <span style="color: #2d9574;">'ROTATING'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      deviceId: <span style="color: #2d9574;">'scor2'</span>,
+      deviceType: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+      roomType: <span style="color: #2d9574;">'SCOREBOARD2'</span>,
+      status: <span style="color: #2d9574;">'MONTHLY'</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6c5d1da" class="outline-4">
+<h4 id="org6c5d1da"><span class="section-number-4">2.2.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-2-2-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  scoreboardDevices: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #2d9574;">'scor1'</span>,
+      type: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+      room: <span style="color: #2d9574;">'SCOREBOARD1'</span>,
+      view: <span style="color: #2d9574;">'ROTATING'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #2d9574;">'scor2'</span>,
+      type: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+      room: <span style="color: #2d9574;">'SCOREBOARD2'</span>,
+      view: <span style="color: #2d9574;">'MONTHLY'</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga64f645" class="outline-3">
+<h3 id="orga64f645"><span class="section-number-3">2.3.</span> List Scoreboard Device Views</h3>
+<div class="outline-text-3" id="text-2-3">
+</div>
+<div id="outline-container-org669faaf" class="outline-4">
+<h4 id="org669faaf"><span class="section-number-4">2.3.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org536f4fb" class="outline-4">
+<h4 id="org536f4fb"><span class="section-number-4">2.3.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706712075044</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org494e478" class="outline-4">
+<h4 id="org494e478"><span class="section-number-4">2.3.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706712075044</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  scoreboardStatuses: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">'ROTATING'</span>,
+    <span style="color: #2d9574;">'ALL_TIME'</span>,
+    <span style="color: #2d9574;">'MONTHLY'</span>,
+    <span style="color: #2d9574;">'WEEKLY'</span>,
+    <span style="color: #2d9574;">'DAILY'</span>,
+    <span style="color: #2d9574;">'ELEMENTS'</span>,
+    <span style="color: #2d9574;">'ROOMS'</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd2f5f43" class="outline-4">
+<h4 id="orgd2f5f43"><span class="section-number-4">2.3.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  scoreboardViews: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">'ROTATING'</span>,
+    <span style="color: #2d9574;">'ALL_TIME'</span>,
+    <span style="color: #2d9574;">'MONTHLY'</span>,
+    <span style="color: #2d9574;">'WEEKLY'</span>,
+    <span style="color: #2d9574;">'DAILY'</span>,
+    <span style="color: #2d9574;">'ELEMENTS'</span>,
+    <span style="color: #2d9574;">'ROOMS'</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0632711" class="outline-3">
+<h3 id="org0632711"><span class="section-number-3">2.4.</span> Update Scoreboard Device View</h3>
+<div class="outline-text-3" id="text-2-4">
+</div>
+<div id="outline-container-org30562de" class="outline-4">
+<h4 id="org30562de"><span class="section-number-4">2.4.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, device</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #2d9574;">'scor1'</span>,
+  type: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+  room: <span style="color: #2d9574;">'SCOREBOARD1'</span>,
+  view: <span style="color: #2d9574;">'ROTATING'</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, new View</span>
+view: <span style="color: #2d9574;">"string"</span>,
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3rd argument, options, optional</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org37862f5" class="outline-4">
+<h4 id="org37862f5"><span class="section-number-4">2.4.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707072209571</span>,
+  deviceId : <span style="color: #2d9574;">"scor1"</span>,
+  status : <span style="color: #2d9574;">"WEEKLY"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org10cda86" class="outline-4">
+<h4 id="org10cda86"><span class="section-number-4">2.4.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707072209641</span>,
+  result : <span style="color: #2d9574;">"OK"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org992df7d" class="outline-4">
+<h4 id="org992df7d"><span class="section-number-4">2.4.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  device: <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #2d9574;">'scor1'</span>,
+    type: <span style="color: #2d9574;">'SCOREBOARD_SCREEN'</span>,
+    room: <span style="color: #2d9574;">'SCOREBOARD1'</span>,
+    view: <span style="color: #2d9574;">'new view'</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org11cd796" class="outline-3">
+<h3 id="org11cd796"><span class="section-number-3">2.5.</span> Boot Device</h3>
+<div class="outline-text-3" id="text-2-5">
+</div>
+<div id="outline-container-org1d7a9e2" class="outline-4">
+<h4 id="org1d7a9e2"><span class="section-number-4">2.5.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-2-5-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, device</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #2d9574;">""</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1694b86" class="outline-4">
+<h4 id="org1694b86"><span class="section-number-4">2.5.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-2-5-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Boot the device identified by deviceId</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706724066778</span>,
+  devicesAction: <span style="color: #2d9574;">"WAKE_UP"</span>,
+  deviceId: <span style="color: #2d9574;">"someDevice"</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Boot all devices</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706724066778</span>,
+  devicesAction: <span style="color: #2d9574;">"WAKEUP_ALL"</span>,
+  deviceId: <span style="color: #2d9574;">""</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org972be22" class="outline-4">
+<h4 id="org972be22"><span class="section-number-4">2.5.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-2-5-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706724066778</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  message: <span style="color: #2d9574;">'action executed'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org419cadf" class="outline-4">
+<h4 id="org419cadf"><span class="section-number-4">2.5.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-2-5-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  device: <span style="color: #a45bad;">null</span> || <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #2d9574;">""</span>,
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org32d9945" class="outline-3">
+<h3 id="org32d9945"><span class="section-number-3">2.6.</span> Shutdown Device</h3>
+<div class="outline-text-3" id="text-2-6">
+</div>
+<div id="outline-container-orgdb71b66" class="outline-4">
+<h4 id="orgdb71b66"><span class="section-number-4">2.6.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-2-6-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, device</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #2d9574;">""</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org54472b4" class="outline-4">
+<h4 id="org54472b4"><span class="section-number-4">2.6.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-2-6-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Shutdown the device identified by deviceId</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706724066778</span>,
+  devicesAction: <span style="color: #2d9574;">"SHUTDOWN"</span>,
+  deviceId: <span style="color: #2d9574;">"someDevice"</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Shutdown all devices</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706724066778</span>,
+  devicesAction: <span style="color: #2d9574;">"SHUTDOWN_ALL"</span>,
+  deviceId: <span style="color: #2d9574;">""</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge65038e" class="outline-4">
+<h4 id="orge65038e"><span class="section-number-4">2.6.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-2-6-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706726298103</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  message: <span style="color: #2d9574;">'action executed'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf145106" class="outline-4">
+<h4 id="orgf145106"><span class="section-number-4">2.6.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-2-6-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  device: <span style="color: #a45bad;">null</span> || <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #2d9574;">""</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b08c6e" class="outline-3">
+<h3 id="org4b08c6e"><span class="section-number-3">2.7.</span> Restart Device</h3>
+<div class="outline-text-3" id="text-2-7">
+</div>
+<div id="outline-container-org33110d8" class="outline-4">
+<h4 id="org33110d8"><span class="section-number-4">2.7.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-2-7-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, device</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #2d9574;">""</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge1e9c65" class="outline-4">
+<h4 id="orge1e9c65"><span class="section-number-4">2.7.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-2-7-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Shutdown the device identified by deviceId</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706724066778</span>,
+  devicesAction: <span style="color: #2d9574;">"RESTART"</span>,
+  deviceId: <span style="color: #2d9574;">"someDevice"</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Shutdown all devices</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706724066778</span>,
+  devicesAction: <span style="color: #2d9574;">"RESTART_ALL"</span>,
+  deviceId: <span style="color: #2d9574;">""</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org76cc8e5" class="outline-4">
+<h4 id="org76cc8e5"><span class="section-number-4">2.7.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-2-7-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span> timestamp: <span style="color: #a45bad;">1706726929389</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  message: <span style="color: #2d9574;">'action executed'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga528075" class="outline-4">
+<h4 id="orga528075"><span class="section-number-4">2.7.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-2-7-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  device: <span style="color: #a45bad;">null</span> || <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #2d9574;">""</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org04b9cf8" class="outline-2">
+<h2 id="org04b9cf8"><span class="section-number-2">3.</span> Scoreboard Tasks</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org7425a0f" class="outline-3">
+<h3 id="org7425a0f"><span class="section-number-3">3.1.</span> List Scoreboard</h3>
+<div class="outline-text-3" id="text-3-1">
+</div>
+<div id="outline-container-orgaaf39c9" class="outline-4">
+<h4 id="orgaaf39c9"><span class="section-number-4">3.1.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge2d053b" class="outline-4">
+<h4 id="orge2d053b"><span class="section-number-4">3.1.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706716622912</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9d7afe4" class="outline-4">
+<h4 id="org9d7afe4"><span class="section-number-4">3.1.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706716622912</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  roomElementAssociations: <span style="color: #bc6ec5;">{</span>
+    JOKER: <span style="color: #2d9574;">'AIR'</span>,
+    BUBBLEBOBBLE: <span style="color: #2d9574;">'WATER'</span>,
+    SUCKERPUNCH: <span style="color: #2d9574;">'FIRE'</span>,
+    GRANDPIANO: <span style="color: #2d9574;">'AIR'</span>,
+    JUSTDOIT: <span style="color: #2d9574;">'FIRE'</span>,
+    REFLECTIONS: <span style="color: #2d9574;">'AIR'</span>,
+    SPECTRUMDICE: <span style="color: #2d9574;">'AIR'</span>,
+    HIGHLIGHTBARS: <span style="color: #2d9574;">'AIR'</span>,
+    LASERDANCE: <span style="color: #2d9574;">'WATER'</span>,
+    FUNINTHEBARN: <span style="color: #2d9574;">'FIRE'</span>,
+    SPACEJAM: <span style="color: #2d9574;">'WATER'</span>,
+    ALLEYOOPS: <span style="color: #2d9574;">'WATER'</span>,
+    GOAL: <span style="color: #2d9574;">'WATER'</span>,
+    LETTERFLOOR: <span style="color: #2d9574;">'AIR'</span>
+  <span style="color: #bc6ec5;">}</span>
+  live: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      teamName: <span style="color: #2d9574;">""</span>,
+      numberOfPlayers: <span style="color: #2d9574;">""</span>,
+      timeUsed: <span style="color: #2d9574;">""</span>,
+      played: <span style="color: #2d9574;">""</span>,
+      won: <span style="color: #2d9574;">""</span>,
+      lost: <span style="color: #2d9574;">""</span>,
+      totalPoints: <span style="color: #2d9574;">""</span>
+    <span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">]</span>,
+  teamAllTime: <span style="color: #bc6ec5;">[]</span>,
+  teamMonthly: <span style="color: #bc6ec5;">[]</span>,
+  teamWeekly: <span style="color: #bc6ec5;">[]</span>,
+  teamDaily: <span style="color: #bc6ec5;">[]</span>,
+
+  perRoom: <span style="color: #bc6ec5;">{</span>
+    JUSTDOIT: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team6'</span>,
+        totalPoints: <span style="color: #a45bad;">298</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243702887</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    SUCKERPUNCH: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team13'</span>,
+        totalPoints: <span style="color: #a45bad;">297</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243704124</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    LASERDANCE: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team5'</span>,
+        totalPoints: <span style="color: #a45bad;">293</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243702676</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    SPECTRUMDICE: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team18'</span>,
+        totalPoints: <span style="color: #a45bad;">288</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243704904</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    FUNINTHEBARN: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team2'</span>,
+        totalPoints: <span style="color: #a45bad;">284</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243702245</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    SPACEJAM: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team7'</span>,
+        totalPoints: <span style="color: #a45bad;">290</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243703043</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    LETTERFLOOR: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team10'</span>,
+        totalPoints: <span style="color: #a45bad;">265</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243703549</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    ALLEYOOPS: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team16'</span>,
+        totalPoints: <span style="color: #a45bad;">297</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243704522</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    GRANDPIANO: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team4'</span>,
+        totalPoints: <span style="color: #a45bad;">291</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243702512</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    BUBBLEBOBBLE: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team2'</span>,
+        totalPoints: <span style="color: #a45bad;">285</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243702213</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    JOKER: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team6'</span>,
+        totalPoints: <span style="color: #a45bad;">283</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243702860</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    HIGHLIGHTBARS: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team10'</span>,
+        totalPoints: <span style="color: #a45bad;">298</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243703579</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>,
+  perElement: <span style="color: #bc6ec5;">{</span>
+    FIRE: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team6'</span>,
+        totalPoints: <span style="color: #a45bad;">298</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243702887</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    AIR: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team10'</span>,
+        totalPoints: <span style="color: #a45bad;">298</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243703579</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>,
+    WATER: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        teamName: <span style="color: #2d9574;">'team16'</span>,
+        totalPoints: <span style="color: #a45bad;">297</span>,
+        numberOfPlayers: <span style="color: #a45bad;">2</span>,
+        created: <span style="color: #a45bad;">1702243704522</span>
+      <span style="color: #67b11d;">}</span>,
+    <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8cdd62f" class="outline-4">
+<h4 id="org8cdd62f"><span class="section-number-4">3.1.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-3-1-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  scoreboard: <span style="color: #bc6ec5;">{</span>
+    roomElementAssociations: ctx.raw.roomElementAssociations,
+    live: ctx.raw.live,
+    teamAllTime: ctx.raw.teamAllTime,
+    teamMonthly: ctx.raw.teamMonthly,
+    teamWeekly: ctx.raw.teamWeekly,
+    teamDaily: ctx.raw.teamDaily,
+    perRoom: ctx.raw.perRoom,
+    perElement: ctx.raw.perElement,
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org6558f3c" class="outline-2">
+<h2 id="org6558f3c"><span class="section-number-2">4.</span> Player Tasks</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org9e5b8d2" class="outline-3">
+<h3 id="org9e5b8d2"><span class="section-number-3">4.1.</span> List Registered Players</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-org1487eca" class="outline-4">
+<h4 id="org1487eca"><span class="section-number-4">4.1.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">arg #1, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org452aa0d" class="outline-4">
+<h4 id="org452aa0d"><span class="section-number-4">4.1.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706642934817</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd1cbd78" class="outline-4">
+<h4 id="orgd1cbd78"><span class="section-number-4">4.1.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706642934817</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  players: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Merry_2mpmnxcgv1s'</span>,
+      name: <span style="color: #2d9574;">'Merry'</span>,
+      surname: <span style="color: #2d9574;">'compassionate'</span>,
+      email: <span style="color: #2d9574;">'Merry@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Wormtongue_klagnkjxqla'</span>,
+      name: <span style="color: #2d9574;">'Wormtongue'</span>,
+      surname: <span style="color: #2d9574;">'jovial'</span>,
+      email: <span style="color: #2d9574;">'Wormtongue@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #67b11d;">{</span> wristbandNumber: <span style="color: #a45bad;">230</span>, wristbandColor: <span style="color: #a45bad;">3</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'6t3o5ds227u'</span>,
+      name: <span style="color: #a45bad;">null</span>,
+      surname: <span style="color: #a45bad;">null</span>,
+      email: <span style="color: #a45bad;">null</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Elrond_6ofeexn83ma'</span>,
+      name: <span style="color: #2d9574;">'Elrond'</span>,
+      surname: <span style="color: #2d9574;">'vigilant'</span>,
+      email: <span style="color: #2d9574;">'Elrond@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">true</span>,
+      wristband: <span style="color: #67b11d;">{</span> wristbandNumber: <span style="color: #a45bad;">231</span>, wristbandColor: <span style="color: #a45bad;">4</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'ppthree'</span>,
+      name: <span style="color: #2d9574;">'yolothree'</span>,
+      surname: <span style="color: #2d9574;">'ggthree'</span>,
+      email: <span style="color: #2d9574;">'ggthree@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge70c4fd" class="outline-4">
+<h4 id="orge70c4fd"><span class="section-number-4">4.1.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-4-1-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  players: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Merry_2mpmnxcgv1s'</span>,
+      name: <span style="color: #2d9574;">'Merry'</span>,
+      surname: <span style="color: #2d9574;">'compassionate'</span>,
+      email: <span style="color: #2d9574;">'Merry@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">null</span>, color: <span style="color: #2d9574;">''</span>, colorCode: <span style="color: #a45bad;">null</span>, state: <span style="color: #2d9574;">'unpaired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Wormtongue_klagnkjxqla'</span>,
+      name: <span style="color: #2d9574;">'Wormtongue'</span>,
+      surname: <span style="color: #2d9574;">'jovial'</span>,
+      email: <span style="color: #2d9574;">'Wormtongue@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">230</span>, color: <span style="color: #2d9574;">'green'</span>, colorCode: <span style="color: #a45bad;">3</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'6t3o5ds227u'</span>,
+      name: <span style="color: #2d9574;">''</span>,
+      surname: <span style="color: #2d9574;">''</span>,
+      email: <span style="color: #2d9574;">''</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">null</span>, color: <span style="color: #2d9574;">''</span>, colorCode: <span style="color: #a45bad;">null</span>, state: <span style="color: #2d9574;">'unpaired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Elrond_6ofeexn83ma'</span>,
+      name: <span style="color: #2d9574;">'Elrond'</span>,
+      surname: <span style="color: #2d9574;">'vigilant'</span>,
+      email: <span style="color: #2d9574;">'Elrond@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'inTeam'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">231</span>, color: <span style="color: #2d9574;">'yellow'</span>, colorCode: <span style="color: #a45bad;">4</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'ppthree'</span>,
+      name: <span style="color: #2d9574;">'yolothree'</span>,
+      surname: <span style="color: #2d9574;">'ggthree'</span>,
+      email: <span style="color: #2d9574;">'ggthree@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">null</span>, color: <span style="color: #2d9574;">''</span>, colorCode: <span style="color: #a45bad;">null</span>, state: <span style="color: #2d9574;">'unpaired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7663d77" class="outline-3">
+<h3 id="org7663d77"><span class="section-number-3">4.2.</span> List Players with a Wristband</h3>
+<div class="outline-text-3" id="text-4-2">
+</div>
+<div id="outline-container-orgb758f4f" class="outline-4">
+<h4 id="orgb758f4f"><span class="section-number-4">4.2.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org77faf66" class="outline-4">
+<h4 id="org77faf66"><span class="section-number-4">4.2.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706649848057</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfd338a9" class="outline-4">
+<h4 id="orgfd338a9"><span class="section-number-4">4.2.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7; font-weight: bold;">const</span> <span style="color: #7590db;">response</span> = <span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706649848057</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  players: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Gilgalad_wsai1ooow3'</span>,
+      name: <span style="color: #2d9574;">'Gilgalad'</span>,
+      surname: <span style="color: #2d9574;">'sweet'</span>,
+      email: <span style="color: #2d9574;">'Gilgalad@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #67b11d;">{</span> wristbandNumber: <span style="color: #a45bad;">232</span>, wristbandColor: <span style="color: #a45bad;">4</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Gandalf_deil7sv8j4c'</span>,
+      name: <span style="color: #2d9574;">'Gandalf'</span>,
+      surname: <span style="color: #2d9574;">'busy'</span>,
+      email: <span style="color: #2d9574;">'Gandalf@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #67b11d;">{</span> wristbandNumber: <span style="color: #a45bad;">233</span>, wristbandColor: <span style="color: #a45bad;">4</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Galadriel_12k3dw52kkhi'</span>,
+      name: <span style="color: #2d9574;">'Galadriel'</span>,
+      surname: <span style="color: #2d9574;">'jovial'</span>,
+      email: <span style="color: #2d9574;">'Galadriel@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #67b11d;">{</span> wristbandNumber: <span style="color: #a45bad;">235</span>, wristbandColor: <span style="color: #a45bad;">5</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2269e25" class="outline-4">
+<h4 id="org2269e25"><span class="section-number-4">4.2.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  players: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Gilgalad_wsai1ooow3'</span>,
+      name: <span style="color: #2d9574;">'Gilgalad'</span>,
+      surname: <span style="color: #2d9574;">'sweet'</span>,
+      email: <span style="color: #2d9574;">'Gilgalad@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">232</span>, color: <span style="color: #2d9574;">'yellow'</span>, colorCode: <span style="color: #a45bad;">4</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Gandalf_deil7sv8j4c'</span>,
+      name: <span style="color: #2d9574;">'Gandalf'</span>,
+      surname: <span style="color: #2d9574;">'busy'</span>,
+      email: <span style="color: #2d9574;">'Gandalf@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">233</span>, color: <span style="color: #2d9574;">'yellow'</span>, colorCode: <span style="color: #a45bad;">4</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'Galadriel_12k3dw52kkhi'</span>,
+      name: <span style="color: #2d9574;">'Galadriel'</span>,
+      surname: <span style="color: #2d9574;">'jovial'</span>,
+      email: <span style="color: #2d9574;">'Galadriel@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">235</span>, color: <span style="color: #2d9574;">'blue'</span>, colorCode: <span style="color: #a45bad;">5</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc8bd2b8" class="outline-3">
+<h3 id="orgc8bd2b8"><span class="section-number-3">4.3.</span> Search Player</h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<div id="outline-container-org1f17f42" class="outline-4">
+<h4 id="org1f17f42"><span class="section-number-4">4.3.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument</span>
+searchTerm = <span style="color: #2d9574;">"string"</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, options, optional</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">false</span> || <span style="color: #a45bad;">true</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org174bc0a" class="outline-4">
+<h4 id="org174bc0a"><span class="section-number-4">4.3.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-4-3-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707068032950</span>,
+  searchTerm : <span style="color: #2d9574;">"l"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org318b105" class="outline-4">
+<h4 id="org318b105"><span class="section-number-4">4.3.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-4-3-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1707067665549</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  players: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'jgtcqvlxs6'</span>,
+      name: <span style="color: #2d9574;">'Tuor'</span>,
+      surname: <span style="color: #2d9574;">'vigorous'</span>,
+      email: <span style="color: #2d9574;">'jgtcqvlxs6@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'TG96'</span>,
+      name: <span style="color: #a45bad;">null</span>,
+      surname: <span style="color: #a45bad;">null</span>,
+      email: <span style="color: #2d9574;">'TG96@maze.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #a45bad;">null</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'li'</span>,
+      name: <span style="color: #2d9574;">'Melian'</span>,
+      surname: <span style="color: #2d9574;">'epic'</span>,
+      email: <span style="color: #2d9574;">'ki3fc4jx7jp@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #67b11d;">{</span> wristbandNumber: <span style="color: #a45bad;">329</span>, wristbandColor: <span style="color: #a45bad;">null</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'lo'</span>,
+      name: <span style="color: #2d9574;">'Idril'</span>,
+      surname: <span style="color: #2d9574;">'brave'</span>,
+      email: <span style="color: #2d9574;">'nsevvxw4ca6@gmail.com'</span>,
+      wristbandMerged: <span style="color: #a45bad;">false</span>,
+      wristband: <span style="color: #67b11d;">{</span> wristbandNumber: <span style="color: #a45bad;">111</span>, wristbandColor: <span style="color: #a45bad;">2</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>
+
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8abb9bb" class="outline-4">
+<h4 id="org8abb9bb"><span class="section-number-4">4.3.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-4-3-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  players: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'pp'</span>,
+      name: <span style="color: #2d9574;">'pp'</span>,
+      surname: <span style="color: #2d9574;">'pp'</span>,
+      email: <span style="color: #2d9574;">'pp@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">null</span>, color: <span style="color: #a45bad;">null</span>, colorCode: <span style="color: #a45bad;">null</span>, state: <span style="color: #2d9574;">'unpaired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgea06395" class="outline-3">
+<h3 id="orgea06395"><span class="section-number-3">4.4.</span> Register Player</h3>
+<div class="outline-text-3" id="text-4-4">
+</div>
+<div id="outline-container-org85d9df8" class="outline-4">
+<h4 id="org85d9df8"><span class="section-number-4">4.4.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, PlayerCommander</span>
+<span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">'test'</span>,
+  name: <span style="color: #2d9574;">'test'</span>,
+  surname: <span style="color: #2d9574;">'test'</span>,
+  email: <span style="color: #2d9574;">'testt@gmail.com'</span>,
+<span style="color: #4f97d7;">}</span>,
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, required password</span>
+password: <span style="color: #2d9574;">"testpass"</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3rd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0902fdb" class="outline-4">
+<h4 id="org0902fdb"><span class="section-number-4">4.4.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-4-4-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706724066778</span>,
+  username: <span style="color: #2d9574;">"test"</span>,
+  surname: <span style="color: #2d9574;">"test"</span>,
+  name: <span style="color: #2d9574;">"test"</span>,
+  email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+  password: <span style="color: #2d9574;">"testpass"</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc9160c5" class="outline-4">
+<h4 id="orgc9160c5"><span class="section-number-4">4.4.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-4-4-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706874481773</span>,
+  result : <span style="color: #2d9574;">"OK"</span>,
+  player : <span style="color: #bc6ec5;">{</span>
+    name : <span style="color: #2d9574;">"test"</span>,
+    surname : <span style="color: #2d9574;">"test"</span>,
+    username : <span style="color: #2d9574;">"test"</span>,
+    email : <span style="color: #2d9574;">"test@gmail.com"</span>,
+    wristbandColor : <span style="color: #a45bad;">0</span>,
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd79b7e0" class="outline-4">
+<h4 id="orgd79b7e0"><span class="section-number-4">4.4.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-4-4-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  player: <span style="color: #bc6ec5;">{</span>
+    username: <span style="color: #2d9574;">'n7rgqxbr0vn'</span>,
+    name: <span style="color: #2d9574;">'Saruman'</span>,
+    surname: <span style="color: #2d9574;">'serene'</span>,
+    email: <span style="color: #2d9574;">'n7rgqxbr0vn@gmail.com'</span>,
+    state: <span style="color: #2d9574;">'registered'</span>,
+    wristband: <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">null</span>, color: <span style="color: #a45bad;">null</span>, colorCode: <span style="color: #a45bad;">null</span>, state: <span style="color: #2d9574;">'unpaired'</span> <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgfcaf99e" class="outline-2">
+<h2 id="orgfcaf99e"><span class="section-number-2">5.</span> Wristband Tasks</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org1618f55" class="outline-3">
+<h3 id="org1618f55"><span class="section-number-3">5.1.</span> Register Wristband</h3>
+<div class="outline-text-3" id="text-5-1">
+</div>
+<div id="outline-container-org41b3623" class="outline-4">
+<h4 id="org41b3623"><span class="section-number-4">5.1.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, Player</span>
+<span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">"test"</span>,
+  name: <span style="color: #2d9574;">'test'</span>,
+  surname: <span style="color: #2d9574;">'test'</span>,
+  email: <span style="color: #2d9574;">'testt@gmail.com'</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, required, Wristband</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  color: <span style="color: #2d9574;">'green'</span>,
+  colorCode: <span style="color: #a45bad;">3</span>
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3rd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7e5be67" class="outline-4">
+<h4 id="org7e5be67"><span class="section-number-4">5.1.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706957679789</span>,
+  username : <span style="color: #2d9574;">"diwgp3nrrtf"</span>,
+  wristbandNumber : <span style="color: #a45bad;">234</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org50dd7b8" class="outline-4">
+<h4 id="org50dd7b8"><span class="section-number-4">5.1.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706957679848</span>,
+  result : <span style="color: #2d9574;">"OK"</span>,
+  message : <span style="color: #2d9574;">"successfully registerWristbandToPlayer"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org92bc080" class="outline-4">
+<h4 id="org92bc080"><span class="section-number-4">5.1.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  player: <span style="color: #bc6ec5;">{</span>
+    username: <span style="color: #2d9574;">"test"</span>,
+    name: <span style="color: #2d9574;">'test'</span>,
+    surname: <span style="color: #2d9574;">'test'</span>,
+    email: <span style="color: #2d9574;">'testt@gmail.com'</span>,
+    wristband: <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">3</span>,
+      color: <span style="color: #2d9574;">"green"</span>,
+      colorCode: <span style="color: #a45bad;">3</span>,
+      state: <span style="color: #2d9574;">"paired"</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3b74967" class="outline-3">
+<h3 id="org3b74967"><span class="section-number-3">5.2.</span> Deregister Wristband</h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+<div id="outline-container-orgd90bdbb" class="outline-4">
+<h4 id="orgd90bdbb"><span class="section-number-4">5.2.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, Player</span>
+<span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">"test"</span>,
+  name: <span style="color: #2d9574;">'test'</span>,
+  surname: <span style="color: #2d9574;">'test'</span>,
+  email: <span style="color: #2d9574;">'testt@gmail.com'</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, required, Wristband</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  color: <span style="color: #2d9574;">'green'</span>,
+  colorCode: <span style="color: #a45bad;">3</span>
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3rd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d3e116" class="outline-4">
+<h4 id="org1d3e116"><span class="section-number-4">5.2.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706960913052</span>,
+  username : <span style="color: #2d9574;">"a39hldmki3"</span>,
+  wristbandNumber : <span style="color: #a45bad;">432</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgba2bbce" class="outline-4">
+<h4 id="orgba2bbce"><span class="section-number-4">5.2.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-5-2-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706960913123</span>,
+  result : <span style="color: #2d9574;">"OK"</span>,
+  message : <span style="color: #2d9574;">"successfully unregisterWristbandToPlayer"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0c886dd" class="outline-4">
+<h4 id="org0c886dd"><span class="section-number-4">5.2.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-5-2-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  player: <span style="color: #bc6ec5;">{</span>
+    username: <span style="color: #2d9574;">"test"</span>,
+    name: <span style="color: #2d9574;">'test'</span>,
+    surname: <span style="color: #2d9574;">'test'</span>,
+    email: <span style="color: #2d9574;">'testt@gmail.com'</span>,
+    wristband: <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">3</span>,
+      color: <span style="color: #2d9574;">"green"</span>,
+      colorCode: <span style="color: #a45bad;">3</span>,
+      state: <span style="color: #2d9574;">"unpaired"</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0b4cba4" class="outline-3">
+<h3 id="org0b4cba4"><span class="section-number-3">5.3.</span> Get Wristband Information</h3>
+<div class="outline-text-3" id="text-5-3">
+</div>
+<div id="outline-container-orgb53fea7" class="outline-4">
+<h4 id="orgb53fea7"><span class="section-number-4">5.3.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  colorCode: <span style="color: #a45bad;">3</span>,
+  color: <span style="color: #2d9574;">"green"</span>,
+  state: <span style="color: #2d9574;">"state"</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org264332b" class="outline-4">
+<h4 id="org264332b"><span class="section-number-4">5.3.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706879364557</span>,
+  wristbandNumber: <span style="color: #a45bad;">3</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6d53f91" class="outline-4">
+<h4 id="org6d53f91"><span class="section-number-4">5.3.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706879364557</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  wristband: <span style="color: #bc6ec5;">{</span> wristbandNumber: <span style="color: #a45bad;">3</span>, wristbandColor: <span style="color: #a45bad;">2</span>, active: <span style="color: #a45bad;">false</span> <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc6f21e9" class="outline-4">
+<h4 id="orgc6f21e9"><span class="section-number-4">5.3.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-5-3-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>
+  wristband: <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #a45bad;">3</span>,
+    color: <span style="color: #2d9574;">'green'</span>,
+    colorCode: <span style="color: #a45bad;">3</span>,
+    state: <span style="color: #2d9574;">'state'</span>,
+  <span style="color: #bc6ec5;">}</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4fe1edf" class="outline-3">
+<h3 id="org4fe1edf"><span class="section-number-3">5.4.</span> Scan Wristband</h3>
+<div class="outline-text-3" id="text-5-4">
+</div>
+<div id="outline-container-org5b8388b" class="outline-4">
+<h4 id="org5b8388b"><span class="section-number-4">5.4.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-5-4-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, unsubcb</span>
+<span style="color: #4f97d7;">(</span>unsub<span style="color: #4f97d7;">)</span> =&gt; <span style="color: #4f97d7;">{</span>...<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">false</span> || <span style="color: #a45bad;">true</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf3471fe" class="outline-4">
+<h4 id="orgf3471fe"><span class="section-number-4">5.4.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-5-4-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">null</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org12b4eb9" class="outline-4">
+<h4 id="org12b4eb9"><span class="section-number-4">5.4.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-5-4-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706880614077</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  wristbandNumber: <span style="color: #a45bad;">3</span>,
+  wristbandColor: <span style="color: #a45bad;">3</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga4a2d5b" class="outline-4">
+<h4 id="orga4a2d5b"><span class="section-number-4">5.4.4.</span> Client request</h4>
+<div class="outline-text-4" id="text-5-4-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>
+  wristband: <span style="color: #bc6ec5;">{</span> id: <span style="color: #a45bad;">3</span>, color: <span style="color: #2d9574;">'green'</span>, colorCode: <span style="color: #a45bad;">3</span>, state: <span style="color: #2d9574;">'unpaired'</span> <span style="color: #bc6ec5;">}</span>,
+  unsubed: <span style="color: #a45bad;">false</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-orge235f88" class="outline-2">
+<h2 id="orge235f88"><span class="section-number-2">6.</span> Cashier Tasks</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org6ee483f" class="outline-3">
+<h3 id="org6ee483f"><span class="section-number-3">6.1.</span> List Cashiers</h3>
+<div class="outline-text-3" id="text-6-1">
+</div>
+<div id="outline-container-org046538b" class="outline-4">
+<h4 id="org046538b"><span class="section-number-4">6.1.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-6-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1af8034" class="outline-4">
+<h4 id="org1af8034"><span class="section-number-4">6.1.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-6-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706707779283</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf41dc21" class="outline-4">
+<h4 id="orgf41dc21"><span class="section-number-4">6.1.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-6-1-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706707779283</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  cashiers: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">1</span>, username: <span style="color: #2d9574;">'pavlos'</span>, email: <span style="color: #2d9574;">'pavlosTester123@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">3</span>, username: <span style="color: #2d9574;">'tt'</span>, email: <span style="color: #2d9574;">'tt@gmail.com'</span> <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8a90f05" class="outline-4">
+<h4 id="org8a90f05"><span class="section-number-4">6.1.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-6-1-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  cashiers: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">1</span>,
+      username: <span style="color: #2d9574;">'pavlos'</span>,
+      email: <span style="color: #2d9574;">'pavlosTester123@gmail.com'</span>,
+      role: <span style="color: #2d9574;">'cashier'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">8</span>,
+      username: <span style="color: #2d9574;">'TEST'</span>,
+      email: <span style="color: #2d9574;">'test@gmail.com'</span>,
+      role: <span style="color: #2d9574;">'cashier'</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgca73a8c" class="outline-3">
+<h3 id="orgca73a8c"><span class="section-number-3">6.2.</span> Login Cashier</h3>
+<div class="outline-text-3" id="text-6-2">
+</div>
+<div id="outline-container-org5bc4e09" class="outline-4">
+<h4 id="org5bc4e09"><span class="section-number-4">6.2.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-6-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, cashier</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  username: <span style="color: #2d9574;">"test"</span>,
+  email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+  role: <span style="color: #2d9574;">"cashier"</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, required, password</span>
+password: <span style="color: #2d9574;">"testpass"</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3nd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd96253a" class="outline-4">
+<h4 id="orgd96253a"><span class="section-number-4">6.2.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-6-2-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">"33rksrlppga"</span>,
+  password: <span style="color: #2d9574;">"7c38dir1206"</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd4de203" class="outline-4">
+<h4 id="orgd4de203"><span class="section-number-4">6.2.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-6-2-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706777994830</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  jwtResponse: <span style="color: #bc6ec5;">{</span>
+    jwt: <span style="color: #2d9574;">'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA'</span>,
+    id: <span style="color: #a45bad;">74</span>,
+    username: <span style="color: #2d9574;">'33rksrlppga'</span>,
+    email: <span style="color: #2d9574;">'33rksrlppga@gmail.com'</span>,
+    roles: <span style="color: #2d9574;">[</span> <span style="color: #2d9574;">'ROLE_CASHIER'</span> <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org161f4cb" class="outline-4">
+<h4 id="org161f4cb"><span class="section-number-4">6.2.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-6-2-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  cashier: <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #a45bad;">3</span>,
+    username: <span style="color: #2d9574;">"test"</span>,
+    email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+    role: <span style="color: #2d9574;">"cashier"</span>,
+  <span style="color: #bc6ec5;">}</span>,
+  jwt: <span style="color: #2d9574;">'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3OTAxMywiZXhwIjoxNzA2ODE1MDEzfQ.KztDiUAgVIjSnY56gU7lrlKU4IRNRY_4N8GKloG5-X92veQwaDCGj4284yHX_XIn_ZjJFEWbPdvhh7C4xsnFCQ'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org4326e9a" class="outline-3">
+<h3 id="org4326e9a"><span class="section-number-3">6.3.</span> Register Cashier</h3>
+<div class="outline-text-3" id="text-6-3">
+</div>
+<div id="outline-container-org4c404bb" class="outline-4">
+<h4 id="org4c404bb"><span class="section-number-4">6.3.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-6-3-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, cashier</span>
+<span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">"test"</span>,
+  email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+  role: <span style="color: #2d9574;">'test'</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, required, password</span>
+password: <span style="color: #2d9574;">"oteuheno"</span>,
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3nd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org11200dd" class="outline-4">
+<h4 id="org11200dd"><span class="section-number-4">6.3.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-6-3-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">"testCashier"</span>,
+  email: <span style="color: #2d9574;">"testCashier@gmail.com"</span>,
+  password: <span style="color: #2d9574;">"testCashierPassword"</span>,
+  role: <span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"ROLE_CASHIER"</span><span style="color: #bc6ec5;">]</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org517b4f4" class="outline-4">
+<h4 id="org517b4f4"><span class="section-number-4">6.3.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-6-3-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706729341301</span>,
+  result: <span style="color: #2d9574;">'OK'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org671d13b" class="outline-4">
+<h4 id="org671d13b"><span class="section-number-4">6.3.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-6-3-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  cashier: <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #a45bad;">3</span>
+    username: <span style="color: #2d9574;">"test"</span>,
+    email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+    role: <span style="color: #2d9574;">"cashier"</span>,
+  <span style="color: #bc6ec5;">}</span>,
+  password: <span style="color: #2d9574;">"testpass"</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org69c389e" class="outline-3">
+<h3 id="org69c389e"><span class="section-number-3">6.4.</span> Deregister Cashier</h3>
+<div class="outline-text-3" id="text-6-4">
+</div>
+<div id="outline-container-org3d5207a" class="outline-4">
+<h4 id="org3d5207a"><span class="section-number-4">6.4.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-6-4-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, cashier</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  username: <span style="color: #2d9574;">"test"</span>,
+  email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+  role: <span style="color: #2d9574;">"cashier"</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org09d1bc5" class="outline-4">
+<h4 id="org09d1bc5"><span class="section-number-4">6.4.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-6-4-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706732989145</span>,
+  username: <span style="color: #2d9574;">"tt"</span>,
+  userId: <span style="color: #a45bad;">3</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8cf89c0" class="outline-4">
+<h4 id="org8cf89c0"><span class="section-number-4">6.4.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-6-4-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706732989145</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  cashiers: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">1</span>, username: <span style="color: #2d9574;">'pavlos'</span>, email: <span style="color: #2d9574;">'pavlosTester123@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">5</span>, username: <span style="color: #2d9574;">'testCashier'</span>, email: <span style="color: #2d9574;">'testCashier@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">6</span>, username: <span style="color: #2d9574;">'testCash'</span>, email: <span style="color: #2d9574;">'testCash@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">7</span>, username: <span style="color: #2d9574;">'r9rcnpncmrf'</span>, email: <span style="color: #2d9574;">'Tom@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">8</span>, username: <span style="color: #2d9574;">'ci10l5jm4ip'</span>, email: <span style="color: #2d9574;">'Finwe@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">9</span>, username: <span style="color: #2d9574;">'9r0d6jqctfp'</span>, email: <span style="color: #2d9574;">'Elrond@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">10</span>, username: <span style="color: #2d9574;">'xi87q2qgu6'</span>, email: <span style="color: #2d9574;">'Gimli@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">11</span>, username: <span style="color: #2d9574;">'2b6rdbkpl6j'</span>, email: <span style="color: #2d9574;">'Gilgalad@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">13</span>, username: <span style="color: #2d9574;">'mpw14t0s9jg'</span>, email: <span style="color: #2d9574;">'Isildur@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">14</span>, username: <span style="color: #2d9574;">'qbavrn3kw7'</span>, email: <span style="color: #2d9574;">'Aragorn@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">15</span>, username: <span style="color: #2d9574;">'jq6ttl0bueg'</span>, email: <span style="color: #2d9574;">'Maedhros@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">16</span>, username: <span style="color: #2d9574;">'ko1b9haqpqh'</span>, email: <span style="color: #2d9574;">'Thorin@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">17</span>, username: <span style="color: #2d9574;">'x21gpwr0bnm'</span>, email: <span style="color: #2d9574;">'Beren@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">18</span>, username: <span style="color: #2d9574;">'face6c6oojv'</span>, email: <span style="color: #2d9574;">'Celebrimbor@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">19</span>, username: <span style="color: #2d9574;">'4i4asuxctvr'</span>, email: <span style="color: #2d9574;">'Theoden@gmail.com'</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> id: <span style="color: #a45bad;">20</span>, username: <span style="color: #2d9574;">'jj7mvpbsco4'</span>, email: <span style="color: #2d9574;">'Earendil@gmail.com'</span> <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgce1e050" class="outline-4">
+<h4 id="orgce1e050"><span class="section-number-4">6.4.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-6-4-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  cashier: <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #a45bad;">3</span>,
+    username: <span style="color: #2d9574;">"test"</span>,
+    email: <span style="color: #2d9574;">"test@gmail.com"</span>
+    role: <span style="color: #2d9574;">"cashier"</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org51f5d2e" class="outline-2">
+<h2 id="org51f5d2e"><span class="section-number-2">7.</span> Package Tasks</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-orge669d80" class="outline-3">
+<h3 id="orge669d80"><span class="section-number-3">7.1.</span> List Packages</h3>
+<div class="outline-text-3" id="text-7-1">
+</div>
+<div id="outline-container-orgd9c59eb" class="outline-4">
+<h4 id="orgd9c59eb"><span class="section-number-4">7.1.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-7-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org53b8b72" class="outline-4">
+<h4 id="org53b8b72"><span class="section-number-4">7.1.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-7-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">null</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org721c9ad" class="outline-4">
+<h4 id="org721c9ad"><span class="section-number-4">7.1.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-7-1-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706640606387</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  packages: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span> name: <span style="color: #2d9574;">'Per Mission 5'</span>, amount: <span style="color: #a45bad;">5</span>, type: <span style="color: #2d9574;">'mission'</span>, cost: <span style="color: #a45bad;">50</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      name: <span style="color: #2d9574;">'Per Mission 10'</span>,
+      amount: <span style="color: #a45bad;">10</span>,
+      type: <span style="color: #2d9574;">'mission'</span>,
+      cost: <span style="color: #a45bad;">100</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      name: <span style="color: #2d9574;">'Per Mission 15'</span>,
+      amount: <span style="color: #a45bad;">15</span>,
+      type: <span style="color: #2d9574;">'mission'</span>,
+      cost: <span style="color: #a45bad;">150</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      name: <span style="color: #2d9574;">'Per Mission 20'</span>,
+      amount: <span style="color: #a45bad;">20</span>,
+      type: <span style="color: #2d9574;">'mission'</span>,
+      cost: <span style="color: #a45bad;">200</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> name: <span style="color: #2d9574;">'Per Time 30'</span>, amount: <span style="color: #a45bad;">30</span>, type: <span style="color: #2d9574;">'time'</span>, cost: <span style="color: #a45bad;">50</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> name: <span style="color: #2d9574;">'Per Time 60'</span>, amount: <span style="color: #a45bad;">60</span>, type: <span style="color: #2d9574;">'time'</span>, cost: <span style="color: #a45bad;">100</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> name: <span style="color: #2d9574;">'Per Time 90'</span>, amount: <span style="color: #a45bad;">90</span>, type: <span style="color: #2d9574;">'time'</span>, cost: <span style="color: #a45bad;">150</span> <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span> name: <span style="color: #2d9574;">'Per Time 120'</span>, amount: <span style="color: #a45bad;">120</span>, type: <span style="color: #2d9574;">'time'</span>, cost: <span style="color: #a45bad;">200</span> <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org36ad254" class="outline-4">
+<h4 id="org36ad254"><span class="section-number-4">7.1.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-7-1-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  packages: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">null</span>,
+      name: <span style="color: #2d9574;">'Per Mission 5'</span>,
+      type: <span style="color: #2d9574;">'mission'</span>,
+      amount: <span style="color: #a45bad;">5</span>,
+      cost: <span style="color: #a45bad;">50</span>,
+      t_start: <span style="color: #a45bad;">null</span>,
+      t_end: <span style="color: #a45bad;">null</span>,
+      remainder: <span style="color: #a45bad;">null</span>,
+      state: <span style="color: #2d9574;">'registered'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">null</span>,
+      name: <span style="color: #2d9574;">'Per Mission 10'</span>,
+      type: <span style="color: #2d9574;">'mission'</span>,
+      amount: <span style="color: #a45bad;">10</span>,
+      cost: <span style="color: #a45bad;">100</span>,
+      t_start: <span style="color: #a45bad;">null</span>,
+      t_end: <span style="color: #a45bad;">null</span>,
+      remainder: <span style="color: #a45bad;">null</span>,
+      state: <span style="color: #2d9574;">'registered'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">null</span>,
+      name: <span style="color: #2d9574;">'Per Mission 15'</span>,
+      type: <span style="color: #2d9574;">'mission'</span>,
+      amount: <span style="color: #a45bad;">15</span>,
+      cost: <span style="color: #a45bad;">150</span>,
+      t_start: <span style="color: #a45bad;">null</span>,
+      t_end: <span style="color: #a45bad;">null</span>,
+      remainder: <span style="color: #a45bad;">null</span>,
+      state: <span style="color: #2d9574;">'registered'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">null</span>,
+      name: <span style="color: #2d9574;">'Per Mission 20'</span>,
+      type: <span style="color: #2d9574;">'mission'</span>,
+      amount: <span style="color: #a45bad;">20</span>,
+      cost: <span style="color: #a45bad;">200</span>,
+      t_start: <span style="color: #a45bad;">null</span>,
+      t_end: <span style="color: #a45bad;">null</span>,
+      remainder: <span style="color: #a45bad;">null</span>,
+      state: <span style="color: #2d9574;">'registered'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">null</span>,
+      name: <span style="color: #2d9574;">'Per Time 30'</span>,
+      type: <span style="color: #2d9574;">'time'</span>,
+      amount: <span style="color: #a45bad;">30</span>,
+      cost: <span style="color: #a45bad;">50</span>,
+      t_start: <span style="color: #a45bad;">null</span>,
+      t_end: <span style="color: #a45bad;">null</span>,
+      remainder: <span style="color: #a45bad;">null</span>,
+      state: <span style="color: #2d9574;">'registered'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">null</span>,
+      name: <span style="color: #2d9574;">'Per Time 60'</span>,
+      type: <span style="color: #2d9574;">'time'</span>,
+      amount: <span style="color: #a45bad;">60</span>,
+      cost: <span style="color: #a45bad;">100</span>,
+      t_start: <span style="color: #a45bad;">null</span>,
+      t_end: <span style="color: #a45bad;">null</span>,
+      remainder: <span style="color: #a45bad;">null</span>,
+      state: <span style="color: #2d9574;">'registered'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">null</span>,
+      name: <span style="color: #2d9574;">'Per Time 90'</span>,
+      type: <span style="color: #2d9574;">'time'</span>,
+      amount: <span style="color: #a45bad;">90</span>,
+      cost: <span style="color: #a45bad;">150</span>,
+      t_start: <span style="color: #a45bad;">null</span>,
+      t_end: <span style="color: #a45bad;">null</span>,
+      remainder: <span style="color: #a45bad;">null</span>,
+      state: <span style="color: #2d9574;">'registered'</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      id: <span style="color: #a45bad;">null</span>,
+      name: <span style="color: #2d9574;">'Per Time 120'</span>,
+      type: <span style="color: #2d9574;">'time'</span>,
+      amount: <span style="color: #a45bad;">120</span>,
+      cost: <span style="color: #a45bad;">200</span>,
+      t_start: <span style="color: #a45bad;">null</span>,
+      t_end: <span style="color: #a45bad;">null</span>,
+      remainder: <span style="color: #a45bad;">null</span>,
+      state: <span style="color: #2d9574;">'registered'</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org036a671" class="outline-2">
+<h2 id="org036a671"><span class="section-number-2">8.</span> Team Tasks</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-orge8f8080" class="outline-3">
+<h3 id="orge8f8080"><span class="section-number-3">8.1.</span> Register Team</h3>
+<div class="outline-text-3" id="text-8-1">
+</div>
+<div id="outline-container-orge868166" class="outline-4">
+<h4 id="orge868166"><span class="section-number-4">8.1.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-8-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, Team</span>
+<span style="color: #4f97d7;">{</span>
+  name: <span style="color: #2d9574;">'elated_Galadriel_cl4piph2kic'</span>,
+  t_created: <span style="color: #a45bad;">null</span>,
+  points: <span style="color: #a45bad;">0</span>,
+  state: <span style="color: #2d9574;">'unregistered'</span>
+  roster: <span style="color: #bc6ec5;">[</span>
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'lqplk9p1w68'</span>,
+      name: <span style="color: #2d9574;">'Finwe'</span>,
+      surname: <span style="color: #2d9574;">'laughing'</span>,
+      email: <span style="color: #2d9574;">'lqplk9p1w68@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">351</span>, color: <span style="color: #2d9574;">'red'</span>, colorCode: <span style="color: #a45bad;">1</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>,
+    <span style="color: #2d9574;">{</span>
+      username: <span style="color: #2d9574;">'pgs5ssie3'</span>,
+      name: <span style="color: #2d9574;">'Eowyn'</span>,
+      surname: <span style="color: #2d9574;">'strange'</span>,
+      email: <span style="color: #2d9574;">'pgs5ssie3@gmail.com'</span>,
+      state: <span style="color: #2d9574;">'registered'</span>,
+      wristband: <span style="color: #67b11d;">{</span> id: <span style="color: #a45bad;">253</span>, color: <span style="color: #2d9574;">'orange'</span>, colorCode: <span style="color: #a45bad;">6</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, optional, Options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b423ca" class="outline-4">
+<h4 id="org4b423ca"><span class="section-number-4">8.1.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-8-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706979526513</span>,
+  teamName : <span style="color: #2d9574;">"testTeam"</span>,
+  usernames : <span style="color: #bc6ec5;">[</span> <span style="color: #2d9574;">"9qqu592xhrg"</span>, <span style="color: #2d9574;">"g0dh1umskej"</span> <span style="color: #bc6ec5;">]</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgddf9b3a" class="outline-4">
+<h4 id="orgddf9b3a"><span class="section-number-4">8.1.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-8-1-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706979526580</span>,
+  result : <span style="color: #2d9574;">"OK"</span>,
+  message : <span style="color: #2d9574;">"successfully created team: tziros1"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9d58f1a" class="outline-4">
+<h4 id="org9d58f1a"><span class="section-number-4">8.1.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-8-1-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  team: <span style="color: #bc6ec5;">{</span>
+    name: <span style="color: #2d9574;">'elated_Galadriel_cl4piph2kic'</span>,
+    t_created: <span style="color: #a45bad;">1707028052944</span>,
+    points: <span style="color: #a45bad;">387</span>,
+    packages: <span style="color: #2d9574;">[]</span>,
+    roster: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        username: <span style="color: #2d9574;">'lqplk9p1w68'</span>,
+        name: <span style="color: #2d9574;">'Finwe'</span>,
+        surname: <span style="color: #2d9574;">'laughing'</span>,
+        email: <span style="color: #2d9574;">'lqplk9p1w68@gmail.com'</span>,
+        state: <span style="color: #2d9574;">'inTeam'</span>,
+        wristband: <span style="color: #b1951d;">{</span> id: <span style="color: #a45bad;">351</span>, color: <span style="color: #2d9574;">'red'</span>, colorCode: <span style="color: #a45bad;">1</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #b1951d;">}</span>
+      <span style="color: #67b11d;">}</span>,
+      <span style="color: #67b11d;">{</span>
+        username: <span style="color: #2d9574;">'pgs5ssie3'</span>,
+        name: <span style="color: #2d9574;">'Eowyn'</span>,
+        surname: <span style="color: #2d9574;">'strange'</span>,
+        email: <span style="color: #2d9574;">'pgs5ssie3@gmail.com'</span>,
+        state: <span style="color: #2d9574;">'inTeam'</span>,
+        wristband: <span style="color: #b1951d;">{</span> id: <span style="color: #a45bad;">253</span>, color: <span style="color: #2d9574;">'orange'</span>, colorCode: <span style="color: #a45bad;">6</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #b1951d;">}</span>
+      <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">]</span>,
+    state: <span style="color: #2d9574;">'registered'</span>,
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d14772" class="outline-3">
+<h3 id="org3d14772"><span class="section-number-3">8.2.</span> Register Team Package</h3>
+<div class="outline-text-3" id="text-8-2">
+</div>
+<div id="outline-container-org6f5e81d" class="outline-4">
+<h4 id="org6f5e81d"><span class="section-number-4">8.2.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-8-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, Team</span>
+<span style="color: #4f97d7;">{</span>
+  <span style="color: #bc6ec5;">{</span>
+    name: <span style="color: #2d9574;">'elated_Galadriel_cl4piph2kic'</span>,
+    t_created: <span style="color: #a45bad;">null</span>,
+    points: <span style="color: #a45bad;">0</span>,
+    state: <span style="color: #2d9574;">'unregistered'</span>
+    roster: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        username: <span style="color: #2d9574;">'lqplk9p1w68'</span>,
+        name: <span style="color: #2d9574;">'Finwe'</span>,
+        surname: <span style="color: #2d9574;">'laughing'</span>,
+        email: <span style="color: #2d9574;">'lqplk9p1w68@gmail.com'</span>,
+        state: <span style="color: #2d9574;">'registered'</span>,
+        wristband: <span style="color: #b1951d;">{</span> id: <span style="color: #a45bad;">351</span>, color: <span style="color: #2d9574;">'red'</span>, colorCode: <span style="color: #a45bad;">1</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #b1951d;">}</span>
+      <span style="color: #67b11d;">}</span>,
+      <span style="color: #67b11d;">{</span>
+        username: <span style="color: #2d9574;">'pgs5ssie3'</span>,
+        name: <span style="color: #2d9574;">'Eowyn'</span>,
+        surname: <span style="color: #2d9574;">'strange'</span>,
+        email: <span style="color: #2d9574;">'pgs5ssie3@gmail.com'</span>,
+        state: <span style="color: #2d9574;">'registered'</span>,
+        wristband: <span style="color: #b1951d;">{</span> id: <span style="color: #a45bad;">253</span>, color: <span style="color: #2d9574;">'orange'</span>, colorCode: <span style="color: #a45bad;">6</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #b1951d;">}</span>
+      <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, package</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">null</span>,
+  name: <span style="color: #2d9574;">'Per Mission 5'</span>,
+  type: <span style="color: #2d9574;">'mission'</span>,
+  cost: <span style="color: #a45bad;">50</span>,
+  t_start: <span style="color: #a45bad;">null</span>,
+  t_end: <span style="color: #a45bad;">null</span>,
+  amount: <span style="color: #a45bad;">5</span>,
+  remainder: <span style="color: #a45bad;">null</span>,
+  state: <span style="color: #2d9574;">'unregistered'</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3rd argument, options</span>
+<span style="color: #4f97d7;">{</span> queue: <span style="color: #a45bad;">false</span> || <span style="color: #a45bad;">true</span> <span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org89c699c" class="outline-4">
+<h4 id="org89c699c"><span class="section-number-4">8.2.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-8-2-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707053008561</span>,
+  teamName : <span style="color: #2d9574;">"hopeful_Feanor_ng2coekx3lc"</span>,
+  name : <span style="color: #2d9574;">"Per Time 30"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3683c9c" class="outline-4">
+<h4 id="org3683c9c"><span class="section-number-4">8.2.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-8-2-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707053008626</span>,
+  result : <span style="color: #2d9574;">"OK"</span>,
+  team : <span style="color: #bc6ec5;">{</span>
+    name : <span style="color: #2d9574;">"hopeful_Feanor_ng2coekx3lc"</span>,
+    totalPoints : <span style="color: #a45bad;">0</span>,
+    teamState : <span style="color: #a45bad;">null</span>,
+    created : <span style="color: #a45bad;">null</span>,
+    lastRegisterAttempt : <span style="color: #a45bad;">null</span>,
+    currentRoster : <span style="color: #2d9574;">{</span>
+      version : <span style="color: #a45bad;">1</span>,
+      players : <span style="color: #67b11d;">[</span> <span style="color: #b1951d;">{</span>
+        username : <span style="color: #2d9574;">"c77r5w5mod2"</span>,
+        wristbandNumber : <span style="color: #a45bad;">455</span>,
+        wristbandColor : <span style="color: #a45bad;">null</span>
+      <span style="color: #b1951d;">}</span>, <span style="color: #b1951d;">{</span>
+        username : <span style="color: #2d9574;">"hndfw7wu1a"</span>,
+        wristbandNumber : <span style="color: #a45bad;">347</span>,
+        wristbandColor : <span style="color: #a45bad;">null</span>
+      <span style="color: #b1951d;">}</span> <span style="color: #67b11d;">]</span>
+    <span style="color: #2d9574;">}</span>,
+    roomType : <span style="color: #a45bad;">null</span>,
+    packages : <span style="color: #2d9574;">[</span> <span style="color: #67b11d;">{</span>
+      id : <span style="color: #a45bad;">10</span>,
+      name : <span style="color: #2d9574;">"Per Time 30"</span>,
+      cost : <span style="color: #a45bad;">null</span>,
+      started : <span style="color: #a45bad;">null</span>,
+      ended : <span style="color: #a45bad;">null</span>,
+      duration : <span style="color: #a45bad;">1800</span>.<span style="color: #a45bad;">000000000</span>,
+      paused : <span style="color: #a45bad;">false</span>,
+      active : <span style="color: #a45bad;">false</span>
+    <span style="color: #67b11d;">}</span> <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc922d12" class="outline-4">
+<h4 id="orgc922d12"><span class="section-number-4">8.2.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-8-2-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  team: <span style="color: #bc6ec5;">{</span>
+    ...
+    packages: <span style="color: #2d9574;">[</span>
+      ...,
+      <span style="color: #67b11d;">{</span>
+        id: <span style="color: #a45bad;">3</span>,
+        name: <span style="color: #2d9574;">'Per Mission 5'</span>,
+        type: <span style="color: #2d9574;">"mission"</span>,
+        cost: <span style="color: #a45bad;">null</span>,
+        amount: <span style="color: #a45bad;">5</span>,
+        remainder: <span style="color: #a45bad;">5</span>,
+        t_start: <span style="color: #a45bad;">null</span>,
+        t_end: <span style="color: #a45bad;">null</span>,
+        state: <span style="color: #2d9574;">"registered"</span>,
+      <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd1bce40" class="outline-3">
+<h3 id="orgd1bce40"><span class="section-number-3">8.3.</span> Deregister Team Package</h3>
+<div class="outline-text-3" id="text-8-3">
+</div>
+<div id="outline-container-orgf9786b6" class="outline-4">
+<h4 id="orgf9786b6"><span class="section-number-4">8.3.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-8-3-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, Team</span>
+<span style="color: #4f97d7;">{</span>
+  <span style="color: #bc6ec5;">{</span>
+    name: <span style="color: #2d9574;">'elated_Galadriel_cl4piph2kic'</span>,
+    t_created: <span style="color: #a45bad;">null</span>,
+    points: <span style="color: #a45bad;">0</span>,
+    state: <span style="color: #2d9574;">'unregistered'</span>
+    roster: <span style="color: #2d9574;">[</span>
+      <span style="color: #67b11d;">{</span>
+        username: <span style="color: #2d9574;">'lqplk9p1w68'</span>,
+        name: <span style="color: #2d9574;">'Finwe'</span>,
+        surname: <span style="color: #2d9574;">'laughing'</span>,
+        email: <span style="color: #2d9574;">'lqplk9p1w68@gmail.com'</span>,
+        state: <span style="color: #2d9574;">'registered'</span>,
+        wristband: <span style="color: #b1951d;">{</span> id: <span style="color: #a45bad;">351</span>, color: <span style="color: #2d9574;">'red'</span>, colorCode: <span style="color: #a45bad;">1</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #b1951d;">}</span>
+      <span style="color: #67b11d;">}</span>,
+      <span style="color: #67b11d;">{</span>
+        username: <span style="color: #2d9574;">'pgs5ssie3'</span>,
+        name: <span style="color: #2d9574;">'Eowyn'</span>,
+        surname: <span style="color: #2d9574;">'strange'</span>,
+        email: <span style="color: #2d9574;">'pgs5ssie3@gmail.com'</span>,
+        state: <span style="color: #2d9574;">'registered'</span>,
+        wristband: <span style="color: #b1951d;">{</span> id: <span style="color: #a45bad;">253</span>, color: <span style="color: #2d9574;">'orange'</span>, colorCode: <span style="color: #a45bad;">6</span>, state: <span style="color: #2d9574;">'paired'</span> <span style="color: #b1951d;">}</span>
+      <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, package</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">null</span>,
+  name: <span style="color: #2d9574;">'Per Mission 5'</span>,
+  type: <span style="color: #2d9574;">'mission'</span>,
+  cost: <span style="color: #a45bad;">50</span>,
+  t_start: <span style="color: #a45bad;">null</span>,
+  t_end: <span style="color: #a45bad;">null</span>,
+  amount: <span style="color: #a45bad;">5</span>,
+  remainder: <span style="color: #a45bad;">null</span>,
+  state: <span style="color: #2d9574;">'unregistered'</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3rd argument, options</span>
+<span style="color: #4f97d7;">{</span> queue: <span style="color: #a45bad;">false</span> || <span style="color: #a45bad;">true</span> <span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge61d963" class="outline-4">
+<h4 id="orge61d963"><span class="section-number-4">8.3.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-8-3-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707056780735</span>,
+  teamName : <span style="color: #2d9574;">"affectionate_Shelob_ct4pqxcce8w"</span>,
+  packageId : <span style="color: #a45bad;">17</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb5aedba" class="outline-4">
+<h4 id="orgb5aedba"><span class="section-number-4">8.3.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-8-3-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707056780791</span>,
+  result : <span style="color: #2d9574;">"OK"</span>,
+  team : <span style="color: #bc6ec5;">{</span>
+    name : <span style="color: #2d9574;">"affectionate_Shelob_ct4pqxcce8w"</span>,
+    totalPoints : <span style="color: #a45bad;">0</span>,
+    teamState : <span style="color: #a45bad;">null</span>,
+    created : <span style="color: #a45bad;">null</span>,
+    lastRegisterAttempt : <span style="color: #a45bad;">null</span>,
+    currentRoster : <span style="color: #2d9574;">{</span>
+      version : <span style="color: #a45bad;">1</span>,
+      players : <span style="color: #67b11d;">[</span> <span style="color: #b1951d;">{</span>
+        username : <span style="color: #2d9574;">"g9781e0di69"</span>,
+        wristbandNumber : <span style="color: #a45bad;">401</span>,
+        wristbandColor : <span style="color: #a45bad;">null</span>
+      <span style="color: #b1951d;">}</span>, <span style="color: #b1951d;">{</span>
+        username : <span style="color: #2d9574;">"18tw5isjpd7e"</span>,
+        wristbandNumber : <span style="color: #a45bad;">421</span>,
+        wristbandColor : <span style="color: #a45bad;">null</span>
+      <span style="color: #b1951d;">}</span> <span style="color: #67b11d;">]</span>
+    <span style="color: #2d9574;">}</span>,
+    roomType : <span style="color: #a45bad;">null</span>,
+    packages : <span style="color: #2d9574;">[</span> <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf3984a4" class="outline-4">
+<h4 id="orgf3984a4"><span class="section-number-4">8.3.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-8-3-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  team: <span style="color: #bc6ec5;">{</span>
+    ...,
+    packages: <span style="color: #2d9574;">[]</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3119b1b" class="outline-3">
+<h3 id="org3119b1b"><span class="section-number-3">8.4.</span> Start team</h3>
+<div class="outline-text-3" id="text-8-4">
+</div>
+<div id="outline-container-org81b1520" class="outline-4">
+<h4 id="org81b1520"><span class="section-number-4">8.4.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-8-4-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, team</span>
+<span style="color: #4f97d7;">{</span>
+  ...
+<span style="color: #4f97d7;">}</span>,
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument options</span>
+<span style="color: #4f97d7;">{</span> cause: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span> <span style="color: #4f97d7;">}</span>;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb5c4b2d" class="outline-4">
+<h4 id="orgb5c4b2d"><span class="section-number-4">8.4.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-8-4-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707060079874</span>,
+  teamName : <span style="color: #2d9574;">"compassionate_Melian_ktl66x5o73f"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org51bb6d1" class="outline-4">
+<h4 id="org51bb6d1"><span class="section-number-4">8.4.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-8-4-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1707060079952</span>,
+  result : <span style="color: #2d9574;">"OK"</span>,
+  team : <span style="color: #bc6ec5;">{</span>
+    name : <span style="color: #2d9574;">"compassionate_Melian_ktl66x5o73f"</span>,
+    totalPoints : <span style="color: #a45bad;">0</span>,
+    teamState : <span style="color: #a45bad;">null</span>,
+    created : <span style="color: #a45bad;">null</span>,
+    lastRegisterAttempt : <span style="color: #a45bad;">null</span>,
+    currentRoster : <span style="color: #2d9574;">{</span>
+      version : <span style="color: #a45bad;">1</span>,
+      players : <span style="color: #67b11d;">[</span> <span style="color: #b1951d;">{</span>
+        username : <span style="color: #2d9574;">"cdc0t3lfjfg"</span>,
+        wristbandNumber : <span style="color: #a45bad;">154</span>,
+        wristbandColor : <span style="color: #a45bad;">null</span>
+      <span style="color: #b1951d;">}</span>, <span style="color: #b1951d;">{</span>
+        username : <span style="color: #2d9574;">"97tixfvlwsp"</span>,
+        wristbandNumber : <span style="color: #a45bad;">255</span>,
+        wristbandColor : <span style="color: #a45bad;">null</span>
+      <span style="color: #b1951d;">}</span> <span style="color: #67b11d;">]</span>
+    <span style="color: #2d9574;">}</span>,
+    roomType : <span style="color: #a45bad;">null</span>,
+    packages : <span style="color: #2d9574;">[</span> <span style="color: #67b11d;">{</span>
+      id : <span style="color: #a45bad;">21</span>,
+      name : <span style="color: #2d9574;">"Per Mission 10"</span>,
+      cost : <span style="color: #a45bad;">null</span>,
+      started : <span style="color: #a45bad;">1707060079921</span>,
+      ended : <span style="color: #a45bad;">null</span>,
+      missions : <span style="color: #a45bad;">10</span>,
+      missionsPlayed : <span style="color: #a45bad;">0</span>,
+      active : <span style="color: #a45bad;">true</span>
+    <span style="color: #67b11d;">}</span> <span style="color: #2d9574;">]</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org135c228" class="outline-4">
+<h4 id="org135c228"><span class="section-number-4">8.4.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-8-4-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ...team,
+  state: <span style="color: #2d9574;">"playing"</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org82104d6" class="outline-3">
+<h3 id="org82104d6"><span class="section-number-3">8.5.</span> Find Team</h3>
+<div class="outline-text-3" id="text-8-5">
+</div>
+<div id="outline-container-org35cfe4a" class="outline-4">
+<h4 id="org35cfe4a"><span class="section-number-4">8.5.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-8-5-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st arument</span>
+<span style="color: #4f97d7;">{</span>
+  ...team,
+<span style="color: #4f97d7;">}</span>,
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2nd argument, options</span>
+<span style="color: #4f97d7;">{</span>
+  cause: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb83d524" class="outline-4">
+<h4 id="orgb83d524"><span class="section-number-4">8.5.2.</span> Client response</h4>
+<div class="outline-text-4" id="text-8-5-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  team: <span style="color: #bc6ec5;">{</span> ... <span style="color: #bc6ec5;">}</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org34e942b" class="outline-2">
+<h2 id="org34e942b"><span class="section-number-2">9.</span> Session Tasks</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+<div id="outline-container-orgff91850" class="outline-3">
+<h3 id="orgff91850"><span class="section-number-3">9.1.</span> List Session</h3>
+<div class="outline-text-3" id="text-9-1">
+</div>
+<div id="outline-container-orgae9a498" class="outline-4">
+<h4 id="orgae9a498"><span class="section-number-4">9.1.1.</span> Backend response</h4>
+<div class="outline-text-4" id="text-9-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1708773525572</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  message: <span style="color: #2d9574;">'No active session'</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Or</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1709248857023</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  message: <span style="color: #2d9574;">'{"session":{"current":true,"created":"2024-02-29 19:10:31.306","ended":"null","started":"2024-02-29 19:10:31.305","updated":"2024-02-29 19:10:31.306"},"user":{"active":true,"id":8,"email":"test@gmail.com","username":"TEST"}}'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbc3db77" class="outline-4">
+<h4 id="orgbc3db77"><span class="section-number-4">9.1.2.</span> Client response</h4>
+<div class="outline-text-4" id="text-9-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  session: <span style="color: #bc6ec5;">{</span>
+    current: <span style="color: #a45bad;">true</span>,
+    created: <span style="color: #2d9574;">'2024-02-29 19:10:31.306'</span>,
+    ended: <span style="color: #2d9574;">'null'</span>,
+    started: <span style="color: #2d9574;">'2024-02-29 19:10:31.305'</span>,
+    updated: <span style="color: #2d9574;">'2024-02-29 19:10:31.306'</span>,
+    user: <span style="color: #2d9574;">{</span>
+      active: <span style="color: #a45bad;">true</span>,
+      id: <span style="color: #a45bad;">8</span>,
+      email: <span style="color: #2d9574;">'test@gmail.com'</span>,
+      username: <span style="color: #2d9574;">'TEST'</span>
+    <span style="color: #2d9574;">}</span>,
+    active: <span style="color: #a45bad;">true</span>
+  <span style="color: #bc6ec5;">}</span>,
+  ok: <span style="color: #a45bad;">true</span>,
+  msg: <span style="color: #2d9574;">'Successfully retrieved Session'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9745dbf" class="outline-3">
+<h3 id="org9745dbf"><span class="section-number-3">9.2.</span> Start Session</h3>
+<div class="outline-text-3" id="text-9-2">
+</div>
+<div id="outline-container-org9bf0e9e" class="outline-4">
+<h4 id="org9bf0e9e"><span class="section-number-4">9.2.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-9-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, cashier</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  username: <span style="color: #2d9574;">"test"</span>,
+  email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+  role: <span style="color: #2d9574;">"cashier"</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2st argument, required, jwt</span>
+<span style="color: #4f97d7;">{</span>
+  jwt: <span style="color: #2d9574;">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA"</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3st argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1bac223" class="outline-4">
+<h4 id="org1bac223"><span class="section-number-4">9.2.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-9-2-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  jwt: <span style="color: #2d9574;">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA"</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6274e7" class="outline-4">
+<h4 id="orga6274e7"><span class="section-number-4">9.2.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-9-2-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706780850379</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb42d96f" class="outline-4">
+<h4 id="orgb42d96f"><span class="section-number-4">9.2.4.</span> Client request</h4>
+<div class="outline-text-4" id="text-9-2-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  cashier: <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #a45bad;">3</span>,
+    username: <span style="color: #2d9574;">"test"</span>,
+    email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+    role: <span style="color: #2d9574;">"cashier"</span>,
+  <span style="color: #bc6ec5;">}</span>,
+  jwt: <span style="color: #2d9574;">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA"</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orge0cafbe" class="outline-3">
+<h3 id="orge0cafbe"><span class="section-number-3">9.3.</span> Stop Session</h3>
+<div class="outline-text-3" id="text-9-3">
+</div>
+<div id="outline-container-orgf75417f" class="outline-4">
+<h4 id="orgf75417f"><span class="section-number-4">9.3.1.</span> Client request</h4>
+<div class="outline-text-4" id="text-9-3-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">1st argument, required, cashier</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  username: <span style="color: #2d9574;">"test"</span>,
+  email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+  role: <span style="color: #2d9574;">"cashier"</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">2st argument, required, jwt</span>
+<span style="color: #4f97d7;">{</span>
+  jwt: <span style="color: #2d9574;">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA"</span>,
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">3st argument, optional, comment</span>
+comment: <span style="color: #2d9574;">"Nothing unexpected ever happens!"</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">4th argument, optional, options</span>
+<span style="color: #4f97d7;">{</span>
+  queue: <span style="color: #a45bad;">true</span> | <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd1a85c6" class="outline-4">
+<h4 id="orgd1a85c6"><span class="section-number-4">9.3.2.</span> Backend request</h4>
+<div class="outline-text-4" id="text-9-3-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  jwt: <span style="color: #2d9574;">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzM3Jrc3JscHBnYSIsImlhdCI6MTcwNjc3Nzk5NCwiZXhwIjoxNzA2ODEzOTk0fQ.-qZzuKJX0Aitieseid4h2Lxf5RJkpoXWBLzvEk9_8iFObwh8LicI9ZgG6_wfI1GEHOrAyoauv5tV5nX2SxfBGA"</span>,
+  comment: <span style="color: #2d9574;">"Nothing unexpected ever happens!"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org89f98b3" class="outline-4">
+<h4 id="org89f98b3"><span class="section-number-4">9.3.3.</span> Backend response</h4>
+<div class="outline-text-4" id="text-9-3-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706780850379</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org02dc536" class="outline-4">
+<h4 id="org02dc536"><span class="section-number-4">9.3.4.</span> Client response</h4>
+<div class="outline-text-4" id="text-9-3-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  ok: <span style="color: #a45bad;">true</span>,
+  cashier: <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #a45bad;">3</span>,
+    username: <span style="color: #2d9574;">"test"</span>,
+    email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+    role: <span style="color: #2d9574;">"cashier"</span>,
+  <span style="color: #bc6ec5;">}</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7be7d03" class="outline-3">
+<h3 id="org7be7d03"><span class="section-number-3">9.4.</span> Stop Sesson force</h3>
+</div>
+</div>
+
+
+<div id="outline-container-orgec173e7" class="outline-2">
+<h2 id="orgec173e7"><span class="section-number-2">10.</span> The Command pattern</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+The <b>afmachine</b> or <b>afm</b> for short is the control center of the application.
+</p>
+
+<p>
+It's API is consumed by invoking any of the public methods of the <b>afm</b>
+instance.
+</p>
+
+<p>
+All API calls are stored under the directory:
+</p>
+
+<p>
+/src/afmachine/tasks/*
+/src/afmachine/synthetic-tasks/*
+</p>
+
+<p>
+Each of these is usually a wrapper for a backend API call.
+</p>
+
+<p>
+The backend API calls are found at:
+</p>
+
+<p>
+/src/afmachine/device/admin-screen/*
+/src/afmachine/device/rpi-reader/*
+</p>
+
+<p>
+The primary function of <b>Afmachine</b> is to allow clients (such as a React
+component or the UI in general) to build middleware chains around each Task.
+This design model follows loosely the <b>command</b> design pattern. see
+(<a href="https://en.wikipedia.org/wiki/Command_pattern">https://en.wikipedia.org/wiki/Command_pattern</a>)
+</p>
+
+<p>
+Each time an API call is made <b>afm</b> creates a <b>Command</b> for the invoked <b>Task</b>.
+A <b>Command</b> represents one instance of a running <b>Task</b>.
+</p>
+
+<p>
+For example: If a client was to invoke an API call multiple times:
+</p>
+
+<p>
+afm.listPkgs()
+afm.listPkgs()
+afm.listPkgs()
+</p>
+
+<p>
+There would be 3 <b>Commands</b> created for the listPkgs <b>Task</b>.
+</p>
+
+<p>
+Each <b>Command</b> carries with it a lot of information but fundamentally it
+contains a sequence of functions (the middleware chain) to run.
+</p>
+
+<p>
+When a command is created it is placed into a queue by afm. The afm is
+responsible for invoking each the commands in the queue in sequence (meaning in
+order, waiting for the completion of one to carry on with the next).
+</p>
+
+<p>
+For example: If a client was to invoke the API calls:
+</p>
+
+<p>
+afm.loginCashier();
+afm.listPkgs();
+afm.logoutCashier();
+</p>
+
+<p>
+There would be 3 <b>Commands</b> to run in the queue by <b>afm</b>.
+It would proceed by running them in these order:
+</p>
+
+<ol class="org-ol">
+<li>loginCashier()</li>
+<li>listPkgs()</li>
+<li>logoutCashier()</li>
+</ol>
+
+<p>
+Clients to afm can register functions that become part of a Command through the
+Eventful interface at:
+</p>
+
+<p>
+/src/Eventful.js
+</p>
+
+<p>
+For exmaple:
+</p>
+
+<p>
+// Register a hook to run before each command in the queue.
+afm.on('precmd', (afm) =&gt; {});
+</p>
+
+<p>
+// Register a hook to run after each command in the queue.
+afm.on('postcmd', (afm) =&gt; {});
+</p>
+
+<p>
+// Register a hook to run before each Command for the listPkgs Task.
+afm.listPkgs.on('precmd', (command, next) =&gt; {});
+</p>
+
+<p>
+// Register a hook to run after each Command for the listPkgs Task.
+afm.listPkgs.on('postcmd', (command, next) =&gt; {});
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orga2d8376" class="outline-2">
+<h2 id="orga2d8376"><span class="section-number-2">11.</span> Conventions</h2>
+<div class="outline-text-2" id="text-11">
+</div>
+<div id="outline-container-org546a091" class="outline-3">
+<h3 id="org546a091"><span class="section-number-3">11.1.</span> Command inputs and outputs</h3>
+<div class="outline-text-3" id="text-11-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  args: <span style="color: #bc6ec5;">{</span>
+    ...AFM_FORM_INPUTS
+  <span style="color: #bc6ec5;">}</span>
+  req: <span style="color: #bc6ec5;">{</span>
+    ...BACKEND_FORM_INPUTS
+  <span style="color: #bc6ec5;">}</span>
+  raw: <span style="color: #bc6ec5;">{</span>
+    ...BACKEND_FORM_OUTPUTS
+  <span style="color: #bc6ec5;">}</span>
+  res: <span style="color: #bc6ec5;">{</span>
+    ...AFM_FORM_OUPUTS
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org90f361c" class="outline-3">
+<h3 id="org90f361c"><span class="section-number-3">11.2.</span> Commands wrap their return value within an object</h3>
+<div class="outline-text-3" id="text-11-2">
+<p>
+Commands never return an entity object, they return an object that contains the
+entity or entities.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Instead of:</span>
+<span style="color: #4f97d7; font-weight: bold;">const</span> <span style="color: #7590db;">response</span> = <span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">"..."</span>,
+  name: <span style="color: #2d9574;">"..."</span>,
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">This:</span>
+<span style="color: #4f97d7; font-weight: bold;">const</span> <span style="color: #7590db;">response</span> = <span style="color: #4f97d7;">{</span>
+  player: <span style="color: #bc6ec5;">{</span>
+    username: <span style="color: #2d9574;">"..."</span>,
+    name: <span style="color: #2d9574;">"..."</span>,
+  <span style="color: #bc6ec5;">}</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org3b73337" class="outline-2">
+<h2 id="org3b73337"><span class="section-number-2">12.</span> Normalization functions</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+Normalization function take an array of source objects and combines them into
+one object. It is similar to Object.assign(target, &#x2026;sources) but adjusted to
+fit the special needs of the ENTITY being normalized. (such as a Player,
+Wristband etc). To be more exact, each normalization function is responsible
+for:
+</p>
+
+<ul class="org-ul">
+<li>TRANSLATION of an object in backend form to frontend form.</li>
+<li>DEDUCING the state of the entity.</li>
+<li>MERGING of multiple sources in any form.</li>
+<li>NORMALIZATION of the NESTED entities contained within, if any.</li>
+</ul>
+</div>
+
+<div id="outline-container-orgfb36496" class="outline-3">
+<h3 id="orgfb36496"><span class="section-number-3">12.1.</span> Inputs</h3>
+<div class="outline-text-3" id="text-12-1">
+<p>
+All normalization functions accept the following inputs:
+</p>
+
+<ul class="org-ul">
+<li>an array of sources, or a single object, or null, or the empty object etc&#x2026;</li>
+<li>An Options object</li>
+</ul>
+
+<p>
+To pass along instructions to a NESTED normalization function, one must begin a
+secondary nesting in the Options object.
+</p>
+
+<p>
+For example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Considering a Composite Entity such as a Team which</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">contains within Players with each owning a Wristband and Packages.</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Team -&gt; Players -&gt; Wristband</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Team -&gt; Packages</span>
+<span style="color: #4f97d7;">{</span>
+  nullSupersede: <span style="color: #a45bad;">true</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Team target</span>
+  state: <span style="color: #2d9574;">'registered'</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Team Target</span>
+  <span style="color: #4f97d7; font-weight: bold;">package</span>: <span style="color: #bc6ec5;">{</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">NESTED TARGET -&gt; Package</span>
+    state: <span style="color: #2d9574;">"playing"</span>,
+  <span style="color: #bc6ec5;">}</span>
+  player: <span style="color: #bc6ec5;">{</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">NESTED TARGET -&gt; Player</span>
+    state: <span style="color: #2d9574;">"inTeam"</span>,
+  <span style="color: #bc6ec5;">}</span>
+  wristband: <span style="color: #bc6ec5;">{</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">NESTED TARGET -&gt; Player -&gt; Wristband</span>
+    state: <span style="color: #2d9574;">"paired"</span>,
+    nullsSupersede: <span style="color: #a45bad;">false</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga2a7e22" class="outline-3">
+<h3 id="orga2a7e22"><span class="section-number-3">12.2.</span> Deducing state</h3>
+<div class="outline-text-3" id="text-12-2">
+<p>
+Deducing state is carried on in 2 stages. The goal is to reduce ambiguity an
+introduce Determinism.
+</p>
+
+<p>
+The first stage is about interpreting the properties that carry with them State.
+</p>
+
+<p>
+For example, given a Package with a non-nil id property:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Package</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">5</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+
+<p>
+I could interpret the existence of a non-nil ID property as indicative of
+the Package being at least Registered.
+</p>
+
+<p>
+But I do not (not in the 1st stage). The only properties used in the first stage
+in that EXACT order of a Package normalization function are:
+</p>
+
+<ul class="org-ul">
+<li>targetState
+The targetState is passed as an option to the normalization function.
+If it has been defined it interrupts the function and returns immediately
+operating under the assumption that the caller already knows what
+the state of the target should be.</li>
+<li>active
+This property is found in a BackendForm package. If it is defined and true
+it means the Package is currently active.</li>
+<li>state
+This property is found in an AfmForm package.</li>
+<li>defaultState
+The defaultState is passed as an option to the normalization function.
+If no state has been deduced so far in the process, it is used.</li>
+</ul>
+
+<p>
+The general pattern is that, the targetState has the highest precedence. It is
+followed by State backendForm, then by afmForm State, then by defaultState.
+</p>
+
+<p>
+In the tobject() functions which must also deduce state the order is:
+targetState, afmForm, defaultState.
+</p>
+
+<p>
+This is the end of the 1st stage.
+</p>
+
+<p>
+The 2nd stage is responsible for binding the Content of the entity to its State.
+</p>
+
+<p>
+What do I mean by that?.
+</p>
+
+<p>
+Some properties such as:
+</p>
+
+<p>
+state or active (in a Package)
+</p>
+
+<p>
+are explicitly designed to convey state.
+</p>
+
+<p>
+While the other properties in a Package are about its Contents.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  id,
+  t_started,
+  t_ended,
+  remainder,
+  amount,
+  ...
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+
+<p>
+Therefore, one may allocate each Property as belonging to:
+</p>
+
+<ul class="org-ul">
+<li>State</li>
+<li>Content</li>
+</ul>
+
+<p>
+So the 2st stage is about making sure that the target's Contents align with the
+State from the 1st stage.
+</p>
+
+<p>
+So again carrying on with the above Example:
+</p>
+
+<p>
+A Package can be in one of four states:
+</p>
+
+<ul class="org-ul">
+<li>Unregistered</li>
+<li>Registered</li>
+<li>Playing</li>
+<li>Completed</li>
+</ul>
+
+<p>
+(-START NOTE-)
+I believe that the architecture of the backend should be based on Packages.
+What do I mean?
+Instead of having Teams with Packages and Teams having an active Package.
+You have Packages with a 'has-a' Team.
+So instead of (1)Team-(*)Packages you have a (1)Package-(1)Team.
+But it is not, so I make best with what I have.
+(-END NOTE-)
+</p>
+
+
+<p>
+Lets say that the target after stage 1 looks like these:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  state: <span style="color: #2d9574;">'unregistered'</span>
+  id: <span style="color: #a45bad;">5</span>,
+  t_start: <span style="color: #a45bad;">100</span>,
+  t_end: <span style="color: #a45bad;">500</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+
+<p>
+This is an example of a misalignment. The State says that this Package
+is unregistered but the Contents say that it is Completed.
+</p>
+
+<p>
+What should be done in this situation?
+</p>
+
+<p>
+In order to help the developer know when a situation like this arises a
+state Error is thrown.
+</p>
+
+<p>
+So the 2nd stage is responsible for making sure that a misalignment never
+occurs.
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgc8831e6" class="outline-2">
+<h2 id="orgc8831e6"><span class="section-number-2">13.</span> Schemas</h2>
+<div class="outline-text-2" id="text-13">
+</div>
+<div id="outline-container-org3f6d35d" class="outline-3">
+<h3 id="org3f6d35d"><span class="section-number-3">13.1.</span> Package</h3>
+<div class="outline-text-3" id="text-13-1">
+</div>
+<div id="outline-container-orgaefa1a9" class="outline-4">
+<h4 id="orgaefa1a9"><span class="section-number-4">13.1.1.</span> AFM Time</h4>
+<div class="outline-text-4" id="text-13-1-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  name: <span style="color: #2d9574;">'Per Time 90'</span>,
+  amount: <span style="color: #a45bad;">99999</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds</span>
+  type: <span style="color: #2d9574;">"time"</span>,
+  cost: <span style="color: #a45bad;">90</span>.<span style="color: #a45bad;">99</span>,
+  amount: <span style="color: #a45bad;">888</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds,</span>
+  remainder: <span style="color: #a45bad;">123</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds,</span>
+  t_start: <span style="color: #a45bad;">1232434324</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds,</span>
+  t_end: <span style="color: #a45bad;">1234234234</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds</span>
+  state: <span style="color: #2d9574;">"unregistered"</span> | <span style="color: #2d9574;">"registered"</span> | <span style="color: #2d9574;">"playing"</span> | <span style="color: #2d9574;">"completed"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb41b58b" class="outline-4">
+<h4 id="orgb41b58b"><span class="section-number-4">13.1.2.</span> AFM Missions</h4>
+<div class="outline-text-4" id="text-13-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  name: <span style="color: #2d9574;">'Per Mission 5'</span>,
+  amount: <span style="color: #a45bad;">5</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">missions</span>
+  type: <span style="color: #2d9574;">"mission"</span>,
+  cost: <span style="color: #a45bad;">90</span>.<span style="color: #a45bad;">99</span>,
+  amount: <span style="color: #a45bad;">5</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">missions</span>
+  remainder: <span style="color: #a45bad;">1</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">missions,</span>
+  t_start: <span style="color: #a45bad;">1232434324</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds,</span>
+  t_end: <span style="color: #a45bad;">1234234234</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds</span>
+  state: <span style="color: #2d9574;">"unregistered"</span> | <span style="color: #2d9574;">"registered"</span> | <span style="color: #2d9574;">"playing"</span> | <span style="color: #2d9574;">"completed"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org76eed2b" class="outline-4">
+<h4 id="org76eed2b"><span class="section-number-4">13.1.3.</span> Backend Time</h4>
+<div class="outline-text-4" id="text-13-1-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">team's package</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">5</span>,
+  name: <span style="color: #2d9574;">'Per Time 90'</span>,
+  cost: <span style="color: #a45bad;">null</span>,
+  started: <span style="color: #a45bad;">1706685129723</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds</span>
+  ended: <span style="color: #a45bad;">null</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds</span>
+  duration: <span style="color: #a45bad;">5400</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">seconds</span>
+  paused: <span style="color: #a45bad;">false</span>,
+  active: <span style="color: #a45bad;">true</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org865619b" class="outline-4">
+<h4 id="org865619b"><span class="section-number-4">13.1.4.</span> Backend Missions</h4>
+<div class="outline-text-4" id="text-13-1-4">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">team's package</span>
+<span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">1</span>,
+  name: <span style="color: #2d9574;">'Per Mission 5'</span>,
+  cost: <span style="color: #a45bad;">null</span>,
+  started: <span style="color: #a45bad;">null</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds</span>
+  ended: <span style="color: #a45bad;">null</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">milliseconds</span>
+  missions: <span style="color: #a45bad;">5</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">missions</span>
+  missionsPlayed: <span style="color: #a45bad;">0</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">missions</span>
+  active: <span style="color: #a45bad;">false</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2dca677" class="outline-4">
+<h4 id="org2dca677"><span class="section-number-4">13.1.5.</span> Available Backend packages</h4>
+<div class="outline-text-4" id="text-13-1-5">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Missions</span>
+<span style="color: #4f97d7;">{</span>
+  name: <span style="color: #2d9574;">"Per Mission 5"</span>,
+  amount: <span style="color: #a45bad;">5</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Missions</span>
+  type: <span style="color: #2d9574;">"mission"</span>,
+  cost: <span style="color: #a45bad;">150</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">time</span>
+<span style="color: #4f97d7;">{</span>
+  name: <span style="color: #2d9574;">"Per Time 90"</span>,
+  amount: <span style="color: #a45bad;">90</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">minutes</span>
+  type: <span style="color: #2d9574;">'time'</span>,
+  cost: <span style="color: #a45bad;">150</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd96f68f" class="outline-3">
+<h3 id="orgd96f68f"><span class="section-number-3">13.2.</span> Device</h3>
+<div class="outline-text-3" id="text-13-2">
+</div>
+<div id="outline-container-orgc387d02" class="outline-4">
+<h4 id="orgc387d02"><span class="section-number-4">13.2.1.</span> AFM rpi reader</h4>
+<div class="outline-text-4" id="text-13-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  id: <span style="color: #2d9574;">'ADMINISTRATION1Reader'</span>,
+  type: <span style="color: #2d9574;">'RPI_READER'</span>,
+  room: <span style="color: #2d9574;">'ADMINISTRATION1'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org33e7c99" class="outline-4">
+<h4 id="org33e7c99"><span class="section-number-4">13.2.2.</span> AFM admin screen</h4>
+<div class="outline-text-4" id="text-13-2-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  id: <span style="color: #2d9574;">'001'</span>,
+  type: <span style="color: #2d9574;">'REGISTRATION_SCREEN'</span>,
+  room: <span style="color: #2d9574;">'ADMINISTRATION1'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd3722b7" class="outline-4">
+<h4 id="orgd3722b7"><span class="section-number-4">13.2.3.</span> Backend</h4>
+<div class="outline-text-4" id="text-13-2-3">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  deviceId: <span style="color: #2d9574;">'001'</span>,
+  deviceType: <span style="color: #2d9574;">'REGISTRATION_SCREEN'</span>,
+  roomType: <span style="color: #2d9574;">'ADMINISTRATION1'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org4037363" class="outline-3">
+<h3 id="org4037363"><span class="section-number-3">13.3.</span> Cashier</h3>
+<div class="outline-text-3" id="text-13-3">
+</div>
+<div id="outline-container-org96a6d58" class="outline-4">
+<h4 id="org96a6d58"><span class="section-number-4">13.3.1.</span> AFM</h4>
+<div class="outline-text-4" id="text-13-3-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">4394</span>,
+  username: <span style="color: #2d9574;">'80teepo7fu9'</span>,
+  email: <span style="color: #2d9574;">'80teepo7fu9@gmail.com'</span>,
+  role: <span style="color: #2d9574;">'manager'</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orge0a8a15" class="outline-3">
+<h3 id="orge0a8a15"><span class="section-number-3">13.4.</span> Player</h3>
+<div class="outline-text-3" id="text-13-4">
+</div>
+<div id="outline-container-orgeb3be3f" class="outline-4">
+<h4 id="orgeb3be3f"><span class="section-number-4">13.4.1.</span> AFM</h4>
+<div class="outline-text-4" id="text-13-4-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">"test"</span>
+  name: <span style="color: #2d9574;">"testname"</span>,
+  surname: <span style="color: #2d9574;">"testsurname"</span>,
+  email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+  state: <span style="color: #2d9574;">'unregistered'</span> || <span style="color: #2d9574;">'registered'</span> || <span style="color: #2d9574;">'inTeam'</span> || <span style="color: #2d9574;">'playing'</span>
+  wristband: <span style="color: #bc6ec5;">{</span>
+    id: <span style="color: #a45bad;">null</span> || <span style="color: #a45bad;">3</span>,
+    color: <span style="color: #a45bad;">null</span> || <span style="color: #2d9574;">'green'</span>,
+    colorCode: <span style="color: #a45bad;">null</span> || <span style="color: #a45bad;">3</span>,
+    state: <span style="color: #2d9574;">"unpaired"</span> || <span style="color: #2d9574;">"pairing"</span> || <span style="color: #2d9574;">"unpairing"</span> || <span style="color: #2d9574;">"paired"</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf900f7c" class="outline-4">
+<h4 id="orgf900f7c"><span class="section-number-4">13.4.2.</span> Backend</h4>
+<div class="outline-text-4" id="text-13-4-2">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">"test"</span>,
+  name: <span style="color: #2d9574;">"test"</span>,
+  surname: <span style="color: #2d9574;">"test"</span>,
+  email: <span style="color: #2d9574;">"test@gmail.com"</span>,
+  wristbandMerged: <span style="color: #a45bad;">true</span> || <span style="color: #a45bad;">false</span>,
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org8affc75" class="outline-3">
+<h3 id="org8affc75"><span class="section-number-3">13.5.</span> Team</h3>
+</div>
+<div id="outline-container-org265e2ce" class="outline-3">
+<h3 id="org265e2ce"><span class="section-number-3">13.6.</span> Wristband</h3>
+<div class="outline-text-3" id="text-13-6">
+</div>
+<div id="outline-container-org3e9c380" class="outline-4">
+<h4 id="org3e9c380"><span class="section-number-4">13.6.1.</span> AFM</h4>
+<div class="outline-text-4" id="text-13-6-1">
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7;">{</span>
+  id: <span style="color: #a45bad;">3</span>,
+  color: <span style="color: #2d9574;">"green"</span>,
+  colorCode: <span style="color: #a45bad;">2</span>,
+  state: <span style="color: #2d9574;">"unpaired"</span> || <span style="color: #2d9574;">"pairing"</span> || <span style="color: #2d9574;">"unpairing"</span> || <span style="color: #2d9574;">"paired"</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org50bfd99" class="outline-4">
+<h4 id="org50bfd99"><span class="section-number-4">13.6.2.</span> Backend</h4>
+<div class="outline-text-4" id="text-13-6-2">
+<div class="org-src-container">
+<pre class="src src-js">
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">wristband register</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706957679789</span>,
+  username : <span style="color: #2d9574;">"diwgp3nrrtf"</span>,
+  wristbandNumber : <span style="color: #a45bad;">234</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">wristband deregister</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp : <span style="color: #a45bad;">1706960913123</span>,
+  result : <span style="color: #2d9574;">"OK"</span>,
+  message : <span style="color: #2d9574;">"successfully unregisterWristbandToPlayer"</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">wristband info</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706879364557</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  wristband: <span style="color: #bc6ec5;">{</span> wristbandNumber: <span style="color: #a45bad;">3</span>, wristbandColor: <span style="color: #a45bad;">2</span>, active: <span style="color: #a45bad;">false</span> <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">wristband scan</span>
+<span style="color: #4f97d7;">{</span>
+  timestamp: <span style="color: #a45bad;">1706880614077</span>,
+  result: <span style="color: #2d9574;">'OK'</span>,
+  wristbandNumber: <span style="color: #a45bad;">3</span>,
+  wristbandColor: <span style="color: #a45bad;">3</span>
+<span style="color: #4f97d7;">}</span>
+
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">list registered players + search players</span>
+<span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">'Merry_2mpmnxcgv1s'</span>,
+  name: <span style="color: #2d9574;">'Merry'</span>,
+  surname: <span style="color: #2d9574;">'compassionate'</span>,
+  email: <span style="color: #2d9574;">'Merry@gmail.com'</span>,
+  wristbandMerged: <span style="color: #a45bad;">false</span>,
+  wristband: <span style="color: #a45bad;">null</span>
+<span style="color: #4f97d7;">}</span>,
+<span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">'Wormtongue_klagnkjxqla'</span>,
+  name: <span style="color: #2d9574;">'Wormtongue'</span>,
+  surname: <span style="color: #2d9574;">'jovial'</span>,
+  email: <span style="color: #2d9574;">'Wormtongue@gmail.com'</span>,
+  wristbandMerged: <span style="color: #a45bad;">false</span>,
+  wristband: <span style="color: #bc6ec5;">{</span> wristbandNumber: <span style="color: #a45bad;">230</span>, wristbandColor: <span style="color: #a45bad;">3</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>,
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">list registered players with writband</span>
+<span style="color: #4f97d7;">{</span>
+  username: <span style="color: #2d9574;">'Gandalf_deil7sv8j4c'</span>,
+  name: <span style="color: #2d9574;">'Gandalf'</span>,
+  surname: <span style="color: #2d9574;">'busy'</span>,
+  email: <span style="color: #2d9574;">'Gandalf@gmail.com'</span>,
+  wristbandMerged: <span style="color: #a45bad;">false</span>,
+  wristband: <span style="color: #bc6ec5;">{</span> wristbandNumber: <span style="color: #a45bad;">233</span>, wristbandColor: <span style="color: #a45bad;">4</span>, active: <span style="color: #a45bad;">true</span> <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>,
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">list teams</span>
+players: <span style="color: #4f97d7;">[</span>
+  <span style="color: #bc6ec5;">{</span>
+    username: <span style="color: #2d9574;">'test1'</span>,
+    wristbandNumber: <span style="color: #a45bad;">null</span>,
+    wristbandColor: <span style="color: #a45bad;">null</span>
+  <span style="color: #bc6ec5;">}</span>,
+  <span style="color: #bc6ec5;">{</span>
+    username: <span style="color: #2d9574;">"test3"</span>,
+    wristbandNumber: <span style="color: #a45bad;">1</span>,
+    wristbandColor: <span style="color: #a45bad;">null</span>,
+  <span style="color: #bc6ec5;">}</span>,
+  <span style="color: #bc6ec5;">{</span>
+    username: <span style="color: #2d9574;">"test4"</span>,
+    wristbandNumber: <span style="color: #a45bad;">null</span>,
+    wristbandColor: <span style="color: #a45bad;">2</span>,
+  <span style="color: #bc6ec5;">}</span>,
+
+  <span style="color: #bc6ec5;">{</span>
+    username: <span style="color: #2d9574;">"Sauron_0h96h9q4xixv"</span>,
+    wristbandNumber: <span style="color: #a45bad;">241</span>,
+    wristbandColor: <span style="color: #a45bad;">2</span>,
+  <span style="color: #bc6ec5;">}</span>,
+
+<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2024-03-01 Fri 01:26</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
