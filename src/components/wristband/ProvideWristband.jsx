@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ContextWristband } from "../../contexts/ContextWristband.jsx";
-import { Wristband } from "#afm/wristband/Wristband.js";
+import { Wristband } from "../../afmachine/wristband/Wristband.js";
 
 function ProvideWristband({ wristband, children, fill }) {
   wristband ??= fill

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { defer, Await, useLoaderData } from "react-router-dom";
 import { getafm } from "/src/getafm.js";
-import { parsecmd } from "#afm/parsecmd.js";
+import { parsecmd } from "../afmachine/parsecmd.js";
 import { Pending } from "../components/await-command/Pending2.jsx";
 
 const loadPlayers = () =>

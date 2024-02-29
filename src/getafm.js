@@ -41,17 +41,17 @@ function deregisterListener(event, name) {
 
 async function getafm(waitBoot = true) {
   if (!afm) {
-    const { Afmachine } = await import("#afm/Afmachine.js");
+    const { Afmachine } = await import("./afmachine/Afmachine.js");
     const { Mqtt } = await import("./Mqtt.js");
     const { MqttProxy } = await import("mqtt_proxy");
     const { registrationTopics, rpiReaderTopics } = await import(
       "../backend-topics.js"
     );
     const { DeviceAdminScreen } = await import(
-      "#afm/device/admin-screen/DeviceAdminScreen.js"
+      "./afmachine/device/admin-screen/DeviceAdminScreen.js"
     );
     const { DeviceRPIReader } = await import(
-      "#afm/device/rpi-reader/DeviceRPIReader.js"
+      "./afmachine/device/rpi-reader/DeviceRPIReader.js"
     );
 
     const clientMqtt = await Mqtt.connectAsync(ENV.AFADMIN_SERVER_URL);

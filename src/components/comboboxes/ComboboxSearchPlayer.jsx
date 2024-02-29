@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { AsyncSearchableCombobox as Combobox } from "react_utils/comboboxes";
 import { useRemoteData, RemoteDataStates } from "react_utils";
-import { parsecmd } from "#afm/parsecmd.js";
+import { parsecmd } from "../../afmachine/parsecmd.js";
 import { SquizzedPlayerInfoCard } from "../player/SquizzedPlayerInfoCard.jsx";
 import { AwaitCommand } from "../await-command/AwaitCommand.jsx";
 import { Pending } from "../track-commands/Pending.jsx";

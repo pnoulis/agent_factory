@@ -9,9 +9,9 @@ import { ComboboxSelectPlayer } from "../../components/comboboxes/ComboboxSelect
 import { generateRandomName } from "js_utils/misc";
 import { useRegistrationQueue } from "../../components/registration-queue/useRegistrationQueue.jsx";
 import { FormTeamName } from "../../components/forms/FormTeamName.jsx";
-import { TeamCommander } from "#afm/team/TeamCommander.js";
-import { PlayerCommander } from "#afm/player/PlayerCommander.js";
-import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
+import { TeamCommander } from "../../afmachine/team/TeamCommander.js";
+import { PlayerCommander } from "../../afmachine/player/PlayerCommander.js";
+import { WristbandCommander } from "../../afmachine/wristband/WristbandCommander.js";
 import { StandardPlayerActionCard } from "../../components/player/StandardPlayerActionCard.jsx";
 import { StandardPlayerFiller } from "../../components/player/StandardPlayerFiller.jsx";
 import { MAX_ROSTER_SIZE } from "../../constants.js";

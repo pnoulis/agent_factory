@@ -1,11 +1,11 @@
 import { ENV } from "./config.js";
 import * as CONSTANTS from "./constants.js";
-import { Afmachine } from "#afm/Afmachine.js";
+import { Afmachine } from "./afmachine/Afmachine.js";
 import { Mqtt } from "./Mqtt.js";
 import { MqttProxy } from "mqtt_proxy";
 import { registrationTopics, rpiReaderTopics } from "../backend-topics.js";
-import { DeviceAdminScreen } from "#afm/device/admin-screen/DeviceAdminScreen.js";
-import { DeviceRPIReader } from "#afm/device/rpi-reader/DeviceRPIReader.js";
+import { DeviceAdminScreen } from "./afmachine/device/admin-screen/DeviceAdminScreen.js";
+import { DeviceRPIReader } from "./afmachine/device/rpi-reader/DeviceRPIReader.js";
 import "./globals.js";
 
 let afm;

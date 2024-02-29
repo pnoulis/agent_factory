@@ -13,7 +13,6 @@
   ],
   "type": "module",
   "imports": {
-    "#afm/*": "./src/afmachine/*",
     "#assets/*": "./assets/*"
   },
   "devDependencies": {

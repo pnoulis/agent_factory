@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { Router } from "./Router.jsx";
 import styled from "styled-components";
-import { parsecmd } from "#afm/parsecmd.js";
+import { parsecmd } from "./afmachine/parsecmd.js";
 
 import "./debug.js";
 import "./errors.js";

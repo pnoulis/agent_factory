@@ -10,9 +10,9 @@ import { WidgetDistribute } from "../../components/widgets/WidgetDistribute.jsx"
 import { WidgetGrouParty } from "../../components/widgets/WidgetGrouParty.jsx";
 import { useRegistrationQueue } from "../../components/registration-queue/useRegistrationQueue.jsx";
 import { distributePlayers } from "../../misc/misc.js";
-import { GrouPartyTeam } from "#afm/grouparty/GrouPartyTeam.js";
-import { GrouPartyPlayer } from "#afm/grouparty/GrouPartyPlayer.js";
-import { GrouPartyWristband } from "#afm/grouparty/GrouPartyWristband.js";
+import { GrouPartyTeam } from "../../afmachine/grouparty/GrouPartyTeam.js";
+import { GrouPartyPlayer } from "../../afmachine/grouparty/GrouPartyPlayer.js";
+import { GrouPartyWristband } from "../../afmachine/grouparty/GrouPartyWristband.js";
 import { TeamActionCard } from "../../components/team/TeamActionCard.jsx";
 import { MAX_ROSTER_SIZE } from "../../constants.js";
 import { getGrouPartyDistribution } from "../../components/dialogs/inputs/getGrouPartyDistribution.jsx";

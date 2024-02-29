@@ -1,6 +1,6 @@
 import * as React from "react";
-import { PlayerCommander } from "#afm/player/PlayerCommander.js";
-import { WristbandCommander } from "#afm/wristband/WristbandCommander.js";
+import { PlayerCommander } from "../../afmachine/player/PlayerCommander.js";
+import { WristbandCommander } from "../../afmachine/wristband/WristbandCommander.js";
 import { StandardPlayerActionCard } from "../../components/player/StandardPlayerActionCard.jsx";
 import { RegistrationQueue } from "../../components/registration-queue/RegistrationQueue.jsx";
 import { useRegistrationQueue } from "../../components/registration-queue/useRegistrationQueue.jsx";
