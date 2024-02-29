@@ -2999,6 +2999,15 @@ session stop
 register
 login
 
+* Pages
+** DONE ./pages/cashiers/PageIndex.jsx
+** DONE ./pages/cashiers/PageRegister.jsx
+** DONE ./pages/cashiers/PageLogin.jsx
+** DONE ./pages/players/PagePairWristband.jsx
+** DONE ./pages/players/PageRegister.jsx
+** ./pages/devices/PageDevices.jsx
+** ./pages/team/PageTeam.jsx
+** ./pages/team/PageRegister.jsx
 * Schemas
 ** Package
 *** AFM Time

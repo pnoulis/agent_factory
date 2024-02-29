@@ -4,7 +4,6 @@ import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { confirmUnpairWristband } from "../dialogs/confirms/confirmUnpairWristband";
 
 function nextPlayer(queue) {
-  debug(queue, "NEXT PLAYER");
   for (let i = 0; i < queue.length; i++) {
     if (queue[i].wristband.inState("unpaired")) return queue[i];
   }
@@ -23,13 +22,11 @@ function useRegistrationQueue(players) {
     try {
       for (let i = 0; i < queueRef.current.length; i++) {
         if (queueRef.current[i].wristband.inState("pairing")) {
-          debug("stopPairing() unpair wristband");
           await queueRef.current[i].unpairWristband();
         }
       }
     } catch (err) {
     } finally {
-      debug("stopPairing() null pairingref");
       pairingRef.current = null;
       return Promise.resolve();
     }
@@ -37,7 +34,6 @@ function useRegistrationQueue(players) {
 
   async function pairWristband(player) {
     await stopPairing();
-    debug("pairWristband() will pair wristband");
     pairingRef.current = player;
     try {
       await player.pairWristband();
@@ -48,23 +44,16 @@ function useRegistrationQueue(players) {
       }
       throw err;
     }
-    debug("pairWristband, paired");
   }
 
   async function unpairWristband(player) {
-    try {
-      if (player.wristband.inState("paired")) {
-        if (!(await confirmUnpairWristband(player))) {
-          return;
-        }
+    if (player.wristband.inState("paired")) {
+      if (!(await confirmUnpairWristband(player))) {
+        return;
       }
-      debug("unpair wristband");
-      await player.unpairWristband();
-      pairingRef.current = null;
-    } catch (err) {
-    } finally {
-      debug("stop pairing");
     }
+    await player.unpairWristband();
+    pairingRef.current = null;
   }
 
   function enqueue(...players) {
@@ -95,12 +84,8 @@ function useRegistrationQueue(players) {
       }
       if (y === players.length) newQueue.push(queue[i]);
     }
-    debug("DEQUE SEARCHING FOR pairing player");
-    debug(pairingRef.current);
     for (let i = 0; i < players.length; i++) {
-      debug(players[i], `player: ${i}`);
       if (pairingRef.current === players[i]) {
-        debug("DEQUE stop pairing");
         stopPairing();
       }
     }
@@ -111,14 +96,8 @@ function useRegistrationQueue(players) {
     function onidle() {
       setTimeout(() => {
         const player = nextPlayer(queueRef.current);
-        debug("IDLE");
         if (player && !pairingRef.current) {
-          debug("WILL PAIR");
-          // pairingRef.current = player;
           pairWristband(player);
-          // player.pairWristband().then(() => {
-          //   pairingRef.current = null;
-          // });
         }
       }, 500);
     }

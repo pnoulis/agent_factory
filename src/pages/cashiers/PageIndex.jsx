@@ -8,8 +8,7 @@ import styled from "styled-components";
 import { AwaitCashiers } from "/src/loaders/loadCashiers.jsx";
 import { TableCashiers } from "#components/tables/TableCashiers.jsx";
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
-import { cashiers as cashierControllers } from "../../controllers/cashiers.jsx";
-import { isObject } from "js_utils/misc";
+import { deregister } from "../../controllers/cashiers.jsx";
 
 function Component() {
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ function Component() {
 
   const deregisterCashiers = async () => {
     try {
-      await cashierControllers.deregister(selectedCashiersRef.current);
+      await deregister(selectedCashiersRef.current);
     } finally {
       revalidator.revalidate();
     }

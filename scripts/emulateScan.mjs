@@ -27,8 +27,8 @@ if (color == null) {
 const afm = getafmNode();
 let err;
 try {
-  afm.boot({ queue: false });
-  afm.boot({ rpiReader: true, });
+  await afm.boot({ queue: false });
+  // await afm.boot({ rpiReader: true, });
   await afm.readWristband({ id, colorCode: color, }, { queue: false });
   console.log(`id: ${id}`);
   console.log(`colorCode: ${color}`)

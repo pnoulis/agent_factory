@@ -6,19 +6,20 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { cashiers as linkCashiers } from "/src/links.jsx";
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
-import { cashiers as cashierControllers } from "../../controllers/cashiers.jsx";
+import { register } from "../../controllers/cashiers.jsx";
 
 function Component() {
   const navigate = useNavigate();
 
   const registerCashier = async (form, onError) => {
     try {
-      await cashierControllers.register(navigate, form.fields);
+      await register(form.fields);
+      navigate(linkCashiers.path);
     } catch (err) {
       try {
         onError(err);
       } catch (err) {
-        setForm("reset");
+        form.setForm("reset");
       }
     }
   };

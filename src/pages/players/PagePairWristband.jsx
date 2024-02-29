@@ -25,6 +25,10 @@ function Component() {
     [id],
   );
 
+  const handlePlayerSelect = (player) => {
+    isObject(player) && enqueue(createPlayer(player));
+  };
+
   return (
     <ViewCommand
       onFulfilled={() => {
@@ -32,7 +36,11 @@ function Component() {
       }}
       onSettled={(cmd) => {
         renderDialog(
-          <DialogAlertStandard initialOpen heading={cmd.verb} msg={cmd.msg} />,
+          <DialogAlertStandard
+            initialOpen
+            heading={cmd.verb}
+            msg={getMsg(cmd)}
+          />,
         );
       }}
       noRejected
@@ -48,7 +56,7 @@ function Component() {
             <DialogAlertStandard
               initialOpen
               heading={cmd.verb}
-              msg={cmd.msg}
+              msg={getMsg(cmd)}
             />,
           );
         }}
@@ -65,10 +73,7 @@ function Component() {
               <ComboboxSearchPlayer
                 searchPlayer={searchPlayer}
                 labelledBy="combobox-label"
-                onSelect={(player) =>
-                  isObject(player) &&
-                  enqueue(createPlayer(player, player.wristband))
-                }
+                onSelect={handlePlayerSelect}
               />
             </section>
             <section>

@@ -73,7 +73,6 @@ function Component() {
         team.register();
       }
     } catch (err) {
-      debug(err);
       renderDialog(
         <DialogAlertStandard
           initialOpen
@@ -91,7 +90,11 @@ function Component() {
       }}
       onSettled={(cmd) => {
         renderDialog(
-          <DialogAlertStandard initialOpen heading={cmd.verb} msg={cmd.msg} />,
+          <DialogAlertStandard
+            initialOpen
+            heading={cmd.verb}
+            msg={getMsg(cmd)}
+          />,
         );
       }}
       noRejected
@@ -107,7 +110,7 @@ function Component() {
             <DialogAlertStandard
               initialOpen
               heading={cmd.verb}
-              msg={cmd.msg}
+              msg={getMsg(cmd)}
             />,
           );
         }}
@@ -125,7 +128,7 @@ function Component() {
               <DialogAlertStandard
                 initialOpen
                 heading={cmd.verb}
-                msg={cmd.msg}
+                msg={getMsg(cmd)}
               />,
             );
           }}

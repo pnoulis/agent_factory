@@ -25,7 +25,7 @@ function PageLanding() {
               <TrackCommands />,
               document.getElementById("flash-messages-react-root"),
             )}
-            <Authorize as={{ role: "cashier" }}>
+            <Authorize>
               <Outlet />
             </Authorize>
           </>

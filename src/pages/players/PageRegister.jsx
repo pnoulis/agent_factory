@@ -3,34 +3,27 @@ import { FormRegisterPlayer } from "#components/forms/FormRegisterPlayer.jsx";
 import { ViewCommand } from "#components/await-command/ViewCommand.jsx";
 import { renderDialog } from "#components/dialogs/renderDialog.jsx";
 import { DialogAlertStandard } from "../../components/dialogs/alerts/DialogAlertStandard.jsx";
+import { register } from "../../controllers/player.jsx";
 
 function Component() {
+  const registerPlayer = async (form, onError) => {
+    try {
+      await register(form.fields);
+      form.setForm("reset");
+    } catch (err) {
+      try {
+        onError(err);
+      } catch (err) {
+        form.setForm("reset");
+      }
+    }
+  };
+
   return (
     <Page className="page-login">
-      <ViewCommand
-        noRejected
-        noFulfilled
-        onSettled={(cmd) => {
-          renderDialog(
-            <DialogAlertStandard
-              initialOpen
-              heading={cmd.verb}
-              msg={cmd.msg}
-            />,
-          );
-        }}
-        cmd={afm.registerPlayer}
-      >
+      <ViewCommand noRejected noFulfilled cmd={afm.registerPlayer}>
         <Content>
-          <FormRegisterPlayer
-            onSubmit={({ fields, setForm }, onError) =>
-              afm
-                .registerPlayer(fields, fields.password)
-                .parse()
-                .then(() => setForm("reset"))
-                .catch(onError)
-            }
-          />
+          <FormRegisterPlayer onSubmit={registerPlayer} />
         </Content>
       </ViewCommand>
     </Page>
