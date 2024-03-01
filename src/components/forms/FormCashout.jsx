@@ -22,7 +22,7 @@ function FormCashout({
       onChange={onChange}
     >
       <div className="comment-wrapper">
-        <Label className="label">Comments</Label>
+        <Label className="label">{t("Comments")}</Label>
         <TextArea autoFocus placeholder="..." name="comment" />
       </div>
       <TextInput readOnly name="cashier" />

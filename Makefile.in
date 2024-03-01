@@ -185,22 +185,22 @@ endif
 ##################################################
 start: stop dotenv
 	$(loadenv)
+	$(vite) --force &> >(tee $(out_client_log))
+
+start-backend: stop-backend
+	$(loadenv)
 	cd backend && docker-compose up -d
 	docker logs --follow backend-agentfactory-app-1 &> $(out_backend_log) &
-	cd $(srcdir_top_abs)
-ifdef daemon
-	$(vite) serve --force &> $(out_client_log) &
-else
-	$(vite) serve --force &> >(tee $(out_client_log))
-endif
 
 ##################################################
 # Stop
 ##################################################
 stop:
+	-pkill --echo --full 'node.*vite.*serve' &>/dev/null
+
+stop-backend:
 	-docker-compose -f backend/docker-compose.yml down
-	pkill --echo --full 'node.*vite.*serve'
-	pkill --echo --full 'docker logs -f*'
+	-pkill --echo --full 'docker logs -f*' &>/dev/null
 
 ##################################################
 # Test

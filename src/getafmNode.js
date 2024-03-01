@@ -6,10 +6,8 @@ import { MqttProxy } from "mqtt_proxy";
 import { registrationTopics, rpiReaderTopics } from "../backend-topics.js";
 import { DeviceAdminScreen } from "./afmachine/device/admin-screen/DeviceAdminScreen.js";
 import { DeviceRPIReader } from "./afmachine/device/rpi-reader/DeviceRPIReader.js";
-import "./globals.js";
 
 let afm;
-let listeners = {};
 
 function getafmNode() {
   if (!afm) {
@@ -50,7 +48,6 @@ function getafmNode() {
       }),
     );
     afm = new Afmachine(adminScreen, rpiReader);
-    logafm(afm);
     afm.on("error", (cmd) => {
       const { msg } = cmd;
       const { message, cause } = cmd.errs.at(-1);

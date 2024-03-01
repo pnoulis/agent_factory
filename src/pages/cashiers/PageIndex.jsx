@@ -16,11 +16,10 @@ function Component() {
   const revalidator = useRevalidator();
 
   const deregisterCashiers = async () => {
-    try {
-      await deregister(selectedCashiersRef.current);
-    } finally {
-      revalidator.revalidate();
-    }
+    await deregister(
+      () => revalidator.revalidate(),
+      selectedCashiersRef.current,
+    );
   };
 
   const handleCashierSelected = (selectedCashiers) => {

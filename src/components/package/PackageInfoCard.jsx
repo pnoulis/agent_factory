@@ -8,8 +8,6 @@ const parseTime = (src, v, name) => {
     const { hour, minute, second, literal } = formatTime(src[name]);
     return `${hour}${literal}${minute}${literal}${second}`;
   } catch (err) {
-    debug("PARSET TIEM", time);
-    debug(err);
     return time;
   }
 };

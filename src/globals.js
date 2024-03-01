@@ -1,7 +1,7 @@
-import "./debug.js";
-import "./errors.js";
 import { parsecmd } from "./afmachine/parsecmd.js";
 import { isArray } from "js_utils/misc";
+import "./debug.js";
+import "./errors.js";
 
 globalThis.parsecmd = parsecmd;
 

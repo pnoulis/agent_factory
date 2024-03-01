@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { defer, Await, useLoaderData } from "react-router-dom";
 import { getafm } from "/src/getafm.js";
-import { parsecmd } from "../afmachine/parsecmd.js";
 import { Pending } from "../components/await-command/Pending2.jsx";
 import { smallid } from "js_utils/uuid";
 
@@ -19,7 +18,6 @@ const loadCashiers = () => {
 
 function AwaitCashiers({ children }) {
   const pending = useLoaderData();
-  debug(pending, " pending");
   return (
     <Suspense fallback={<Pending />}>
       <Await resolve={pending.cashiers}>{children}</Await>

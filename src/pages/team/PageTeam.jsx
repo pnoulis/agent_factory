@@ -52,7 +52,6 @@ function Component() {
       navigate(url.pathname, { replace: true });
     } catch (err) {
       msg = err.message;
-      debug(err);
     } finally {
       if (msg) {
         renderDialog(
@@ -78,7 +77,6 @@ function Component() {
       revalidator.revalidate();
     } catch (err) {
       msg = err.message;
-      debug(err);
     } finally {
       if (msg) {
         renderDialog(
@@ -104,7 +102,6 @@ function Component() {
       revalidator.revalidate();
     } catch (err) {
       msg = err.message;
-      debug(err);
     } finally {
       if (msg) {
         renderDialog(
@@ -127,13 +124,40 @@ function Component() {
       navigate(teamPackage.path, { relative: true });
     } catch (err) {
       msg = err.message;
-      debug(err);
     } finally {
       if (msg) {
         renderDialog(
           <DialogAlertStandard initialOpen heading="add package" msg={msg} />,
         );
       }
+    }
+  };
+
+  const visitRoster = async () => {
+    try {
+      const team = await getTeam();
+      if (!PackageController.isTodaysTeam(team)) {
+        return renderDialog(
+          <DialogAlertStandard
+            initialOpen
+            heading="pair wristbands"
+            msg="Inactive team"
+          />,
+        );
+      } else if (team.isTemporary) {
+        return renderDialog(
+          <DialogAlertStandard
+            initialOpen
+            heading="pair wristbands"
+            msg="Group party teams cannot change their roster"
+          />,
+        );
+      }
+      return setPairWristbands((prev) => !prev);
+    } catch (err) {
+      renderDialog(
+        <DialogAlertStandard heading="pair wristbands" msg={getMsg(err)} />,
+      );
     }
   };
 
@@ -185,26 +209,7 @@ function Component() {
                                 content={
                                   pairWristbands ? "roster" : "pair wristbands"
                                 }
-                                onClick={async () => {
-                                  if (
-                                    await blockInactiveTeam(
-                                      team,
-                                      "pair wristbands",
-                                    )
-                                  ) {
-                                    return;
-                                  } else if (team.isTemporary) {
-                                    return renderDialog(
-                                      <DialogAlertStandard
-                                        initialOpen
-                                        heading="pair wristbands"
-                                        msg="Group party teams cannot change their roster"
-                                      />,
-                                    );
-                                  } else {
-                                    setPairWristbands((prev) => !prev);
-                                  }
-                                }}
+                                onClick={visitRoster}
                               />
                             </PanelNavbar>
                           </PanelActionbar>

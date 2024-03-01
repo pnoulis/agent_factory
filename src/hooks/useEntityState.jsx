@@ -14,7 +14,6 @@ function useEntityState(entity, cb) {
     const followState = (s, o, cmd) => {
       if (cb) {
         if (cb(cmd)) {
-          debug('SHOULD FOOLOW STATE');
           setState(s);
         }
       } else {

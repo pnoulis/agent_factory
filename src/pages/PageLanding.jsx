@@ -6,9 +6,16 @@ import BrandFigure from "/assets/brand/logo-agent-white.png";
 import { Await, useLoaderData, Outlet } from "react-router-dom";
 import { Authorize } from "../components/Authorize.jsx";
 import { TrackCommands } from "../components/track-commands/TrackCommands.jsx";
+import { translate } from "/src/translate.js";
 
 function PageLanding() {
   const pending = useLoaderData();
+  const [language, setLanguage] = React.useState(navigator.language);
+
+  const t = React.useMemo(() => {
+    globalThis.t = translate.bind(null, language);
+    return globalThis.t;
+  }, [language, setLanguage]);
 
   return (
     <Suspense
@@ -25,8 +32,8 @@ function PageLanding() {
               <TrackCommands />,
               document.getElementById("flash-messages-react-root"),
             )}
-            <Authorize as={{ role: "cashier" }}>
-              <Outlet />
+            <Authorize>
+              <Outlet context={{ language, setLanguage, t }} />
             </Authorize>
           </>
         )}

@@ -84,9 +84,11 @@ async function cashout(navigate, comment) {
       );
     } else if (await confirmStopSession(cashier)) {
       msg = getMsg(await afm.stopSession(cashier, comment));
+      window.localStorage.removeItem("cashier");
+      navigate(home.path);
+    } else {
+      return Promise.resolve();
     }
-    window.localStorage.removeItem("cashier");
-    navigate(home.path);
   } catch (err) {
     msg = getMsg(err);
     throw err;

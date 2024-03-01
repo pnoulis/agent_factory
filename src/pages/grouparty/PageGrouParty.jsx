@@ -105,8 +105,6 @@ function Component() {
   };
 
   function distribute(size, ratio) {
-    debug(`size: ${size}`);
-    debug(`ratio: ${ratio}`);
     const registeredTeams = [];
     const unregisteredTeams = [];
     for (let i = 0; i < gpRef.current.length; i++) {
@@ -124,11 +122,6 @@ function Component() {
       parseInt(sizeToDistribute),
       parseInt(ratio),
     );
-    debug(registeredTeams, "registered teams");
-    debug(unregisteredTeams, "unregistered teams");
-    debug(unregisteredPlayers, "unregistered players");
-    debug(sizeToDistribute, "size to distribute");
-    debug(distribution, "distribution");
     const newPlayers = [];
     gpRef.current = distribution.map((players, i) => {
       const team = createTeam({ name: unregisteredTeams[i]?.name });
@@ -144,8 +137,6 @@ function Component() {
       return team;
     });
     gpRef.current = gpRef.current.concat(registeredTeams);
-    debug(newPlayers, "enqueue new players");
-    debug(gpRef.current, " new gp ref current");
     enqueue(...newPlayers);
   }
 

@@ -28,7 +28,7 @@ async function register(navigate, form) {
   }
 }
 
-async function deregister(cashiers) {
+async function deregister(revalidate, cashiers) {
   if (!cashiers.length) {
     return renderDialog(
       <DialogAlertStandard
@@ -60,6 +60,8 @@ async function deregister(cashiers) {
         msg={getMsg(err)}
       />,
     );
+  } finally {
+    revalidate();
   }
 }
 

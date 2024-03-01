@@ -1,35 +1,27 @@
 import * as React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useOutletContext } from "react-router-dom";
 import { Site } from "./components/site/Site.jsx";
 import { ContextApp } from "./contexts/ContextApp.jsx";
-import { translate } from "/src/translate.js";
 import { useSession } from "/src/hooks/useSession.jsx";
 
 function Component() {
   const location = useLocation();
-  const [language, setLanguage] = React.useState(navigator.language);
   const { logout } = useSession();
-
-  const t = React.useMemo(() => {
-    globalThis.t = translate.bind(null, language);
-    return globalThis.t;
-  }, [language, setLanguage]);
+  const ctx = useOutletContext();
 
   return (
     <ContextApp
       ctx={{
-        t,
-        language,
-        setLanguage,
+        ...ctx,
         location,
         afm,
       }}
     >
       <Site
         onLogout={logout}
-        language={language}
-        onLanguageChange={setLanguage}
-        t={t}
+        language={ctx.language}
+        onLanguageChange={ctx.setLanguage}
+        t={ctx.t}
       >
         <Outlet />
       </Site>

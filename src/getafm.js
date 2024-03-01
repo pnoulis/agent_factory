@@ -1,7 +1,6 @@
 import { removeIndex } from "./misc/misc.js";
 import { ENV } from "./config.js";
 import * as CONSTANTS from "./constants.js";
-import "./debug.js";
 
 let afm;
 let listeners = {};

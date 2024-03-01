@@ -6,9 +6,7 @@ function Authorize({ as, level = "cashier", children }) {
   const { pathname } = useLocation();
 
   const user = as || JSON.parse(window.localStorage.getItem("cashier"));
-  debug(user, "authorize user");
   const authorized = user && user?.role === level;
-  debug(authorized, "authorized");
   return isFunction(children) ? (
     children({ user, level, authorized })
   ) : authorized ? (

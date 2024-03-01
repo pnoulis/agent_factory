@@ -35,7 +35,6 @@ function logevents(eventful) {
   if (ENV.LOGLEVEL === "silent") return;
   eventful.on("stateChange", (nstate, ostate, entity) => {
     debug(`${entity.constructor.name} changed state: ${ostate} -> ${nstate}`);
-    debug("state_change");
   });
   eventful.on("error", (err) => {
     console.log(logcmd(err));

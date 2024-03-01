@@ -22,7 +22,6 @@ function TeamActionCard({
     generateRandomName().toLowerCase(),
   );
   const state = useEntityState(afm.registerGroupTeam, (cmd) => {
-    debug("LISTEN ON THIS TEAM");
     return cmd.args?.team?.name === team.name;
   });
 

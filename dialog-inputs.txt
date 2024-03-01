@@ -1,9 +1,0 @@
-src/components/dialogs/inputs
-src/components/dialogs/inputs/getGrouPartySize.jsx
-src/components/dialogs/inputs/Description.jsx
-src/components/dialogs/inputs/Submit.jsx
-src/components/dialogs/inputs/DialogInput.jsx
-src/components/dialogs/inputs/Heading.jsx
-src/components/dialogs/inputs/DialogInputStandard.jsx
-src/components/dialogs/inputs/getGrouPartyDistribution.jsx
-src/components/dialogs/inputs/Cancel.jsx

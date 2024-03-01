@@ -1,402 +1,674 @@
 {
+  "": {
+    "en-US": "English-UnitedStates",
+    "ar-SA": "Arabic-SaudiArabia",
+    "da-DK": "Danish-Denmark",
+    "fr-FR": "French-France",
+    "de-DE": "German-Deutchland"
+  },
   "registration": {
     "en-US": "registration",
-    "ar-SA": "hathatnh"
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": ""
   },
   "register player": {
     "en-US": "register player",
-    "ar-SA": "toehun"
+    "ar-SA": ""
   },
   "register cashier": {
     "en-US": "register cashier",
     "ar-SA": ""
   },
-  "": {
+  "merge": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "group party": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "live view": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "scoreboard": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "administration": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "pair wristband": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "players": {
+    "en-US": "",
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
+  },
+  "cashout cashier": {
     "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
+  },
+  "cashiers": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "devices": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "register cashier": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "top 10": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "yolo": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "no": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "yes": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "name": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "status": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "packages": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "active package type": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "active package amount": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "active package remainder": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
-  },
-  "": {
-    "en-US": "",
-    "ar-SA": ""
+  "active package start time": {
+    "en-US": "",
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "points": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "played": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "won": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "lost": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "created": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "id": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "username": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "email": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "role": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "type": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "room": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "view": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "surname": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "state": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "list devices": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list players with wristband": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list teams": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list scoreboard": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "login cashier": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list session": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "successfully logged in cashier": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "undefined": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "nok backend api response": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "bad credentials": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "merge team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "not enough players": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "find team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "search player": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "fullname": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "rfid": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "color": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "t_start": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "t_end": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "cost": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "remainder": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "amount": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "merge group party": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "could not locate cashier in storage": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "stop session": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "successfully stopped session": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "start session": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "successfully started session": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list players": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "successfully registered new player": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "remove player": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "pair player's wristband": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "scan wristband": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "register wristband": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "successfully registered wristband to player": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "register team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "successfully registered team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "todays team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "pair wristbands": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list packages": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "add package": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list team packages": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "team does not have any packages!": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "team package": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "add team package": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "remove package": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "activate team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "remove team package": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "start team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "cannot remove a completed package": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "group party teams cannot change their roster": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "roster": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "first name": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "last name": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "password": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "cashier": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list cashiers": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "remove cashier": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "new cashier": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "back": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "list scoreboard devices": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "list device views": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "restart device": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "shutdown device": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "boot device": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "size": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "distribution": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "add team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "distribute players": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "new group party": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "teamname": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "add player": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "remove team": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "unpair player's wristband": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "unsubscribed": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "group party distribution": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "submit": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "logout cashier": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "logout": { "en-US": "", "ar-SA": "", "da-DK": "", "fr-FR": "", "de-DE": "" },
+  "cashout": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   },
-  "": {
+  "successfully logged out cashier": {
     "en-US": "",
-    "ar-SA": ""
+    "ar-SA": "",
+    "da-DK": "",
+    "fr-FR": "",
+    "de-DE": ""
   }
 }

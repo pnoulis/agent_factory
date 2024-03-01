@@ -220,6 +220,13 @@ resolve_dependencies() {
     error MISSING
   }
   echo "$JQ"
+
+  printf "Checking dependency...|m4..."
+  declare -gx M4="$(command -v m4)"
+  [[ -z "$M4" ]] && {
+    error MISSING
+  }
+  echo "$M4"
 }
 
 install_npm_packages() {
