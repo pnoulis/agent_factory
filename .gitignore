@@ -29,15 +29,12 @@ package-lock.json
 # intellij
 .idea
 
-# Ignore python script
-*.py[cod]
-__pycache__
-
 # ------- Transient files
 *.log
 *.logs
 *.out
 *.tar.gz
+*.zip
 
 # configure output
 Makefile

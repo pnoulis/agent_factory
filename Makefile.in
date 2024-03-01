@@ -35,7 +35,8 @@ confdir=$(srcdir_top)/config
 scriptdir=$(srcdir_top)/scripts
 distdir=$(srcdir_top)/dist
 distribution=$(distdir)/$(pkg_distname)
-
+src_distribution=$(distribution)+src
+bin_distribution=$(distribution)+bin
 
 ##################################################
 # Tools and their configurations
@@ -59,10 +60,20 @@ vite=$(realpath $(srcdir_top)/node_modules/.bin/vite)
 vitest=$(realpath $(srcdir_top)/node_modules/.bin/vitest)
 ## run files in sequence
 vitestflags=--no-file-parallelism
+# Bump version
+bumpve=$(scriptdir)/bumpve.sh
 
 ##################################################
 # Misc
 ##################################################
+vctree_state = $(shell git status -z | wc -w | while read n; do \
+	if [ $$n -eq 0 ]; then \
+		echo clean; \
+	else \
+		echo dirty; \
+	fi; \
+	done)
+
 
 ##################################################
 # io
@@ -86,22 +97,41 @@ all: build
 ##################################################
 # Distribute
 ##################################################
-dist: $(distribution)
-	echo $(distribution)
+dist: archive?=zip
 
-dist.gz: $(distribution).tar.gz
-dist.zip: $(distribution).zip
+dist: dist.$$(archive)
+dist.tar: $(src_distribution).tar.gz
+dist.zip: $(src_distribution).zip
 
-$(distribution).tar.gz: $(distribution)
+$(src_distribution).tar.gz: $(src_distribution)
+	cd $(distdir)
+	tar --create --dereference --file=- $(pkg_distname)+src  \
+	| gzip --to-stdout --best - > $(pkg_distname)+src.tar.gz
 
-# vctree := $(shell git ls-files --exclude-standard --cached)
-$(distribution):
-	-mkdir -p $(distribution) &>/dev/null
-	for file in $(shell git ls-files --exclude-standard); do
-		dirname=$${file%/*}
-		[ -d $${dirname} ] && mkdir -p $(distribution)/$${dirname}
-		ln --force --physical $${file} $(distribution)/$${dirname}
-	done
+$(src_distribution).zip: $(src_distribution)
+	cd $(distdir)
+	zip -r - $(pkg_distname)+src > $(pkg_distname)+src.zip
+
+$(src_distribution):
+	-mkdir -p $(src_distribution) &>/dev/null
+	for file in $(shell git ls-files --exclude-standard --cached); do
+			dirname=$${file%/*}
+			[ -d $${dirname} ] && mkdir -p $(src_distribution)/$${dirname}
+			ln --force --physical $${file} $(src_distribution)/$${dirname}
+		done
+
+##################################################
+# Release
+##################################################
+release:
+	./$(srcdir_top)/scripts/release.sh
+
+clean_working_tree:
+ifeq ($(vctree_state), dirty)
+	$(error Uncommited changes in working tree! Aborting dist target)
+endif
+
+
 
 ##################################################
 # Build
@@ -206,6 +236,7 @@ distclean: clean
 	-rm -f *.log
 	-rm -f .#*
 	-rm -rf $(buildir)
+	-rm -rf $(distdir)
 	-rm -rf node_modules
 	-rm -f package-lock.json
 	-rm -f config.*
@@ -246,6 +277,7 @@ help:
 # Software distribution
 .PHONY: dist # Distribute source tree
 .PHONY: deploy # Deploy the application to the consumer, such as a server
+.PHONY: release
 # Cleaning
 .PHONY: clean # Remove files created by ./make
 .PHONY: distclean # Remove files created by ./configure
