@@ -1,4 +1,4 @@
-dist/
+/dist
 tmp/
 build/
 coverage/
@@ -55,4 +55,3 @@ Makefile
 env.local
 env.*.local
 eslint-errors
-
