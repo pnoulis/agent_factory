@@ -208,10 +208,10 @@ resolve_dependencies() {
   fi
 
   printf "Checking dependency...|dotenv...|"
-  declare -gx DOTENV="$(command -v dotenv)"
-  [[ -z "$DOTENV" ]] && {
+  declare -gx DOTENV=${SRCDIR}/scripts/dotenv
+  if [[ ! -f $DOTENV ]]; then
     error MISSING
-  }
+  fi
   echo "$DOTENV"
 
   printf "Checking dependency...|jq...|"

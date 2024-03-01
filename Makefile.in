@@ -39,6 +39,13 @@ src_distribution=$(distribution)+src
 bin_distribution=$(distribution)+bin
 
 ##################################################
+# Important files
+##################################################
+configfile=$(srcdir_top)/configure
+releasefile=$(srcdir_top)/RELEASE
+pkgjsonfile=$(srcdir_top)/package.json
+
+##################################################
 # Tools and their configurations
 ##################################################
 # node
@@ -95,11 +102,21 @@ alias_afm=$(srcdir)/afmachine
 all: build
 
 ##################################################
+# Build
+##################################################
+build: buildclean dotenv | $(buildir_abs)
+	$(loadenv)
+	$(vite) build
+
+buildclean: | $(buildir_abs)
+	rm -rf $(buildir)/*
+
+##################################################
 # Distribute
 ##################################################
 dist: archive?=zip
-
 dist: dist.$$(archive)
+
 dist.tar: $(src_distribution).tar.gz
 dist.zip: $(src_distribution).zip
 
@@ -118,40 +135,49 @@ $(src_distribution):
 			dirname=$${file%/*}
 			[ -d $${dirname} ] && mkdir -p $(src_distribution)/$${dirname}
 			ln --force --physical $${file} $(src_distribution)/$${dirname}
-		done
+	done
+
+##################################################
+# Package
+##################################################
+package: archive?=zip
+package: package.$$(archive)
+
+package.tar: $(bin_distribution).tar.gz
+package.zip: $(bin_distribution).zip
+
+$(bin_distribution).tar.gz: $(bin_distribution)
+	cd $(distdir)
+	tar --create --dereference --file=- $(pkg_distname)+bin \
+	| gzip --to-stdout --best - > $(pkg_distname)+bin.tar.gz
+
+$(bin_distribution).zip: $(bin_distribution)
+	cd $(distdir)
+	zip -r - $(pkg_distname)+bin > $(pkg_distname)+bin.zip
+
+$(bin_distribution): build
+	-mkdir -p $(bin_distribution) &>/dev/null
+	cp -r $(buildir)/* $(bin_distribution)
+	cp $$releasefile $(bin_distribution)
+	cp $$pkgjsonfile $(bin_distribution)
 
 ##################################################
 # Release
 ##################################################
 release:
-	./$(srcdir_top)/scripts/release.sh
+	$(srcdir_top)/scripts/release.sh
 
-clean_working_tree:
-ifeq ($(vctree_state), dirty)
-	$(error Uncommited changes in working tree! Aborting dist target)
-endif
-
-
-
-##################################################
-# Build
-##################################################
-build: buildclean dotenv | $(buildir_abs)
-	$(loadenv)
-	$(vite) build
-
-buildclean: | $(buildir_abs)
-	rm -rf $(buildir)/*
 
 ##################################################
 # Deploy
 ##################################################
-deploy:
+deploy: package
 ifeq (IN_DEPLOY_TARGET, afserver)
 	ssh Mindtrap@afserver.local 'rmdir /s /q C:\laragon\www\administration'
-	scp -C -r $(buildir) 'Mindtrap@afserver.local:C:/laragon/www/administration' &> /dev/null
+	scp -C -r $(bin_distribution) \
+	'Mindtrap@afserver.local:C:/laragon/www/administration' &> /dev/null
 else
-	rsync -r $(buildir) /mnt/c/laragon/www &> /dev/null
+	rsync -r $(bin_distribution) /mnt/c/laragon/www &> /dev/null
 endif
 
 ##################################################
@@ -212,8 +238,6 @@ run: dotenv $(file)
 ##################################################
 # dotenv
 ##################################################
-# | sed -e 's/=([^\'\"]+)/"\1/"'
-# sed -e 's/=\([^\x27"].*$$\)/=\x27\1\x27/'
 dotenv:
 	$(dotenv) $(dotenvflags) $(dotenvdirs) | sort > $(dotenvfile)
 
@@ -226,7 +250,9 @@ clean:
 	-rm -f $(out_test_log)
 	-rm -f *.tar.gz
 	-rm -f $(dotenvfile)
-	find $(srcdir_top) -name '*~' -exec rm {} \;
+	-rm -rf $(buildir)
+	-rm -rf $(distdir)
+	find $(srcdir_top) -name backend -prune -o -name '*~' -exec rm {} \;
 
 
 ##################################################
@@ -235,8 +261,6 @@ clean:
 distclean: clean
 	-rm -f *.log
 	-rm -f .#*
-	-rm -rf $(buildir)
-	-rm -rf $(distdir)
 	-rm -rf node_modules
 	-rm -f package-lock.json
 	-rm -f config.*
@@ -275,9 +299,10 @@ help:
 .PHONY: stop # Stop application
 .PHONY: test # Test application
 # Software distribution
+.PHONY: release # Create a new version
 .PHONY: dist # Distribute source tree
+.PHONY: package # Distribute build
 .PHONY: deploy # Deploy the application to the consumer, such as a server
-.PHONY: release
 # Cleaning
 .PHONY: clean # Remove files created by ./make
 .PHONY: distclean # Remove files created by ./configure
@@ -285,6 +310,3 @@ help:
 .PHONY: help # Display a short description about each Makefile target's function
 .PHONY: dotenv # Write environment into .env
 .PHONY: all # Default target
-
-_test:
-	echo $(alias_afm)

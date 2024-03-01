@@ -1,6 +1,104 @@
 #!/usr/bin/env bash
 
-function isGitClean() {
+# This script is designed to be invoked through the Makefile
+#
+# Example:
+# make run file=scripts/release.sh
+#
+# OR:
+# make release
+
+# The versions and release id
+prev_v=$pkg_version
+next_v=
+release_id=
+
+main() {
+  # Dependencies
+  exit_if_empty pkg_version 'Missing \$pkg_version'
+  exit_if_empty srcdir_top 'Missing \$srcdir_top'
+  exit_if_empty bumpve 'Missing \$bumpve'
+  exit_if_empty jq 'Missing \$jq'
+  exit_if_empty configfile 'Missing \$configfile'
+  exit_if_empty releasefile 'Missing \$releasefile'
+  exit_if_empty pkgjsonfile 'Missing \$pkgjsonfile'
+
+  ensureOnBranch $srcdir_top 'master' || exit 1
+  isGitClean $srcdir_top || exit 1
+  gitNoUnpushedCommits $srcdir_top || exit 1
+  bump_version
+  make_release_id
+  update_release_file
+  update_config_file
+  update_packagejson_file
+  tag_git
+  commit_git
+}
+
+bump_version() {
+  select vsegment in 'major' 'minor' 'patch'; do
+    case $vsegment in
+      major)
+        next_v="$($bumpve -cM $prev_v)"
+        break
+        ;;
+      minor)
+        next_v="$($bumpve -cm $prev_v)"
+        break
+        ;;
+      patch)
+        next_v="$($bumpve -cp $prev_v)"
+        break
+        ;;
+    esac
+  done
+}
+
+make_release_id() {
+  release_id="[v$next_v] $(date "+%A %d %B %Y %k:%M:%S")"
+}
+
+update_release_file() {
+  echo "UPDATE RELEASE FILE|${releasefile}"
+  local tmpfile=$(mktemp)
+
+  if [[ -f $releasefile ]]; then
+    cat $releasefile > $tmpfile
+  fi
+
+  printf "%s\n" "$release_id" > $releasefile
+  cat $tmpfile >> $releasefile
+  rm $tmpfile
+}
+
+update_config_file() {
+  echo "UPDATE CONFIG FILE|${configfile}"
+  sed -i "s|PKG_VERSION=$prev_v|PKG_VERSION=$next_v|g" $configfile
+}
+
+update_packagejson_file() {
+  local tmpfile=$(mktemp)
+  echo "UPDATE PACKAGE.JSON FILE|${pkgjsonfile}"
+  $jq ".version = \"$next_v\"" $pkgjsonfile > $tmpfile
+  cat $tmpfile > $pkgjsonfile
+  rm $tmpfile
+}
+
+tag_git() {
+  echo "TAGGING GIT|v$next_v"
+  git tag -d "v$next_v"
+  git tag -a "v$next_v" -m "$releaseId"
+}
+
+commit_git() {
+  echo "PUSHING GIT|$(git remote -v show | grep push)"
+  git add .
+  git commit -m "$releaseId"
+  git push --follow-tags
+}
+
+
+isGitClean() {
     # input validation
     ## 1. one parameter has been provided
     [[ $# -eq 0 ]] && {
@@ -134,39 +232,24 @@ ensureOnBranch() {
   return 0
 }
 
+isempty() {
+  local v="${!1:-}"
+  if [ "$v" == "" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
 
-# ensureOnBranch $srcdir_top 'master' || exit 1
-# isGitClean || exit 1
-# gitNoUnpushedCommits $srcdir_top || exit 1
-prev_version=$pkg_version
+error() {
+  echo "$@"
+  exit 1
+}
 
-echo $prev_version
-
-select vsegment in 'major' 'minor' 'patch'; do
-  case $vsegment in
-    major)
-      next_v="$($bumpve -cM $prev_version)"
-      break
-      ;;
-    minor)
-      next_v="$($bumpve -cm $prev_version)"
-      break
-      ;;
-    patch)
-      next_v="$($bumpve -cp $prev_version)"
-      break
-      ;;
-  esac
-done
-
-echo $next_v
+exit_if_empty() {
+  isempty $1 && error "${2:-Missing $1}"
+}
 
 
-releaseId="[v$next_v] $(date "+%A %d %B %Y %k:%M:%S")"
 
-echo $releaseId
-
-# ## package.json
-# jq ".version = \"$next_v\"" package.json > package.json
-
-# ## Release
+main "$@"
