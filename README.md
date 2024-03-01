@@ -3,7 +3,7 @@
 <br />
 <div align="center">
 <h3 align="center">Agent Factory</h3>
-<h4 align="center">A web application</h4>
+<h4 align="center">Administration panel client</h4>
 </div>
 <br/>
 
