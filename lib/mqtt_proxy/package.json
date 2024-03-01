@@ -1,0 +1,39 @@
+{
+  "name": "mqtt_proxy",
+  "version": "0.0.1",
+  "description": "mqtt_proxy-summary",
+  "homepage": "https://github.com/pnoulis/mqtt_proxy#readme",
+  "bugs": "https://github.com/pnoulis/mqtt_proxy/issues",
+  "keywords": [
+    "mqtt_proxy-keywords"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pnoulis/mqtt_proxy.git"
+  },
+  "scripts": {
+    "dev": "make run",
+    "build": "make build",
+    "test": "make test"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": "./dist/mqtt-proxy.js",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=19.8.1",
+    "npm": ">=9.5.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "esbuild": "0.19.9",
+    "js_utils": "github:pnoulis/js_utils",
+    "mqtt": "^5.0.5",
+    "prettier": "^3.0.3",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.4"
+  }
+}

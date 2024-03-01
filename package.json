@@ -11,6 +11,11 @@
       "url": "https://github.com/pnoulis"
     }
   ],
+  "workspaces": [
+    "lib/react_utils",
+    "lib/js_utils",
+    "lib/mqtt_proxy"
+  ],
   "type": "module",
   "devDependencies": {
     "@mui/material": "5.15.10",
@@ -23,12 +28,9 @@
     "dayjs": "1.11.10",
     "deepmerge": "4.3.1",
     "depcheck": "^1.4.7",
-    "js_utils": "github:pnoulis/js_utils",
     "mqtt": "5.3.3",
-    "mqtt_proxy": "github:pnoulis/mqtt_proxy",
     "mysql2": "3.9.1",
     "putout": "^35.5.1",
-    "react_utils": "github:pnoulis/react_utils",
     "react-spinners": "0.13.8",
     "styled-components": "^6.1.1",
     "vite": "^5.0.7",

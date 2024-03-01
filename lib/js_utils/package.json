@@ -1,0 +1,47 @@
+{
+  "name": "js_utils",
+  "version": "0.0.1",
+  "description": "js_utils-summary",
+  "homepage": "https://github.com/pnoulis/js_utils#readme",
+  "bugs": "https://github.com/pnoulis/js_utils/issues",
+  "keywords": ["js_utils-keywords"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pnoulis/js_utils.git"
+  },
+  "scripts": {
+    "dev": "make run",
+    "test": "make test"
+  },
+  "files": ["dist"],
+  "exports": {
+    ".": "./dist/index.js",
+    "./pipeline": "./dist/pipeline/Pipeline.js",
+    "./task_runners": "./dist/task_runners/index.js",
+    "./*": "./dist/*.js",
+    "./node": "./dist/node/index.js",
+    "./node/*": "./dist/node/*.js",
+    "./browser": "./dist/browser/index.js",
+    "./browser/*": "./dist/browser/*.js"
+  },
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=19.8.1",
+    "npm": ">=9.5.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "esbuild": "^0.19.2",
+    "eslint": "^8.49.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jest": "^27.2.3",
+    "prettier": "^3.0.3"
+  },
+  "dependencies": {
+    "is-number": "^7.0.0",
+    "uuid": "^9.0.1"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "name": "react_utils",
+  "version": "0.0.1",
+  "description": "react_utils-summary",
+  "homepage": "https://github.com/pnoulis/react_utils#readme",
+  "bugs": "https://github.com/pnoulis/react_utils/issues",
+  "keywords": [
+    "react_utils-keywords"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pnoulis/react_utils.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./comboboxes": {
+      "import": "./dist/comboboxes.js"
+    },
+    "./svgs": {
+      "import": "./dist/svgs.js"
+    },
+    "./flashMessages": {
+      "import": "./dist/flashMessages.js"
+    },
+    "./dialogs": {
+      "import": "./dist/dialogs.js"
+    },
+    "./buttons": {
+      "import": "./dist/buttons.js"
+    },
+    "./inputs": {
+      "import": "./dist/inputs.js"
+    },
+    "./tooltips": {
+      "import": "./dist/tooltips.js"
+    },
+    "./hooks": {
+      "import": "./dist/hooks.js"
+    },
+    "./misc": {
+      "import": "./dist/misc.js"
+    }
+  },
+  "type": "module",
+  "private": true,
+  "browser": true,
+  "engines": {
+    "node": ">=19.8.1",
+    "npm": ">=9.5.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.4",
+    "react-spinners": "^0.13.8",
+    "vite": "^4.4.9",
+    "vite-plugin-svgr": "^3.2.0"
+  },
+  "dependencies": {
+    "@floating-ui/react": "0.23.0",
+    "fuse.js": "6.6.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.1"
+  }
+}
