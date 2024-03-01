@@ -1,6 +1,6 @@
 {
   "name": "agent_factory",
-  "version": "1.0.7",
+  "version": "3.0.0",
   "description": "Administration panel",
   "author": "Intelligent Entertainment <info@iegroup.gr> (https://iegroup.gr/)",
   "contributors": [
@@ -10,7 +10,11 @@
       "url": "https://github.com/pnoulis"
     }
   ],
-  "workspaces": ["lib/react_utils", "lib/js_utils", "lib/mqtt_proxy"],
+  "workspaces": [
+    "lib/react_utils",
+    "lib/js_utils",
+    "lib/mqtt_proxy"
+  ],
   "type": "module",
   "dependencies": {
     "@mui/material": "5.15.10",

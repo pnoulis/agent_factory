@@ -87,13 +87,13 @@ update_packagejson_file() {
 tag_git() {
   echo "TAGGING GIT|v$next_v"
   git tag -d "v$next_v"
-  git tag -a "v$next_v" -m "$releaseId"
+  git tag -a "v$next_v" -m "$release_id"
 }
 
 commit_git() {
   echo "PUSHING GIT|$(git remote -v show | grep push)"
   git add .
-  git commit -m "$releaseId"
+  git commit -m "$release_id"
   git push --follow-tags
 }
 
