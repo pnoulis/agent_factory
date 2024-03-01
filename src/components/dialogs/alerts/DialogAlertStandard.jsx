@@ -24,8 +24,8 @@ function DialogAlertStandard({
     >
       {children || (
         <>
-          <Heading>{heading}</Heading>
-          <Description>{msg}</Description>
+          <Heading>{t(heading)}</Heading>
+          <Description>{t(msg)}</Description>
         </>
       )}
     </StyledDialogAlert>

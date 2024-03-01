@@ -13,13 +13,13 @@ function AlertUpdateDevices({ cmds, heading, onClose }) {
           {cmds.map(({ status, value, reason }, i) => {
             return status === "rejected" ? (
               <li className="error" key={i}>
-                <span>{reason.args.device?.id || "ALL DEVICES"}</span>
-                <span>{getMsg(reason)}</span>
+                <span>{reason.args.device?.id || t("ALL DEVICES")}</span>
+                <span>{t(getMsg(reason))}</span>
               </li>
             ) : (
               <li key={i}>
-                <span>{value.res.device?.id || "ALL DEVICES"}</span>
-                <span>{getMsg(value) || value.res.device.view}</span>
+                <span>{value.res.device?.id || t("ALL DEVICES")}</span>
+                <span>{t(getMsg(value)) || t(value.res.device.view)}</span>
               </li>
             );
           })}

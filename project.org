@@ -1,0 +1,92 @@
+* Translations
+** Dialog Alerts
+src/components/dialogs/alerts
+
+src/components/dialogs/alerts/AlertSuccessfullGrouPartyMerge.jsx
+src/components/dialogs/alerts/Description.jsx
+src/components/dialogs/alerts/Heading.jsx
+src/components/dialogs/alerts/DialogAlert.jsx
+src/components/dialogs/alerts/DialogAlertStandard.jsx
+src/components/dialogs/alerts/AlertRegisterTeamUnpairedWrisbands.jsx
+src/components/dialogs/alerts/AlertDeregisteredCashiers.jsx
+
+** DONE src/components/dialogs/alerts/AlertUpdateDevices.jsx
+CLOSED: [2024-03-01 Fri 13:34]
+
+
+** Dialog Confirms
+src/components/dialogs/confirms
+src/components/dialogs/confirms/confirmActivateTeamPackage.jsx
+src/components/dialogs/confirms/confirmUpdateDevices.jsx
+src/components/dialogs/confirms/confirmRegisterGrouParty.jsx
+src/components/dialogs/confirms/confirmRemoveTeamPackage.jsx
+src/components/dialogs/confirms/Description.jsx
+src/components/dialogs/confirms/confirmDeregisterCashier.jsx
+src/components/dialogs/confirms/Heading.jsx
+src/components/dialogs/confirms/DialogConfirm.jsx
+src/components/dialogs/confirms/confirmUpdateDeviceView.jsx
+src/components/dialogs/confirms/Yes.jsx
+src/components/dialogs/confirms/No.jsx
+src/components/dialogs/confirms/confirmRegisterTeam.jsx
+src/components/dialogs/confirms/confirmAddTeamPackage.jsx
+src/components/dialogs/confirms/confirmStopSession.jsx
+src/components/dialogs/confirms/confirmRegisterCashier.jsx
+src/components/dialogs/confirms/confirmUnpairWristband.jsx
+src/components/dialogs/confirms/confirmLogoutCashier.jsx
+src/components/dialogs/confirms/confirmLogoutSession.jsx
+src/components/dialogs/confirms/confirmRegisterPlayer.jsx
+src/components/dialogs/confirms/DialogConfirmStandard.jsx
+
+** Dialog Inputs
+src/components/dialogs/inputs
+src/components/dialogs/inputs/getGrouPartySize.jsx
+src/components/dialogs/inputs/Description.jsx
+src/components/dialogs/inputs/Submit.jsx
+src/components/dialogs/inputs/DialogInput.jsx
+src/components/dialogs/inputs/Heading.jsx
+src/components/dialogs/inputs/DialogInputStandard.jsx
+src/components/dialogs/inputs/getGrouPartyDistribution.jsx
+src/components/dialogs/inputs/Cancel.jsx
+** Info cards
+src/components/package/StandardPackageInfoCard.jsx
+src/components/package/PackageInfoCard.jsx
+src/components/wristband/WristbandInfoCard.jsx
+src/components/player/StandardPlayerInfoCard.jsx
+src/components/player/SquizzedPlayerInfoCard.jsx
+src/components/player/PlayerInfoCard.jsx
+** Table headers
+TableDataTuple.jsx
+TableDevices.jsx
+TablePlayers.jsx
+TableScoreboardLive.jsx
+TableScoreboardTop10.jsx
+TableTeams.jsx
+** Panel Navlinks
+** Widgets
+src/components/widgets
+src/components/widgets/WidgetGrouParty.jsx
+src/components/widgets/Widget.jsx
+src/components/widgets/WidgetPlay.jsx
+src/components/widgets/WidgetDate.jsx
+src/components/widgets/WidgetRegister.jsx
+src/components/widgets/WidgetShutdown.jsx
+src/components/widgets/WidgetBoot.jsx
+src/components/widgets/WidgetMerge.jsx
+src/components/widgets/WidgetLanguage.jsx
+src/components/widgets/WidgetLock.jsx
+src/components/widgets/WidgetBack.jsx
+src/components/widgets/WidgetRoster.jsx
+src/components/widgets/WidgetRemove.jsx
+src/components/widgets/WidgetRestart.jsx
+src/components/widgets/WidgetDistribute.jsx
+src/components/widgets/WidgetAccount.jsx
+src/components/widgets/StandardWidget.jsx
+src/components/widgets/WidgetElementWater.jsx
+src/components/widgets/WidgetAdd.jsx
+src/components/widgets/WidgetWristband.jsx
+src/components/widgets/WidgetElementAir.jsx
+src/components/widgets/ElementWidget.jsx
+src/components/widgets/WidgetPackage.jsx
+src/components/widgets/WidgetTime.jsx
+src/components/widgets/WidgetElementFire.jsx
+src/components/widgets/WidgetElementEarth.jsx

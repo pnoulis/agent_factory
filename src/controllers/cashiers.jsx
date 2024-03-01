@@ -3,15 +3,16 @@ import { DialogAlertStandard } from "../components/dialogs/alerts/DialogAlertSta
 import { confirmRegisterCashier } from "../components/dialogs/confirms/confirmRegisterCashier.jsx";
 import { confirmDeregisterCashier } from "../components/dialogs/confirms/confirmDeregisterCashier.jsx";
 import { AlertDeregisterCashiers } from "../components/dialogs/alerts/AlertDeregisteredCashiers.jsx";
+import { cashiers as linkCashiers } from "/src/links.jsx";
 
-async function register(form) {
+async function register(navigate, form) {
   if (!(await confirmRegisterCashier(form))) {
     return Promise.resolve();
   }
   let msg;
   try {
     msg = await afm.registerCashier(form, form.password);
-    return msg.res;
+    navigate(linkCashiers.path);
   } catch (err) {
     msg = err;
     throw getErr(err);

@@ -7,10 +7,10 @@ function confirmRegisterCashier(cashier) {
       renderDialog(
         <DialogConfirmStandard
           initialOpen
-          heading="register cashier"
+          heading={t("register cashier")}
           onClose={resolve}
         >
-          <p>Register cashier {cashier.username} ?</p>
+          <p>{`${t("Register cashier")} ${cashier.username}?`}</p>
         </DialogConfirmStandard>,
       );
     } catch (err) {

@@ -34,12 +34,12 @@ function DialogInputStandard({
       open={open}
       onOpenChange={setOpen}
     >
-      <Heading>{heading}</Heading>
+      <Heading>{t(heading)}</Heading>
       <Description>
         {isFunction(children) ? children(closeDialog) : null}
       </Description>
       {cancellable && <Cancel>{cancel}</Cancel>}
-      <Submit form={form}>{submit}</Submit>
+      <Submit form={form}>{t(submit)}</Submit>
     </StyledDialogInput>
   );
 }

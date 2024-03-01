@@ -26,10 +26,10 @@ function DialogConfirmStandard({
       initialOpen={initialOpen}
       onClose={onClose}
     >
-      <Heading>{heading}</Heading>
-      <Description>{children || msg}</Description>
-      <No>{no}</No>
-      <Yes autoFocus>{yes}</Yes>
+      <Heading>{t(heading)}</Heading>
+      <Description>{children || t(msg)}</Description>
+      <No>{t(no)}</No>
+      <Yes autoFocus>{t(yes)}</Yes>
     </StyledDialogConfirm>
   );
 }

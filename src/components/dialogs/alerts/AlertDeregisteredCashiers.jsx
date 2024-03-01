@@ -14,12 +14,12 @@ function AlertDeregisterCashiers({ cmds, onClose }) {
             return status === "rejected" ? (
               <li className="error" key={i}>
                 <span>{reason.args.cashier.username}</span>
-                <span>{getMsg(reason)}</span>
+                <span>{t(getMsg(reason))}</span>
               </li>
             ) : (
               <li key={i}>
                 <span>{value.args.cashier.username}</span>
-                <span>{getMsg(value)}</span>
+                <span>{t(getMsg(value))}</span>
               </li>
             );
           })}

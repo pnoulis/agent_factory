@@ -4,7 +4,6 @@ import { PanelNavbar } from "../../components/panel/PanelNavbar.jsx";
 import { WidgetBack } from "../../components/widgets/WidgetBack.jsx";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { cashiers as linkCashiers } from "/src/links.jsx";
 import { ViewCommand } from "../../components/await-command/ViewCommand.jsx";
 import { register } from "../../controllers/cashiers.jsx";
 
@@ -13,8 +12,7 @@ function Component() {
 
   const registerCashier = async (form, onError) => {
     try {
-      await register(form.fields);
-      navigate(linkCashiers.path);
+      await register(navigate, form.fields);
     } catch (err) {
       try {
         onError(err);

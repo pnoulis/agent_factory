@@ -7,7 +7,9 @@ function AlertSuccessfullGrouPartyMerge({ id, onClose, teams }) {
     <ThisDialog initialOpen id={id} onClose={onClose}>
       <Heading>merge group party</Heading>
       <div className="description">
-        <h4 className="subheading">Successfully registered group teams</h4>
+        <h4 className="subheading">
+          {t("Successfully registered group teams")}
+        </h4>
         <ul className="content">
           {teams.map((team, i) => (
             <li key={team.name + i}>{team.name}</li>
