@@ -41,7 +41,7 @@ Agent Factory administration panel client
 
 ```sh
 
-git clone git@github.com:pnoulis/agent_factory.git
+git clone https://github.com/pnoulis/agent_factory.git
 cd agent_factory
 
 # Initializes backend submodule

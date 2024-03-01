@@ -7,7 +7,7 @@ function confirmRegisterCashier(cashier) {
       renderDialog(
         <DialogConfirmStandard
           initialOpen
-          heading={t("register cashier")}
+          heading="register cashier"
           onClose={resolve}
         >
           <p>{`${t("Register cashier")} ${cashier.username}?`}</p>

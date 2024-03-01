@@ -22,7 +22,7 @@ function State({ cmd }) {
           )}
           {messages.map((msg, i) => (
             <Message severity={severity} key={i} className="msg">
-              {msg}
+              {t(msg)}
             </Message>
           ))}
         </>

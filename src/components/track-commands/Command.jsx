@@ -25,7 +25,7 @@ const Command = React.forwardRef((props, ref) => {
 
   return (
     <Li ref={ref} onClick={() => props.umount(props.cmd)}>
-      <span className="taskname">{props.cmd.verb ?? props.cmd.taskname}</span>
+      <span className="taskname">{t(props.cmd.verb ?? props.cmd.taskname)}</span>
       <State cmd={props.cmd} />
     </Li>
   );

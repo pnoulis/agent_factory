@@ -36,7 +36,7 @@ function DataTuple({
         (isFunction(renderKey) ? (
           renderKey(props)
         ) : (
-          <span className={mergec("key", className)}>{props.name}</span>
+          <span className={mergec("key", className)}>{t(props.name)}</span>
         ))}
       {!nov &&
         (isFunction(renderValue) ? (

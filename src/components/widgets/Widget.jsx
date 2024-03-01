@@ -24,7 +24,7 @@ function Widget({
         <Svg>{children}</Svg>
       </TooltipTrigger>
       <TooltipContent className={className + " tooltip"}>
-        {content}
+        {t(content)}
       </TooltipContent>
     </Tooltip>
   );
