@@ -1,8 +1,7 @@
 {
   "name": "agent_factory",
   "version": "1.0.7",
-  "description": "",
-  "keywords": [],
+  "description": "Administration panel",
   "author": "Intelligent Entertainment <info@iegroup.gr> (https://iegroup.gr/)",
   "contributors": [
     {
@@ -11,11 +10,7 @@
       "url": "https://github.com/pnoulis"
     }
   ],
-  "workspaces": [
-    "lib/react_utils",
-    "lib/js_utils",
-    "lib/mqtt_proxy"
-  ],
+  "workspaces": ["lib/react_utils", "lib/js_utils", "lib/mqtt_proxy"],
   "type": "module",
   "devDependencies": {
     "@mui/material": "5.15.10",
@@ -30,7 +25,6 @@
     "depcheck": "^1.4.7",
     "mqtt": "5.3.3",
     "mysql2": "3.9.1",
-    "putout": "^35.5.1",
     "react-spinners": "0.13.8",
     "styled-components": "^6.1.1",
     "vite": "^5.0.7",

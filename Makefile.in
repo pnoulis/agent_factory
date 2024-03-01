@@ -33,6 +33,9 @@ srcdir=$(srcdir_top)/src
 srcdir_abs=$(srcdir_top_abs)/src
 confdir=$(srcdir_top)/config
 scriptdir=$(srcdir_top)/scripts
+distdir=$(srcdir_top)/dist
+distribution=$(distdir)/$(pkg_distname)
+
 
 ##################################################
 # Tools and their configurations
@@ -79,6 +82,26 @@ alias_afm=$(srcdir)/afmachine
 # Default target
 ##################################################
 all: build
+
+##################################################
+# Distribute
+##################################################
+dist: $(distribution)
+	echo $(distribution)
+
+dist.gz: $(distribution).tar.gz
+dist.zip: $(distribution).zip
+
+$(distribution).tar.gz: $(distribution)
+
+# vctree := $(shell git ls-files --exclude-standard --cached)
+$(distribution):
+	-mkdir -p $(distribution) &>/dev/null
+	for file in $(shell git ls-files --exclude-standard); do
+		dirname=$${file%/*}
+		[ -d $${dirname} ] && mkdir -p $(distribution)/$${dirname}
+		ln --force --physical $${file} $(distribution)/$${dirname}
+	done
 
 ##################################################
 # Build
@@ -221,6 +244,7 @@ help:
 .PHONY: stop # Stop application
 .PHONY: test # Test application
 # Software distribution
+.PHONY: dist # Distribute source tree
 .PHONY: deploy # Deploy the application to the consumer, such as a server
 # Cleaning
 .PHONY: clean # Remove files created by ./make

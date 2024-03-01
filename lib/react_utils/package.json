@@ -2,18 +2,15 @@
   "name": "react_utils",
   "version": "0.0.1",
   "description": "react_utils-summary",
+  "author": "pavlos noulis <pavlos.noulis@gmail.com> (https://github.com:pnoulis)",
   "homepage": "https://github.com/pnoulis/react_utils#readme",
   "bugs": "https://github.com/pnoulis/react_utils/issues",
-  "keywords": [
-    "react_utils-keywords"
-  ],
+  "keywords": ["react_utils-keywords"],
   "repository": {
     "type": "git",
     "url": "https://github.com/pnoulis/react_utils.git"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "exports": {
     ".": {
       "import": "./dist/index.js"
@@ -52,18 +49,6 @@
   "engines": {
     "node": ">=19.8.1",
     "npm": ">=9.5.1"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.4",
-    "react-spinners": "^0.13.8",
-    "vite": "^4.4.9",
-    "vite-plugin-svgr": "^3.2.0"
-  },
-  "dependencies": {
-    "@floating-ui/react": "0.23.0",
-    "fuse.js": "6.6.2"
   },
   "peerDependencies": {
     "react": "^18.2.0",
