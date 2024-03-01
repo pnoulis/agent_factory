@@ -15,6 +15,7 @@ import { Main } from "./Main.jsx";
 
 function Site({ children, language, onLanguageChange, onLogout, t }) {
   const navigate = useNavigate();
+
   return (
     <Div>
       <Header>

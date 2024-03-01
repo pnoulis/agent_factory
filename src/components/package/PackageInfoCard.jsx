@@ -4,6 +4,7 @@ import { t_stomls, t_stomin, formatTime } from "/src/misc/misc.js";
 
 const parseTime = (src, v, name) => {
   try {
+    if (!src[name]) return null;
     const { hour, minute, second, literal } = formatTime(src[name]);
     return `${hour}${literal}${minute}${literal}${second}`;
   } catch (err) {
