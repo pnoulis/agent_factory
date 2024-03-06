@@ -6,6 +6,7 @@ skip_npm_install=true
 installdirs_preset=gnu_prefix
 buildir_stem=build
 loglevel=debug
+max_wristband_id=2000
 client_url='http://localhost:5173'
 server_url='mqtt://localhost:9001/themaze'
 mysqldb_url='mysql://root:root@localhost:3308/agent_factory'
@@ -20,8 +21,9 @@ args="--mode=$mode \
 --afadmin-client-url-local=$client_url \
 --afadmin-server-url=$server_url \
 --afadmin-mysqldb-url=$mysqldb_url \
---device-admin-screen-id=$device_admin_screen_id
---device-rpi-reader-id=$device_rpi_reader_id
+--device-admin-screen-id=$device_admin_screen_id \
+--device-rpi-reader-id=$device_rpi_reader_id \
+--max-wristband-id=$max_wristband_id
 "
 
 if [ "${1:-}" != '--dont-skip-npm-install' ]; then

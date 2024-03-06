@@ -11,7 +11,7 @@ export { REACT_APP_ROOT };
 //////////////////////////////////////////////////
 const MAX_WRISTBAND_CC = 6; // max wristband colorCode
 const MIN_WRISTBAND_CC = 1; // minimum wristband colorCode
-const MAX_WRISTBAND_ID = 500;
+const MAX_WRISTBAND_ID = IN_MAX_WRISTBAND_ID;
 const MIN_WRISTBAND_ID = 1;
 const WRISTBAND_COLORS = Object.freeze({
   red: 1,

@@ -27,6 +27,7 @@ export AFADMIN_CLIENT_URL_LOCAL=
 export DEVICE_ADMIN_SCREEN_ID=
 export DEVICE_RPI_READER_ID=
 export LOGLEVEL=
+export MAX_WRISTBAND_ID=2000
 
 # CONSTANTS
 export PREFIX=
@@ -69,6 +70,7 @@ main() {
   create_vitefile
   create_indexfile
   create_backend_topicsfile
+  create_constantsfile
   create_makefile
   cleanup
 }
@@ -669,6 +671,18 @@ create_backend_topicsfile() {
   echo "OUT_CONFIG_BACKEND_TOPICSFILE_abs...|$OUT_CONFIG_BACKEND_TOPICSFILE_abs"
 }
 
+create_constantsfile() {
+  print_chapter 'Creating constants...'
+  declare -gx OUT_CONFIG_CONSTANTSFILE=${CONFIGUREDIR}/src/constants.js
+  OUT_CONFIG_CONSTANTSFILE_abs=${CONFIGUREDIR_ABS}/src/constants.js
+  in_CONSTANTSFILE=${SRCDIR}/src/in.constants.js
+  rm -f $OUT_CONFIG_CONSTANTSFILE
+
+  m4 $OUT_CONFIG_MACROSFILE $in_CONSTANTSFILE > $OUT_CONFIG_CONSTANTSFILE
+  echo "OUT_CONFIG_CONSTANTSFILE...|$OUT_CONFIG_CONSTANTSFILE"
+  echo "OUT_CONFIG_CONSTANTSFILE_abs...|$OUT_CONFIG_CONSTANTSFILE_abs"
+}
+
 create_makefile() {
   print_chapter "Creating makefile..."
   declare -gx OUT_CONFIG_MAKEFILE=${CONFIGUREDIR}/Makefile
@@ -682,6 +696,7 @@ create_makefile() {
      -DIN_CONFIG_VITEFILE=$OUT_CONFIG_VITEFILE \
      -DIN_CONFIG_INDEXFILE=$OUT_CONFIG_INDEXFILE \
      -DIN_CONFIG_BACKEND_TOPICSFILE=$OUT_CONFIG_BACKEND_TOPICSFILE \
+     -DIN_CONFIG_CONSTANTSFILE=$OUT_CONFIG_CONSTANTSFILE \
      $OUT_CONFIG_MACROSFILE $in_makefile > $OUT_CONFIG_MAKEFILE
 
   echo "OUT_CONFIG_MAKEFILE...|$OUT_CONFIG_MAKEFILE"
@@ -781,6 +796,9 @@ parse_args(){
         ;;
       --skip-npm-install)
         SKIP_NPM_INSTALL=true
+        ;;
+      --max-wristband-id=* | --max-wristband-id*)
+        MAX_WRISTBAND_ID="$(parse_param "$@")" || shift $?
         ;;
       --afadmin-client-url-public=* | --afadmin-client-url-public*)
         AFADMIN_CLIENT_URL_PUBLIC="$(parse_param "$@")" || shift $?

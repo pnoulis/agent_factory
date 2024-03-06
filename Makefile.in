@@ -269,6 +269,7 @@ distclean: clean
 	-rm -f IN_CONFIG_BACKEND_TOPICSFILE
 	-rm -f IN_CONFIG_MAKEFILE
 	-rm -f IN_CONFIG_BACKEND_TOPICSFILE
+	-rm -f IN_CONFIG_CONSTANTSFILE
 
 ##################################################
 # misc
